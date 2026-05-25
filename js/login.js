@@ -1,56 +1,19 @@
 // ======================
-// USUARIOS DEMO
+// CONEXION SUPABASE
 // ======================
 
-const usuariosDemo = [
+const supabaseUrl =
+'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
-  {
-    usuario: 'admin',
-    password: '1234',
-    rol: 'admin'
-  },
+const supabaseKey =
+'TU_API_KEY';
 
-  {
-    usuario: 'lider',
-    password: '1234',
-    rol: 'lider'
-  },
+const supabase = window.supabase.createClient(
 
-  {
-    usuario: 'jefe',
-    password: '1234',
-    rol: 'jefe'
-  },
+  supabaseUrl,
+  supabaseKey
 
-  {
-    usuario: 'auditor',
-    password: '1234',
-    rol: 'auditor'
-  }
-
-];
-
-
-
-
-// ======================
-// GUARDAR USUARIOS
-// ======================
-
-if(!localStorage.getItem('usuarios')){
-
-  localStorage.setItem(
-
-    'usuarios',
-
-    JSON.stringify(
-      usuariosDemo
-    )
-
-  );
-
-}
-
+);
 
 
 
@@ -87,12 +50,16 @@ form.addEventListener(
 // LOGIN
 // ======================
 
-function login(e){
+async function login(e){
 
   e.preventDefault();
 
 
 
+
+  // ======================
+  // INPUTS
+  // ======================
 
   const usuario =
 
@@ -121,41 +88,48 @@ function login(e){
 
 
 
-  const usuarios = JSON.parse(
 
-    localStorage.getItem(
-      'usuarios'
-    )
+  // ======================
+  // CONSULTAR USUARIO
+  // ======================
 
-  ) || [];
+  const { data, error } = await supabase
 
+  .from('usuarios')
 
+  .select('*')
 
+  .eq('usuario', usuario)
 
-  const usuarioEncontrado =
+  .eq('password', password)
 
-  usuarios.find(item => {
+  .eq('rol', rol)
 
-    return(
-
-      item.usuario === usuario
-
-      &&
-
-      item.password === password
-
-      &&
-
-      item.rol === rol
-
-    );
-
-  });
+  .single();
 
 
 
 
-  if(!usuarioEncontrado){
+
+  // ======================
+  // ERROR SUPABASE
+  // ======================
+
+  if(error){
+
+    console.log(error);
+
+  }
+
+
+
+
+
+  // ======================
+  // VALIDAR LOGIN
+  // ======================
+
+  if(!data){
 
     alert(
       'Usuario o contraseña incorrectos'
@@ -168,12 +142,17 @@ function login(e){
 
 
 
+
+  // ======================
+  // GUARDAR SESION
+  // ======================
+
   localStorage.setItem(
 
     'usuarioLogueado',
 
     JSON.stringify(
-      usuarioEncontrado
+      data
     )
 
   );
@@ -181,7 +160,10 @@ function login(e){
 
 
 
+
+  // ======================
   // REDIRECCIONAR
+  // ======================
 
   window.location.href =
   'dashboard.html';
