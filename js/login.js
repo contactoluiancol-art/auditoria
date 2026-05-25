@@ -1,5 +1,5 @@
 // ======================
-// CREAR USUARIOS DEMO
+// USUARIOS DEMO
 // ======================
 
 if(!localStorage.getItem('usuarios')){
@@ -9,25 +9,25 @@ if(!localStorage.getItem('usuarios')){
     {
       usuario: 'admin',
       password: '1234',
-      rol: 'Admin'
+      rol: 'admin'
     },
 
     {
       usuario: 'lider',
       password: '1234',
-      rol: 'Lider'
+      rol: 'lider'
     },
 
     {
       usuario: 'jefe',
       password: '1234',
-      rol: 'Jefe'
+      rol: 'jefe'
     },
 
     {
       usuario: 'auditor',
       password: '1234',
-      rol: 'Auditor'
+      rol: 'auditor'
     }
 
   ];
@@ -45,6 +45,7 @@ if(!localStorage.getItem('usuarios')){
   );
 
 }
+
 
 
 
@@ -109,7 +110,11 @@ function login(e){
   // STORAGE
 
   const usuarios = JSON.parse(
-    localStorage.getItem('usuarios')
+
+    localStorage.getItem(
+      'usuarios'
+    )
+
   ) || [];
 
 
