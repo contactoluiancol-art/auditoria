@@ -1,5 +1,34 @@
 // ======================
-// EVENTOS
+// CONEXION SUPABASE
+// ======================
+
+const supabaseUrl =
+
+'https://hurxdjoiafkjoyrmyhbd.supabase.co';
+
+
+
+const supabaseKey =
+
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+
+
+
+const supabaseClient =
+
+supabase.createClient(
+
+  supabaseUrl,
+  supabaseKey
+
+);
+
+
+
+
+
+// ======================
+// EVENTO
 // ======================
 
 document.getElementById(
@@ -18,26 +47,36 @@ document.getElementById(
 // GUARDAR USUARIO
 // ======================
 
-function guardarUsuario(){
+async function guardarUsuario(){
 
   const usuario =
+
   document.getElementById(
     'usuarioInput'
-  ).value.trim();
+  )
+  .value
+  .trim();
+
 
 
 
   const password =
+
   document.getElementById(
     'passwordInput'
-  ).value.trim();
+  )
+  .value
+  .trim();
+
 
 
 
   const rol =
+
   document.getElementById(
     'rolInput'
-  ).value;
+  )
+  .value;
 
 
 
@@ -48,8 +87,11 @@ function guardarUsuario(){
   // ======================
 
   if(
+
     !usuario ||
+
     !password
+
   ){
 
     alert(
@@ -65,37 +107,30 @@ function guardarUsuario(){
 
 
   // ======================
-  // STORAGE
+  // VALIDAR DUPLICADO
   // ======================
 
-  const usuarios = JSON.parse(
-    localStorage.getItem(
-      'usuarios'
-    )
-  ) || [];
+  const { data: existeUsuario } =
+
+  await supabaseClient
+
+  .from('usuarios')
+
+  .select('*')
+
+  .eq('usuario', usuario);
 
 
 
 
 
-  // ======================
-  // VALIDAR DUPLICADOS
-  // ======================
+  if(
 
-  const existeUsuario =
-  usuarios.some(
+    existeUsuario &&
 
-    item =>
+    existeUsuario.length > 0
 
-    item.usuario
-    .toLowerCase() ===
-    usuario.toLowerCase()
-
-  );
-
-
-
-  if(existeUsuario){
+  ){
 
     alert(
       'El usuario ya existe'
@@ -110,54 +145,48 @@ function guardarUsuario(){
 
 
   // ======================
-  // NUEVO USUARIO
+  // INSERTAR USUARIO
   // ======================
 
-  const nuevoUsuario = {
+  const { error } =
 
-    id: Date.now(),
+  await supabaseClient
 
-    usuario,
+  .from('usuarios')
 
-    password,
+  .insert([
 
-    rol,
+    {
 
-    fecha:
-    new Date()
-    .toLocaleDateString()
+      usuario,
 
-  };
+      password,
 
+      rol
 
+    }
 
-
-
-  // ======================
-  // AGREGAR
-  // ======================
-
-  usuarios.push(
-    nuevoUsuario
-  );
+  ]);
 
 
 
 
 
   // ======================
-  // GUARDAR
+  // ERROR
   // ======================
 
-  localStorage.setItem(
+  if(error){
 
-    'usuarios',
+    console.log(error);
 
-    JSON.stringify(
-      usuarios
-    )
+    alert(
+      'Error creando usuario'
+    );
 
-  );
+    return;
+
+  }
 
 
 
@@ -189,21 +218,15 @@ function guardarUsuario(){
 
 
 
+
 // ======================
 // RENDER USUARIOS
 // ======================
 
-function renderUsuarios(){
-
-  const usuarios = JSON.parse(
-    localStorage.getItem(
-      'usuarios'
-    )
-  ) || [];
-
-
+async function renderUsuarios(){
 
   const body =
+
   document.getElementById(
     'usuariosBody'
   );
@@ -217,10 +240,54 @@ function renderUsuarios(){
 
 
   // ======================
+  // CONSULTAR USUARIOS
+  // ======================
+
+  const { data, error } =
+
+  await supabaseClient
+
+  .from('usuarios')
+
+  .select('*')
+
+  .order('id', {
+
+    ascending: false
+
+  });
+
+
+
+
+
+  // ======================
+  // ERROR
+  // ======================
+
+  if(error){
+
+    console.log(error);
+
+    return;
+
+  }
+
+
+
+
+
+  // ======================
   // VALIDAR VACIO
   // ======================
 
-  if(usuarios.length === 0){
+  if(
+
+    !data ||
+
+    data.length === 0
+
+  ){
 
     body.innerHTML = `
 
@@ -248,16 +315,11 @@ function renderUsuarios(){
   // TABLA
   // ======================
 
-  usuarios.forEach(item => {
+  data.forEach(item => {
 
     body.innerHTML += `
 
       <tr>
-
-
-
-
-        <!-- USUARIO -->
 
         <td>
 
@@ -265,17 +327,9 @@ function renderUsuarios(){
 
         </td>
 
-
-
-
-
-        <!-- PASSWORD -->
-
         <td>
 
-          <span
-            class="password-text"
-          >
+          <span class="password-text">
 
             ${item.password}
 
@@ -283,43 +337,19 @@ function renderUsuarios(){
 
         </td>
 
-
-
-
-
-        <!-- ROL -->
-
         <td>
 
           ${item.rol}
 
         </td>
 
-
-
-
-
-        <!-- FECHA -->
-
         <td>
 
-          ${item.fecha}
+          ${item.fecha || ''}
 
         </td>
 
-
-
-
-
-        <!-- ACCIONES -->
-
         <td class="acciones-tabla">
-
-
-
-
-
-          <!-- ELIMINAR -->
 
           <button
             class="btn-eliminar"
@@ -329,12 +359,6 @@ function renderUsuarios(){
             Eliminar
 
           </button>
-
-
-
-
-
-          <!-- EDITAR -->
 
           <button
             class="btn-editar"
@@ -359,11 +383,12 @@ function renderUsuarios(){
 
 
 
+
 // ======================
-// ELIMINAR
+// ELIMINAR USUARIO
 // ======================
 
-function eliminarUsuario(id){
+async function eliminarUsuario(id){
 
   const confirmar = confirm(
 
@@ -381,36 +406,49 @@ function eliminarUsuario(id){
 
 
 
-  let usuarios = JSON.parse(
-    localStorage.getItem(
-      'usuarios'
-    )
-  ) || [];
+
+
+  // ======================
+  // ELIMINAR
+  // ======================
+
+  const { error } =
+
+  await supabaseClient
+
+  .from('usuarios')
+
+  .delete()
+
+  .eq('id', id);
 
 
 
-  usuarios = usuarios.filter(
-
-    item =>
-
-    String(item.id) !==
-    String(id)
-
-  );
 
 
+  // ======================
+  // ERROR
+  // ======================
 
-  localStorage.setItem(
+  if(error){
 
-    'usuarios',
+    console.log(error);
 
-    JSON.stringify(
-      usuarios
-    )
+    alert(
+      'Error eliminando usuario'
+    );
 
-  );
+    return;
+
+  }
 
 
+
+
+
+  // ======================
+  // ACTUALIZAR
+  // ======================
 
   renderUsuarios();
 
@@ -420,33 +458,34 @@ function eliminarUsuario(id){
 
 
 
+
 // ======================
 // EDITAR USUARIO
 // ======================
 
-function editarUsuario(id){
+async function editarUsuario(id){
 
-  const usuarios = JSON.parse(
-    localStorage.getItem(
-      'usuarios'
-    )
-  ) || [];
+  // ======================
+  // BUSCAR USUARIO
+  // ======================
 
+  const { data } =
 
+  await supabaseClient
 
-  const usuarioEditar =
-  usuarios.find(
+  .from('usuarios')
 
-    item =>
+  .select('*')
 
-    String(item.id) ===
-    String(id)
+  .eq('id', id)
 
-  );
+  .single();
 
 
 
-  if(!usuarioEditar){
+
+
+  if(!data){
 
     return;
 
@@ -457,21 +496,23 @@ function editarUsuario(id){
 
 
   // ======================
-  // NUEVOS DATOS
+  // NUEVA PASSWORD
   // ======================
 
   const nuevoPassword = prompt(
 
     'Nueva contraseña:',
 
-    usuarioEditar.password
+    data.password
 
   );
 
 
 
   if(
+
     nuevoPassword === null
+
   ){
 
     return;
@@ -480,23 +521,31 @@ function editarUsuario(id){
 
 
 
+
+
+  // ======================
+  // NUEVO ROL
+  // ======================
+
   const nuevoRol = prompt(
 
 `Nuevo rol:
 
 admin
 lider
-auditor
-jefe`,
+jefe
+auditor`,
 
-    usuarioEditar.rol
+    data.rol
 
   );
 
 
 
   if(
+
     nuevoRol === null
+
   ){
 
     return;
@@ -511,31 +560,41 @@ jefe`,
   // ACTUALIZAR
   // ======================
 
-  usuarioEditar.password =
-  nuevoPassword;
+  const { error } =
 
+  await supabaseClient
 
+  .from('usuarios')
 
-  usuarioEditar.rol =
-  nuevoRol;
+  .update({
+
+    password: nuevoPassword,
+
+    rol: nuevoRol
+
+  })
+
+  .eq('id', id);
 
 
 
 
 
   // ======================
-  // GUARDAR
+  // ERROR
   // ======================
 
-  localStorage.setItem(
+  if(error){
 
-    'usuarios',
+    console.log(error);
 
-    JSON.stringify(
-      usuarios
-    )
+    alert(
+      'Error actualizando usuario'
+    );
 
-  );
+    return;
+
+  }
 
 
 
@@ -560,6 +619,7 @@ jefe`,
   );
 
 }
+
 
 
 
