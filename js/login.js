@@ -12,7 +12,7 @@ if(!localStorage.getItem('usuarios')){
 
       password: '1234',
 
-      rol: 'admin'
+      rol: 'Admin'
 
     },
 
@@ -22,7 +22,7 @@ if(!localStorage.getItem('usuarios')){
 
       password: '1234',
 
-      rol: 'lider'
+      rol: 'Lider'
 
     },
 
@@ -32,7 +32,7 @@ if(!localStorage.getItem('usuarios')){
 
       password: '1234',
 
-      rol: 'jefe'
+      rol: 'Jefe'
 
     },
 
@@ -42,7 +42,7 @@ if(!localStorage.getItem('usuarios')){
 
       password: '1234',
 
-      rol: 'auditor'
+      rol: 'Auditor'
 
     }
 
