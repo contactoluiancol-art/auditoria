@@ -51,23 +51,6 @@ localStorage.setItem(
 
 
 // ======================
-// MOSTRAR STORAGE
-// ======================
-
-console.log(
-
-  JSON.parse(
-    localStorage.getItem(
-      'usuarios'
-    )
-  )
-
-);
-
-
-
-
-// ======================
 // FORM LOGIN
 // ======================
 
@@ -133,15 +116,6 @@ function login(e){
 
 
 
-  console.log(usuario);
-
-  console.log(password);
-
-  console.log(rol);
-
-
-
-
   const usuarios = JSON.parse(
 
     localStorage.getItem(
@@ -176,38 +150,35 @@ function login(e){
 
 
 
-  console.log(usuarioEncontrado);
-
-
-
-
   if(!usuarioEncontrado){
 
-  alert(
-    'Usuario o contraseña incorrectos'
+    alert(
+      'Usuario o contraseña incorrectos'
+    );
+
+    return;
+
+  }
+
+
+
+
+  localStorage.setItem(
+
+    'usuarioLogueado',
+
+    JSON.stringify(
+      usuarioEncontrado
+    )
+
   );
 
-  return;
+
+
+
+  // REDIRECCIONAR
+
+  window.location.href =
+  'dashboard.html';
 
 }
-
-
-
-
-localStorage.setItem(
-
-  'usuarioLogueado',
-
-  JSON.stringify(
-    usuarioEncontrado
-  )
-
-);
-
-
-
-
-// REDIRECCIONAR
-
-window.location.href =
-'dashboard.html';
