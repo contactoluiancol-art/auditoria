@@ -1,4 +1,60 @@
 // ======================
+// USUARIOS DEMO
+// ======================
+
+if(!localStorage.getItem('usuarios')){
+
+  const usuariosDemo = [
+
+    {
+
+      usuario: 'admin',
+
+      password: '1234',
+
+      rol: 'Administrador'
+
+    },
+
+    {
+
+      usuario: 'auditor',
+
+      password: '1234',
+
+      rol: 'Auditor'
+
+    },
+
+    {
+
+      usuario: 'operador',
+
+      password: '1234',
+
+      rol: 'Operador'
+
+    }
+
+  ];
+
+
+
+  localStorage.setItem(
+
+    'usuarios',
+
+    JSON.stringify(usuariosDemo)
+
+  );
+
+}
+
+
+
+
+
+// ======================
 // FORM LOGIN
 // ======================
 
@@ -8,14 +64,18 @@ document.getElementById(
 );
 
 
+
+
 // ======================
-// EVENTO
+// EVENTO LOGIN
 // ======================
 
 form.addEventListener(
   'submit',
   login
 );
+
+
 
 
 // ======================
@@ -27,6 +87,8 @@ function login(e){
   // EVITAR RECARGA
 
   e.preventDefault();
+
+
 
 
   // INPUTS
@@ -47,11 +109,19 @@ function login(e){
   ).value;
 
 
+
+
   // STORAGE
 
   const usuarios = JSON.parse(
-    localStorage.getItem('usuarios')
+
+    localStorage.getItem(
+      'usuarios'
+    )
+
   ) || [];
+
+
 
 
   // BUSCAR USUARIO
@@ -76,6 +146,8 @@ function login(e){
   });
 
 
+
+
   // VALIDAR
 
   if(!usuarioEncontrado){
@@ -89,6 +161,8 @@ function login(e){
   }
 
 
+
+
   // GUARDAR SESION
 
   localStorage.setItem(
@@ -100,6 +174,8 @@ function login(e){
     )
 
   );
+
+
 
 
   // REDIRECCIONAR
