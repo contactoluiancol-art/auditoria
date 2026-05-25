@@ -1,19 +1,49 @@
 // ======================
+// VALIDAR LIBRERIA
+// ======================
+
+if(!window.supabase){
+
+  alert(
+    'Error cargando Supabase'
+  );
+
+  throw new Error(
+    'Supabase no cargó correctamente'
+  );
+
+}
+
+
+
+
+
+// ======================
 // CONEXION SUPABASE
 // ======================
 
 const supabaseUrl =
+
 'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
+
+
 const supabaseKey =
+
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
 
-const supabaseClient = window.supabase.createClient(
+
+
+
+const supabaseClient =
+
+window.supabase.createClient(
 
   supabaseUrl,
   supabaseKey
 
 );
+
 
 
 
@@ -32,16 +62,21 @@ document.getElementById(
 
 
 // ======================
-// EVENTO LOGIN
+// VALIDAR FORM
 // ======================
 
-form.addEventListener(
+if(form){
 
-  'submit',
+  form.addEventListener(
 
-  login
+    'submit',
 
-);
+    login
+
+  );
+
+}
+
 
 
 
@@ -67,7 +102,9 @@ async function login(e){
 
   document.getElementById(
     'usuario'
-  ).value;
+  )
+  .value
+  .trim();
 
 
 
@@ -76,7 +113,8 @@ async function login(e){
 
   document.getElementById(
     'password'
-  ).value;
+  )
+  .value;
 
 
 
@@ -85,7 +123,34 @@ async function login(e){
 
   document.getElementById(
     'rol'
-  ).value;
+  )
+  .value;
+
+
+
+
+
+  // ======================
+  // VALIDAR CAMPOS
+  // ======================
+
+  if(
+
+    !usuario ||
+
+    !password ||
+
+    !rol
+
+  ){
+
+    alert(
+      'Complete todos los campos'
+    );
+
+    return;
+
+  }
 
 
 
@@ -95,7 +160,9 @@ async function login(e){
   // CONSULTAR SUPABASE
   // ======================
 
-  const { data, error } = await supabaseClient
+  const { data, error } =
+
+  await supabaseClient
 
   .from('usuarios')
 
@@ -114,7 +181,7 @@ async function login(e){
 
 
   // ======================
-  // ERROR
+  // ERROR SUPABASE
   // ======================
 
   if(error){
@@ -183,6 +250,7 @@ async function login(e){
   // ======================
 
   window.location.href =
+
   'dashboard.html';
 
 }
