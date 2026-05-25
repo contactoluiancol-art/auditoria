@@ -1,5 +1,5 @@
 // ======================
-// USUARIOS DEMO
+// CREAR USUARIOS DEMO
 // ======================
 
 if(!localStorage.getItem('usuarios')){
@@ -7,43 +7,27 @@ if(!localStorage.getItem('usuarios')){
   const usuariosDemo = [
 
     {
-
       usuario: 'admin',
-
       password: '1234',
-
-      rol: 'Admin'
-
+      rol: 'admin'
     },
 
     {
-
       usuario: 'lider',
-
       password: '1234',
-
-      rol: 'Lider'
-
+      rol: 'lider'
     },
 
     {
-
       usuario: 'jefe',
-
       password: '1234',
-
-      rol: 'Jefe'
-
+      rol: 'jefe'
     },
 
     {
-
       usuario: 'auditor',
-
       password: '1234',
-
-      rol: 'Auditor'
-
+      rol: 'auditor'
     }
 
   ];
@@ -54,12 +38,13 @@ if(!localStorage.getItem('usuarios')){
 
     'usuarios',
 
-    JSON.stringify(usuariosDemo)
+    JSON.stringify(
+      usuariosDemo
+    )
 
   );
 
 }
-
 
 
 
@@ -77,7 +62,7 @@ document.getElementById(
 
 
 // ======================
-// EVENTO LOGIN
+// EVENTO
 // ======================
 
 form.addEventListener(
@@ -124,11 +109,7 @@ function login(e){
   // STORAGE
 
   const usuarios = JSON.parse(
-
-    localStorage.getItem(
-      'usuarios'
-    )
-
+    localStorage.getItem('usuarios')
   ) || [];
 
 
