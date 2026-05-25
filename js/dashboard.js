@@ -8,6 +8,7 @@ const usuarioLogueado = JSON.parse(
 
 
 
+
 // ======================
 // VALIDAR SESION
 // ======================
@@ -310,32 +311,6 @@ function mostrarModulo(modulo){
 
   }
 
-
-
-  // ======================
-  // DESPACHO
-  // ======================
-
-  else if(modulo === 'despacho'){
-
-    contenido.innerHTML = `
-
-      <div class="modulo-vacio">
-
-        <h2>
-          🚚 Módulo Despacho
-        </h2>
-
-        <p>
-          Próximamente...
-        </p>
-
-      </div>
-
-    `;
-
-  }
-
 }
 
 
@@ -604,19 +579,6 @@ document.getElementById(
 
 
 
-document.getElementById(
-  'despachoMenu'
-)
-?.addEventListener(
-  'click',
-  () => mostrarModulo(
-    'despacho'
-  )
-);
-
-
-
-
 
 // ======================
 // CARDS DASHBOARD
@@ -672,19 +634,6 @@ document.addEventListener(
 
       mostrarModulo(
         'recepcion'
-      );
-
-    }
-
-
-
-    if(
-      card.id ===
-      'cardDespacho'
-    ){
-
-      mostrarModulo(
-        'despacho'
       );
 
     }
@@ -1099,9 +1048,6 @@ function eliminarNotificacion(id){
 
 
 
-// ======================
-// LIMPIAR TODAS
-// ======================
 // ======================
 // LIMPIAR TODAS
 // ======================
