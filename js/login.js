@@ -6,7 +6,7 @@ const supabaseUrl =
 'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
 const supabaseKey =
-'TU_API_KEY';
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
 
 const supabase = window.supabase.createClient(
 
