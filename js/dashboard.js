@@ -15,7 +15,7 @@ const usuarioLogueado = JSON.parse(
 if(!usuarioLogueado){
 
   window.location.href =
-  'login.html';
+  'index.html';
 
 }
 
