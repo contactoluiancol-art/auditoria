@@ -183,17 +183,31 @@ function login(e){
 
   if(!usuarioEncontrado){
 
-    alert(
-      'Usuario o contraseña incorrectos'
-    );
+  alert(
+    'Usuario o contraseña incorrectos'
+  );
 
-    return;
-
-  }
-
-
-
-
-  alert('LOGIN CORRECTO');
+  return;
 
 }
+
+
+
+
+localStorage.setItem(
+
+  'usuarioLogueado',
+
+  JSON.stringify(
+    usuarioEncontrado
+  )
+
+);
+
+
+
+
+// REDIRECCIONAR
+
+window.location.href =
+'dashboard.html';
