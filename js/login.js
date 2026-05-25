@@ -32,19 +32,25 @@ const usuariosDemo = [
 
 
 
+
 // ======================
 // GUARDAR USUARIOS
 // ======================
 
-localStorage.setItem(
+if(!localStorage.getItem('usuarios')){
 
-  'usuarios',
+  localStorage.setItem(
 
-  JSON.stringify(
-    usuariosDemo
-  )
+    'usuarios',
 
-);
+    JSON.stringify(
+      usuariosDemo
+    )
+
+  );
+
+}
+
 
 
 
@@ -52,4 +58,132 @@ localStorage.setItem(
 // ======================
 // FORM LOGIN
 // ======================
+
+const form =
+
+document.getElementById(
+  'loginForm'
+);
+
+
+
+
+// ======================
+// EVENTO
+// ======================
+
+form.addEventListener(
+
+  'submit',
+
+  login
+
+);
+
+
+
+
+// ======================
+// LOGIN
+// ======================
+
+function login(e){
+
+  e.preventDefault();
+
+
+
+
+  const usuario =
+
+  document.getElementById(
+    'usuario'
+  ).value;
+
+
+
+
+  const password =
+
+  document.getElementById(
+    'password'
+  ).value;
+
+
+
+
+  const rol =
+
+  document.getElementById(
+    'rol'
+  ).value;
+
+
+
+
+  const usuarios = JSON.parse(
+
+    localStorage.getItem(
+      'usuarios'
+    )
+
+  ) || [];
+
+
+
+
+  const usuarioEncontrado =
+
+  usuarios.find(item => {
+
+    return(
+
+      item.usuario === usuario
+
+      &&
+
+      item.password === password
+
+      &&
+
+      item.rol === rol
+
+    );
+
+  });
+
+
+
+
+  if(!usuarioEncontrado){
+
+    alert(
+      'Usuario o contraseña incorrectos'
+    );
+
+    return;
+
+  }
+
+
+
+
+  localStorage.setItem(
+
+    'usuarioLogueado',
+
+    JSON.stringify(
+      usuarioEncontrado
+    )
+
+  );
+
+
+
+
+  // REDIRECCIONAR
+
+  window.location.href =
+  'dashboard.html';
+
 }
