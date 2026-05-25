@@ -9,25 +9,25 @@ if(!localStorage.getItem('usuarios')){
     {
       usuario: 'admin',
       password: '1234',
-      rol: 'admin'
+      rol: 'Admin'
     },
 
     {
       usuario: 'lider',
       password: '1234',
-      rol: 'lider'
+      rol: 'Lider'
     },
 
     {
       usuario: 'jefe',
       password: '1234',
-      rol: 'jefe'
+      rol: 'Jefe'
     },
 
     {
       usuario: 'auditor',
       password: '1234',
-      rol: 'auditor'
+      rol: 'Auditor'
     }
 
   ];
