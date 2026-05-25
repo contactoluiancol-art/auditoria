@@ -1,0 +1,89 @@
+<div class="usuarios-container">
+
+  <link rel="stylesheet" href="css/usuarios.css">
+  <h1 class="titulo-usuarios">
+    👥 Gestión de Usuarios
+  </h1>
+
+
+  <!-- FORMULARIO -->
+
+  <div class="usuarios-form">
+
+    <input
+      type="text"
+      id="usuarioInput"
+      placeholder="Usuario"
+    >
+
+
+    <input
+      type="password"
+      id="passwordInput"
+      placeholder="Contraseña"
+    >
+
+
+    <select id="rolInput">
+
+      <option value="admin">
+        Admin
+      </option>
+
+      <option value="lider">
+        Líder
+      </option>
+        <option value="jefe">
+        Jefe
+      </option>
+
+    <option value="auditor">
+  Auditor
+</option>
+
+
+    </select>
+
+
+    <button id="guardarUsuario">
+
+      Crear usuario
+
+    </button>
+
+  </div>
+
+
+  <!-- TABLA -->
+
+  <div class="tabla-usuarios">
+
+    <table>
+
+      <thead>
+<tr>
+
+  <th>Usuario</th>
+
+  <th>Contraseña</th>
+
+  <th>Rol</th>
+
+  <th>Fecha</th>
+
+  <th>Acciones</th>
+
+</tr>
+
+      </thead>
+
+
+      <tbody id="usuariosBody">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

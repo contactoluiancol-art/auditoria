@@ -1,0 +1,360 @@
+<link rel="stylesheet" href="css/recepcion.css">
+
+<div class="recepcion-container">
+
+  <!-- HEADER -->
+
+  <div class="recepcion-header">
+
+    <div>
+
+      <h1>
+        📥 Recepción de Material
+      </h1>
+
+      <p>
+        Control y validación de mercancía recibida
+      </p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- FORMULARIO -->
+
+  <div class="recepcion-form">
+
+    <!-- PROVEEDOR -->
+
+    <div class="form-group">
+
+      <label>
+        Proveedor
+      </label>
+
+      <input
+        type="text"
+        id="proveedorInput"
+        placeholder="Ej: Colombina"
+      >
+
+    </div>
+
+
+
+
+
+    <!-- MATERIAL -->
+
+    <div class="form-group">
+
+      <label>
+        Material
+      </label>
+
+      <input
+        type="text"
+        id="materialInput"
+        placeholder="Ej: CDP 20"
+      >
+
+    </div>
+
+
+
+
+
+    <!-- CAJAS RECIBIDAS -->
+
+    <div class="form-group">
+
+      <label>
+        Cajas recibidas
+      </label>
+
+      <input
+        type="number"
+        id="cantidadInput"
+        placeholder="Cantidad de cajas recibidas"
+      >
+
+    </div>
+
+
+
+
+
+    <!-- CAJAS REVISADAS -->
+
+    <div class="form-group">
+
+      <label>
+        Cajas revisadas
+      </label>
+
+      <input
+        type="number"
+        id="revisadasInput"
+        placeholder="Cantidad de cajas revisadas"
+      >
+
+    </div>
+
+
+
+
+
+    <!-- CAJAS CON NOVEDAD -->
+
+    <div class="form-group">
+
+      <label>
+        Cajas con novedad
+      </label>
+
+      <input
+        type="number"
+        id="novedadesInput"
+        placeholder="Cantidad de cajas con novedad"
+      >
+
+    </div>
+
+
+
+
+
+    <!-- UNIDADES FALTANTES -->
+
+    <div class="form-group">
+
+      <label>
+        Unidades faltantes
+      </label>
+
+      <input
+        type="number"
+        id="faltantesInput"
+        placeholder="Cantidad de unidades faltantes"
+      >
+
+    </div>
+
+
+
+
+
+    <!-- OBSERVACION -->
+
+    <div class="form-group">
+
+      <label>
+        Observación
+      </label>
+
+      <textarea
+        id="observacionInput"
+        placeholder="Describe la novedad encontrada"
+      ></textarea>
+
+    </div>
+
+
+
+
+
+    <!-- ESTADO -->
+
+    <div class="form-group">
+
+      <label>
+        Estado
+      </label>
+
+      <select id="estadoRecepcionInput">
+
+        <option value="Pendiente">
+          Pendiente
+        </option>
+
+        <option value="En revisión">
+          En revisión
+        </option>
+
+        <option value="Revisado">
+          Revisado
+        </option>
+
+        <option value="Novedad">
+          Novedad
+        </option>
+
+      </select>
+
+    </div>
+
+
+
+
+
+    <!-- BOTON -->
+
+    <div class="form-group">
+
+      <button id="guardarRecepcion">
+
+        Guardar Recepción
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <!-- KPIS -->
+
+  <div class="kpi-container">
+
+    <div class="kpi-card">
+
+      <h3>
+        Recepciones
+      </h3>
+
+      <p id="kpiRecepciones">
+        0
+      </p>
+
+    </div>
+
+
+
+
+
+    <div class="kpi-card">
+
+      <h3>
+        % Revisado
+      </h3>
+
+      <p id="kpiRevisado">
+        0%
+      </p>
+
+    </div>
+
+
+
+
+
+    <div class="kpi-card">
+
+      <h3>
+        Cajas Novedad
+      </h3>
+
+      <p id="kpiNovedades">
+        0
+      </p>
+
+    </div>
+
+
+
+
+
+    <div class="kpi-card">
+
+      <h3>
+        Unidades Faltantes
+      </h3>
+
+      <p id="kpiFaltantes">
+        0
+      </p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <!-- TABLA -->
+
+  <div class="tabla-recepciones">
+
+    <h2>
+      📋 Historial Recepciones
+    </h2>
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Proveedor
+          </th>
+
+          <th>
+            Material
+          </th>
+
+          <th>
+            Cajas Recibidas
+          </th>
+
+          <th>
+            Cajas Revisadas
+          </th>
+
+          <th>
+            % Revisado
+          </th>
+
+          <th>
+            Cajas Novedad
+          </th>
+
+          <th>
+            Estado
+          </th>
+
+          <th>
+            Fecha
+          </th>
+
+          <th>
+            Observación
+          </th>
+
+          <th>
+            Acciones
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="recepcionesBody">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

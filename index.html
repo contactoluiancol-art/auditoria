@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit System - Login</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="login-container">
+
+    <div class="login-card">
+
+      <h1>AUDITORIA</h1>
+      <p>Sistema Auditoría Logística</p>
+
+      <form id="loginForm">
+
+        <div class="input-group">
+          <label>Usuario: </label>
+          <input type="text" id="usuario" placeholder="Ingrese usuario">
+        </div>
+
+        <div class="input-group">
+          <label>Contraseña: </label>
+          <input type="password" id="password" placeholder="Ingrese contraseña">
+        </div>
+
+        <div class="input-group">
+          <label>Rol: </label>
+
+          <select id="rol">
+            <option value="admin">Admin</option>
+            <option value="lider">Líder</option>
+            <option value="jefe">Jefe</option>
+             <option value="auditor">Auditor</option>
+          </select>
+
+        </div>
+
+        <button type="submit">
+          Ingresar
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <script src="js/login.js"></script>
+
+</body>
+</html>

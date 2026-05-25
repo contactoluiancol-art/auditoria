@@ -1,0 +1,456 @@
+<link rel="stylesheet" href="css/inventario.css">
+
+<div class="inventario-container">
+
+  <!-- =========================
+  HEADER
+  ========================= -->
+
+  <div class="inventario-header">
+
+    <div>
+
+      <h2>
+        📦 Inventario Cíclico
+      </h2>
+
+      <p class="subtitulo-inventario">
+        Gestión y control de inventario
+      </p>
+
+    </div>
+
+
+    <div class="acciones-header">
+
+      <input
+        type="file"
+        id="excelFile"
+      >
+
+
+      <button id="reiniciarInventario">
+
+        🗑 Reiniciar inventario
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  BUSQUEDA
+  ========================= -->
+
+  <div class="busqueda-box">
+
+    <div class="busqueda">
+
+      <input
+        type="text"
+        id="codigoInput"
+        placeholder="Ingrese código"
+      >
+
+
+      <button id="buscarBtn">
+
+        Buscar
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  INFO PRODUCTO
+  ========================= -->
+
+  <div class="producto-info">
+
+    <div class="info-card">
+
+      <span>
+        Código
+      </span>
+
+      <p id="codigoProducto">
+        -
+      </p>
+
+    </div>
+
+
+
+    <div class="info-card">
+
+      <span>
+        Producto
+      </span>
+
+      <p id="nombreProducto">
+        -
+      </p>
+
+    </div>
+
+
+
+    <div class="info-card">
+
+      <span>
+        Ubicación
+      </span>
+
+      <p id="ubicacionProducto">
+        -
+      </p>
+
+    </div>
+
+
+
+    <div class="info-card">
+
+      <span>
+        Stock Sistema
+      </span>
+
+      <p id="stockProducto">
+        -
+      </p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  CONTEO
+  ========================= -->
+
+  <div class="conteo-box">
+
+    <input
+      type="number"
+      id="conteoFisico"
+      placeholder="Cantidad física"
+    >
+
+
+    <button id="guardarConteo">
+
+      Registrar Conteo
+
+    </button>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  RESULTADO
+  ========================= -->
+
+  <div class="resultado">
+
+    <h3>
+      Diferencia:
+    </h3>
+
+    <p id="resultadoTexto">
+
+      -
+
+    </p>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  KPIS
+  ========================= -->
+
+  <div class="kpi-container">
+
+    <div class="kpi-card">
+
+      <h3>
+        Total Conteos
+      </h3>
+
+      <p id="kpiTotal">
+        0
+      </p>
+
+    </div>
+
+
+
+    <div class="kpi-card">
+
+      <h3>
+        Exactos
+      </h3>
+
+      <p id="kpiExactos">
+        0
+      </p>
+
+    </div>
+
+
+
+    <div class="kpi-card">
+
+      <h3>
+        Faltantes
+      </h3>
+
+      <p id="kpiFaltantes">
+        0
+      </p>
+
+    </div>
+
+
+
+    <div class="kpi-card">
+
+      <h3>
+        Sobrantes
+      </h3>
+
+      <p id="kpiSobrantes">
+        0
+      </p>
+
+    </div>
+
+
+
+    <div class="kpi-card">
+
+      <h3>
+        Exactitud
+      </h3>
+
+      <p id="kpiExactitud">
+        0%
+      </p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  FILTROS
+  ========================= -->
+
+  <div class="filtros-box">
+
+    <button onclick="filtrarHistorial('todos')">
+
+      Todos
+
+    </button>
+
+
+    <button onclick="filtrarHistorial('exactos')">
+
+      Exactos
+
+    </button>
+
+
+    <button onclick="filtrarHistorial('faltantes')">
+
+      Faltantes
+
+    </button>
+
+
+    <button onclick="filtrarHistorial('sobrantes')">
+
+      Sobrantes
+
+    </button>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  HISTORIAL
+  ========================= -->
+
+  <div class="historial">
+
+    <div class="historial-header">
+
+      <h3>
+        📋 Historial Conteos
+      </h3>
+
+
+    </div>
+
+
+
+    <table class="tabla-premium">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Código
+          </th>
+
+          <th>
+            Producto
+          </th>
+
+          <th>
+            Sistema
+          </th>
+
+          <th>
+            Físico
+          </th>
+
+          <th>
+            Diferencia
+          </th>
+
+          <th>
+            Acción
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody id="historialBody">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  BUSCADOR INVENTARIO
+  ========================= -->
+
+  <div class="inventario-top">
+
+    <input
+      type="text"
+      id="buscadorInventario"
+      placeholder="Buscar producto..."
+    >
+
+
+    <div class="inventario-info">
+
+      <span id="totalProductos">
+
+        Productos cargados: 0
+
+      </span>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  TABLA INVENTARIO
+  ========================= -->
+
+  <div class="tabla-container">
+
+    <h2>
+      📋 Listado de productos
+    </h2>
+
+
+    <table class="tabla-premium">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Código
+          </th>
+
+          <th>
+            Producto
+          </th>
+
+          <th>
+            Ubicación
+          </th>
+
+          <th>
+            Stock
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody id="inventarioBody">
+
+      </tbody>
+
+    </table>
+ <button id="exportarExcel">
+
+        📤 Exportar Excel
+
+      </button>
+  </div>
+
+</div>
+
+
+
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
+<script src="js/inventario.js"></script>

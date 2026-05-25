@@ -1,0 +1,155 @@
+/* =========================
+CONTENEDOR
+========================= */
+
+.usuarios-container{
+
+  background:white;
+
+  padding:30px;
+
+  border-radius:20px;
+
+  box-shadow:
+  0 4px 20px rgba(0,0,0,0.05);
+
+}
+
+
+/* =========================
+TITULO
+========================= */
+
+.titulo-usuarios{
+
+  font-size:35px;
+
+  margin-bottom:10px;
+
+  color:#0f172a;
+
+}
+
+
+/* =========================
+FORMULARIO
+========================= */
+
+.usuarios-form{
+
+  display:flex;
+
+  gap:15px;
+
+  flex-wrap:wrap;
+
+  margin-bottom:30px;
+
+}
+
+
+.usuarios-form input,
+.usuarios-form select{
+
+  padding:14px 18px;
+
+  border-radius:12px;
+
+  border:1px solid #cbd5e1;
+
+  outline:none;
+
+  font-size:15px;
+
+}
+
+
+.usuarios-form input:focus,
+.usuarios-form select:focus{
+
+  border-color:#2563eb;
+
+  box-shadow:
+  0 0 0 4px rgba(37,99,235,0.15);
+
+}
+
+
+/* =========================
+BOTON
+========================= */
+
+#guardarUsuario{
+
+  background:#2563eb;
+
+  color:white;
+
+  border:none;
+
+  padding:14px 22px;
+
+  border-radius:12px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:0.3s;
+
+}
+
+
+#guardarUsuario:hover{
+
+  background:#1d4ed8;
+
+  transform:translateY(-2px);
+
+}
+
+
+/* =========================
+TABLA
+========================= */
+
+.tabla-usuarios{
+
+  margin-top:20px;
+
+}
+
+
+.tabla-usuarios table{
+
+  width:100%;
+
+  border-collapse:collapse;
+
+}
+
+
+.tabla-usuarios th{
+
+  background:#f1f5f9;
+
+  padding:18px;
+
+  text-align:left;
+
+}
+
+
+.tabla-usuarios td{
+
+  padding:5px;
+
+  border-top:1px solid #e2e8f0;
+
+}
+
+
+/* =========================
+BOTON ELIMINAR
+========================= */
+
