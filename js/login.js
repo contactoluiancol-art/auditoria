@@ -8,7 +8,7 @@ const supabaseUrl =
 const supabaseKey =
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
 
-const supabase = supabase.createClient(
+const supabaseClient = window.supabase.createClient(
 
   supabaseUrl,
   supabaseKey
@@ -32,7 +32,7 @@ document.getElementById(
 
 
 // ======================
-// EVENTO
+// EVENTO LOGIN
 // ======================
 
 form.addEventListener(
@@ -51,6 +51,8 @@ form.addEventListener(
 // ======================
 
 async function login(e){
+
+  // EVITAR RECARGA
 
   e.preventDefault();
 
@@ -90,10 +92,10 @@ async function login(e){
 
 
   // ======================
-  // CONSULTAR USUARIO
+  // CONSULTAR SUPABASE
   // ======================
 
-  const { data, error } = await client
+  const { data, error } = await supabaseClient
 
   .from('usuarios')
 
@@ -112,12 +114,15 @@ async function login(e){
 
 
   // ======================
-  // ERROR SUPABASE
+  // ERROR
   // ======================
 
   if(error){
 
-    console.log(error);
+    console.log(
+      'ERROR SUPABASE:',
+      error
+    );
 
   }
 
@@ -126,7 +131,7 @@ async function login(e){
 
 
   // ======================
-  // VALIDAR LOGIN
+  // VALIDAR USUARIO
   // ======================
 
   if(!data){
@@ -155,6 +160,18 @@ async function login(e){
       data
     )
 
+  );
+
+
+
+
+
+  // ======================
+  // LOGIN EXITOSO
+  // ======================
+
+  alert(
+    'Login correcto'
   );
 
 
