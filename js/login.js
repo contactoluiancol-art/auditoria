@@ -8,7 +8,7 @@ const supabaseUrl =
 const supabaseKey =
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
 
-const supabase = window.supabase.createClient(
+const supabase = supabase.createClient(
 
   supabaseUrl,
   supabaseKey
@@ -93,7 +93,7 @@ async function login(e){
   // CONSULTAR USUARIO
   // ======================
 
-  const { data, error } = await supabase
+  const { data, error } = await client
 
   .from('usuarios')
 
