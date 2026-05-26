@@ -1,4 +1,51 @@
 // ======================
+// VALIDAR LIBRERIA
+// ======================
+
+if(!window.supabase){
+
+  alert(
+    'Supabase no cargó'
+  );
+
+}
+
+
+
+
+
+// ======================
+// CONEXION GLOBAL
+// ======================
+
+const supabaseUrl =
+
+'https://hurxdjoiafkjoyrmyhbd.supabase.co';
+
+
+
+const supabaseKey =
+
+'TU_API_KEY';
+
+
+
+
+
+window.supabaseClient =
+
+window.supabase.createClient(
+
+  supabaseUrl,
+  supabaseKey
+
+);
+
+
+
+
+
+// ======================
 // USUARIO LOGUEADO
 // ======================
 
