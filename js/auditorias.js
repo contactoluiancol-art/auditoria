@@ -356,7 +356,9 @@ async function renderAuditorias(){
 
         <td>
 
-          ${item.created_at || ''}
+          ${new Date(
+            item.created_at
+          ).toLocaleDateString()}
 
         </td>
 
@@ -675,10 +677,14 @@ function limpiarFormulario(){
 
 
 // ======================
-// PDF
+// PDF CORPORATIVO
 // ======================
 
 async function descargarPDFIndividual(id){
+
+  // ======================
+  // CONSULTAR
+  // ======================
 
   const { data } =
 
@@ -695,6 +701,10 @@ async function descargarPDFIndividual(id){
 
 
 
+
+  // ======================
+  // VALIDAR
+  // ======================
 
   if(!data){
 
@@ -736,7 +746,7 @@ async function descargarPDFIndividual(id){
 
 
 
- // ======================
+  // ======================
   // HEADER
   // ======================
 
@@ -745,6 +755,7 @@ async function descargarPDFIndividual(id){
     23,
     42
   );
+
 
 
   doc.rect(
@@ -758,6 +769,7 @@ async function descargarPDFIndividual(id){
 
 
 
+
   // EMPRESA
 
   doc.setTextColor(
@@ -767,7 +779,9 @@ async function descargarPDFIndividual(id){
   );
 
 
+
   doc.setFontSize(22);
+
 
 
   doc.text(
@@ -778,7 +792,10 @@ async function descargarPDFIndividual(id){
 
 
 
+
+
   doc.setFontSize(11);
+
 
 
   doc.text(
@@ -790,9 +807,11 @@ async function descargarPDFIndividual(id){
 
 
 
+
   // CODIGO
 
   doc.setFontSize(10);
+
 
 
   doc.text(
@@ -808,16 +827,21 @@ AUD-${auditoria.id}`,
 
 
 
+
+
   doc.text(
 
     `Fecha:
-${auditoria.fecha}`,
+${new Date(
+      auditoria.created_at
+    ).toLocaleDateString()}`,
 
     150,
 
     26
 
   );
+
 
 
 
@@ -833,7 +857,9 @@ ${auditoria.fecha}`,
   );
 
 
+
   doc.setFontSize(18);
+
 
 
   doc.text(
@@ -845,6 +871,7 @@ ${auditoria.fecha}`,
 
 
 
+
   // LINEA
 
   doc.setDrawColor(
@@ -852,9 +879,11 @@ ${auditoria.fecha}`,
   );
 
 
+
   doc.setLineWidth(
     0.2
   );
+
 
 
   doc.line(
@@ -863,6 +892,7 @@ ${auditoria.fecha}`,
     190,
     60
   );
+
 
 
 
@@ -876,6 +906,7 @@ ${auditoria.fecha}`,
 
 
 
+
   // TITULO TABLA
 
   doc.setFillColor(
@@ -883,6 +914,7 @@ ${auditoria.fecha}`,
     245,
     249
   );
+
 
 
   doc.rect(
@@ -895,7 +927,10 @@ ${auditoria.fecha}`,
 
 
 
+
+
   doc.setFontSize(12);
+
 
 
   doc.text(
@@ -906,7 +941,10 @@ ${auditoria.fecha}`,
 
 
 
+
+
   y += 18;
+
 
 
 
@@ -932,14 +970,21 @@ ${auditoria.fecha}`,
 
     [
       'Fecha',
-      auditoria.fecha
+
+      new Date(
+        auditoria.created_at
+      ).toLocaleDateString()
     ]
 
   ];
 
 
 
+
+
   datos.forEach(item => {
+
+
 
 
 
@@ -952,6 +997,7 @@ ${auditoria.fecha}`,
     );
 
 
+
     doc.rect(
       20,
       y - 6,
@@ -962,11 +1008,14 @@ ${auditoria.fecha}`,
 
 
 
+
+
     doc.text(
-      item[0],
+      String(item[0]),
       25,
       y + 2
     );
+
 
 
 
@@ -978,6 +1027,7 @@ ${auditoria.fecha}`,
     );
 
 
+
     doc.line(
       70,
       y + 6,
@@ -987,11 +1037,15 @@ ${auditoria.fecha}`,
 
 
 
+
+
     doc.text(
-      item[1],
+      String(item[1]),
       75,
       y + 2
     );
+
+
 
 
 
@@ -1010,11 +1064,15 @@ ${auditoria.fecha}`,
   y += 10;
 
 
+
+
+
   doc.setFillColor(
     241,
     245,
     249
   );
+
 
 
   doc.rect(
@@ -1027,6 +1085,8 @@ ${auditoria.fecha}`,
 
 
 
+
+
   doc.text(
     'HALLAZGO',
     25,
@@ -1035,7 +1095,34 @@ ${auditoria.fecha}`,
 
 
 
+
+
   y += 15;
+
+
+
+
+
+  // TEXTO DINAMICO
+
+  const lineasHallazgo =
+
+  doc.splitTextToSize(
+
+    auditoria.hallazgo,
+
+    155
+
+  );
+
+
+
+
+
+  const altoCaja =
+
+  lineasHallazgo.length * 8;
+
 
 
 
@@ -1046,22 +1133,22 @@ ${auditoria.fecha}`,
     20,
     y - 5,
     170,
-    45
+    altoCaja + 10
   );
 
 
 
+
+
+  // TEXTO
+
   doc.text(
 
-    auditoria.hallazgo,
+    lineasHallazgo,
 
     25,
 
-    y + 5,
-
-    {
-      maxWidth:160
-    }
+    y + 5
 
   );
 
@@ -1073,7 +1160,10 @@ ${auditoria.fecha}`,
   // FIRMA
   // ======================
 
-  y += 70;
+  y += altoCaja + 35;
+
+
+
 
 
   doc.line(
@@ -1085,10 +1175,18 @@ ${auditoria.fecha}`,
 
 
 
+
+
   y += 8;
 
 
+
+
+
   doc.setFontSize(11);
+
+
+
 
 
   doc.text(
@@ -1112,6 +1210,7 @@ ${auditoria.fecha}`,
   );
 
 
+
   doc.rect(
     0,
     285,
@@ -1122,6 +1221,8 @@ ${auditoria.fecha}`,
 
 
 
+
+
   doc.setTextColor(
     255,
     255,
@@ -1129,15 +1230,20 @@ ${auditoria.fecha}`,
   );
 
 
+
   doc.setFontSize(9);
 
 
+
+
+
   doc.text(
-    'Sistemas Auditoria v1 | Luis Grisales',
+    'Sistema Auditoria v1 | Luis Grisales',
     20,
     292
   );
-  
+
+
 
 
 
