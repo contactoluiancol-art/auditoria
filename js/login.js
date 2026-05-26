@@ -35,6 +35,7 @@ const supabaseKey =
 
 
 
+
 const supabaseClient =
 
 window.supabase.createClient(
@@ -61,8 +62,9 @@ document.getElementById(
 
 
 
+
 // ======================
-// VALIDAR FORM
+// EVENTO LOGIN
 // ======================
 
 if(form){
@@ -114,7 +116,8 @@ async function login(e){
   document.getElementById(
     'password'
   )
-  .value;
+  .value
+  .trim();
 
 
 
@@ -157,7 +160,7 @@ async function login(e){
 
 
   // ======================
-  // CONSULTAR SUPABASE
+  // CONSULTAR USUARIO
   // ======================
 
   const { data, error } =
@@ -174,7 +177,7 @@ async function login(e){
 
   .eq('rol', rol)
 
-  .single();
+  .limit(1);
 
 
 
@@ -191,6 +194,12 @@ async function login(e){
       error
     );
 
+    alert(
+      'Error conectando con Supabase'
+    );
+
+    return;
+
   }
 
 
@@ -201,7 +210,13 @@ async function login(e){
   // VALIDAR USUARIO
   // ======================
 
-  if(!data){
+  if(
+
+    !data ||
+
+    data.length === 0
+
+  ){
 
     alert(
       'Usuario o contraseña incorrectos'
@@ -224,7 +239,7 @@ async function login(e){
     'usuarioLogueado',
 
     JSON.stringify(
-      data
+      data[0]
     )
 
   );
