@@ -1,27 +1,10 @@
 // ======================
-// CONEXION SUPABASE
+// CLIENTE GLOBAL
 // ======================
-
-const supabaseUrl =
-
-'https://hurxdjoiafkjoyrmyhbd.supabase.co';
-
-
-
-const supabaseKey =
-
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
-
-
 
 const supabaseClient =
 
-supabase.createClient(
-
-  supabaseUrl,
-  supabaseKey
-
-);
+window.supabaseClient;
 
 
 
@@ -145,7 +128,7 @@ async function guardarUsuario(){
 
 
   // ======================
-  // INSERTAR USUARIO
+  // INSERTAR
   // ======================
 
   const { error } =
@@ -220,7 +203,7 @@ async function guardarUsuario(){
 
 
 // ======================
-// RENDER USUARIOS
+// RENDER
 // ======================
 
 async function renderUsuarios(){
@@ -240,7 +223,7 @@ async function renderUsuarios(){
 
 
   // ======================
-  // CONSULTAR USUARIOS
+  // CONSULTAR
   // ======================
 
   const { data, error } =
@@ -278,7 +261,7 @@ async function renderUsuarios(){
 
 
   // ======================
-  // VALIDAR VACIO
+  // VACIO
   // ======================
 
   if(
@@ -345,7 +328,7 @@ async function renderUsuarios(){
 
         <td>
 
-          ${item.fecha || ''}
+          ${item.created_at || ''}
 
         </td>
 
@@ -385,7 +368,7 @@ async function renderUsuarios(){
 
 
 // ======================
-// ELIMINAR USUARIO
+// ELIMINAR
 // ======================
 
 async function eliminarUsuario(id){
@@ -408,10 +391,6 @@ async function eliminarUsuario(id){
 
 
 
-  // ======================
-  // ELIMINAR
-  // ======================
-
   const { error } =
 
   await supabaseClient
@@ -425,10 +404,6 @@ async function eliminarUsuario(id){
 
 
 
-
-  // ======================
-  // ERROR
-  // ======================
 
   if(error){
 
@@ -446,10 +421,6 @@ async function eliminarUsuario(id){
 
 
 
-  // ======================
-  // ACTUALIZAR
-  // ======================
-
   renderUsuarios();
 
 }
@@ -460,14 +431,10 @@ async function eliminarUsuario(id){
 
 
 // ======================
-// EDITAR USUARIO
+// EDITAR
 // ======================
 
 async function editarUsuario(id){
-
-  // ======================
-  // BUSCAR USUARIO
-  // ======================
 
   const { data } =
 
@@ -495,10 +462,6 @@ async function editarUsuario(id){
 
 
 
-  // ======================
-  // NUEVA PASSWORD
-  // ======================
-
   const nuevoPassword = prompt(
 
     'Nueva contraseña:',
@@ -522,10 +485,6 @@ async function editarUsuario(id){
 
 
 
-
-  // ======================
-  // NUEVO ROL
-  // ======================
 
   const nuevoRol = prompt(
 
@@ -557,7 +516,7 @@ auditor`,
 
 
   // ======================
-  // ACTUALIZAR
+  // UPDATE
   // ======================
 
   const { error } =
@@ -580,10 +539,6 @@ auditor`,
 
 
 
-  // ======================
-  // ERROR
-  // ======================
-
   if(error){
 
     console.log(error);
@@ -600,19 +555,11 @@ auditor`,
 
 
 
-  // ======================
-  // ACTUALIZAR TABLA
-  // ======================
-
   renderUsuarios();
 
 
 
 
-
-  // ======================
-  // ALERTA
-  // ======================
 
   alert(
     'Usuario actualizado'
