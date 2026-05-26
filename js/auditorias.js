@@ -1,4 +1,16 @@
 // ======================
+// CLIENTE GLOBAL
+// ======================
+
+const supabaseClient =
+
+window.supabaseClient;
+
+
+
+
+
+// ======================
 // EVENTOS
 // ======================
 
@@ -13,43 +25,69 @@ document.getElementById(
 
 
 
+
 // ======================
 // GUARDAR AUDITORIA
 // ======================
 
-function guardarAuditoria(){
+async function guardarAuditoria(){
 
   const proceso =
+
   document.getElementById(
     'procesoInput'
-  ).value;
+  )
+  .value
+  .trim();
+
+
 
 
   const hallazgo =
+
   document.getElementById(
     'hallazgoInput'
-  ).value;
+  )
+  .value
+  .trim();
+
+
 
 
   const responsable =
+
   document.getElementById(
     'responsableInput'
-  ).value;
+  )
+  .value
+  .trim();
+
+
 
 
   const estado =
+
   document.getElementById(
     'estadoInput'
-  ).value;
+  )
+  .value;
 
 
 
+
+
+  // ======================
   // VALIDAR
+  // ======================
 
   if(
+
     !proceso ||
+
     !hallazgo ||
+
     !responsable
+
   ){
 
     alert(
@@ -62,65 +100,80 @@ function guardarAuditoria(){
 
 
 
-  // STORAGE
-
-  const auditorias = JSON.parse(
-    localStorage.getItem(
-      'auditorias'
-    )
-  ) || [];
 
 
+  // ======================
+  // INSERTAR
+  // ======================
 
-  // NUEVA AUDITORIA
+  const { error } =
 
-  const nuevaAuditoria = {
+  await supabaseClient
 
-    id: Date.now(),
+  .from('auditorias')
 
-    proceso,
+  .insert([
 
-    hallazgo,
+    {
 
-    responsable,
+      proceso,
 
-    estado,
+      hallazgo,
 
-    fecha:
-    new Date()
-    .toLocaleDateString()
+      responsable,
 
-  };
+      estado
+
+    }
+
+  ]);
 
 
 
-  // GUARDAR
-
-  auditorias.push(
-    nuevaAuditoria
-  );
 
 
-  localStorage.setItem(
+  // ======================
+  // ERROR
+  // ======================
 
-    'auditorias',
+  if(error){
 
-    JSON.stringify(
-      auditorias
-    )
+    console.log(error);
 
-  );
+    alert(
+      'Error guardando auditoría'
+    );
+
+    return;
+
+  }
 
 
 
+
+
+  // ======================
   // ACTUALIZAR
+  // ======================
 
   renderAuditorias();
 
-
   limpiarFormulario();
 
+
+
+
+
+  // ======================
+  // ALERTA
+  // ======================
+
+  alert(
+    'Auditoría guardada'
+  );
+
 }
+
 
 
 
@@ -130,28 +183,103 @@ function guardarAuditoria(){
 // RENDER AUDITORIAS
 // ======================
 
-function renderAuditorias(){
-
-  const auditorias = JSON.parse(
-    localStorage.getItem(
-      'auditorias'
-    )
-  ) || [];
-
+async function renderAuditorias(){
 
   const body =
+
   document.getElementById(
     'auditoriasBody'
   );
+
 
 
   body.innerHTML = '';
 
 
 
-  auditorias.forEach(item => {
+
+
+  // ======================
+  // CONSULTAR
+  // ======================
+
+  const { data, error } =
+
+  await supabaseClient
+
+  .from('auditorias')
+
+  .select('*')
+
+  .order('id', {
+
+    ascending: false
+
+  });
+
+
+
+
+
+  // ======================
+  // ERROR
+  // ======================
+
+  if(error){
+
+    console.log(error);
+
+    return;
+
+  }
+
+
+
+
+
+  // ======================
+  // VALIDAR VACIO
+  // ======================
+
+  if(
+
+    !data ||
+
+    data.length === 0
+
+  ){
+
+    body.innerHTML = `
+
+      <tr>
+
+        <td colspan="6">
+
+          No hay auditorías registradas
+
+        </td>
+
+      </tr>
+
+    `;
+
+    return;
+
+  }
+
+
+
+
+
+  // ======================
+  // TABLA
+  // ======================
+
+  data.forEach(item => {
 
     let estadoClass = '';
+
+
 
 
 
@@ -160,8 +288,10 @@ function renderAuditorias(){
     // ======================
 
     if(
+
       item.estado ===
       'Pendiente'
+
     ){
 
       estadoClass =
@@ -169,17 +299,17 @@ function renderAuditorias(){
 
     }
 
-
     else if(
+
       item.estado ===
       'En revisión'
+
     ){
 
       estadoClass =
       'estado-revision';
 
     }
-
 
     else{
 
@@ -190,9 +320,7 @@ function renderAuditorias(){
 
 
 
-    // ======================
-    // TABLA
-    // ======================
+
 
     body.innerHTML += `
 
@@ -204,13 +332,11 @@ function renderAuditorias(){
 
         </td>
 
-
         <td>
 
           ${item.hallazgo}
 
         </td>
-
 
         <td>
 
@@ -218,12 +344,9 @@ function renderAuditorias(){
 
         </td>
 
-
         <td>
 
-          <span
-            class="${estadoClass}"
-          >
+          <span class="${estadoClass}">
 
             ${item.estado}
 
@@ -231,12 +354,12 @@ function renderAuditorias(){
 
         </td>
 
-
         <td>
 
-          ${item.fecha}
+          ${item.created_at || ''}
 
         </td>
+
 
 
 
@@ -252,7 +375,7 @@ function renderAuditorias(){
 
           <button
             class="btn-eliminar"
-            onclick="eliminarAuditoria(${item.id})"
+            onclick="eliminarAuditoria('${item.id}')"
           >
 
             Eliminar
@@ -267,7 +390,7 @@ function renderAuditorias(){
 
           <button
             class="btn-pdf"
-            onclick="descargarPDFIndividual(${item.id})"
+            onclick="descargarPDFIndividual('${item.id}')"
           >
 
             PDF
@@ -282,7 +405,7 @@ function renderAuditorias(){
 
           <button
             class="btn-editar"
-            onclick="editarEstado(${item.id})"
+            onclick="editarEstado('${item.id}')"
           >
 
             Editar
@@ -303,38 +426,67 @@ function renderAuditorias(){
 
 
 
+
 // ======================
 // ELIMINAR
 // ======================
 
-function eliminarAuditoria(id){
+async function eliminarAuditoria(id){
 
-  let auditorias = JSON.parse(
-    localStorage.getItem(
-      'auditorias'
-    )
-  ) || [];
+  const confirmar = confirm(
 
-
-  auditorias = auditorias.filter(
-
-    item =>
-
-    String(item.id) !==
-    String(id)
+    '¿Desea eliminar esta auditoría?'
 
   );
 
 
-  localStorage.setItem(
 
-    'auditorias',
+  if(!confirmar){
 
-    JSON.stringify(
-      auditorias
-    )
+    return;
 
-  );
+  }
+
+
+
+
+
+  // ======================
+  // DELETE
+  // ======================
+
+  const { error } =
+
+  await supabaseClient
+
+  .from('auditorias')
+
+  .delete()
+
+  .eq('id', id);
+
+
+
+
+
+  // ======================
+  // ERROR
+  // ======================
+
+  if(error){
+
+    console.log(error);
+
+    alert(
+      'Error eliminando auditoría'
+    );
+
+    return;
+
+  }
+
+
+
 
 
   renderAuditorias();
@@ -345,30 +497,34 @@ function eliminarAuditoria(id){
 
 
 
+
 // ======================
 // EDITAR ESTADO
 // ======================
 
-function editarEstado(id){
+async function editarEstado(id){
 
-  const auditorias = JSON.parse(
-    localStorage.getItem(
-      'auditorias'
-    )
-  ) || [];
+  // ======================
+  // CONSULTAR
+  // ======================
+
+  const { data } =
+
+  await supabaseClient
+
+  .from('auditorias')
+
+  .select('*')
+
+  .eq('id', id)
+
+  .single();
 
 
-  const auditoria = auditorias.find(
-
-    item =>
-
-    String(item.id) ===
-    String(id)
-
-  );
 
 
-  if(!auditoria){
+
+  if(!data){
 
     return;
 
@@ -376,62 +532,108 @@ function editarEstado(id){
 
 
 
+
+
+  // ======================
   // NUEVO ESTADO
+  // ======================
 
   const nuevoEstado = prompt(
 
-`Ingrese nuevo estado:
+`Nuevo estado:
 
 Pendiente
 En revisión
-Cerrado`
+Cerrado`,
+
+    data.estado
 
   );
 
 
 
+
+
+  // ======================
   // VALIDAR
+  // ======================
 
   if(
 
-    nuevoEstado === 'Pendiente' ||
+    nuevoEstado !== 'Pendiente' &&
 
-    nuevoEstado === 'En revisión' ||
+    nuevoEstado !== 'En revisión' &&
 
-    nuevoEstado === 'Cerrado'
+    nuevoEstado !== 'Cerrado'
 
   ){
-
-    auditoria.estado =
-    nuevoEstado;
-
-
-
-    localStorage.setItem(
-
-      'auditorias',
-
-      JSON.stringify(
-        auditorias
-      )
-
-    );
-
-
-
-    renderAuditorias();
-
-  }
-
-  else{
 
     alert(
       'Estado inválido'
     );
 
+    return;
+
   }
 
+
+
+
+
+  // ======================
+  // UPDATE
+  // ======================
+
+  const { error } =
+
+  await supabaseClient
+
+  .from('auditorias')
+
+  .update({
+
+    estado: nuevoEstado
+
+  })
+
+  .eq('id', id);
+
+
+
+
+
+  // ======================
+  // ERROR
+  // ======================
+
+  if(error){
+
+    console.log(error);
+
+    alert(
+      'Error actualizando estado'
+    );
+
+    return;
+
+  }
+
+
+
+
+
+  renderAuditorias();
+
+
+
+
+
+  alert(
+    'Estado actualizado'
+  );
+
 }
+
 
 
 
@@ -448,14 +650,17 @@ function limpiarFormulario(){
   ).value = '';
 
 
+
   document.getElementById(
     'hallazgoInput'
   ).value = '';
 
 
+
   document.getElementById(
     'responsableInput'
   ).value = '';
+
 
 
   document.getElementById(
@@ -468,40 +673,30 @@ function limpiarFormulario(){
 
 
 
-// ======================
-// INICIO
-// ======================
-
-renderAuditorias();
-
-
-
-
 
 // ======================
-// PDF CORPORATIVO SAP
+// PDF
 // ======================
 
-function descargarPDFIndividual(id){
+async function descargarPDFIndividual(id){
 
-  const auditorias = JSON.parse(
-    localStorage.getItem(
-      'auditorias'
-    )
-  ) || [];
+  const { data } =
 
+  await supabaseClient
 
-  const auditoria = auditorias.find(
+  .from('auditorias')
 
-    item =>
+  .select('*')
 
-    String(item.id) ===
-    String(id)
+  .eq('id', id)
 
-  );
+  .single();
 
 
-  if(!auditoria){
+
+
+
+  if(!data){
 
     alert(
       'Auditoría no encontrada'
@@ -513,16 +708,30 @@ function descargarPDFIndividual(id){
 
 
 
+
+
+  const auditoria = data;
+
+
+
+
+
   // ======================
   // JSPDF
   // ======================
 
   const { jsPDF } =
+
   window.jspdf;
 
 
+
+
+
   const doc =
+
   new jsPDF();
+
 
 
 
@@ -538,6 +747,7 @@ function descargarPDFIndividual(id){
   );
 
 
+
   doc.rect(
     0,
     0,
@@ -549,7 +759,6 @@ function descargarPDFIndividual(id){
 
 
 
-  // EMPRESA
 
   doc.setTextColor(
     255,
@@ -558,7 +767,9 @@ function descargarPDFIndividual(id){
   );
 
 
+
   doc.setFontSize(22);
+
 
 
   doc.text(
@@ -572,6 +783,7 @@ function descargarPDFIndividual(id){
   doc.setFontSize(11);
 
 
+
   doc.text(
     'Sistema Auditoría Logística',
     20,
@@ -581,9 +793,9 @@ function descargarPDFIndividual(id){
 
 
 
-  // CODIGO
 
   doc.setFontSize(10);
+
 
 
   doc.text(
@@ -602,13 +814,14 @@ AUD-${auditoria.id}`,
   doc.text(
 
     `Fecha:
-${auditoria.fecha}`,
+${auditoria.created_at}`,
 
     150,
 
     26
 
   );
+
 
 
 
@@ -624,7 +837,9 @@ ${auditoria.fecha}`,
   );
 
 
+
   doc.setFontSize(18);
+
 
 
   doc.text(
@@ -635,17 +850,6 @@ ${auditoria.fecha}`,
 
 
 
-
-  // LINEA
-
-  doc.setDrawColor(
-    200
-  );
-
-
-  doc.setLineWidth(
-    0.2
-  );
 
 
   doc.line(
@@ -658,8 +862,9 @@ ${auditoria.fecha}`,
 
 
 
+
   // ======================
-  // TABLA
+  // DATOS
   // ======================
 
   let y = 80;
@@ -667,42 +872,6 @@ ${auditoria.fecha}`,
 
 
 
-  // TITULO TABLA
-
-  doc.setFillColor(
-    241,
-    245,
-    249
-  );
-
-
-  doc.rect(
-    20,
-    y - 8,
-    170,
-    12,
-    'F'
-  );
-
-
-
-  doc.setFontSize(12);
-
-
-  doc.text(
-    'DATOS AUDITORÍA',
-    25,
-    y
-  );
-
-
-
-  y += 18;
-
-
-
-
-  // DATOS
 
   const datos = [
 
@@ -719,72 +888,21 @@ ${auditoria.fecha}`,
     [
       'Estado',
       auditoria.estado
-    ],
-
-    [
-      'Fecha',
-      auditoria.fecha
     ]
 
   ];
 
 
 
+
+
   datos.forEach(item => {
 
-
-
-    // TITULO
-
-    doc.setFillColor(
-      248,
-      250,
-      252
-    );
-
-
-    doc.rect(
-      20,
-      y - 6,
-      50,
-      12,
-      'F'
-    );
-
-
-
     doc.text(
-      item[0],
+      `${item[0]}: ${item[1]}`,
       25,
-      y + 2
+      y
     );
-
-
-
-
-    // VALOR
-
-    doc.setDrawColor(
-      230
-    );
-
-
-    doc.line(
-      70,
-      y + 6,
-      190,
-      y + 6
-    );
-
-
-
-    doc.text(
-      item[1],
-      75,
-      y + 2
-    );
-
-
 
     y += 15;
 
@@ -801,44 +919,16 @@ ${auditoria.fecha}`,
   y += 10;
 
 
-  doc.setFillColor(
-    241,
-    245,
-    249
-  );
-
-
-  doc.rect(
-    20,
-    y - 8,
-    170,
-    12,
-    'F'
-  );
-
-
 
   doc.text(
-    'HALLAZGO',
+    'Hallazgo:',
     25,
     y
   );
 
 
 
-  y += 15;
-
-
-
-
-  // CAJA
-
-  doc.rect(
-    20,
-    y - 5,
-    170,
-    45
-  );
+  y += 10;
 
 
 
@@ -848,10 +938,12 @@ ${auditoria.fecha}`,
 
     25,
 
-    y + 5,
+    y,
 
     {
+
       maxWidth:160
+
     }
 
   );
@@ -860,75 +952,6 @@ ${auditoria.fecha}`,
 
 
 
-  // ======================
-  // FIRMA
-  // ======================
-
-  y += 70;
-
-
-  doc.line(
-    25,
-    y,
-    90,
-    y
-  );
-
-
-
-  y += 8;
-
-
-  doc.setFontSize(11);
-
-
-  doc.text(
-    'Firma Auditor',
-    25,
-    y
-  );
-
-
-
-
-
-  // ======================
-  // FOOTER
-  // ======================
-
-  doc.setFillColor(
-    15,
-    23,
-    42
-  );
-
-
-  doc.rect(
-    0,
-    285,
-    210,
-    12,
-    'F'
-  );
-
-
-
-  doc.setTextColor(
-    255,
-    255,
-    255
-  );
-
-
-  doc.setFontSize(9);
-
-
-  doc.text(
-    'Sistemas Auditoria v1 | Luis Grisales',
-    20,
-    292
-  );
-  
   // ======================
   // DESCARGAR
   // ======================
@@ -941,74 +964,13 @@ ${auditoria.fecha}`,
 
 }
 
+
+
+
+
+
 // ======================
-// EDITAR ESTADO
+// INICIO
 // ======================
 
-function editarEstado(id){
-
-  const auditorias = JSON.parse(
-    localStorage.getItem('auditorias')
-  ) || [];
-
-
-  const auditoria = auditorias.find(
-    item =>
-    String(item.id) === String(id)
-  );
-
-
-  if(!auditoria){
-
-    return;
-
-  }
-
-
-  // NUEVO ESTADO
-
-  const nuevoEstado = prompt(
-
-    `Cambiar estado:
-
-1. Pendiente
-2. En revisión
-3. Cerrado`
-
-  );
-
-
-  // VALIDAR
-
-  if(
-    nuevoEstado === 'Pendiente' ||
-    nuevoEstado === 'En revision' ||
-    nuevoEstado === 'Cerrado'
-  ){
-
-    auditoria.estado =
-    nuevoEstado;
-
-
-    localStorage.setItem(
-
-      'auditorias',
-
-      JSON.stringify(auditorias)
-
-    );
-
-
-    renderAuditorias();
-
-  }
-
-  else{
-
-    alert(
-      'Estado inválido'
-    );
-
-  }
-
-}
+renderAuditorias();
