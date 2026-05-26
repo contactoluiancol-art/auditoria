@@ -105,7 +105,7 @@ usuarioLogueado.rol;
 
 
 // ======================
-// OCULTAR MENU
+// OCULTAR MODULOS
 // ======================
 
 function ocultarModulo(id){
@@ -159,6 +159,7 @@ function ocultarCard(id){
 // ======================
 
 function aplicarPermisos(){
+
 
 
 
@@ -312,8 +313,11 @@ function mostrarModulo(modulo){
       html;
 
       cargarScript(
+
         'inventarioScript',
-        'js/inventario.js?v=14',
+
+        'js/inventario.js?v=15',
+
         () => {
 
           renderInventario();
@@ -350,8 +354,11 @@ function mostrarModulo(modulo){
       html;
 
       cargarScript(
+
         'auditoriasScript',
-        'js/auditorias.js?v=14',
+
+        'js/auditorias.js?v=15',
+
         () => {
 
           renderAuditorias();
@@ -384,8 +391,11 @@ function mostrarModulo(modulo){
       html;
 
       cargarScript(
+
         'usuariosScript',
-        'js/usuarios.js?v=14',
+
+        'js/usuarios.js?v=15',
+
         () => {
 
           renderUsuarios();
@@ -418,8 +428,11 @@ function mostrarModulo(modulo){
       html;
 
       cargarScript(
+
         'recepcionScript',
-        'js/recepcion.js?v=14'
+
+        'js/recepcion.js?v=15'
+
       );
 
     });
@@ -433,7 +446,7 @@ function mostrarModulo(modulo){
 
 
 // ======================
-// CARGAR SCRIPT DINAMICO
+// CARGAR SCRIPT
 // ======================
 
 function cargarScript(id, src, callback){
@@ -609,7 +622,7 @@ document.getElementById(
 
 
 // ======================
-// CARDS DASHBOARD
+// EVENTOS CARDS
 // ======================
 
 document.addEventListener(
@@ -714,6 +727,7 @@ document.getElementById(
 // ======================
 
 function renderNotificaciones(){
+
 
 
 
@@ -1113,7 +1127,7 @@ function eliminarNotificacion(id){
 
 
 // ======================
-// LIMPIAR TODAS
+// LIMPIAR NOTIFICACIONES
 // ======================
 
 function limpiarNotificaciones(){
@@ -1155,7 +1169,7 @@ function limpiarNotificaciones(){
 
 
 // ======================
-// TIEMPO REAL LOCAL
+// TIEMPO REAL
 // ======================
 
 window.addEventListener(
