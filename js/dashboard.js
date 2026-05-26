@@ -1,11 +1,11 @@
 // ======================
-// VALIDAR LIBRERIA
+// VALIDAR LIBRERIA SUPABASE
 // ======================
 
 if(!window.supabase){
 
   alert(
-    'Supabase no cargó'
+    'Supabase no cargó correctamente'
   );
 
 }
@@ -15,7 +15,7 @@ if(!window.supabase){
 
 
 // ======================
-// CONEXION GLOBAL
+// CONEXION GLOBAL SUPABASE
 // ======================
 
 const supabaseUrl =
@@ -26,7 +26,7 @@ const supabaseUrl =
 
 const supabaseKey =
 
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'TU_API_KEY';
 
 
 
@@ -49,9 +49,16 @@ window.supabase.createClient(
 // USUARIO LOGUEADO
 // ======================
 
-const usuarioLogueado = JSON.parse(
-  localStorage.getItem('usuarioLogueado')
+const usuarioLogueado =
+
+JSON.parse(
+
+  localStorage.getItem(
+    'usuarioLogueado'
+  )
+
 );
+
 
 
 
@@ -77,8 +84,7 @@ if(!usuarioLogueado){
 
 document.getElementById(
   'usuarioNombre'
-)
-.innerText =
+).innerText =
 
 `${usuarioLogueado.usuario} | ${usuarioLogueado.rol}`;
 
@@ -91,6 +97,7 @@ document.getElementById(
 // ======================
 
 const rol =
+
 usuarioLogueado.rol;
 
 
@@ -104,7 +111,10 @@ usuarioLogueado.rol;
 function ocultarModulo(id){
 
   const elemento =
+
   document.getElementById(id);
+
+
 
   if(elemento){
 
@@ -126,7 +136,10 @@ function ocultarModulo(id){
 function ocultarCard(id){
 
   const card =
+
   document.getElementById(id);
+
+
 
   if(card){
 
@@ -148,6 +161,8 @@ function ocultarCard(id){
 function aplicarPermisos(){
 
 
+
+
   // ======================
   // LIDER
   // ======================
@@ -167,6 +182,7 @@ function aplicarPermisos(){
     );
 
 
+
     ocultarCard(
       'cardInventario'
     );
@@ -183,6 +199,8 @@ function aplicarPermisos(){
 
 
 
+
+
   // ======================
   // AUDITOR
   // ======================
@@ -193,11 +211,15 @@ function aplicarPermisos(){
       'usuariosMenu'
     );
 
+
+
     ocultarCard(
       'cardUsuarios'
     );
 
   }
+
+
 
 
 
@@ -210,6 +232,8 @@ function aplicarPermisos(){
     ocultarModulo(
       'usuariosMenu'
     );
+
+
 
     ocultarCard(
       'cardUsuarios'
@@ -251,6 +275,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // DASHBOARD
   // ======================
@@ -265,6 +291,8 @@ function mostrarModulo(modulo){
     return;
 
   }
+
+
 
 
 
@@ -283,11 +311,26 @@ function mostrarModulo(modulo){
       contenido.innerHTML =
       html;
 
-      cargarScriptsInventario();
+      cargarScript(
+        'inventarioScript',
+        'js/inventario.js?v=14',
+        () => {
+
+          renderInventario();
+
+          renderHistorial();
+
+          actualizarKPIs();
+
+        }
+
+      );
 
     });
 
   }
+
+
 
 
 
@@ -306,11 +349,22 @@ function mostrarModulo(modulo){
       contenido.innerHTML =
       html;
 
-      cargarScriptsAuditorias();
+      cargarScript(
+        'auditoriasScript',
+        'js/auditorias.js?v=14',
+        () => {
+
+          renderAuditorias();
+
+        }
+
+      );
 
     });
 
   }
+
+
 
 
 
@@ -329,11 +383,22 @@ function mostrarModulo(modulo){
       contenido.innerHTML =
       html;
 
-      cargarScriptsUsuarios();
+      cargarScript(
+        'usuariosScript',
+        'js/usuarios.js?v=14',
+        () => {
+
+          renderUsuarios();
+
+        }
+
+      );
 
     });
 
   }
+
+
 
 
 
@@ -352,7 +417,10 @@ function mostrarModulo(modulo){
       contenido.innerHTML =
       html;
 
-      cargarScriptsRecepcion();
+      cargarScript(
+        'recepcionScript',
+        'js/recepcion.js?v=14'
+      );
 
     });
 
@@ -365,153 +433,29 @@ function mostrarModulo(modulo){
 
 
 // ======================
-// INVENTARIO
+// CARGAR SCRIPT DINAMICO
 // ======================
 
-function cargarScriptsInventario(){
-
-  if(
-    document.getElementById(
-      'inventarioScript'
-    )
-  ){
-
-    renderInventario();
-
-    renderHistorial();
-
-    actualizarKPIs();
-
-    return;
-
-  }
-
-
-  const script =
-
-  document.createElement(
-    'script'
-  );
-
-  script.src =
-  'js/inventario.js?v=14';
-
-  script.id =
-  'inventarioScript';
-
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
-
-
-
-// ======================
-// AUDITORIAS
-// ======================
-
-function cargarScriptsAuditorias(){
-
-  if(
-    document.getElementById(
-      'auditoriasScript'
-    )
-  ){
-
-    renderAuditorias();
-
-    return;
-
-  }
-
-
-  const script =
-
-  document.createElement(
-    'script'
-  );
-
-  script.src =
-  'js/auditorias.js?v=14';
-
-  script.id =
-  'auditoriasScript';
-
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
-
-
-
-// ======================
-// USUARIOS
-// ======================
-
-function cargarScriptsUsuarios(){
-
-  if(
-    document.getElementById(
-      'usuariosScript'
-    )
-  ){
-
-    renderUsuarios();
-
-    return;
-
-  }
-
-
-  const script =
-
-  document.createElement(
-    'script'
-  );
-
-  script.src =
-  'js/usuarios.js?v=14';
-
-  script.id =
-  'usuariosScript';
-
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
-
-
-
-// ======================
-// RECEPCION
-// ======================
-
-function cargarScriptsRecepcion(){
+function cargarScript(id, src, callback){
 
   const scriptAnterior =
 
-  document.getElementById(
-    'recepcionScript'
-  );
+  document.getElementById(id);
+
+
+
 
 
   if(scriptAnterior){
 
-    scriptAnterior.remove();
+    callback?.();
+
+    return;
 
   }
+
+
+
 
 
   const script =
@@ -520,12 +464,28 @@ function cargarScriptsRecepcion(){
     'script'
   );
 
-  script.src =
-  'js/recepcion.js?v=' +
-  Date.now();
 
-  script.id =
-  'recepcionScript';
+
+  script.src = src;
+
+  script.id = id;
+
+
+
+
+
+  script.onload = () => {
+
+    if(callback){
+
+      callback();
+
+    }
+
+  };
+
+
+
 
 
   document.body.appendChild(
@@ -548,6 +508,8 @@ function cerrarSesion(){
     'usuarioLogueado'
   );
 
+
+
   window.location.href =
   'index.html';
 
@@ -558,18 +520,22 @@ function cerrarSesion(){
 
 
 // ======================
-// MENUS
+// EVENTOS MENU
 // ======================
 
 document.getElementById(
   'dashboardMenu'
 )
 .addEventListener(
+
   'click',
+
   () => mostrarModulo(
     'dashboard'
   )
+
 );
+
 
 
 
@@ -578,11 +544,15 @@ document.getElementById(
   'inventarioMenu'
 )
 ?.addEventListener(
+
   'click',
+
   () => mostrarModulo(
     'inventario'
   )
+
 );
+
 
 
 
@@ -591,11 +561,15 @@ document.getElementById(
   'auditoriasMenu'
 )
 ?.addEventListener(
+
   'click',
+
   () => mostrarModulo(
     'auditorias'
   )
+
 );
+
 
 
 
@@ -604,11 +578,15 @@ document.getElementById(
   'usuariosMenu'
 )
 ?.addEventListener(
+
   'click',
+
   () => mostrarModulo(
     'usuarios'
   )
+
 );
+
 
 
 
@@ -617,10 +595,13 @@ document.getElementById(
   'recepcionMenu'
 )
 ?.addEventListener(
+
   'click',
+
   () => mostrarModulo(
     'recepcion'
   )
+
 );
 
 
@@ -632,13 +613,20 @@ document.getElementById(
 // ======================
 
 document.addEventListener(
+
   'click',
+
   function(e){
 
     const card =
+
     e.target.closest(
       '.dashboard-card'
     );
+
+
+
+
 
     if(!card){
 
@@ -648,10 +636,9 @@ document.addEventListener(
 
 
 
-    if(
-      card.id ===
-      'cardInventario'
-    ){
+
+
+    if(card.id === 'cardInventario'){
 
       mostrarModulo(
         'inventario'
@@ -661,10 +648,9 @@ document.addEventListener(
 
 
 
-    if(
-      card.id ===
-      'cardAuditorias'
-    ){
+
+
+    if(card.id === 'cardAuditorias'){
 
       mostrarModulo(
         'auditorias'
@@ -674,10 +660,9 @@ document.addEventListener(
 
 
 
-    if(
-      card.id ===
-      'cardRecepcion'
-    ){
+
+
+    if(card.id === 'cardRecepcion'){
 
       mostrarModulo(
         'recepcion'
@@ -687,10 +672,9 @@ document.addEventListener(
 
 
 
-    if(
-      card.id ===
-      'cardUsuarios'
-    ){
+
+
+    if(card.id === 'cardUsuarios'){
 
       mostrarModulo(
         'usuarios'
@@ -699,6 +683,7 @@ document.addEventListener(
     }
 
   }
+
 );
 
 
@@ -706,15 +691,18 @@ document.addEventListener(
 
 
 // ======================
-// CERRAR SESION
+// BOTON CERRAR SESION
 // ======================
 
 document.getElementById(
   'cerrarSesionBtn'
 )
 .addEventListener(
+
   'click',
+
   cerrarSesion
+
 );
 
 
@@ -722,23 +710,17 @@ document.getElementById(
 
 
 // ======================
-// INICIO
-// ======================
-
-aplicarPermisos();
-
-
-
-
-
-// ======================
-// MOSTRAR NOTIFICACIONES
+// RENDER NOTIFICACIONES
 // ======================
 
 function renderNotificaciones(){
 
 
+
+
+  // ======================
   // VALIDAR ROL
+  // ======================
 
   if(
 
@@ -750,13 +732,18 @@ function renderNotificaciones(){
 
   ){
 
-    const box = document.getElementById(
+    const box =
+
+    document.getElementById(
       'notificacionesBox'
     );
 
+
+
     if(box){
 
-      box.style.display = 'none';
+      box.style.display =
+      'none';
 
     }
 
@@ -767,9 +754,14 @@ function renderNotificaciones(){
 
 
 
-  // STORAGE
 
-  const notificaciones = JSON.parse(
+  // ======================
+  // STORAGE
+  // ======================
+
+  const notificaciones =
+
+  JSON.parse(
 
     localStorage.getItem(
       'notificaciones'
@@ -780,7 +772,10 @@ function renderNotificaciones(){
 
 
 
+
+  // ======================
   // ELEMENTOS
+  // ======================
 
   const lista =
 
@@ -799,6 +794,7 @@ function renderNotificaciones(){
 
 
 
+
   if(!lista || !contador){
 
     return;
@@ -808,12 +804,16 @@ function renderNotificaciones(){
 
 
 
+
   lista.innerHTML = '';
 
 
 
 
+
+  // ======================
   // NO LEIDAS
+  // ======================
 
   const noLeidas =
 
@@ -824,7 +824,6 @@ function renderNotificaciones(){
 
 
 
-  // CONTADOR
 
   contador.innerText =
   noLeidas.length;
@@ -832,24 +831,22 @@ function renderNotificaciones(){
 
 
 
-  if(noLeidas.length === 0){
 
-    contador.style.display =
-    'none';
+  contador.style.display =
 
-  }
+  noLeidas.length === 0
 
-  else{
+  ? 'none'
 
-    contador.style.display =
-    'flex';
-
-  }
+  : 'flex';
 
 
 
 
+
+  // ======================
   // VACIO
+  // ======================
 
   if(notificaciones.length === 0){
 
@@ -870,7 +867,10 @@ function renderNotificaciones(){
 
 
 
+
+  // ======================
   // RENDER
+  // ======================
 
   notificaciones.forEach(item => {
 
@@ -952,6 +952,7 @@ campanaBtn?.addEventListener(
 
 
 
+
     panelNotificaciones?.classList.toggle(
       'active'
     );
@@ -959,13 +960,17 @@ campanaBtn?.addEventListener(
 
 
 
-    let notificaciones = JSON.parse(
+
+    let notificaciones =
+
+    JSON.parse(
 
       localStorage.getItem(
         'notificaciones'
       )
 
     ) || [];
+
 
 
 
@@ -983,6 +988,7 @@ campanaBtn?.addEventListener(
 
 
 
+
     localStorage.setItem(
 
       'notificaciones',
@@ -992,6 +998,7 @@ campanaBtn?.addEventListener(
       )
 
     );
+
 
 
 
@@ -1007,7 +1014,7 @@ campanaBtn?.addEventListener(
 
 
 // ======================
-// NO CERRAR DENTRO
+// CLICK DENTRO PANEL
 // ======================
 
 panelNotificaciones?.addEventListener(
@@ -1027,7 +1034,7 @@ panelNotificaciones?.addEventListener(
 
 
 // ======================
-// CLICK FUERA
+// CLICK FUERA PANEL
 // ======================
 
 document.addEventListener(
@@ -1054,7 +1061,9 @@ document.addEventListener(
 
 function eliminarNotificacion(id){
 
-  let notificaciones = JSON.parse(
+  let notificaciones =
+
+  JSON.parse(
 
     localStorage.getItem(
       'notificaciones'
@@ -1064,7 +1073,11 @@ function eliminarNotificacion(id){
 
 
 
-  notificaciones = notificaciones.filter(
+
+
+  notificaciones =
+
+  notificaciones.filter(
 
     item =>
 
@@ -1072,6 +1085,8 @@ function eliminarNotificacion(id){
     String(id)
 
   );
+
+
 
 
 
@@ -1084,6 +1099,8 @@ function eliminarNotificacion(id){
     )
 
   );
+
+
 
 
 
@@ -1101,9 +1118,6 @@ function eliminarNotificacion(id){
 
 function limpiarNotificaciones(){
 
-
-  // CONFIRMACION
-
   const confirmar = confirm(
 
     '¿Seguro que deseas limpiar todas las notificaciones?'
@@ -1112,7 +1126,7 @@ function limpiarNotificaciones(){
 
 
 
-  // CANCELAR
+
 
   if(!confirmar){
 
@@ -1122,7 +1136,7 @@ function limpiarNotificaciones(){
 
 
 
-  // ELIMINAR
+
 
   localStorage.removeItem(
     'notificaciones'
@@ -1130,11 +1144,12 @@ function limpiarNotificaciones(){
 
 
 
-  // ACTUALIZAR
+
 
   renderNotificaciones();
 
 }
+
 
 
 
@@ -1162,5 +1177,7 @@ window.addEventListener(
 // ======================
 // INICIO
 // ======================
+
+aplicarPermisos();
 
 renderNotificaciones();
