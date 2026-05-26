@@ -736,7 +736,7 @@ async function descargarPDFIndividual(id){
 
 
 
-  // ======================
+ // ======================
   // HEADER
   // ======================
 
@@ -745,7 +745,6 @@ async function descargarPDFIndividual(id){
     23,
     42
   );
-
 
 
   doc.rect(
@@ -759,6 +758,7 @@ async function descargarPDFIndividual(id){
 
 
 
+  // EMPRESA
 
   doc.setTextColor(
     255,
@@ -767,9 +767,7 @@ async function descargarPDFIndividual(id){
   );
 
 
-
   doc.setFontSize(22);
-
 
 
   doc.text(
@@ -783,7 +781,6 @@ async function descargarPDFIndividual(id){
   doc.setFontSize(11);
 
 
-
   doc.text(
     'Sistema Auditoría Logística',
     20,
@@ -793,9 +790,9 @@ async function descargarPDFIndividual(id){
 
 
 
+  // CODIGO
 
   doc.setFontSize(10);
-
 
 
   doc.text(
@@ -814,14 +811,13 @@ AUD-${auditoria.id}`,
   doc.text(
 
     `Fecha:
-${auditoria.created_at}`,
+${auditoria.fecha}`,
 
     150,
 
     26
 
   );
-
 
 
 
@@ -837,9 +833,7 @@ ${auditoria.created_at}`,
   );
 
 
-
   doc.setFontSize(18);
-
 
 
   doc.text(
@@ -850,6 +844,17 @@ ${auditoria.created_at}`,
 
 
 
+
+  // LINEA
+
+  doc.setDrawColor(
+    200
+  );
+
+
+  doc.setLineWidth(
+    0.2
+  );
 
 
   doc.line(
@@ -862,9 +867,8 @@ ${auditoria.created_at}`,
 
 
 
-
   // ======================
-  // DATOS
+  // TABLA
   // ======================
 
   let y = 80;
@@ -872,6 +876,42 @@ ${auditoria.created_at}`,
 
 
 
+  // TITULO TABLA
+
+  doc.setFillColor(
+    241,
+    245,
+    249
+  );
+
+
+  doc.rect(
+    20,
+    y - 8,
+    170,
+    12,
+    'F'
+  );
+
+
+
+  doc.setFontSize(12);
+
+
+  doc.text(
+    'DATOS AUDITORÍA',
+    25,
+    y
+  );
+
+
+
+  y += 18;
+
+
+
+
+  // DATOS
 
   const datos = [
 
@@ -888,21 +928,72 @@ ${auditoria.created_at}`,
     [
       'Estado',
       auditoria.estado
+    ],
+
+    [
+      'Fecha',
+      auditoria.fecha
     ]
 
   ];
 
 
 
-
-
   datos.forEach(item => {
 
-    doc.text(
-      `${item[0]}: ${item[1]}`,
-      25,
-      y
+
+
+    // TITULO
+
+    doc.setFillColor(
+      248,
+      250,
+      252
     );
+
+
+    doc.rect(
+      20,
+      y - 6,
+      50,
+      12,
+      'F'
+    );
+
+
+
+    doc.text(
+      item[0],
+      25,
+      y + 2
+    );
+
+
+
+
+    // VALOR
+
+    doc.setDrawColor(
+      230
+    );
+
+
+    doc.line(
+      70,
+      y + 6,
+      190,
+      y + 6
+    );
+
+
+
+    doc.text(
+      item[1],
+      75,
+      y + 2
+    );
+
+
 
     y += 15;
 
@@ -919,16 +1010,44 @@ ${auditoria.created_at}`,
   y += 10;
 
 
+  doc.setFillColor(
+    241,
+    245,
+    249
+  );
+
+
+  doc.rect(
+    20,
+    y - 8,
+    170,
+    12,
+    'F'
+  );
+
+
 
   doc.text(
-    'Hallazgo:',
+    'HALLAZGO',
     25,
     y
   );
 
 
 
-  y += 10;
+  y += 15;
+
+
+
+
+  // CAJA
+
+  doc.rect(
+    20,
+    y - 5,
+    170,
+    45
+  );
 
 
 
@@ -938,17 +1057,87 @@ ${auditoria.created_at}`,
 
     25,
 
-    y,
+    y + 5,
 
     {
-
       maxWidth:160
-
     }
 
   );
 
 
+
+
+
+  // ======================
+  // FIRMA
+  // ======================
+
+  y += 70;
+
+
+  doc.line(
+    25,
+    y,
+    90,
+    y
+  );
+
+
+
+  y += 8;
+
+
+  doc.setFontSize(11);
+
+
+  doc.text(
+    'Firma Auditor',
+    25,
+    y
+  );
+
+
+
+
+
+  // ======================
+  // FOOTER
+  // ======================
+
+  doc.setFillColor(
+    15,
+    23,
+    42
+  );
+
+
+  doc.rect(
+    0,
+    285,
+    210,
+    12,
+    'F'
+  );
+
+
+
+  doc.setTextColor(
+    255,
+    255,
+    255
+  );
+
+
+  doc.setFontSize(9);
+
+
+  doc.text(
+    'Sistemas Auditoria v1 | Luis Grisales',
+    20,
+    292
+  );
+  
 
 
 
