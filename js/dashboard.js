@@ -1,3 +1,4 @@
+```javascript
 // ======================
 // VALIDAR LIBRERIA SUPABASE
 // ======================
@@ -26,9 +27,7 @@ const supabaseUrl =
 
 const supabaseKey =
 
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
-
-
+'TU_SUPABASE_KEY';
 
 
 
@@ -83,7 +82,6 @@ if(!usuarioLogueado){
 // ======================
 
 const rol =
-
 usuarioLogueado.rol;
 
 
@@ -330,6 +328,14 @@ function mostrarModulo(modulo){
 
 
 
+  const notificacionesBox =
+
+  document.getElementById(
+    'notificacionesBox'
+  );
+
+
+
   // ======================
   // DASHBOARD
   // ======================
@@ -339,9 +345,37 @@ function mostrarModulo(modulo){
     contenido.innerHTML =
     dashboardOriginal;
 
+
+
     aplicarPermisos();
 
+
+
+    if(notificacionesBox){
+
+      notificacionesBox.style.display =
+      'flex';
+
+    }
+
+
+
+    renderNotificaciones();
+
     return;
+
+  }
+
+
+
+  // ======================
+  // OCULTAR NOTIFICACIONES
+  // ======================
+
+  if(notificacionesBox){
+
+    notificacionesBox.style.display =
+    'none';
 
   }
 
@@ -361,21 +395,13 @@ function mostrarModulo(modulo){
 
       'inventarioScript',
 
-      'js/inventario.js?v=17',
+      'js/inventario.js?v=20',
 
       () => {
 
         if(typeof renderInventario === 'function'){
 
           renderInventario();
-
-        }
-
-
-
-        if(typeof renderHistorial === 'function'){
-
-          renderHistorial();
 
         }
 
@@ -395,6 +421,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // AUDITORIAS
   // ======================
@@ -409,7 +437,7 @@ function mostrarModulo(modulo){
 
       'auditoriasScript',
 
-      'js/auditorias.js?v=17',
+      'js/auditorias.js?v=20',
 
       () => {
 
@@ -427,6 +455,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // USUARIOS
   // ======================
@@ -441,7 +471,7 @@ function mostrarModulo(modulo){
 
       'usuariosScript',
 
-      'js/usuarios.js?v=17',
+      'js/usuarios.js?v=20',
 
       () => {
 
@@ -459,6 +489,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // RECEPCION
   // ======================
@@ -473,11 +505,13 @@ function mostrarModulo(modulo){
 
       'recepcionScript',
 
-      'js/recepcion.js?v=17'
+      'js/recepcion.js?v=20'
 
     );
 
   }
+
+
 
 
 
@@ -495,7 +529,7 @@ function mostrarModulo(modulo){
 
       'historialScript',
 
-      'js/historial.js?v=17',
+      'js/historial.js?v=20',
 
       () => {
 
@@ -566,15 +600,15 @@ function cargarScript(
 
 ){
 
-  const scriptAnterior =
+  const anterior =
 
   document.getElementById(id);
 
 
 
-  if(scriptAnterior){
+  if(anterior){
 
-    scriptAnterior.remove();
+    anterior.remove();
 
   }
 
@@ -647,8 +681,7 @@ function cerrarSesion(){
 
 document.getElementById(
   'dashboardMenu'
-)
-.addEventListener(
+)?.addEventListener(
 
   'click',
 
@@ -662,8 +695,7 @@ document.getElementById(
 
 document.getElementById(
   'inventarioMenu'
-)
-?.addEventListener(
+)?.addEventListener(
 
   'click',
 
@@ -677,8 +709,7 @@ document.getElementById(
 
 document.getElementById(
   'auditoriasMenu'
-)
-?.addEventListener(
+)?.addEventListener(
 
   'click',
 
@@ -692,8 +723,7 @@ document.getElementById(
 
 document.getElementById(
   'usuariosMenu'
-)
-?.addEventListener(
+)?.addEventListener(
 
   'click',
 
@@ -707,8 +737,7 @@ document.getElementById(
 
 document.getElementById(
   'recepcionMenu'
-)
-?.addEventListener(
+)?.addEventListener(
 
   'click',
 
@@ -722,8 +751,7 @@ document.getElementById(
 
 document.getElementById(
   'historialMenu'
-)
-?.addEventListener(
+)?.addEventListener(
 
   'click',
 
@@ -792,9 +820,7 @@ document.addEventListener(
 
     if(modulo){
 
-      mostrarModulo(
-        modulo
-      );
+      mostrarModulo(modulo);
 
     }
 
@@ -812,175 +838,13 @@ document.addEventListener(
 
 document.getElementById(
   'cerrarSesionBtn'
-)
-.addEventListener(
+)?.addEventListener(
 
   'click',
 
   cerrarSesion
 
 );
-
-
-
-
-
-// ======================
-// RENDER NOTIFICACIONES
-// ======================
-
-function renderNotificaciones(){
-
-  if(
-
-    rol !== 'admin' &&
-
-    rol !== 'auditor' &&
-
-    rol !== 'jefe'
-
-  ){
-
-    const box =
-
-    document.getElementById(
-      'notificacionesBox'
-    );
-
-
-
-    if(box){
-
-      box.style.display =
-      'none';
-
-    }
-
-    return;
-
-  }
-
-
-
-  const notificaciones =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'notificaciones'
-    )
-
-  ) || [];
-
-
-
-  const lista =
-
-  document.getElementById(
-    'listaNotificaciones'
-  );
-
-
-
-  const contador =
-
-  document.getElementById(
-    'contadorNotificaciones'
-  );
-
-
-
-  if(!lista || !contador){
-
-    return;
-
-  }
-
-
-
-  lista.innerHTML = '';
-
-
-
-  const noLeidas =
-
-  notificaciones.filter(
-    item => !item.leida
-  );
-
-
-
-  contador.innerText =
-  noLeidas.length;
-
-
-
-  contador.style.display =
-
-  noLeidas.length === 0
-
-  ? 'none'
-
-  : 'flex';
-
-
-
-  if(notificaciones.length === 0){
-
-    lista.innerHTML = `
-
-      <p>
-
-        No hay notificaciones
-
-      </p>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  notificaciones.forEach(item => {
-
-    lista.innerHTML += `
-
-      <div class="notificacion-item">
-
-        <div class="notificacion-top">
-
-          <p>
-
-            ${item.mensaje}
-
-          </p>
-
-          <button
-            class="btn-eliminar-noti"
-            onclick="eliminarNotificacion('${item.id}')"
-          >
-
-            ✖
-
-          </button>
-
-        </div>
-
-        <span>
-
-          ${item.fecha}
-
-        </span>
-
-      </div>
-
-    `;
-
-  });
-
-}
 
 
 
@@ -1009,7 +873,71 @@ document.getElementById(
 
 
 // ======================
-// ABRIR PANEL
+// TOGGLE PANEL
+// ======================
+
+function toggleNotificaciones(){
+
+  if(!panelNotificaciones){
+
+    return;
+
+  }
+
+
+
+  panelNotificaciones.classList.toggle(
+    'active'
+  );
+
+
+
+  let notificaciones =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'notificaciones'
+    )
+
+  ) || [];
+
+
+
+  notificaciones =
+
+  notificaciones.map(item => {
+
+    item.leida = true;
+
+    return item;
+
+  });
+
+
+
+  localStorage.setItem(
+
+    'notificaciones',
+
+    JSON.stringify(
+      notificaciones
+    )
+
+  );
+
+
+
+  renderNotificaciones();
+
+}
+
+
+
+
+
+// ======================
+// CLICK CAMPANA
 // ======================
 
 campanaBtn?.addEventListener(
@@ -1020,51 +948,7 @@ campanaBtn?.addEventListener(
 
     e.stopPropagation();
 
-
-
-    panelNotificaciones?.classList.toggle(
-      'active'
-    );
-
-
-
-    let notificaciones =
-
-    JSON.parse(
-
-      localStorage.getItem(
-        'notificaciones'
-      )
-
-    ) || [];
-
-
-
-    notificaciones =
-
-    notificaciones.map(item => {
-
-      item.leida = true;
-
-      return item;
-
-    });
-
-
-
-    localStorage.setItem(
-
-      'notificaciones',
-
-      JSON.stringify(
-        notificaciones
-      )
-
-    );
-
-
-
-    renderNotificaciones();
+    toggleNotificaciones();
 
   }
 
@@ -1095,7 +979,7 @@ panelNotificaciones?.addEventListener(
 
 
 // ======================
-// CLICK FUERA PANEL
+// CERRAR PANEL
 // ======================
 
 document.addEventListener(
@@ -1104,9 +988,13 @@ document.addEventListener(
 
   () => {
 
-    panelNotificaciones?.classList.remove(
-      'active'
-    );
+    if(panelNotificaciones){
+
+      panelNotificaciones.classList.remove(
+        'active'
+      );
+
+    }
 
   }
 
@@ -1204,6 +1092,144 @@ function limpiarNotificaciones(){
 
 
 // ======================
+// RENDER NOTIFICACIONES
+// ======================
+
+function renderNotificaciones(){
+
+  const lista =
+
+  document.getElementById(
+    'listaNotificaciones'
+  );
+
+
+
+  const contador =
+
+  document.getElementById(
+    'contadorNotificaciones'
+  );
+
+
+
+  if(!lista || !contador){
+
+    return;
+
+  }
+
+
+
+  const notificaciones =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'notificaciones'
+    )
+
+  ) || [];
+
+
+
+  lista.innerHTML = '';
+
+
+
+  const noLeidas =
+
+  notificaciones.filter(
+    item => !item.leida
+  );
+
+
+
+  contador.innerText =
+  noLeidas.length;
+
+
+
+  contador.style.display =
+
+  noLeidas.length > 0
+
+  ? 'flex'
+
+  : 'none';
+
+
+
+  if(notificaciones.length === 0){
+
+    lista.innerHTML = `
+
+      <p class="sin-notificaciones">
+
+        No hay notificaciones
+
+      </p>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  notificaciones.forEach(item => {
+
+    lista.innerHTML += `
+
+      <div class="notificacion-item">
+
+        <div class="notificacion-top">
+
+          <p>
+
+            ${item.mensaje}
+
+          </p>
+
+
+
+
+
+          <button
+            class="btn-eliminar-noti"
+            onclick="eliminarNotificacion('${item.id}')"
+          >
+
+            ✖
+
+          </button>
+
+        </div>
+
+
+
+
+
+        <span>
+
+          ${item.fecha}
+
+        </span>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+
+
+
+// ======================
 // TIEMPO REAL
 // ======================
 
@@ -1230,3 +1256,4 @@ window.addEventListener(
 aplicarPermisos();
 
 renderNotificaciones();
+```
