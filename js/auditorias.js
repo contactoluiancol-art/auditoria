@@ -1,4 +1,4 @@
-```javascript
+
 // ======================
 // EVENTO
 // ======================
@@ -526,4 +526,4 @@ function limpiarFormulario(){
 // ======================
 
 renderAuditorias();
-```
+
