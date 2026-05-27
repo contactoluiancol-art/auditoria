@@ -1,81 +1,43 @@
 // ======================
-// CLIENTE GLOBAL
-// ======================
-
-const supabaseClient =
-
-window.supabaseClient;
-
-
-
-
-
-// ======================
 // EVENTO
 // ======================
 
 document.getElementById(
   'guardarUsuario'
 )
-.addEventListener(
+?.addEventListener(
   'click',
   guardarUsuario
 );
 
 
 
-
-
 // ======================
-// GUARDAR USUARIO
+// GUARDAR
 // ======================
 
 async function guardarUsuario(){
 
   const usuario =
-
   document.getElementById(
     'usuarioInput'
-  )
-  .value
-  .trim();
-
-
-
+  ).value.trim();
 
   const password =
-
   document.getElementById(
     'passwordInput'
-  )
-  .value
-  .trim();
-
-
-
+  ).value.trim();
 
   const rol =
-
   document.getElementById(
     'rolInput'
-  )
-  .value;
+  ).value;
 
 
 
 
 
-  // ======================
-  // VALIDAR
-  // ======================
-
-  if(
-
-    !usuario ||
-
-    !password
-
-  ){
+  if(!usuario || !password){
 
     alert(
       'Complete todos los campos'
@@ -89,13 +51,9 @@ async function guardarUsuario(){
 
 
 
-  // ======================
-  // VALIDAR DUPLICADO
-  // ======================
-
   const { data: existeUsuario } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('usuarios')
 
@@ -107,13 +65,7 @@ async function guardarUsuario(){
 
 
 
-  if(
-
-    existeUsuario &&
-
-    existeUsuario.length > 0
-
-  ){
+  if(existeUsuario.length > 0){
 
     alert(
       'El usuario ya existe'
@@ -127,26 +79,18 @@ async function guardarUsuario(){
 
 
 
-  // ======================
-  // INSERTAR
-  // ======================
-
   const { error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('usuarios')
 
   .insert([
 
     {
-
       usuario,
-
       password,
-
       rol
-
     }
 
   ]);
@@ -154,10 +98,6 @@ async function guardarUsuario(){
 
 
 
-
-  // ======================
-  // ERROR
-  // ======================
 
   if(error){
 
@@ -175,27 +115,19 @@ async function guardarUsuario(){
 
 
 
-  // ======================
-  // HISTORIAL
-  // ======================
-
-  guardarHistorial(
+  await guardarHistorial(
 
     'CREAR',
 
     'USUARIOS',
 
-    `Se creó el usuario ${usuario}`
+    `Se creó usuario ${usuario}`
 
   );
 
 
 
 
-
-  // ======================
-  // ACTUALIZAR
-  // ======================
 
   await renderUsuarios();
 
@@ -205,16 +137,11 @@ async function guardarUsuario(){
 
 
 
-  // ======================
-  // ALERTA
-  // ======================
-
   alert(
     'Usuario creado correctamente'
   );
 
 }
-
 
 
 
@@ -227,7 +154,6 @@ async function guardarUsuario(){
 async function renderUsuarios(){
 
   const body =
-
   document.getElementById(
     'usuariosBody'
   );
@@ -248,13 +174,9 @@ async function renderUsuarios(){
 
 
 
-  // ======================
-  // CONSULTAR
-  // ======================
-
   const { data, error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('usuarios')
 
@@ -270,10 +192,6 @@ async function renderUsuarios(){
 
 
 
-  // ======================
-  // ERROR
-  // ======================
-
   if(error){
 
     console.log(error);
@@ -286,43 +204,7 @@ async function renderUsuarios(){
 
 
 
-  // ======================
-  // VALIDAR DUPLICADOS
-  // ======================
-
-  const usuariosUnicos = [];
-
-  const ids = new Set();
-
-
-
-
-
-  data.forEach(item => {
-
-    if(!ids.has(item.id)){
-
-      ids.add(item.id);
-
-      usuariosUnicos.push(item);
-
-    }
-
-  });
-
-
-
-
-
-  // ======================
-  // VACIO
-  // ======================
-
-  if(
-
-    usuariosUnicos.length === 0
-
-  ){
+  if(!data || data.length === 0){
 
     body.innerHTML = `
 
@@ -330,7 +212,7 @@ async function renderUsuarios(){
 
         <td colspan="5">
 
-          No hay usuarios registrados
+          No hay usuarios
 
         </td>
 
@@ -346,57 +228,27 @@ async function renderUsuarios(){
 
 
 
-  // ======================
-  // TABLA
-  // ======================
-
-  usuariosUnicos.forEach(item => {
+  data.forEach(item => {
 
     body.innerHTML += `
 
       <tr>
 
-        <td>
+        <td>${item.usuario}</td>
 
-          ${item.usuario}
+        <td>${item.password}</td>
 
-        </td>
-
-        <td>
-
-          <span class="password-text">
-
-            ${item.password}
-
-          </span>
-
-        </td>
+        <td>${item.rol}</td>
 
         <td>
 
-          ${item.rol}
+          ${new Date(
+            item.created_at
+          ).toLocaleString()}
 
         </td>
-
-        <td>
-
-          ${new Date(item.created_at)
-            .toLocaleString()}
-
-        </td>
-
-
-
-
-
-        <!-- ACCIONES -->
 
         <td class="acciones-tabla">
-
-
-
-
-          <!-- ELIMINAR -->
 
           <button
             class="btn-eliminar"
@@ -406,12 +258,6 @@ async function renderUsuarios(){
             Eliminar
 
           </button>
-
-
-
-
-
-          <!-- EDITAR -->
 
           <button
             class="btn-editar"
@@ -436,7 +282,6 @@ async function renderUsuarios(){
 
 
 
-
 // ======================
 // ELIMINAR
 // ======================
@@ -444,9 +289,7 @@ async function renderUsuarios(){
 async function eliminarUsuario(id){
 
   const confirmar = confirm(
-
-    '¿Desea eliminar este usuario?'
-
+    '¿Eliminar usuario?'
   );
 
 
@@ -461,13 +304,9 @@ async function eliminarUsuario(id){
 
 
 
-  // ======================
-  // CONSULTAR USUARIO
-  // ======================
+  const { data } =
 
-  const { data: usuarioEliminar } =
-
-  await supabaseClient
+  await window.supabaseClient
 
   .from('usuarios')
 
@@ -481,13 +320,9 @@ async function eliminarUsuario(id){
 
 
 
-  // ======================
-  // DELETE
-  // ======================
-
   const { error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('usuarios')
 
@@ -499,17 +334,9 @@ async function eliminarUsuario(id){
 
 
 
-  // ======================
-  // ERROR
-  // ======================
-
   if(error){
 
     console.log(error);
-
-    alert(
-      'Error eliminando usuario'
-    );
 
     return;
 
@@ -519,44 +346,23 @@ async function eliminarUsuario(id){
 
 
 
-  // ======================
-  // HISTORIAL
-  // ======================
-
-  guardarHistorial(
+  await guardarHistorial(
 
     'ELIMINAR',
 
     'USUARIOS',
 
-    `Se eliminó el usuario ${usuarioEliminar?.usuario}`
+    `Se eliminó usuario ${data?.usuario}`
 
   );
 
 
 
 
-
-  // ======================
-  // ACTUALIZAR
-  // ======================
 
   await renderUsuarios();
 
-
-
-
-
-  // ======================
-  // ALERTA
-  // ======================
-
-  alert(
-    'Usuario eliminado'
-  );
-
 }
-
 
 
 
@@ -568,13 +374,9 @@ async function eliminarUsuario(id){
 
 async function editarUsuario(id){
 
-  // ======================
-  // CONSULTAR
-  // ======================
-
   const { data } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('usuarios')
 
@@ -598,25 +400,14 @@ async function editarUsuario(id){
 
 
 
-  // ======================
-  // NUEVA PASSWORD
-  // ======================
-
   const nuevoPassword = prompt(
-
     'Nueva contraseña:',
-
     data.password
-
   );
 
 
 
-  if(
-
-    nuevoPassword === null
-
-  ){
+  if(nuevoPassword === null){
 
     return;
 
@@ -625,31 +416,15 @@ async function editarUsuario(id){
 
 
 
-
-  // ======================
-  // NUEVO ROL
-  // ======================
 
   const nuevoRol = prompt(
-
-`Nuevo rol:
-
-admin
-lider
-jefe
-auditor`,
-
+    'Nuevo rol:',
     data.rol
-
   );
 
 
 
-  if(
-
-    nuevoRol === null
-
-  ){
+  if(nuevoRol === null){
 
     return;
 
@@ -658,14 +433,10 @@ auditor`,
 
 
 
-
-  // ======================
-  // UPDATE
-  // ======================
 
   const { error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('usuarios')
 
@@ -683,17 +454,9 @@ auditor`,
 
 
 
-  // ======================
-  // ERROR
-  // ======================
-
   if(error){
 
     console.log(error);
-
-    alert(
-      'Error actualizando usuario'
-    );
 
     return;
 
@@ -703,44 +466,23 @@ auditor`,
 
 
 
-  // ======================
-  // HISTORIAL
-  // ======================
-
-  guardarHistorial(
+  await guardarHistorial(
 
     'EDITAR',
 
     'USUARIOS',
 
-    `Se actualizó el usuario ${data.usuario}`
+    `Se editó usuario ${data.usuario}`
 
   );
 
 
 
 
-
-  // ======================
-  // ACTUALIZAR
-  // ======================
 
   await renderUsuarios();
 
-
-
-
-
-  // ======================
-  // ALERTA
-  // ======================
-
-  alert(
-    'Usuario actualizado'
-  );
-
 }
-
 
 
 
@@ -756,20 +498,15 @@ function limpiarFormulario(){
     'usuarioInput'
   ).value = '';
 
-
-
   document.getElementById(
     'passwordInput'
   ).value = '';
-
-
 
   document.getElementById(
     'rolInput'
   ).value = 'lider';
 
 }
-
 
 
 
