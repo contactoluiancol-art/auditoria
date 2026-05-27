@@ -352,3 +352,74 @@ RESPONSIVE
     }
 
 }
+
+/* =========================
+BOTONES SISTEMA
+========================= */
+
+.btn-primary,
+.btn-editar,
+.btn-eliminar,
+.btn-pdf,
+.btn-ver,
+.btn-guardar{
+    width:auto;
+    min-width:140px;
+    padding:12px 20px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:700;
+}
+
+
+/* BUSCAR */
+
+#buscarBtn{
+    background:#2563eb;
+    color:white;
+}
+
+
+/* REGISTRAR */
+
+#guardarConteo,
+#guardarRecepcion,
+#guardarAuditoria,
+#guardarUsuario{
+    background:#16a34a;
+    color:white;
+}
+
+
+/* ELIMINAR */
+
+.btn-eliminar{
+    background:#dc2626;
+    color:white;
+}
+
+
+/* EDITAR */
+
+.btn-editar{
+    background:#f59e0b;
+    color:white;
+}
+
+
+/* PDF */
+
+.btn-pdf{
+    background:#0f172a;
+    color:white;
+}
+
+
+/* LIMPIAR */
+
+.btn-limpiar-noti{
+    background:#0f172a;
+    color:white;
+    padding:10px 18px;
+    border-radius:10px;
+}
