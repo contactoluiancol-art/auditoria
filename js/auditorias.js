@@ -1,28 +1,14 @@
 // ======================
-// CLIENTE GLOBAL
-// ======================
-
-const supabaseClient =
-
-window.supabaseClient;
-
-
-
-
-
-// ======================
-// EVENTOS
+// EVENTO
 // ======================
 
 document.getElementById(
   'guardarAuditoria'
 )
-.addEventListener(
+?.addEventListener(
   'click',
   guardarAuditoria
 );
-
-
 
 
 
@@ -33,61 +19,33 @@ document.getElementById(
 async function guardarAuditoria(){
 
   const proceso =
-
   document.getElementById(
     'procesoInput'
-  )
-  .value
-  .trim();
-
-
-
+  ).value.trim();
 
   const hallazgo =
-
   document.getElementById(
     'hallazgoInput'
-  )
-  .value
-  .trim();
-
-
-
+  ).value.trim();
 
   const responsable =
-
   document.getElementById(
     'responsableInput'
-  )
-  .value
-  .trim();
-
-
-
+  ).value.trim();
 
   const estado =
-
   document.getElementById(
     'estadoInput'
-  )
-  .value;
+  ).value;
 
 
 
 
-
-  // ======================
-  // VALIDAR
-  // ======================
 
   if(
-
     !proceso ||
-
     !hallazgo ||
-
     !responsable
-
   ){
 
     alert(
@@ -102,28 +60,19 @@ async function guardarAuditoria(){
 
 
 
-  // ======================
-  // INSERTAR
-  // ======================
-
   const { error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('auditorias')
 
   .insert([
 
     {
-
       proceso,
-
       hallazgo,
-
       responsable,
-
       estado
-
     }
 
   ]);
@@ -131,10 +80,6 @@ async function guardarAuditoria(){
 
 
 
-
-  // ======================
-  // ERROR
-  // ======================
 
   if(error){
 
@@ -152,27 +97,19 @@ async function guardarAuditoria(){
 
 
 
-  // ======================
-  // HISTORIAL
-  // ======================
-
-  guardarHistorial(
+  await guardarHistorial(
 
     'CREAR',
 
     'AUDITORIAS',
 
-    `Se creó auditoría del proceso ${proceso}`
+    `Se creó auditoría ${proceso}`
 
   );
 
 
 
 
-
-  // ======================
-  // ACTUALIZAR
-  // ======================
 
   await renderAuditorias();
 
@@ -181,10 +118,6 @@ async function guardarAuditoria(){
 
 
 
-
-  // ======================
-  // ALERTA
-  // ======================
 
   alert(
     'Auditoría guardada'
@@ -196,15 +129,13 @@ async function guardarAuditoria(){
 
 
 
-
 // ======================
-// RENDER AUDITORIAS
+// RENDER
 // ======================
 
 async function renderAuditorias(){
 
   const body =
-
   document.getElementById(
     'auditoriasBody'
   );
@@ -225,13 +156,9 @@ async function renderAuditorias(){
 
 
 
-  // ======================
-  // CONSULTAR
-  // ======================
-
   const { data, error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('auditorias')
 
@@ -247,10 +174,6 @@ async function renderAuditorias(){
 
 
 
-  // ======================
-  // ERROR
-  // ======================
-
   if(error){
 
     console.log(error);
@@ -263,17 +186,7 @@ async function renderAuditorias(){
 
 
 
-  // ======================
-  // VALIDAR VACIO
-  // ======================
-
-  if(
-
-    !data ||
-
-    data.length === 0
-
-  ){
+  if(!data || data.length === 0){
 
     body.innerHTML = `
 
@@ -297,40 +210,20 @@ async function renderAuditorias(){
 
 
 
-  // ======================
-  // TABLA
-  // ======================
-
   data.forEach(item => {
 
     let estadoClass = '';
 
 
 
-
-
-    // ======================
-    // ESTADOS
-    // ======================
-
-    if(
-
-      item.estado ===
-      'Pendiente'
-
-    ){
+    if(item.estado === 'Pendiente'){
 
       estadoClass =
       'estado-pendiente';
 
     }
 
-    else if(
-
-      item.estado ===
-      'En revisión'
-
-    ){
+    else if(item.estado === 'En revisión'){
 
       estadoClass =
       'estado-revision';
@@ -352,23 +245,11 @@ async function renderAuditorias(){
 
       <tr>
 
-        <td>
+        <td>${item.proceso}</td>
 
-          ${item.proceso}
+        <td>${item.hallazgo}</td>
 
-        </td>
-
-        <td>
-
-          ${item.hallazgo}
-
-        </td>
-
-        <td>
-
-          ${item.responsable}
-
-        </td>
+        <td>${item.responsable}</td>
 
         <td>
 
@@ -388,18 +269,7 @@ async function renderAuditorias(){
 
         </td>
 
-
-
-
-
-        <!-- ACCIONES -->
-
         <td class="acciones-tabla">
-
-
-
-
-          <!-- ELIMINAR -->
 
           <button
             class="btn-eliminar"
@@ -409,27 +279,6 @@ async function renderAuditorias(){
             Eliminar
 
           </button>
-
-
-
-
-
-          <!-- PDF -->
-
-          <button
-            class="btn-pdf"
-            onclick="descargarPDFIndividual('${item.id}')"
-          >
-
-            PDF
-
-          </button>
-
-
-
-
-
-          <!-- EDITAR -->
 
           <button
             class="btn-editar"
@@ -454,7 +303,6 @@ async function renderAuditorias(){
 
 
 
-
 // ======================
 // ELIMINAR
 // ======================
@@ -462,9 +310,7 @@ async function renderAuditorias(){
 async function eliminarAuditoria(id){
 
   const confirmar = confirm(
-
     '¿Desea eliminar esta auditoría?'
-
   );
 
 
@@ -479,13 +325,9 @@ async function eliminarAuditoria(id){
 
 
 
-  // ======================
-  // CONSULTAR
-  // ======================
+  const { data } =
 
-  const { data: auditoriaEliminar } =
-
-  await supabaseClient
+  await window.supabaseClient
 
   .from('auditorias')
 
@@ -499,13 +341,9 @@ async function eliminarAuditoria(id){
 
 
 
-  // ======================
-  // DELETE
-  // ======================
-
   const { error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('auditorias')
 
@@ -516,10 +354,6 @@ async function eliminarAuditoria(id){
 
 
 
-
-  // ======================
-  // ERROR
-  // ======================
 
   if(error){
 
@@ -537,41 +371,21 @@ async function eliminarAuditoria(id){
 
 
 
-  // ======================
-  // HISTORIAL
-  // ======================
-
-  guardarHistorial(
+  await guardarHistorial(
 
     'ELIMINAR',
 
     'AUDITORIAS',
 
-    `Se eliminó auditoría del proceso ${auditoriaEliminar?.proceso}`
+    `Se eliminó auditoría ${data?.proceso}`
 
   );
 
 
 
 
-
-  // ======================
-  // ACTUALIZAR
-  // ======================
 
   await renderAuditorias();
-
-
-
-
-
-  // ======================
-  // ALERTA
-  // ======================
-
-  alert(
-    'Auditoría eliminada'
-  );
 
 }
 
@@ -579,20 +393,15 @@ async function eliminarAuditoria(id){
 
 
 
-
 // ======================
-// EDITAR ESTADO
+// EDITAR
 // ======================
 
 async function editarEstado(id){
 
-  // ======================
-  // CONSULTAR
-  // ======================
-
   const { data } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('auditorias')
 
@@ -615,10 +424,6 @@ async function editarEstado(id){
 
 
 
-
-  // ======================
-  // NUEVO ESTADO
-  // ======================
 
   const nuevoEstado = prompt(
 
@@ -636,23 +441,7 @@ Cerrado`,
 
 
 
-  // ======================
-  // VALIDAR
-  // ======================
-
-  if(
-
-    nuevoEstado !== 'Pendiente' &&
-
-    nuevoEstado !== 'En revisión' &&
-
-    nuevoEstado !== 'Cerrado'
-
-  ){
-
-    alert(
-      'Estado inválido'
-    );
+  if(!nuevoEstado){
 
     return;
 
@@ -662,13 +451,9 @@ Cerrado`,
 
 
 
-  // ======================
-  // UPDATE
-  // ======================
-
   const { error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('auditorias')
 
@@ -684,16 +469,12 @@ Cerrado`,
 
 
 
-  // ======================
-  // ERROR
-  // ======================
-
   if(error){
 
     console.log(error);
 
     alert(
-      'Error actualizando estado'
+      'Error actualizando'
     );
 
     return;
@@ -704,44 +485,23 @@ Cerrado`,
 
 
 
-  // ======================
-  // HISTORIAL
-  // ======================
-
-  guardarHistorial(
+  await guardarHistorial(
 
     'EDITAR',
 
     'AUDITORIAS',
 
-    `Se actualizó estado de auditoría ${data.proceso}`
+    `Se editó auditoría ${data.proceso}`
 
   );
 
 
 
 
-
-  // ======================
-  // ACTUALIZAR
-  // ======================
 
   await renderAuditorias();
 
-
-
-
-
-  // ======================
-  // ALERTA
-  // ======================
-
-  alert(
-    'Estado actualizado'
-  );
-
 }
-
 
 
 
@@ -757,590 +517,19 @@ function limpiarFormulario(){
     'procesoInput'
   ).value = '';
 
-
-
   document.getElementById(
     'hallazgoInput'
   ).value = '';
 
-
-
   document.getElementById(
     'responsableInput'
   ).value = '';
-
-
 
   document.getElementById(
     'estadoInput'
   ).value = 'Pendiente';
 
 }
-
-
-
-
-
-
-// ======================
-// PDF CORPORATIVO
-// ======================
-
-async function descargarPDFIndividual(id){
-
-  // ======================
-  // CONSULTAR
-  // ======================
-
-  const { data } =
-
-  await supabaseClient
-
-  .from('auditorias')
-
-  .select('*')
-
-  .eq('id', id)
-
-  .single();
-
-
-
-
-
-  // ======================
-  // VALIDAR
-  // ======================
-
-  if(!data){
-
-    alert(
-      'Auditoría no encontrada'
-    );
-
-    return;
-
-  }
-
-
-
-
-
-  const auditoria = data;
-
-
-
-
-
-  // ======================
-  // JSPDF
-  // ======================
-
-  const { jsPDF } =
-
-  window.jspdf;
-
-
-
-
-
-  const doc =
-
-  new jsPDF();
-
-
-
-
-
-  // ======================
-  // HEADER
-  // ======================
-
-  doc.setFillColor(
-    15,
-    23,
-    42
-  );
-
-
-
-  doc.rect(
-    0,
-    0,
-    210,
-    35,
-    'F'
-  );
-
-
-
-
-
-  // EMPRESA
-
-  doc.setTextColor(
-    255,
-    255,
-    255
-  );
-
-
-
-  doc.setFontSize(22);
-
-
-
-  doc.text(
-    'ELECTRO INGENIERÍA',
-    20,
-    18
-  );
-
-
-
-
-
-  doc.setFontSize(11);
-
-
-
-  doc.text(
-    'Sistema Auditoría Logística',
-    20,
-    27
-  );
-
-
-
-
-
-  // CODIGO
-
-  doc.setFontSize(10);
-
-
-
-  doc.text(
-
-    `Código:
-AUD-${auditoria.id}`,
-
-    150,
-
-    18
-
-  );
-
-
-
-
-
-  doc.text(
-
-    `Fecha:
-${new Date(
-      auditoria.created_at
-    ).toLocaleDateString()}`,
-
-    150,
-
-    26
-
-  );
-
-
-
-
-
-  // ======================
-  // TITULO
-  // ======================
-
-  doc.setTextColor(
-    0,
-    0,
-    0
-  );
-
-
-
-  doc.setFontSize(18);
-
-
-
-  doc.text(
-    'REPORTE AUDITORÍA',
-    20,
-    55
-  );
-
-
-
-
-
-  // LINEA
-
-  doc.setDrawColor(
-    200
-  );
-
-
-
-  doc.setLineWidth(
-    0.2
-  );
-
-
-
-  doc.line(
-    20,
-    60,
-    190,
-    60
-  );
-
-
-
-
-
-  // ======================
-  // DATOS
-  // ======================
-
-  let y = 80;
-
-
-
-
-
-  doc.setFillColor(
-    241,
-    245,
-    249
-  );
-
-
-
-  doc.rect(
-    20,
-    y - 8,
-    170,
-    12,
-    'F'
-  );
-
-
-
-  doc.setFontSize(12);
-
-
-
-  doc.text(
-    'DATOS AUDITORÍA',
-    25,
-    y
-  );
-
-
-
-
-
-  y += 18;
-
-
-
-
-
-  const datos = [
-
-    [
-      'Proceso',
-      auditoria.proceso
-    ],
-
-    [
-      'Responsable',
-      auditoria.responsable
-    ],
-
-    [
-      'Estado',
-      auditoria.estado
-    ],
-
-    [
-      'Fecha',
-
-      new Date(
-        auditoria.created_at
-      ).toLocaleDateString()
-    ]
-
-  ];
-
-
-
-
-
-  datos.forEach(item => {
-
-    doc.setFillColor(
-      248,
-      250,
-      252
-    );
-
-
-
-    doc.rect(
-      20,
-      y - 6,
-      50,
-      12,
-      'F'
-    );
-
-
-
-    doc.text(
-      String(item[0]),
-      25,
-      y + 2
-    );
-
-
-
-    doc.setDrawColor(
-      230
-    );
-
-
-
-    doc.line(
-      70,
-      y + 6,
-      190,
-      y + 6
-    );
-
-
-
-    doc.text(
-      String(item[1]),
-      75,
-      y + 2
-    );
-
-
-
-    y += 15;
-
-  });
-
-
-
-
-
-  // ======================
-  // HALLAZGO
-  // ======================
-
-  y += 10;
-
-
-
-
-
-  doc.setFillColor(
-    241,
-    245,
-    249
-  );
-
-
-
-  doc.rect(
-    20,
-    y - 8,
-    170,
-    12,
-    'F'
-  );
-
-
-
-  doc.text(
-    'HALLAZGO',
-    25,
-    y
-  );
-
-
-
-
-
-  y += 15;
-
-
-
-
-
-  // TEXTO DINAMICO
-
-  const lineasHallazgo =
-
-  doc.splitTextToSize(
-
-    auditoria.hallazgo,
-
-    155
-
-  );
-
-
-
-
-
-  const altoCaja =
-
-  lineasHallazgo.length * 8;
-
-
-
-
-
-  // CAJA
-
-  doc.rect(
-    20,
-    y - 5,
-    170,
-    altoCaja + 10
-  );
-
-
-
-
-
-  // TEXTO
-
-  doc.text(
-
-    lineasHallazgo,
-
-    25,
-
-    y + 5
-
-  );
-
-
-
-
-
-  // ======================
-  // FIRMA
-  // ======================
-
-  y += altoCaja + 35;
-
-
-
-
-
-  doc.line(
-    25,
-    y,
-    90,
-    y
-  );
-
-
-
-
-
-  y += 8;
-
-
-
-
-
-  doc.setFontSize(11);
-
-
-
-
-
-  doc.text(
-    'Firma Auditor',
-    25,
-    y
-  );
-
-
-
-
-
-  // ======================
-  // FOOTER
-  // ======================
-
-  doc.setFillColor(
-    15,
-    23,
-    42
-  );
-
-
-
-  doc.rect(
-    0,
-    285,
-    210,
-    12,
-    'F'
-  );
-
-
-
-
-
-  doc.setTextColor(
-    255,
-    255,
-    255
-  );
-
-
-
-  doc.setFontSize(9);
-
-
-
-
-
-  doc.text(
-    'Sistema Auditoria v1 | Luis Grisales',
-    20,
-    292
-  );
-
-
-
-
-
-  // ======================
-  // DESCARGAR
-  // ======================
-
-  doc.save(
-
-    `AUD-${auditoria.id}.pdf`
-
-  );
-
-}
-
 
 
 
