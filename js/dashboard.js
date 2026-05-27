@@ -1,9 +1,9 @@
-
+```javascript
 // ======================
 // VALIDAR LIBRERIA SUPABASE
 // ======================
 
-if(!window.supabase){
+if (!window.supabase) {
 
   alert(
     'Supabase no cargó correctamente'
@@ -20,13 +20,11 @@ if(!window.supabase){
 // ======================
 
 const supabaseUrl =
-
 'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
 
 
 const supabaseKey =
-
 'TU_SUPABASE_KEY';
 
 
@@ -66,7 +64,7 @@ JSON.parse(
 // VALIDAR SESION
 // ======================
 
-if(!usuarioLogueado){
+if (!usuarioLogueado) {
 
   window.location.href =
   'index.html';
@@ -166,8 +164,6 @@ function ocultarCard(id){
 
 function aplicarPermisos(){
 
-
-
   // ======================
   // LIDER
   // ======================
@@ -212,8 +208,6 @@ function aplicarPermisos(){
 
 
 
-
-
   // ======================
   // AUDITOR
   // ======================
@@ -229,8 +223,6 @@ function aplicarPermisos(){
     );
 
   }
-
-
 
 
 
@@ -270,8 +262,12 @@ async function guardarHistorial(
 
   const usuario =
 
-  usuarioLogueado?.usuario ||
-  'Sistema';
+  usuarioLogueado &&
+  usuarioLogueado.usuario
+
+  ? usuarioLogueado.usuario
+
+  : 'Sistema';
 
 
 
@@ -397,7 +393,7 @@ function mostrarModulo(modulo){
 
       'js/inventario.js?v=20',
 
-      () => {
+      function(){
 
         if(typeof renderInventario === 'function'){
 
@@ -421,8 +417,6 @@ function mostrarModulo(modulo){
 
 
 
-
-
   // ======================
   // AUDITORIAS
   // ======================
@@ -439,7 +433,7 @@ function mostrarModulo(modulo){
 
       'js/auditorias.js?v=20',
 
-      () => {
+      function(){
 
         if(typeof renderAuditorias === 'function'){
 
@@ -452,8 +446,6 @@ function mostrarModulo(modulo){
     );
 
   }
-
-
 
 
 
@@ -473,7 +465,7 @@ function mostrarModulo(modulo){
 
       'js/usuarios.js?v=20',
 
-      () => {
+      function(){
 
         if(typeof renderUsuarios === 'function'){
 
@@ -486,8 +478,6 @@ function mostrarModulo(modulo){
     );
 
   }
-
-
 
 
 
@@ -513,8 +503,6 @@ function mostrarModulo(modulo){
 
 
 
-
-
   // ======================
   // HISTORIAL
   // ======================
@@ -531,7 +519,7 @@ function mostrarModulo(modulo){
 
       'js/historial.js?v=20',
 
-      () => {
+      function(){
 
         if(typeof renderHistorialSistema === 'function'){
 
@@ -567,9 +555,13 @@ function cargarModulo(
 
   fetch(htmlPath)
 
-  .then(res => res.text())
+  .then(function(res){
 
-  .then(html => {
+    return res.text();
+
+  })
+
+  .then(function(html){
 
     contenido.innerHTML =
     html;
@@ -623,7 +615,6 @@ function cargarScript(
 
 
   script.src =
-
   src + '&cache=' + Date.now();
 
 
@@ -632,7 +623,7 @@ function cargarScript(
 
 
 
-  script.onload = () => {
+  script.onload = function(){
 
     if(callback){
 
@@ -679,154 +670,163 @@ function cerrarSesion(){
 // EVENTOS MENU
 // ======================
 
+const dashboardMenu =
 document.getElementById(
   'dashboardMenu'
-)?.addEventListener(
-
-  'click',
-
-  () => mostrarModulo(
-    'dashboard'
-  )
-
 );
 
+if(dashboardMenu){
+
+  dashboardMenu.addEventListener(
+
+    'click',
+
+    function(){
+
+      mostrarModulo(
+        'dashboard'
+      );
+
+    }
+
+  );
+
+}
 
 
+
+
+
+const inventarioMenu =
 document.getElementById(
   'inventarioMenu'
-)?.addEventListener(
-
-  'click',
-
-  () => mostrarModulo(
-    'inventario'
-  )
-
 );
 
+if(inventarioMenu){
+
+  inventarioMenu.addEventListener(
+
+    'click',
+
+    function(){
+
+      mostrarModulo(
+        'inventario'
+      );
+
+    }
+
+  );
+
+}
 
 
+
+
+
+const auditoriasMenu =
 document.getElementById(
   'auditoriasMenu'
-)?.addEventListener(
-
-  'click',
-
-  () => mostrarModulo(
-    'auditorias'
-  )
-
 );
 
+if(auditoriasMenu){
+
+  auditoriasMenu.addEventListener(
+
+    'click',
+
+    function(){
+
+      mostrarModulo(
+        'auditorias'
+      );
+
+    }
+
+  );
+
+}
 
 
+
+
+
+const usuariosMenu =
 document.getElementById(
   'usuariosMenu'
-)?.addEventListener(
-
-  'click',
-
-  () => mostrarModulo(
-    'usuarios'
-  )
-
 );
 
+if(usuariosMenu){
+
+  usuariosMenu.addEventListener(
+
+    'click',
+
+    function(){
+
+      mostrarModulo(
+        'usuarios'
+      );
+
+    }
+
+  );
+
+}
 
 
+
+
+
+const recepcionMenu =
 document.getElementById(
   'recepcionMenu'
-)?.addEventListener(
-
-  'click',
-
-  () => mostrarModulo(
-    'recepcion'
-  )
-
 );
 
+if(recepcionMenu){
+
+  recepcionMenu.addEventListener(
+
+    'click',
+
+    function(){
+
+      mostrarModulo(
+        'recepcion'
+      );
+
+    }
+
+  );
+
+}
 
 
+
+
+
+const historialMenu =
 document.getElementById(
   'historialMenu'
-)?.addEventListener(
-
-  'click',
-
-  () => mostrarModulo(
-    'historial'
-  )
-
 );
 
+if(historialMenu){
 
+  historialMenu.addEventListener(
 
+    'click',
 
+    function(){
 
-// ======================
-// EVENTOS CARDS
-// ======================
-
-document.addEventListener(
-
-  'click',
-
-  function(e){
-
-    const card =
-
-    e.target.closest(
-      '.dashboard-card'
-    );
-
-
-
-    if(!card){
-
-      return;
+      mostrarModulo(
+        'historial'
+      );
 
     }
 
+  );
 
-
-    const acciones = {
-
-      cardInventario:
-      'inventario',
-
-      cardAuditorias:
-      'auditorias',
-
-      cardRecepcion:
-      'recepcion',
-
-      cardUsuarios:
-      'usuarios',
-
-      cardHistorial:
-      'historial'
-
-    };
-
-
-
-    const modulo =
-
-    acciones[card.id];
-
-
-
-    if(modulo){
-
-      mostrarModulo(modulo);
-
-    }
-
-  }
-
-);
+}
 
 
 
@@ -836,414 +836,22 @@ document.addEventListener(
 // BOTON CERRAR SESION
 // ======================
 
+const cerrarSesionBtn =
 document.getElementById(
   'cerrarSesionBtn'
-)?.addEventListener(
-
-  'click',
-
-  cerrarSesion
-
 );
 
+if(cerrarSesionBtn){
 
+  cerrarSesionBtn.addEventListener(
 
+    'click',
 
-
-// ======================
-// CAMPANA
-// ======================
-
-const campanaBtn =
-
-document.getElementById(
-  'campanaBtn'
-);
-
-
-
-const panelNotificaciones =
-
-document.getElementById(
-  'panelNotificaciones'
-);
-
-
-
-
-
-// ======================
-// TOGGLE PANEL
-// ======================
-
-function toggleNotificaciones(){
-
-  if(!panelNotificaciones){
-
-    return;
-
-  }
-
-
-
-  panelNotificaciones.classList.toggle(
-    'active'
-  );
-
-
-
-  let notificaciones =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'notificaciones'
-    )
-
-  ) || [];
-
-
-
-  notificaciones =
-
-  notificaciones.map(item => {
-
-    item.leida = true;
-
-    return item;
-
-  });
-
-
-
-  localStorage.setItem(
-
-    'notificaciones',
-
-    JSON.stringify(
-      notificaciones
-    )
+    cerrarSesion
 
   );
-
-
-
-  renderNotificaciones();
 
 }
-
-
-
-
-
-// ======================
-// CLICK CAMPANA
-// ======================
-
-campanaBtn?.addEventListener(
-
-  'click',
-
-  (e) => {
-
-    e.stopPropagation();
-
-    toggleNotificaciones();
-
-  }
-
-);
-
-
-
-
-
-// ======================
-// CLICK DENTRO PANEL
-// ======================
-
-panelNotificaciones?.addEventListener(
-
-  'click',
-
-  (e) => {
-
-    e.stopPropagation();
-
-  }
-
-);
-
-
-
-
-
-// ======================
-// CERRAR PANEL
-// ======================
-
-document.addEventListener(
-
-  'click',
-
-  () => {
-
-    if(panelNotificaciones){
-
-      panelNotificaciones.classList.remove(
-        'active'
-      );
-
-    }
-
-  }
-
-);
-
-
-
-
-
-// ======================
-// ELIMINAR NOTIFICACION
-// ======================
-
-function eliminarNotificacion(id){
-
-  let notificaciones =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'notificaciones'
-    )
-
-  ) || [];
-
-
-
-  notificaciones =
-
-  notificaciones.filter(
-
-    item =>
-
-    String(item.id) !==
-    String(id)
-
-  );
-
-
-
-  localStorage.setItem(
-
-    'notificaciones',
-
-    JSON.stringify(
-      notificaciones
-    )
-
-  );
-
-
-
-  renderNotificaciones();
-
-}
-
-
-
-
-
-// ======================
-// LIMPIAR NOTIFICACIONES
-// ======================
-
-function limpiarNotificaciones(){
-
-  const confirmar = confirm(
-
-    '¿Seguro que deseas limpiar todas las notificaciones?'
-
-  );
-
-
-
-  if(!confirmar){
-
-    return;
-
-  }
-
-
-
-  localStorage.removeItem(
-    'notificaciones'
-  );
-
-
-
-  renderNotificaciones();
-
-}
-
-
-
-
-
-// ======================
-// RENDER NOTIFICACIONES
-// ======================
-
-function renderNotificaciones(){
-
-  const lista =
-
-  document.getElementById(
-    'listaNotificaciones'
-  );
-
-
-
-  const contador =
-
-  document.getElementById(
-    'contadorNotificaciones'
-  );
-
-
-
-  if(!lista || !contador){
-
-    return;
-
-  }
-
-
-
-  const notificaciones =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'notificaciones'
-    )
-
-  ) || [];
-
-
-
-  lista.innerHTML = '';
-
-
-
-  const noLeidas =
-
-  notificaciones.filter(
-    item => !item.leida
-  );
-
-
-
-  contador.innerText =
-  noLeidas.length;
-
-
-
-  contador.style.display =
-
-  noLeidas.length > 0
-
-  ? 'flex'
-
-  : 'none';
-
-
-
-  if(notificaciones.length === 0){
-
-    lista.innerHTML = `
-
-      <p class="sin-notificaciones">
-
-        No hay notificaciones
-
-      </p>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  notificaciones.forEach(item => {
-
-    lista.innerHTML += `
-
-      <div class="notificacion-item">
-
-        <div class="notificacion-top">
-
-          <p>
-
-            ${item.mensaje}
-
-          </p>
-
-
-
-
-
-          <button
-            class="btn-eliminar-noti"
-            onclick="eliminarNotificacion('${item.id}')"
-          >
-
-            ✖
-
-          </button>
-
-        </div>
-
-
-
-
-
-        <span>
-
-          ${item.fecha}
-
-        </span>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
-
-
-
-
-// ======================
-// TIEMPO REAL
-// ======================
-
-window.addEventListener(
-
-  'nuevaNotificacion',
-
-  () => {
-
-    renderNotificaciones();
-
-  }
-
-);
 
 
 
@@ -1254,6 +862,4 @@ window.addEventListener(
 // ======================
 
 aplicarPermisos();
-
-renderNotificaciones();
-
+```
