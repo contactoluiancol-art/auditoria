@@ -26,7 +26,7 @@ const supabaseUrl =
 
 const supabaseKey =
 
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'TU_API_KEY';
 
 
 
@@ -41,73 +41,6 @@ window.supabase.createClient(
 
 );
 
-// ======================
-// GUARDAR HISTORIAL
-// ======================
-
-async function guardarHistorial(
-
-  accion,
-  modulo,
-  descripcion
-
-){
-
-  const usuario =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'usuarioLogueado'
-    )
-
-  );
-
-
-
-  if(!usuario){
-
-    return;
-
-  }
-
-
-
-  const { error } =
-
-  await window.supabaseClient
-
-  .from('historial')
-
-  .insert([
-
-    {
-
-      usuario:
-      usuario.usuario,
-
-      accion,
-
-      modulo,
-
-      descripcion
-
-    }
-
-  ]);
-
-
-
-  if(error){
-
-    console.log(
-      'Error historial:',
-      error
-    );
-
-  }
-
-}
 
 
 
@@ -263,6 +196,12 @@ function aplicarPermisos(){
 
 
 
+    ocultarModulo(
+      'historialMenu'
+    );
+
+
+
     ocultarCard(
       'cardInventario'
     );
@@ -273,6 +212,12 @@ function aplicarPermisos(){
 
     ocultarCard(
       'cardUsuarios'
+    );
+
+
+
+    ocultarCard(
+      'cardHistorial'
     );
 
   }
@@ -290,6 +235,8 @@ function aplicarPermisos(){
     ocultarModulo(
       'usuariosMenu'
     );
+
+
 
     ocultarCard(
       'cardUsuarios'
@@ -311,8 +258,71 @@ function aplicarPermisos(){
       'usuariosMenu'
     );
 
+
+
     ocultarCard(
       'cardUsuarios'
+    );
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// GUARDAR HISTORIAL
+// ======================
+
+async function guardarHistorial(
+
+  accion,
+  modulo,
+  descripcion
+
+){
+
+  const usuario =
+
+  usuarioLogueado?.usuario || 'Sistema';
+
+
+
+
+
+  const { error } =
+
+  await window.supabaseClient
+
+  .from('historial')
+
+  .insert([
+
+    {
+
+      usuario,
+
+      accion,
+
+      modulo,
+
+      descripcion
+
+    }
+
+  ]);
+
+
+
+
+
+  if(error){
+
+    console.log(
+      'Error historial:',
+      error
     );
 
   }
@@ -377,7 +387,7 @@ function mostrarModulo(modulo){
 
         'inventarioScript',
 
-        'js/inventario.js?v=16',
+        'js/inventario.js?v=17',
 
         () => {
 
@@ -434,7 +444,7 @@ function mostrarModulo(modulo){
 
         'auditoriasScript',
 
-        'js/auditorias.js?v=16',
+        'js/auditorias.js?v=17',
 
         () => {
 
@@ -475,7 +485,7 @@ function mostrarModulo(modulo){
 
         'usuariosScript',
 
-        'js/usuarios.js?v=16',
+        'js/usuarios.js?v=17',
 
         () => {
 
@@ -516,7 +526,48 @@ function mostrarModulo(modulo){
 
         'recepcionScript',
 
-        'js/recepcion.js?v=16'
+        'js/recepcion.js?v=17'
+
+      );
+
+    });
+
+  }
+
+
+
+
+
+  // ======================
+  // HISTORIAL
+  // ======================
+
+  else if(modulo === 'historial'){
+
+    fetch('modules/historial.html')
+
+    .then(res => res.text())
+
+    .then(html => {
+
+      contenido.innerHTML =
+      html;
+
+      cargarScript(
+
+        'historialScript',
+
+        'js/historial.js?v=17',
+
+        () => {
+
+          if(typeof renderHistorial === 'function'){
+
+            renderHistorial();
+
+          }
+
+        }
 
       );
 
@@ -536,13 +587,11 @@ function mostrarModulo(modulo){
 
 function cargarScript(id, src, callback){
 
-  // ======================
-  // ELIMINAR SCRIPT ANTERIOR
-  // ======================
-
   const scriptAnterior =
 
   document.getElementById(id);
+
+
 
 
 
@@ -555,10 +604,6 @@ function cargarScript(id, src, callback){
 
 
 
-
-  // ======================
-  // CREAR SCRIPT NUEVO
-  // ======================
 
   const script =
 
@@ -580,10 +625,6 @@ function cargarScript(id, src, callback){
 
 
 
-  // ======================
-  // ONLOAD
-  // ======================
-
   script.onload = () => {
 
     if(callback){
@@ -597,10 +638,6 @@ function cargarScript(id, src, callback){
 
 
 
-
-  // ======================
-  // INSERTAR
-  // ======================
 
   document.body.appendChild(
     script
@@ -722,6 +759,23 @@ document.getElementById(
 
 
 
+document.getElementById(
+  'historialMenu'
+)
+?.addEventListener(
+
+  'click',
+
+  () => mostrarModulo(
+    'historial'
+  )
+
+);
+
+
+
+
+
 // ======================
 // EVENTOS CARDS
 // ======================
@@ -794,6 +848,18 @@ document.addEventListener(
 
     }
 
+
+
+
+
+    if(card.id === 'cardHistorial'){
+
+      mostrarModulo(
+        'historial'
+      );
+
+    }
+
   }
 
 );
@@ -826,12 +892,6 @@ document.getElementById(
 // ======================
 
 function renderNotificaciones(){
-
-
-
-  // ======================
-  // VALIDAR ROL
-  // ======================
 
   if(
 
@@ -866,10 +926,6 @@ function renderNotificaciones(){
 
 
 
-  // ======================
-  // STORAGE
-  // ======================
-
   const notificaciones =
 
   JSON.parse(
@@ -883,10 +939,6 @@ function renderNotificaciones(){
 
 
 
-
-  // ======================
-  // ELEMENTOS
-  // ======================
 
   const lista =
 
@@ -922,10 +974,6 @@ function renderNotificaciones(){
 
 
 
-  // ======================
-  // NO LEIDAS
-  // ======================
-
   const noLeidas =
 
   notificaciones.filter(
@@ -955,10 +1003,6 @@ function renderNotificaciones(){
 
 
 
-  // ======================
-  // VACIO
-  // ======================
-
   if(notificaciones.length === 0){
 
     lista.innerHTML = `
@@ -978,10 +1022,6 @@ function renderNotificaciones(){
 
 
 
-
-  // ======================
-  // RENDER
-  // ======================
 
   notificaciones.forEach(item => {
 
@@ -1270,60 +1310,7 @@ window.addEventListener(
 );
 
 
-// ======================
-// GUARDAR HISTORIAL
-// ======================
 
-async function guardarHistorial(
-
-  accion,
-  modulo,
-  descripcion
-
-){
-
-  const usuario =
-
-  usuarioLogueado?.usuario || 'Sistema';
-
-
-
-
-  const { error } =
-
-  await supabaseClient
-
-  .from('historial')
-
-  .insert([
-
-    {
-
-      accion,
-
-      modulo,
-
-      descripcion,
-
-      usuario
-
-    }
-
-  ]);
-
-
-
-
-  if(error){
-
-    console.log(
-      'Error historial:',
-      error
-    );
-
-  }
-
-}
 
 
 // ======================
