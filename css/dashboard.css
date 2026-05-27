@@ -787,6 +787,30 @@ BOTONES EN MOVIL
 
 }
 
+/* =========================
+FIX BOTONES GIGANTES
+========================= */
+
+button{
+  width:auto !important;
+  max-width:max-content;
+}
+
+td .btn-editar,
+td .btn-eliminar,
+td .btn-ver,
+td .btn-pdf{
+
+  width:auto !important;
+
+  min-width:95px;
+}
+
+table button{
+
+  margin:0;
+}
+
 
 /* =========================
 TABLES
