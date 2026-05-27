@@ -1,521 +1,437 @@
-<!DOCTYPE html>
-<html lang="es">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<head>
 
-  <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
+
+<!-- =========================
+SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+  <div class="logo">
+
+    <img
+      src="img/logo-electro.png"
+      alt="Logo"
+    >
+
+    <h2>
+      AUDITORIA
+    </h2>
+
+    <p>
+      Sistema Logístico
+    </p>
+
+  </div>
+
+  <nav>
+
+    <ul>
+
+      <li
+        id="dashboardMenu"
+        class="active"
+      >
+
+        🏠 Dashboard
+
+      </li>
+
+      <li id="inventarioMenu">
+
+        📦 Inventario
+
+      </li>
+
+      <li id="auditoriasMenu">
+
+        📋 Auditorías
+
+      </li>
+
+      <li id="recepcionMenu">
+
+        📥 Recepción
+
+      </li>
+
+      <li id="usuariosMenu">
+
+        👥 Usuarios
+
+      </li>
+
+      <li id="historialMenu">
+
+        🕓 Historial
+
+      </li>
+
+      <li>
+
+        <button
+          id="cerrarSesionBtn"
+          class="logout-btn"
+        >
+
+          Cerrar Sesión
+
+        </button>
+
+      </li>
+
+    </ul>
+
+  </nav>
+
+</aside>
+
+
+
+
+
+<!-- =========================
+MAIN CONTENT
+========================= -->
+
+<main class="main-content">
+
+  <!-- =========================
+  TOPBAR
+  ========================= -->
+
+  <header class="topbar">
+
+    <div>
+
+      <h1>
+        Dashboard
+      </h1>
+
+    </div>
+
+
+
+
+
+    <div class="topbar-right">
+
+      <!-- NOTIFICACIONES -->
+
+      <div
+        class="notificaciones-box"
+        id="notificacionesBox"
+      >
+
+        <div
+          class="campana"
+          id="campanaBtn"
+        >
+
+          🔔
+
+          <span
+            id="contadorNotificaciones"
+          >
+
+            0
+
+          </span>
+
+        </div>
+
+
+
+
+
+        <!-- PANEL -->
+
+        <div
+          class="panel-notificaciones"
+          id="panelNotificaciones"
+        >
+
+          <div
+            class="notificaciones-header"
+          >
+
+            <h3>
+              Notificaciones
+            </h3>
+
+            <button
+              class="btn-limpiar-noti"
+              onclick="limpiarNotificaciones()"
+            >
+
+              Limpiar
+
+            </button>
+
+          </div>
+
+
+
+
+
+          <div
+            id="listaNotificaciones"
+          >
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+
+
+      <!-- USER -->
+
+      <div class="user-info">
+
+        <span id="usuarioNombre">
+
+        </span>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+
+
+  <!-- =========================
+  CONTENT
+  ========================= -->
+
+  <section
+    class="content"
+    id="mainContent"
   >
 
-  <title>
-    Audit System
-  </title>
+    <!-- =========================
+    WELCOME
+    ========================= -->
+
+    <div class="welcome-banner">
+
+      <div class="welcome-left">
+
+        <div class="welcome-icon">
+
+          📋
+
+        </div>
 
 
-  <link
-    rel="stylesheet"
-    href="css/dashboard.css"
-  >
 
-  <link
-  rel="stylesheet"
-  href="css/historial.css"
-/>
 
-</head>
 
-<body>
+        <div>
 
-  <div class="dashboard">
+          <h1>
+
+            Bienvenido al sistema
+
+          </h1>
+
+
+
+
+
+          <p>
+
+            Gestiona auditorías,
+            inventarios y procesos
+            logísticos de manera
+            profesional y eficiente.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
 
 
 
 
     <!-- =========================
-    SIDEBAR
+    GRID
     ========================= -->
 
-    <aside class="sidebar">
+    <div class="dashboard-grid">
 
-      <div class="logo">
+      <!-- INVENTARIO -->
 
-        <h2>
-          AUDITORIA
-        </h2>
+      <div
+        id="cardInventario"
+        class="dashboard-card"
+      >
+
+        <div class="card-icon">
+
+          📦
+
+        </div>
+
+        <h3>
+
+          Inventario
+
+        </h3>
 
         <p>
-          Auditoría Logística
+
+          Gestión de inventarios
+          y conteos cíclicos.
+
         </p>
 
       </div>
 
 
 
-      <nav>
-
-        <ul>
-
-          <!-- DASHBOARD -->
-
-          <li
-            id="dashboardMenu"
-            class="active"
-          >
-
-            🏠 Dashboard
-
-          </li>
 
 
+      <!-- AUDITORIAS -->
 
+      <div
+        id="cardAuditorias"
+        class="dashboard-card"
+      >
 
-          <!-- INVENTARIO -->
+        <div class="card-icon">
 
-          <li id="inventarioMenu">
-
-            📦 Inventario
-
-          </li>
-
-
-
-
-          <!-- AUDITORIAS -->
-
-          <li id="auditoriasMenu">
-
-            📋 Auditorías
-
-          </li>
-
-
-
-
-          <!-- RECEPCION -->
-
-          <li id="recepcionMenu">
-
-            📥 Recepción
-
-          </li>
-
-
-
-          <!-- USUARIOS -->
-
-          <li id="usuariosMenu">
-
-            👥 Usuarios
-
-          </li>
-
-            <li id="historialMenu">
-
-  🕓 Historial
-
-</li>
-          
-
-          <!-- LOGOUT -->
-
-          <li>
-
-            <button
-              id="cerrarSesionBtn"
-              class="logout-btn"
-            >
-
-              Cerrar Sesión
-
-            </button>
-
-          </li>
-
-        </ul>
-
-      </nav>
-
-    </aside>
-
-
-
-
-
-
-    <!-- =========================
-    MAIN
-    ========================= -->
-
-    <main class="main-content">
-
-
-
-      <!-- =========================
-      TOPBAR
-      ========================= -->
-
-      <header class="topbar">
-
-        <div>
-
-          <h1>
-            Dashboard
-          </h1>
+          📋
 
         </div>
 
+        <h3>
 
-<div class="topbar-right">
+          Auditorías
 
+        </h3>
 
+        <p>
 
+          Seguimiento y control
+          de auditorías.
 
-  <!-- NOTIFICACIONES -->
+        </p>
 
-  <div
-    class="notificaciones-box"
-    id="notificacionesBox"
-  >
-
-    <div
-      class="campana"
-      id="campanaBtn"
-    >
-
-      🔔
-
-      <span
-        id="contadorNotificaciones"
-      >
-
-        0
-
-      </span>
-
-    </div>
+      </div>
 
 
-<div class="notificaciones-header">
 
 
-  <button
-    class="btn-limpiar-noti"
-    onclick="limpiarNotificaciones()"
-  >
 
-    Limpiar
-
-  </button>
-
-</div>
-
-    <!-- PANEL -->
-
-    <div
-      class="panel-notificaciones"
-      id="panelNotificaciones"
-    >
-
-
+      <!-- RECEPCION -->
 
       <div
-        id="listaNotificaciones"
+        id="cardRecepcion"
+        class="dashboard-card"
       >
+
+        <div class="card-icon">
+
+          📥
+
+        </div>
+
+        <h3>
+
+          Recepción
+
+        </h3>
+
+        <p>
+
+          Control de recepción
+          y novedades.
+
+        </p>
+
+      </div>
+
+
+
+
+
+      <!-- USUARIOS -->
+
+      <div
+        id="cardUsuarios"
+        class="dashboard-card"
+      >
+
+        <div class="card-icon">
+
+          👥
+
+        </div>
+
+        <h3>
+
+          Usuarios
+
+        </h3>
+
+        <p>
+
+          Gestión de usuarios
+          y permisos.
+
+        </p>
+
+      </div>
+
+
+
+
+
+      <!-- HISTORIAL -->
+
+      <div
+        id="cardHistorial"
+        class="dashboard-card"
+      >
+
+        <div class="card-icon">
+
+          🕓
+
+        </div>
+
+        <h3>
+
+          Historial
+
+        </h3>
+
+        <p>
+
+          Seguimiento de movimientos
+          y acciones del sistema.
+
+        </p>
 
       </div>
 
     </div>
 
-  </div>
+  </section>
 
-
-
-
-
-  <!-- USER -->
-
-  <div class="user-info">
-
-    <span id="usuarioNombre">
-
-    </span>
-
-  </div>
-
-</div>
-
-      </header>
-
-
-
-
-
-
-      <!-- =========================
-      CONTENIDO
-      ========================= -->
-
-      <section
-        class="content"
-        id="mainContent"
-      >
-
-
-
-        <!-- =========================
-        WELCOME
-        ========================= -->
-
-        <div class="welcome-banner">
-
-          <div class="welcome-left">
-
-            <div class="welcome-icon">
-
-              📋
-
-            </div>
-
-
-
-            <div>
-
-              <h1>
-
-                Bienvenido al sistema
-
-              </h1>
-
-
-
-              <p>
-
-                Gestiona y controla
-                los procesos de
-                auditoría logística
-                de forma eficiente.
-
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-
-
-
-
-        <!-- =========================
-        GRID
-        ========================= -->
-
-        <div class="dashboard-grid">
-
-
-
-
-          <!-- =========================
-          INVENTARIO
-          ========================= -->
-
-          <div
-            id="cardInventario"
-            class="dashboard-card"
-          >
-
-            <div class="card-icon">
-
-              📦
-
-            </div>
-
-
-            <h3>
-
-              Inventario
-
-            </h3>
-
-
-            <p>
-
-              Gestión de inventarios
-              y conteos cíclicos.
-
-            </p>
-
-          </div>
-
-
-
-
-
-
-          <!-- =========================
-          AUDITORIAS
-          ========================= -->
-
-          <div
-            id="cardAuditorias"
-            class="dashboard-card"
-          >
-
-            <div class="card-icon">
-
-              📋
-
-            </div>
-
-
-            <h3>
-
-              Auditorías
-
-            </h3>
-
-
-            <p>
-
-              Control y seguimiento
-              de auditorías.
-
-            </p>
-
-          </div>
-
-
-
-
-
-
-          <!-- =========================
-          RECEPCION
-          ========================= -->
-
-          <div
-            id="cardRecepcion"
-            class="dashboard-card"
-          >
-
-            <div class="card-icon">
-
-              📥
-
-            </div>
-
-
-            <h3>
-
-              Recepción
-
-            </h3>
-
-
-            <p>
-
-              Control de recepción
-              de mercancía.
-
-            </p>
-
-          </div>
-
-
-          <!-- =========================
-          USUARIOS
-          ========================= -->
-
-          <div
-            id="cardUsuarios"
-            class="dashboard-card"
-          >
-
-            <div class="card-icon">
-
-              👥
-
-            </div>
-
-
-            <h3>
-
-              Usuarios
-
-            </h3>
-
-
-            <p>
-
-              Administración
-              de usuarios y roles.
-
-            </p>
-<div
-  id="cardHistorial"
-  class="dashboard-card"
->
-
-  <div class="card-icon">
-
-    🕓
-
-  </div>
-
-  <h3>
-
-    Historial
-
-  </h3>
-
-  <p>
-
-    Seguimiento de movimientos
-    del sistema.
-
-  </p>
-
-</div>
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
-
-  </div>
-
-
-
-
-
-  <!-- =========================
-  LIBRERIAS
-  ========================= -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-  <!-- =========================
-  JS
-  ========================= -->
-
-  <script
-    src="js/dashboard.js?v=13"
-    defer
-  ></script>
-
-</body>
-
-</html>
+</main>
