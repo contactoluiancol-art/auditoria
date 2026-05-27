@@ -10,7 +10,13 @@ document.getElementById(
 
 
 
-if(guardarAuditoriaBtn){
+if(
+
+  guardarAuditoriaBtn &&
+
+  !guardarAuditoriaBtn.dataset.evento
+
+){
 
   guardarAuditoriaBtn.addEventListener(
 
@@ -19,6 +25,11 @@ if(guardarAuditoriaBtn){
     guardarAuditoria
 
   );
+
+
+
+  guardarAuditoriaBtn.dataset.evento =
+  'true';
 
 }
 
@@ -392,6 +403,8 @@ async function renderAuditorias(){
 
       '</td>' +
 
+
+
       '<td class="acciones-tabla">' +
 
 
@@ -516,19 +529,6 @@ async function eliminarAuditoria(id){
 
 
 
-  var proceso = '';
-
-
-
-  if(data){
-
-    proceso =
-    data.proceso;
-
-  }
-
-
-
   if(typeof guardarHistorial === 'function'){
 
     await guardarHistorial(
@@ -538,7 +538,7 @@ async function eliminarAuditoria(id){
       'AUDITORIAS',
 
       'Se eliminó auditoría ' +
-      proceso
+      data.proceso
 
     );
 
@@ -560,7 +560,7 @@ async function eliminarAuditoria(id){
 
 async function editarEstado(id){
 
-  var response =
+  var consulta =
 
   await window.supabaseClient
 
@@ -575,7 +575,7 @@ async function editarEstado(id){
 
 
   var data =
-  response.data;
+  consulta.data;
 
 
 
@@ -605,7 +605,7 @@ async function editarEstado(id){
 
 
 
-  var updateResponse =
+  var response =
 
   await window.supabaseClient
 
@@ -622,7 +622,7 @@ async function editarEstado(id){
 
 
   var error =
-  updateResponse.error;
+  response.error;
 
 
 
@@ -658,6 +658,12 @@ async function editarEstado(id){
 
 
   await renderAuditorias();
+
+
+
+  alert(
+    'Auditoría actualizada'
+  );
 
 }
 
