@@ -1,126 +1,196 @@
-<div class="auditorias-container">
+<div class="module-container">
 
-  <h1 class="titulo-modulo">
-    Módulo Auditorías
-  </h1>
+  <!-- HEADER -->
 
-<link rel="stylesheet" href="css/auditorias.css">
+  <div class="module-header">
 
-  <!-- FORMULARIO -->
+    <div>
 
-  <div class="auditoria-form">
+      <h2>
+        📋 Auditorías
+      </h2>
 
-    <div class="form-group">
-
-      <label>
-        Proceso
-      </label>
-
-      <input
-        type="text"
-        id="procesoInput"
-        placeholder="Ej: Recepción"
-      >
+      <p>
+        Gestión y seguimiento de auditorías
+      </p>
 
     </div>
-     
-
-
-    <div class="form-group">
-
-      <label>
-        Hallazgo
-      </label>
-
-      <textarea
-        id="hallazgoInput"
-        placeholder="Describe el hallazgo"
-      ></textarea>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>
-        Responsable
-      </label>
-
-      <input
-        type="text"
-        id="responsableInput"
-        placeholder="Responsable"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>
-        Estado
-      </label>
-
-      <select id="estadoInput">
-
-        <option value="Pendiente">
-          Pendiente
-        </option>
-
-        <option value="En revisión">
-          En revisión
-        </option>
-
-        <option value="Cerrado">
-          Cerrado
-        </option>
-
-      </select>
-  <button id="guardarAuditoria">
-      Guardar auditoría
-    </button>
-    </div>
-
-
- 
 
   </div>
 
 
-  <!-- HISTORIAL -->
 
-  <div class="tabla-auditorias">
 
-    <table>
 
-      <thead>
+  <!-- FORM -->
 
-        <tr>
+  <div class="module-card">
 
-          <th>Proceso</th>
+    <h3>
+      Nueva Auditoría
+    </h3>
 
-          <th>Hallazgo</th>
 
-          <th>Responsable</th>
 
-          <th>Estado</th>
 
-          <th>Fecha</th>
 
-          <th>Acciones</th>
+    <div class="form-grid">
 
-        </tr>
+      <div class="input-group">
 
-      </thead>
+        <label>
+          Proceso
+        </label>
 
-      <tbody id="auditoriasBody">
+        <input
+          type="text"
+          id="procesoInput"
+          placeholder="Ingrese proceso"
+        >
 
-      </tbody>
+      </div>
 
-    </table>
+
+
+
+
+      <div class="input-group">
+
+        <label>
+          Hallazgo
+        </label>
+
+        <input
+          type="text"
+          id="hallazgoInput"
+          placeholder="Ingrese hallazgo"
+        >
+
+      </div>
+
+
+
+
+
+      <div class="input-group">
+
+        <label>
+          Responsable
+        </label>
+
+        <input
+          type="text"
+          id="responsableInput"
+          placeholder="Ingrese responsable"
+        >
+
+      </div>
+
+
+
+
+
+      <div class="input-group">
+
+        <label>
+          Estado
+        </label>
+
+        <select id="estadoInput">
+
+          <option value="Pendiente">
+            Pendiente
+          </option>
+
+          <option value="En revisión">
+            En revisión
+          </option>
+
+          <option value="Cerrado">
+            Cerrado
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+
+
+
+    <div class="button-group">
+
+      <button
+        id="guardarAuditoria"
+        class="btn-primary"
+      >
+
+        Guardar Auditoría
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- TABLA -->
+
+  <div class="module-card">
+
+    <div class="table-header">
+
+      <h3>
+        Auditorías Registradas
+      </h3>
+
+    </div>
+
+
+
+
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Proceso</th>
+
+            <th>Hallazgo</th>
+
+            <th>Responsable</th>
+
+            <th>Estado</th>
+
+            <th>Fecha</th>
+
+            <th>Acciones</th>
+
+          </tr>
+
+        </thead>
+
+
+
+
+
+        <tbody id="auditoriasBody">
+
+        </tbody>
+
+      </table>
+
+    </div>
 
   </div>
 
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
