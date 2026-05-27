@@ -188,7 +188,7 @@ async function guardarAuditoria(){
 
 
     // ======================
-    // RECARGAR
+    // RECARGAR TABLA
     // ======================
 
     await renderAuditorias();
@@ -468,61 +468,76 @@ async function renderAuditorias(){
 
 
 // ======================
-// ELIMINAR
+// ELIMINAR AUDITORIA
 // ======================
 
 window.eliminarAuditoria = async function(id){
 
-  var confirmar = confirm(
+  try{
 
-    '¿Eliminar auditoría?'
+    var confirmar = confirm(
 
-  );
+      '¿Eliminar auditoría?'
+
+    );
 
 
 
-  if(!confirmar){
+    if(!confirmar){
 
-    return;
+      return;
+
+    }
+
+
+
+    var response =
+
+    await window.supabaseClient
+
+    .from('auditorias')
+
+    .delete()
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    );
+
+
+
+    if(response.error){
+
+      console.log(response.error);
+
+      alert(
+        'Error eliminando'
+      );
+
+      return;
+
+    }
+
+
+
+    await renderAuditorias();
+
+
+
+    alert(
+      'Auditoría eliminada'
+    );
 
   }
 
-
-
-  var response =
-
-  await window.supabaseClient
-
-  .from('auditorias')
-
-  .delete()
-
-  .eq(
-
-    'id',
-
-    Number(id)
-
-  );
-
-
-
-  var error =
-  response.error;
-
-
-
-  if(error){
+  catch(error){
 
     console.log(error);
 
-    return;
-
   }
-
-
-
-  renderAuditorias();
 
 };
 
