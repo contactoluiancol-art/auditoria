@@ -3,6 +3,10 @@
 
 <head>
 
+  <!-- ========================= -->
+  <!-- META -->
+  <!-- ========================= -->
+
   <meta charset="UTF-8">
 
   <meta
@@ -11,57 +15,119 @@
   >
 
   <title>
+
     Audit System
+
   </title>
 
 
-<link
-  rel="stylesheet"
-  href="css/styles.css"
-/>
 
-<link
-  rel="stylesheet"
-  href="css/dashboard.css"
-/>
 
-<link
-  rel="stylesheet"
-  href="css/historial.css"
-/>
+
+  <!-- ========================= -->
+  <!-- CSS -->
+  <!-- ========================= -->
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/dashboard.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/historial.css"
+  >
 
 </head>
 
-<body>
+
+
+
+
+<!-- ========================= -->
+<!-- BODY -->
+<!-- ========================= -->
+
+<body class="dashboard-body">
+
+
+
+
+
+  <!-- ========================= -->
+  <!-- DASHBOARD -->
+  <!-- ========================= -->
 
   <div class="dashboard">
 
 
 
 
-    <!-- =========================
-    SIDEBAR
-    ========================= -->
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
 
     <aside class="sidebar">
 
-      <div class="logo">
+
+
+
+
+      <!-- ========================= -->
+      <!-- LOGO -->
+      <!-- ========================= -->
+
+      <div class="logo-box">
+
+        <img
+
+          src="img/logo-electro.png"
+
+          class="sidebar-logo"
+
+          alt="Logo"
+
+        >
+
+
 
         <h2>
+
           AUDITORIA
+
         </h2>
 
+
+
         <p>
+
           Auditoría Logística
+
         </p>
 
       </div>
 
 
 
+
+
+      <!-- ========================= -->
+      <!-- MENU -->
+      <!-- ========================= -->
+
       <nav>
 
         <ul>
+
+
+
+
 
           <!-- DASHBOARD -->
 
@@ -77,6 +143,7 @@
 
 
 
+
           <!-- INVENTARIO -->
 
           <li id="inventarioMenu">
@@ -84,6 +151,7 @@
             📦 Inventario
 
           </li>
+
 
 
 
@@ -99,6 +167,7 @@
 
 
 
+
           <!-- RECEPCION -->
 
           <li id="recepcionMenu">
@@ -106,6 +175,8 @@
             📥 Recepción
 
           </li>
+
+
 
 
 
@@ -117,20 +188,32 @@
 
           </li>
 
-            <li id="historialMenu">
 
-  🕓 Historial
 
-</li>
-          
+
+
+          <!-- HISTORIAL -->
+
+          <li id="historialMenu">
+
+            🕓 Historial
+
+          </li>
+
+
+
+
 
           <!-- LOGOUT -->
 
           <li>
 
             <button
+
               id="cerrarSesionBtn"
+
               class="logout-btn"
+
             >
 
               Cerrar Sesión
@@ -149,108 +232,148 @@
 
 
 
-
-    <!-- =========================
-    MAIN
-    ========================= -->
+    <!-- ========================= -->
+    <!-- MAIN -->
+    <!-- ========================= -->
 
     <main class="main-content">
 
 
 
-      <!-- =========================
-      TOPBAR
-      ========================= -->
+
+
+      <!-- ========================= -->
+      <!-- TOPBAR -->
+      <!-- ========================= -->
 
       <header class="topbar">
+
+
+
+
+        <!-- TITLE -->
 
         <div>
 
           <h1>
+
             Dashboard
+
           </h1>
 
         </div>
 
 
-<div class="topbar-right">
 
 
 
+        <!-- RIGHT -->
 
-  <!-- NOTIFICACIONES -->
-
-  <div
-    class="notificaciones-box"
-    id="notificacionesBox"
-  >
-
-    <div
-      class="campana"
-      id="campanaBtn"
-    >
-
-      🔔
-
-      <span
-        id="contadorNotificaciones"
-      >
-
-        0
-
-      </span>
-
-    </div>
-
-
-<div class="notificaciones-header">
-
-
-  <button
-    class="btn-limpiar-noti"
-    onclick="limpiarNotificaciones()"
-  >
-
-    Limpiar
-
-  </button>
-
-</div>
-
-    <!-- PANEL -->
-
-    <div
-      class="panel-notificaciones"
-      id="panelNotificaciones"
-    >
-
-
-
-      <div
-        id="listaNotificaciones"
-      >
-
-      </div>
-
-    </div>
-
-  </div>
+        <div class="topbar-right">
 
 
 
 
 
-  <!-- USER -->
+          <!-- ========================= -->
+          <!-- NOTIFICACIONES -->
+          <!-- ========================= -->
 
-  <div class="user-info">
+          <div
 
-    <span id="usuarioNombre">
+            class="notificaciones-box"
 
-    </span>
+            id="notificacionesBox"
 
-  </div>
+          >
 
-</div>
+
+
+
+
+            <!-- CAMPANA -->
+
+            <div
+
+              class="campana"
+
+              id="campanaBtn"
+
+            >
+
+              🔔
+
+              <span
+                id="contadorNotificaciones"
+              >
+
+                0
+
+              </span>
+
+            </div>
+
+
+
+
+
+            <!-- HEADER -->
+
+            <div class="notificaciones-header">
+
+              <button
+
+                class="btn-limpiar-noti"
+
+                onclick="limpiarNotificaciones()"
+
+              >
+
+                Limpiar
+
+              </button>
+
+            </div>
+
+
+
+
+
+            <!-- PANEL -->
+
+            <div
+
+              class="panel-notificaciones"
+
+              id="panelNotificaciones"
+
+            >
+
+              <div id="listaNotificaciones">
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+
+
+          <!-- ========================= -->
+          <!-- USER -->
+          <!-- ========================= -->
+
+          <div class="user-info">
+
+            <span id="usuarioNombre">
+
+            </span>
+
+          </div>
+
+        </div>
 
       </header>
 
@@ -258,21 +381,25 @@
 
 
 
-
-      <!-- =========================
-      CONTENIDO
-      ========================= -->
+      <!-- ========================= -->
+      <!-- CONTENT -->
+      <!-- ========================= -->
 
       <section
+
         class="content"
+
         id="mainContent"
+
       >
 
 
 
-        <!-- =========================
-        WELCOME
-        ========================= -->
+
+
+        <!-- ========================= -->
+        <!-- WELCOME -->
+        <!-- ========================= -->
 
         <div class="welcome-banner">
 
@@ -283,6 +410,8 @@
               📋
 
             </div>
+
+
 
 
 
@@ -315,23 +444,24 @@
 
 
 
-
-        <!-- =========================
-        GRID
-        ========================= -->
+        <!-- ========================= -->
+        <!-- GRID -->
+        <!-- ========================= -->
 
         <div class="dashboard-grid">
 
 
 
 
-          <!-- =========================
-          INVENTARIO
-          ========================= -->
+
+          <!-- INVENTARIO -->
 
           <div
+
             id="cardInventario"
+
             class="dashboard-card"
+
           >
 
             <div class="card-icon">
@@ -341,11 +471,13 @@
             </div>
 
 
+
             <h3>
 
               Inventario
 
             </h3>
+
 
 
             <p>
@@ -361,14 +493,14 @@
 
 
 
-
-          <!-- =========================
-          AUDITORIAS
-          ========================= -->
+          <!-- AUDITORIAS -->
 
           <div
+
             id="cardAuditorias"
+
             class="dashboard-card"
+
           >
 
             <div class="card-icon">
@@ -378,11 +510,13 @@
             </div>
 
 
+
             <h3>
 
               Auditorías
 
             </h3>
+
 
 
             <p>
@@ -398,14 +532,14 @@
 
 
 
-
-          <!-- =========================
-          RECEPCION
-          ========================= -->
+          <!-- RECEPCION -->
 
           <div
+
             id="cardRecepcion"
+
             class="dashboard-card"
+
           >
 
             <div class="card-icon">
@@ -415,11 +549,13 @@
             </div>
 
 
+
             <h3>
 
               Recepción
 
             </h3>
+
 
 
             <p>
@@ -432,13 +568,17 @@
           </div>
 
 
-          <!-- =========================
-          USUARIOS
-          ========================= -->
+
+
+
+          <!-- USUARIOS -->
 
           <div
+
             id="cardUsuarios"
+
             class="dashboard-card"
+
           >
 
             <div class="card-icon">
@@ -448,11 +588,13 @@
             </div>
 
 
+
             <h3>
 
               Usuarios
 
             </h3>
+
 
 
             <p>
@@ -461,31 +603,46 @@
               de usuarios y roles.
 
             </p>
-<div
-  id="cardHistorial"
-  class="dashboard-card"
->
 
-  <div class="card-icon">
+          </div>
 
-    🕓
 
-  </div>
 
-  <h3>
 
-    Historial
 
-  </h3>
+          <!-- HISTORIAL -->
 
-  <p>
+          <div
 
-    Seguimiento de movimientos
-    del sistema.
+            id="cardHistorial"
 
-  </p>
+            class="dashboard-card"
 
-</div>
+          >
+
+            <div class="card-icon">
+
+              🕓
+
+            </div>
+
+
+
+            <h3>
+
+              Historial
+
+            </h3>
+
+
+
+            <p>
+
+              Seguimiento de
+              movimientos del sistema.
+
+            </p>
+
           </div>
 
         </div>
@@ -500,25 +657,30 @@
 
 
 
-  <!-- =========================
-  LIBRERIAS
-  ========================= -->
+  <!-- ========================= -->
+  <!-- LIBRERIAS -->
+  <!-- ========================= -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-  <!-- =========================
-  JS
-  ========================= -->
+
+
+  <!-- ========================= -->
+  <!-- JS -->
+  <!-- ========================= -->
 
   <script
-    src="js/dashboard.js?v=13"
+
+    src="js/dashboard.js?v=17"
+
     defer
+
   ></script>
 
 </body>
