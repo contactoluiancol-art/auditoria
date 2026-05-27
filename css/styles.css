@@ -1,3 +1,8 @@
+```css
+/* =========================
+RESET
+========================= */
+
 *{
   margin:0;
   padding:0;
@@ -6,21 +11,204 @@
 
 body{
   font-family:'Segoe UI',sans-serif;
-  background:#eef2f7;
-  color:#111827;
+  background:linear-gradient(
+    135deg,
+    #0f172a,
+    #1d4ed8
+  );
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
-a{
-  text-decoration:none;
+/* =========================
+LOGIN CONTAINER
+========================= */
+
+.login-container{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-img{
-  max-width:100%;
+/* =========================
+LOGIN CARD
+========================= */
+
+.login-card{
+  width:100%;
+  max-width:500px;
+  background:white;
+  border-radius:28px;
+  padding:50px;
+  box-shadow:
+  0 20px 50px rgba(0,0,0,.25);
+  animation:fadeIn .5s ease;
 }
 
-button,
-input,
-select,
-textarea{
-  font-family:inherit;
+/* =========================
+LOGO
+========================= */
+
+.logo-login{
+  width:120px;
+  display:block;
+  margin:0 auto 25px;
 }
+
+/* =========================
+TEXTOS
+========================= */
+
+.login-card h1{
+  text-align:center;
+  font-size:48px;
+  color:#0f172a;
+  margin-bottom:10px;
+  font-weight:800;
+}
+
+.login-card p{
+  text-align:center;
+  color:#64748b;
+  margin-bottom:35px;
+  font-size:16px;
+}
+
+/* =========================
+FORM
+========================= */
+
+#loginForm{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+/* =========================
+INPUT GROUP
+========================= */
+
+.input-group{
+  display:flex;
+  flex-direction:column;
+}
+
+.input-group label{
+  margin-bottom:10px;
+  font-weight:600;
+  color:#1e293b;
+  font-size:15px;
+}
+
+/* =========================
+INPUTS
+========================= */
+
+.input-group input,
+.input-group select{
+  width:100%;
+  height:55px;
+  border:1px solid #cbd5e1;
+  border-radius:14px;
+  padding:0 18px;
+  font-size:15px;
+  transition:.3s;
+  background:#f8fafc;
+}
+
+.input-group input:focus,
+.input-group select:focus{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:
+  0 0 0 4px rgba(37,99,235,.15);
+  background:white;
+}
+
+/* =========================
+BOTON
+========================= */
+
+button{
+  width:100%;
+  height:55px;
+  border:none;
+  border-radius:14px;
+  background:#ffd400;
+  color:#0f172a;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+  margin-top:10px;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  background:#facc15;
+  box-shadow:
+  0 10px 20px rgba(250,204,21,.35);
+}
+
+/* =========================
+ANIMACION
+========================= */
+
+@keyframes fadeIn{
+
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+  .login-card{
+    padding:35px 25px;
+  }
+
+  .login-card h1{
+    font-size:38px;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .login-card{
+    border-radius:22px;
+    padding:30px 20px;
+  }
+
+  .logo-login{
+    width:90px;
+  }
+
+  .login-card h1{
+    font-size:30px;
+  }
+
+  .input-group input,
+  .input-group select,
+  button{
+    height:50px;
+  }
+
+}
+```
