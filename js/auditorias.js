@@ -1,4 +1,16 @@
 // ======================
+// EVITAR DUPLICAR SCRIPT
+// ======================
+
+if(typeof window.auditoriasCargado === 'undefined'){
+
+window.auditoriasCargado = true;
+
+
+
+
+
+// ======================
 // EVENTO BOTON
 // ======================
 
@@ -459,7 +471,7 @@ async function renderAuditorias(){
 // ELIMINAR
 // ======================
 
-async function eliminarAuditoria(id){
+window.eliminarAuditoria = async function(id){
 
   var confirmar = confirm(
 
@@ -512,7 +524,7 @@ async function eliminarAuditoria(id){
 
   renderAuditorias();
 
-}
+};
 
 
 
@@ -522,7 +534,7 @@ async function eliminarAuditoria(id){
 // EDITAR ESTADO
 // ======================
 
-async function editarEstado(id){
+window.editarEstado = async function(id){
 
   try{
 
@@ -652,7 +664,7 @@ async function editarEstado(id){
 
   }
 
-}
+};
 
 
 
@@ -697,3 +709,5 @@ function limpiarFormulario(){
 // ======================
 
 renderAuditorias();
+
+}
