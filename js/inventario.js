@@ -1,50 +1,149 @@
+
 // ======================
 // VARIABLES GLOBALES
 // ======================
 
-let inventario = JSON.parse(
-  localStorage.getItem('inventario')
+let inventario =
+
+JSON.parse(
+
+  localStorage.getItem(
+    'inventario'
+  )
+
 ) || [];
 
+
+
 let productoActual = null;
+
+
+
+
+
+// ======================
+// ELEMENTOS
+// ======================
+
+const excelFile =
+document.getElementById(
+  'excelFile'
+);
+
+const reiniciarInventarioBtn =
+document.getElementById(
+  'reiniciarInventario'
+);
+
+const buscarBtn =
+document.getElementById(
+  'buscarBtn'
+);
+
+const guardarConteoBtn =
+document.getElementById(
+  'guardarConteo'
+);
+
+const exportarExcelBtn =
+document.getElementById(
+  'exportarExcel'
+);
+
+const buscadorInventario =
+document.getElementById(
+  'buscadorInventario'
+);
+
+
+
 
 
 // ======================
 // EVENTOS
 // ======================
 
-document.getElementById('excelFile')
-.addEventListener('change', leerExcel);
+if(excelFile){
 
-document.getElementById('reiniciarInventario')
-.addEventListener(
-  'click',
-  reiniciarInventario
-);
+  excelFile.addEventListener(
+    'change',
+    leerExcel
+  );
 
-document.getElementById('buscarBtn')
-.addEventListener(
-  'click',
-  buscarProducto
-);
+}
 
-document.getElementById('guardarConteo')
-.addEventListener(
-  'click',
-  registrarConteo
-);
 
-document.getElementById('exportarExcel')
-.addEventListener(
-  'click',
-  exportarExcel
-);
 
-document.getElementById('buscadorInventario')
-.addEventListener(
-  'input',
-  filtrarInventario
-);
+if(reiniciarInventarioBtn){
+
+  reiniciarInventarioBtn.addEventListener(
+
+    'click',
+
+    reiniciarInventario
+
+  );
+
+}
+
+
+
+if(buscarBtn){
+
+  buscarBtn.addEventListener(
+
+    'click',
+
+    buscarProducto
+
+  );
+
+}
+
+
+
+if(guardarConteoBtn){
+
+  guardarConteoBtn.addEventListener(
+
+    'click',
+
+    registrarConteo
+
+  );
+
+}
+
+
+
+if(exportarExcelBtn){
+
+  exportarExcelBtn.addEventListener(
+
+    'click',
+
+    exportarExcel
+
+  );
+
+}
+
+
+
+if(buscadorInventario){
+
+  buscadorInventario.addEventListener(
+
+    'input',
+
+    filtrarInventario
+
+  );
+
+}
+
+
+
 
 
 // ======================
@@ -53,48 +152,90 @@ document.getElementById('buscadorInventario')
 
 function leerExcel(e){
 
-  const file = e.target.files[0];
+  const file =
+  e.target.files[0];
 
-  const reader = new FileReader();
+
+
+  if(!file){
+
+    return;
+
+  }
+
+
+
+  const reader =
+  new FileReader();
+
+
 
   reader.onload = function(event){
 
-    const data = new Uint8Array(
+    const data =
+    new Uint8Array(
       event.target.result
     );
 
-    const workbook = XLSX.read(
+
+
+    const workbook =
+    XLSX.read(
+
       data,
-      {type:'array'}
+
+      { type:'array' }
+
     );
 
+
+
     const hoja =
+
     workbook.Sheets[
       workbook.SheetNames[0]
     ];
 
+
+
     inventario =
-    XLSX.utils.sheet_to_json(hoja);
 
-
-    // GUARDAR INVENTARIO
-
-    localStorage.setItem(
-      'inventario',
-      JSON.stringify(inventario)
+    XLSX.utils.sheet_to_json(
+      hoja
     );
 
 
-    alert('Excel cargado correctamente');
+
+    localStorage.setItem(
+
+      'inventario',
+
+      JSON.stringify(
+        inventario
+      )
+
+    );
+
+
+
+    alert(
+      'Excel cargado correctamente'
+    );
+
+
 
     renderInventario();
 
   };
 
 
+
   reader.readAsArrayBuffer(file);
 
 }
+
+
+
 
 
 // ======================
@@ -103,37 +244,76 @@ function leerExcel(e){
 
 function buscarProducto(){
 
-  const codigo = document
-  .getElementById('codigoInput')
-  .value;
-
-  productoActual = inventario.find(
-    p => p.codigo == codigo
+  const codigoInput =
+  document.getElementById(
+    'codigoInput'
   );
 
 
-  if(!productoActual){
 
-    alert('Producto no encontrado');
+  if(!codigoInput){
 
     return;
 
   }
 
 
-  document.getElementById('codigoProducto')
-  .innerText = productoActual.codigo;
 
-  document.getElementById('nombreProducto')
-  .innerText = productoActual.producto;
+  const codigo =
+  codigoInput.value;
 
-  document.getElementById('ubicacionProducto')
-  .innerText = productoActual.ubicacion;
 
-  document.getElementById('stockProducto')
-  .innerText = productoActual.stock;
+
+  productoActual = inventario.find(
+
+    p => p.codigo == codigo
+
+  );
+
+
+
+  if(!productoActual){
+
+    alert(
+      'Producto no encontrado'
+    );
+
+    return;
+
+  }
+
+
+
+  actualizarTexto(
+    'codigoProducto',
+    productoActual.codigo
+  );
+
+
+
+  actualizarTexto(
+    'nombreProducto',
+    productoActual.producto
+  );
+
+
+
+  actualizarTexto(
+    'ubicacionProducto',
+    productoActual.ubicacion
+  );
+
+
+
+  actualizarTexto(
+    'stockProducto',
+    productoActual.stock
+  );
 
 }
+
+
+
 
 
 // ======================
@@ -144,77 +324,120 @@ function registrarConteo(){
 
   if(!productoActual){
 
-    alert('Busque un producto');
+    alert(
+      'Busque un producto'
+    );
 
     return;
 
   }
 
 
-  const fisico = Number(
-    document.getElementById('conteoFisico')
-    .value
+
+  const conteoFisico =
+  document.getElementById(
+    'conteoFisico'
   );
+
+
+
+  if(!conteoFisico){
+
+    return;
+
+  }
+
+
+
+  const fisico = Number(
+    conteoFisico.value
+  );
+
+
 
   const stockSistema = Number(
     productoActual.stock
   );
 
 
-  // VALIDAR
 
-  if(isNaN(fisico) || isNaN(stockSistema)){
+  if(
 
-    alert('Valores inválidos');
+    isNaN(fisico)
+
+    ||
+
+    isNaN(stockSistema)
+
+  ){
+
+    alert(
+      'Valores inválidos'
+    );
 
     return;
 
   }
 
 
+
   const diferencia =
   fisico - stockSistema;
 
 
+
   const resultado =
-  document.getElementById('resultadoTexto');
-
-  resultado.innerText = diferencia;
-
-  resultado.className = '';
+  document.getElementById(
+    'resultadoTexto'
+  );
 
 
-  // COLORES
 
-  if(diferencia < 0){
+  if(resultado){
 
-    resultado.classList.add(
-      'negativo'
-    );
+    resultado.innerText =
+    diferencia;
+
+    resultado.className =
+    '';
+
+
+
+    if(diferencia < 0){
+
+      resultado.classList.add(
+        'negativo'
+      );
+
+    }
+
+    else if(diferencia > 0){
+
+      resultado.classList.add(
+        'positivo'
+      );
+
+    }
+
+    else{
+
+      resultado.classList.add(
+        'exacto'
+      );
+
+    }
 
   }
 
-  else if(diferencia > 0){
-
-    resultado.classList.add(
-      'positivo'
-    );
-
-  }
-
-  else{
-
-    resultado.classList.add(
-      'exacto'
-    );
-
-  }
 
 
   guardarHistorial(
+
     fisico,
     diferencia
+
   );
+
 
 
   limpiarFormulario();
@@ -222,24 +445,42 @@ function registrarConteo(){
 }
 
 
+
+
+
 // ======================
 // GUARDAR HISTORIAL
 // ======================
 
 function guardarHistorial(
+
   fisico,
   diferencia
+
 ){
 
-  const historial = JSON.parse(
-    localStorage.getItem('historial')
+  let historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
   ) || [];
 
 
-  const index = historial.findIndex(
+
+  const index =
+  historial.findIndex(
+
     item =>
-    item.codigo == productoActual.codigo
+
+    item.codigo ==
+    productoActual.codigo
+
   );
+
 
 
   const nuevoRegistro = {
@@ -260,7 +501,6 @@ function guardarHistorial(
   };
 
 
-  // ACTUALIZAR
 
   if(index !== -1){
 
@@ -268,8 +508,6 @@ function guardarHistorial(
     nuevoRegistro;
 
   }
-
-  // CREAR
 
   else{
 
@@ -280,10 +518,17 @@ function guardarHistorial(
   }
 
 
+
   localStorage.setItem(
+
     'historial',
-    JSON.stringify(historial)
+
+    JSON.stringify(
+      historial
+    )
+
   );
+
 
 
   renderHistorial();
@@ -291,6 +536,9 @@ function guardarHistorial(
   actualizarKPIs();
 
 }
+
+
+
 
 
 // ======================
@@ -304,47 +552,71 @@ function filtrarHistorial(tipo){
 }
 
 
+
+
+
 // ======================
 // RENDER HISTORIAL
 // ======================
 
 function renderHistorial(
+
   filtro = 'todos'
+
 ){
 
-  let historial = JSON.parse(
-    localStorage.getItem('historial')
+  let historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
   ) || [];
 
 
-  // FILTROS
 
   if(filtro === 'exactos'){
 
     historial = historial.filter(
+
       item =>
+
       Number(item.diferencia) === 0
+
     );
 
   }
+
+
 
   else if(filtro === 'faltantes'){
 
     historial = historial.filter(
+
       item =>
+
       Number(item.diferencia) < 0
+
     );
 
   }
+
+
 
   else if(filtro === 'sobrantes'){
 
     historial = historial.filter(
+
       item =>
+
       Number(item.diferencia) > 0
+
     );
 
   }
+
 
 
   const body =
@@ -352,7 +624,18 @@ function renderHistorial(
     'historialBody'
   );
 
+
+
+  if(!body){
+
+    return;
+
+  }
+
+
+
   body.innerHTML = '';
+
 
 
   historial.forEach(item => {
@@ -373,11 +656,18 @@ function renderHistorial(
 
         <td>
 
-          <button
-            onclick="eliminarRegistro('${item.codigo}')"
-          >
-            Eliminar
-          </button>
+          <div class="acciones-tabla">
+
+            <button
+              class="btn-eliminar"
+              onclick="eliminarRegistro('${item.codigo}')"
+            >
+
+              Eliminar
+
+            </button>
+
+          </div>
 
         </td>
 
@@ -390,12 +680,17 @@ function renderHistorial(
 }
 
 
+
+
+
 // ======================
 // RENDER INVENTARIO
 // ======================
 
 function renderInventario(
+
   datos = inventario
+
 ){
 
   const body =
@@ -403,13 +698,35 @@ function renderInventario(
     'inventarioBody'
   );
 
+
+
+  if(!body){
+
+    return;
+
+  }
+
+
+
   body.innerHTML = '';
 
-  document.getElementById(
-  'totalProductos'
-).innerText =
 
-`Productos cargados: ${datos.length}`;
+
+  const totalProductos =
+  document.getElementById(
+    'totalProductos'
+  );
+
+
+
+  if(totalProductos){
+
+    totalProductos.innerText =
+
+    `Productos cargados: ${datos.length}`;
+
+  }
+
 
 
   datos.forEach(item => {
@@ -418,13 +735,13 @@ function renderInventario(
 
       <tr>
 
-        <td>${item.codigo}</td>
+        <td>${item.codigo || '-'}</td>
 
-        <td>${item.producto}</td>
+        <td>${item.producto || '-'}</td>
 
-        <td>${item.ubicacion}</td>
+        <td>${item.ubicacion || '-'}</td>
 
-        <td>${item.stock}</td>
+        <td>${item.stock || 0}</td>
 
       </tr>
 
@@ -435,44 +752,61 @@ function renderInventario(
 }
 
 
+
+
+
 // ======================
 // FILTRAR INVENTARIO
 // ======================
 
 function filtrarInventario(){
 
-  const texto = document
-  .getElementById(
+  const buscador =
+  document.getElementById(
     'buscadorInventario'
-  )
-  .value
-  .toLowerCase();
+  );
+
+
+
+  if(!buscador){
+
+    return;
+
+  }
+
+
+
+  const texto =
+  buscador.value.toLowerCase();
+
 
 
   const filtrados =
+
   inventario.filter(item => {
 
     return(
 
-      String(item.codigo)
+      String(item.codigo || '')
       .toLowerCase()
       .includes(texto)
 
       ||
 
-      String(item.producto)
+      String(item.producto || '')
       .toLowerCase()
       .includes(texto)
 
       ||
 
-      String(item.ubicacion)
+      String(item.ubicacion || '')
       .toLowerCase()
       .includes(texto)
 
     );
 
   });
+
 
 
   renderInventario(
@@ -482,27 +816,47 @@ function filtrarInventario(){
 }
 
 
+
+
+
 // ======================
 // ELIMINAR REGISTRO
 // ======================
 
 function eliminarRegistro(codigo){
 
-  let historial = JSON.parse(
-    localStorage.getItem('historial')
+  let historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
   ) || [];
 
 
+
   historial = historial.filter(
+
     item =>
+
     item.codigo != codigo
+
   );
+
 
 
   localStorage.setItem(
+
     'historial',
-    JSON.stringify(historial)
+
+    JSON.stringify(
+      historial
+    )
+
   );
+
 
 
   renderHistorial();
@@ -512,48 +866,77 @@ function eliminarRegistro(codigo){
 }
 
 
+
+
+
 // ======================
 // EXPORTAR EXCEL
 // ======================
 
 function exportarExcel(){
 
-  const historial = JSON.parse(
-    localStorage.getItem('historial')
+  const historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
   ) || [];
+
 
 
   if(historial.length === 0){
 
-    alert('No hay datos');
+    alert(
+      'No hay datos'
+    );
 
     return;
 
   }
 
 
+
   const worksheet =
+
   XLSX.utils.json_to_sheet(
     historial
   );
 
+
+
   const workbook =
+
   XLSX.utils.book_new();
 
 
+
   XLSX.utils.book_append_sheet(
+
     workbook,
+
     worksheet,
+
     'Conteos'
+
   );
+
 
 
   XLSX.writeFile(
+
     workbook,
+
     'inventario_conteos.xlsx'
+
   );
 
 }
+
+
+
 
 
 // ======================
@@ -562,30 +945,44 @@ function exportarExcel(){
 
 function limpiarFormulario(){
 
-  document.getElementById(
+  limpiarInput(
     'codigoInput'
-  ).value = '';
+  );
 
-  document.getElementById(
+
+
+  limpiarInput(
     'conteoFisico'
-  ).value = '';
+  );
 
 
-  document.getElementById(
-    'codigoProducto'
-  ).innerText = '-';
 
-  document.getElementById(
-    'nombreProducto'
-  ).innerText = '-';
+  actualizarTexto(
+    'codigoProducto',
+    '-'
+  );
 
-  document.getElementById(
-    'ubicacionProducto'
-  ).innerText = '-';
 
-  document.getElementById(
-    'stockProducto'
-  ).innerText = '-';
+
+  actualizarTexto(
+    'nombreProducto',
+    '-'
+  );
+
+
+
+  actualizarTexto(
+    'ubicacionProducto',
+    '-'
+  );
+
+
+
+  actualizarTexto(
+    'stockProducto',
+    '-'
+  );
+
 
 
   const resultado =
@@ -593,19 +990,24 @@ function limpiarFormulario(){
     'resultadoTexto'
   );
 
-  resultado.innerText = '-';
 
-  resultado.className = '';
+
+  if(resultado){
+
+    resultado.innerText = '-';
+
+    resultado.className = '';
+
+  }
+
 
 
   productoActual = null;
 
-
-  document.getElementById(
-    'codigoInput'
-  ).focus();
-
 }
+
+
+
 
 
 // ======================
@@ -614,82 +1016,111 @@ function limpiarFormulario(){
 
 function actualizarKPIs(){
 
-  const historial = JSON.parse(
-    localStorage.getItem('historial')
+  const historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
   ) || [];
 
 
-  // TOTAL
 
   const total =
   historial.length;
 
 
-  // EXACTOS
 
   const exactos =
   historial.filter(
+
     item =>
+
     Number(item.diferencia) === 0
+
   ).length;
 
 
-  // FALTANTES
 
   const faltantes =
   historial.filter(
+
     item =>
+
     Number(item.diferencia) < 0
+
   ).length;
 
 
-  // SOBRANTES
 
   const sobrantes =
   historial.filter(
+
     item =>
+
     Number(item.diferencia) > 0
+
   ).length;
 
 
-  // EXACTITUD
 
   let exactitud = 0;
+
 
 
   if(total > 0){
 
     exactitud =
+
     (
+
       (exactos / total) * 100
+
     ).toFixed(1);
 
   }
 
 
-  // ACTUALIZAR HTML
 
-  document.getElementById(
-    'kpiTotal'
-  ).innerText = total;
+  actualizarTexto(
+    'kpiTotal',
+    total
+  );
 
-  document.getElementById(
-    'kpiExactos'
-  ).innerText = exactos;
 
-  document.getElementById(
-    'kpiFaltantes'
-  ).innerText = faltantes;
 
-  document.getElementById(
-    'kpiSobrantes'
-  ).innerText = sobrantes;
+  actualizarTexto(
+    'kpiExactos',
+    exactos
+  );
 
-  document.getElementById(
-    'kpiExactitud'
-  ).innerText = `${exactitud}%`;
+
+
+  actualizarTexto(
+    'kpiFaltantes',
+    faltantes
+  );
+
+
+
+  actualizarTexto(
+    'kpiSobrantes',
+    sobrantes
+  );
+
+
+
+  actualizarTexto(
+    'kpiExactitud',
+    `${exactitud}%`
+  );
 
 }
+
+
+
 
 
 // ======================
@@ -699,8 +1130,11 @@ function actualizarKPIs(){
 function reiniciarInventario(){
 
   const confirmar = confirm(
+
     '¿Desea eliminar el inventario cargado?'
+
   );
+
 
 
   if(!confirmar){
@@ -710,21 +1144,19 @@ function reiniciarInventario(){
   }
 
 
-  // LIMPIAR ARRAY
 
   inventario = [];
 
 
-  // BORRAR STORAGE
 
   localStorage.removeItem(
     'inventario'
   );
 
 
-  // LIMPIAR TABLA
 
   renderInventario();
+
 
 
   alert(
@@ -734,11 +1166,62 @@ function reiniciarInventario(){
 }
 
 
+
+
+
+// ======================
+// HELPERS
+// ======================
+
+function actualizarTexto(
+
+  id,
+  valor
+
+){
+
+  const elemento =
+  document.getElementById(id);
+
+
+
+  if(elemento){
+
+    elemento.innerText =
+    valor;
+
+  }
+
+}
+
+
+
+
+
+function limpiarInput(id){
+
+  const input =
+  document.getElementById(id);
+
+
+
+  if(input){
+
+    input.value = '';
+
+  }
+
+}
+
+
+
+
+
 // ======================
 // INICIO
 // ======================
 
-setTimeout(() => {
+setTimeout(function(){
 
   renderInventario();
 
@@ -747,3 +1230,4 @@ setTimeout(() => {
   actualizarKPIs();
 
 }, 100);
+
