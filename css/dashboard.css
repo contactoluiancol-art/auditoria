@@ -215,11 +215,14 @@ NOTIFICACIONES
 
 .notificaciones-box{
   position:relative;
+  display:flex;
+  align-items:center;
 }
 
 .campana{
-  width:44px;
-  height:44px;
+
+  width:42px;
+  height:42px;
 
   border-radius:12px;
 
@@ -235,20 +238,26 @@ NOTIFICACIONES
 
   position:relative;
 
-  font-size:20px;
+  font-size:18px;
+
+  transition:.2s;
+}
+
+.campana:hover{
+  background:#dbeafe;
 }
 
 #contadorNotificaciones{
 
   position:absolute;
 
-  top:-5px;
+  top:-4px;
 
-  right:-5px;
+  right:-4px;
 
-  width:20px;
+  width:18px;
 
-  height:20px;
+  height:18px;
 
   border-radius:50%;
 
@@ -256,13 +265,15 @@ NOTIFICACIONES
 
   color:white;
 
-  font-size:11px;
+  font-size:10px;
 
   display:flex;
 
   align-items:center;
 
   justify-content:center;
+
+  font-weight:700;
 }
 
 .panel-notificaciones{
@@ -271,61 +282,129 @@ NOTIFICACIONES
 
   position:absolute;
 
-  right:0;
-
   top:55px;
 
-  width:320px;
+  right:0;
+
+  width:280px;
 
   background:white;
 
-  border-radius:16px;
-
-  box-shadow:
-  0 10px 30px rgba(0,0,0,.15);
+  border-radius:14px;
 
   border:
   1px solid #e2e8f0;
 
+  box-shadow:
+  0 10px 25px rgba(0,0,0,.12);
+
   overflow:hidden;
+
+  z-index:999;
+}
+
+.panel-notificaciones.active{
+  display:block;
 }
 
 .notificaciones-header{
 
-  padding:16px;
+  padding:12px 14px;
 
   border-bottom:
   1px solid #e2e8f0;
 
   display:flex;
 
-  justify-content:space-between;
-
   align-items:center;
+
+  justify-content:space-between;
+}
+
+.notificaciones-header h3{
+  font-size:15px;
+  color:#0f172a;
 }
 
 .btn-limpiar-noti{
 
-  height:34px;
+  height:30px;
 
-  padding:0 14px;
+  padding:0 10px;
 
   border:none;
 
-  border-radius:10px;
+  border-radius:8px;
 
   background:#facc15;
 
-  font-size:13px;
+  font-size:12px;
 
   font-weight:700;
 
   cursor:pointer;
+
+  transition:.2s;
+}
+
+.btn-limpiar-noti:hover{
+  background:#eab308;
 }
 
 .sin-notificaciones{
-  padding:20px;
+
+  padding:14px;
+
+  font-size:13px;
+
   color:#64748b;
+}
+
+.notificacion-item{
+
+  padding:14px;
+
+  border-bottom:
+  1px solid #f1f5f9;
+}
+
+.notificacion-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:10px;
+}
+
+.notificacion-item p{
+  font-size:13px;
+  line-height:1.5;
+  color:#0f172a;
+}
+
+.notificacion-item span{
+
+  display:block;
+
+  margin-top:6px;
+
+  font-size:11px;
+
+  color:#94a3b8;
+}
+
+.btn-eliminar-noti{
+
+  border:none;
+
+  background:none;
+
+  cursor:pointer;
+
+  font-size:12px;
+
+  color:#ef4444;
 }
 
 /* =========================
