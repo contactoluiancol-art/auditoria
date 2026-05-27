@@ -3,10 +3,12 @@
 // EVENTO
 // ======================
 
-const guardarAuditoriaBtn =
+var guardarAuditoriaBtn =
 document.getElementById(
   'guardarAuditoria'
 );
+
+
 
 if(guardarAuditoriaBtn){
 
@@ -30,22 +32,28 @@ if(guardarAuditoriaBtn){
 
 async function guardarAuditoria(){
 
-  const procesoInput =
+  var procesoInput =
   document.getElementById(
     'procesoInput'
   );
 
-  const hallazgoInput =
+
+
+  var hallazgoInput =
   document.getElementById(
     'hallazgoInput'
   );
 
-  const responsableInput =
+
+
+  var responsableInput =
   document.getElementById(
     'responsableInput'
   );
 
-  const estadoInput =
+
+
+  var estadoInput =
   document.getElementById(
     'estadoInput'
   );
@@ -70,16 +78,22 @@ async function guardarAuditoria(){
 
 
 
-  const proceso =
+  var proceso =
   procesoInput.value.trim();
 
-  const hallazgo =
+
+
+  var hallazgo =
   hallazgoInput.value.trim();
 
-  const responsable =
+
+
+  var responsable =
   responsableInput.value.trim();
 
-  const estado =
+
+
+  var estado =
   estadoInput.value;
 
 
@@ -104,7 +118,7 @@ async function guardarAuditoria(){
 
 
 
-  const response =
+  var response =
 
   await window.supabaseClient
 
@@ -128,7 +142,7 @@ async function guardarAuditoria(){
 
 
 
-  const error =
+  var error =
   response.error;
 
 
@@ -147,16 +161,70 @@ async function guardarAuditoria(){
 
 
 
-  await guardarHistorial(
+  // ======================
+  // NOTIFICACIONES
+  // ======================
 
-    'CREAR',
+  var notificaciones =
 
-    'AUDITORIAS',
+  JSON.parse(
 
-    'Se creó auditoría ' +
-    proceso
+    localStorage.getItem(
+      'notificaciones'
+    )
+
+  ) || [];
+
+
+
+  notificaciones.unshift({
+
+    mensaje:
+
+    'Nueva auditoría creada: ' +
+    proceso,
+
+
+
+    fecha:
+
+    new Date()
+    .toLocaleString()
+
+  });
+
+
+
+  localStorage.setItem(
+
+    'notificaciones',
+
+    JSON.stringify(
+      notificaciones
+    )
 
   );
+
+
+
+  // ======================
+  // HISTORIAL
+  // ======================
+
+  if(typeof guardarHistorial === 'function'){
+
+    await guardarHistorial(
+
+      'CREAR',
+
+      'AUDITORIAS',
+
+      'Se creó auditoría ' +
+      proceso
+
+    );
+
+  }
 
 
 
@@ -177,12 +245,12 @@ async function guardarAuditoria(){
 
 
 // ======================
-// RENDER
+// RENDER AUDITORIAS
 // ======================
 
 async function renderAuditorias(){
 
-  const body =
+  var body =
   document.getElementById(
     'auditoriasBody'
   );
@@ -201,7 +269,7 @@ async function renderAuditorias(){
 
 
 
-  const response =
+  var response =
 
   await window.supabaseClient
 
@@ -223,10 +291,12 @@ async function renderAuditorias(){
 
 
 
-  const data =
+  var data =
   response.data;
 
-  const error =
+
+
+  var error =
   response.error;
 
 
@@ -249,7 +319,7 @@ async function renderAuditorias(){
 
       '<td colspan="6">' +
 
-      'No hay auditorías registradas' +
+        'No hay auditorías registradas' +
 
       '</td>' +
 
@@ -265,7 +335,7 @@ async function renderAuditorias(){
 
   data.forEach(function(item){
 
-    let estadoClass = '';
+    var estadoClass = '';
 
 
 
@@ -315,12 +385,16 @@ async function renderAuditorias(){
       '<td>' +
 
         new Date(
+
           item.created_at
+
         ).toLocaleString() +
 
       '</td>' +
 
       '<td class="acciones-tabla">' +
+
+
 
         '<button ' +
 
@@ -328,7 +402,7 @@ async function renderAuditorias(){
 
           'onclick="eliminarAuditoria(' +
 
-          "'" + item.id + "'" +
+            "'" + item.id + "'" +
 
           ')"' +
 
@@ -337,6 +411,26 @@ async function renderAuditorias(){
           'Eliminar' +
 
         '</button>' +
+
+
+
+        '<button ' +
+
+          'class="btn-editar" ' +
+
+          'onclick="editarEstado(' +
+
+            "'" + item.id + "'" +
+
+          ')"' +
+
+        '>' +
+
+          'Editar' +
+
+        '</button>' +
+
+
 
       '</td>' +
 
@@ -351,12 +445,12 @@ async function renderAuditorias(){
 
 
 // ======================
-// ELIMINAR
+// ELIMINAR AUDITORIA
 // ======================
 
 async function eliminarAuditoria(id){
 
-  const confirmar = confirm(
+  var confirmar = confirm(
 
     '¿Desea eliminar esta auditoría?'
 
@@ -372,7 +466,7 @@ async function eliminarAuditoria(id){
 
 
 
-  const consulta =
+  var consulta =
 
   await window.supabaseClient
 
@@ -386,12 +480,12 @@ async function eliminarAuditoria(id){
 
 
 
-  const data =
+  var data =
   consulta.data;
 
 
 
-  const response =
+  var response =
 
   await window.supabaseClient
 
@@ -403,7 +497,7 @@ async function eliminarAuditoria(id){
 
 
 
-  const error =
+  var error =
   response.error;
 
 
@@ -422,7 +516,7 @@ async function eliminarAuditoria(id){
 
 
 
-  let proceso = '';
+  var proceso = '';
 
 
 
@@ -435,16 +529,20 @@ async function eliminarAuditoria(id){
 
 
 
-  await guardarHistorial(
+  if(typeof guardarHistorial === 'function'){
 
-    'ELIMINAR',
+    await guardarHistorial(
 
-    'AUDITORIAS',
+      'ELIMINAR',
 
-    'Se eliminó auditoría ' +
-    proceso
+      'AUDITORIAS',
 
-  );
+      'Se eliminó auditoría ' +
+      proceso
+
+    );
+
+  }
 
 
 
@@ -457,27 +555,144 @@ async function eliminarAuditoria(id){
 
 
 // ======================
-// LIMPIAR
+// EDITAR ESTADO
+// ======================
+
+async function editarEstado(id){
+
+  var response =
+
+  await window.supabaseClient
+
+  .from('auditorias')
+
+  .select('*')
+
+  .eq('id', id)
+
+  .single();
+
+
+
+  var data =
+  response.data;
+
+
+
+  if(!data){
+
+    return;
+
+  }
+
+
+
+  var nuevoEstado = prompt(
+
+    'Nuevo estado:',
+
+    data.estado
+
+  );
+
+
+
+  if(!nuevoEstado){
+
+    return;
+
+  }
+
+
+
+  var updateResponse =
+
+  await window.supabaseClient
+
+  .from('auditorias')
+
+  .update({
+
+    estado: nuevoEstado
+
+  })
+
+  .eq('id', id);
+
+
+
+  var error =
+  updateResponse.error;
+
+
+
+  if(error){
+
+    console.log(error);
+
+    alert(
+      'Error actualizando'
+    );
+
+    return;
+
+  }
+
+
+
+  if(typeof guardarHistorial === 'function'){
+
+    await guardarHistorial(
+
+      'EDITAR',
+
+      'AUDITORIAS',
+
+      'Se editó auditoría ' +
+      data.proceso
+
+    );
+
+  }
+
+
+
+  await renderAuditorias();
+
+}
+
+
+
+
+
+// ======================
+// LIMPIAR FORMULARIO
 // ======================
 
 function limpiarFormulario(){
 
-  const procesoInput =
+  var procesoInput =
   document.getElementById(
     'procesoInput'
   );
 
-  const hallazgoInput =
+
+
+  var hallazgoInput =
   document.getElementById(
     'hallazgoInput'
   );
 
-  const responsableInput =
+
+
+  var responsableInput =
   document.getElementById(
     'responsableInput'
   );
 
-  const estadoInput =
+
+
+  var estadoInput =
   document.getElementById(
     'estadoInput'
   );
