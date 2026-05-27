@@ -1,4 +1,4 @@
-
+```javascript
 // ======================
 // VARIABLES GLOBALES
 // ======================
@@ -29,32 +29,32 @@ var productoActual = null;
 // ELEMENTOS
 // ======================
 
-const excelFile =
+var excelFile =
 document.getElementById(
   'excelFile'
 );
 
-const reiniciarInventarioBtn =
+var reiniciarInventarioBtn =
 document.getElementById(
   'reiniciarInventario'
 );
 
-const buscarBtn =
+var buscarBtn =
 document.getElementById(
   'buscarBtn'
 );
 
-const guardarConteoBtn =
+var guardarConteoBtn =
 document.getElementById(
   'guardarConteo'
 );
 
-const exportarExcelBtn =
+var exportarExcelBtn =
 document.getElementById(
   'exportarExcel'
 );
 
-const buscadorInventario =
+var buscadorInventario =
 document.getElementById(
   'buscadorInventario'
 );
@@ -563,14 +563,92 @@ function guardarHistorial(
 
 
 // ======================
+// FILTRAR HISTORIAL
+// ======================
+
+function filtrarHistorial(tipo){
+
+  let historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
+  ) || [];
+
+
+
+  if(tipo === 'exactos'){
+
+    historial = historial.filter(
+
+      function(item){
+
+        return Number(
+          item.diferencia
+        ) === 0;
+
+      }
+
+    );
+
+  }
+
+
+
+  else if(tipo === 'faltantes'){
+
+    historial = historial.filter(
+
+      function(item){
+
+        return Number(
+          item.diferencia
+        ) < 0;
+
+      }
+
+    );
+
+  }
+
+
+
+  else if(tipo === 'sobrantes'){
+
+    historial = historial.filter(
+
+      function(item){
+
+        return Number(
+          item.diferencia
+        ) > 0;
+
+      }
+
+    );
+
+  }
+
+
+
+  renderHistorial(
+    historial
+  );
+
+}
+
+
+
+
+
+// ======================
 // RENDER INVENTARIO
 // ======================
 
-function renderInventario(
-
-  datos
-
-){
+function renderInventario(datos){
 
   if(!datos){
 
@@ -709,7 +787,7 @@ function filtrarInventario(){
 // RENDER HISTORIAL
 // ======================
 
-function renderHistorial(){
+function renderHistorial(datos){
 
   const body =
   document.getElementById(
@@ -726,15 +804,19 @@ function renderHistorial(){
 
 
 
-  let historial =
+  if(!datos){
 
-  JSON.parse(
+    datos =
 
-    localStorage.getItem(
-      'historial'
-    )
+    JSON.parse(
 
-  ) || [];
+      localStorage.getItem(
+        'historial'
+      )
+
+    ) || [];
+
+  }
 
 
 
@@ -742,7 +824,29 @@ function renderHistorial(){
 
 
 
-  historial.forEach(function(item){
+  if(datos.length === 0){
+
+    body.innerHTML =
+
+    '<tr>' +
+
+      '<td colspan="5">' +
+
+      'No hay registros' +
+
+      '</td>' +
+
+    '</tr>';
+
+
+
+    return;
+
+  }
+
+
+
+  datos.forEach(function(item){
 
     body.innerHTML +=
 
@@ -995,12 +1099,7 @@ function reiniciarInventario(){
 // HELPERS
 // ======================
 
-function actualizarTexto(
-
-  id,
-  valor
-
-){
+function actualizarTexto(id, valor){
 
   const elemento =
   document.getElementById(id);
@@ -1119,3 +1218,4 @@ setTimeout(function(){
   actualizarKPIs();
 
 }, 100);
+```
