@@ -1,55 +1,521 @@
-/* =========================
+<!DOCTYPE html>
+<html lang="es">
 
-  .sidebar{
-    position:relative;
-    width:100%;
-    height:auto;
-  }
+<head>
 
-  .dashboard{
-    flex-direction:column;
-  }
+  <meta charset="UTF-8">
 
-  .main-content{
-    margin-left:0;
-    width:100%;
-  }
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  .topbar{
-    flex-direction:column;
-    gap:15px;
-    align-items:flex-start;
-  }
+  <title>
+    Audit System
+  </title>
 
-  .welcome-left{
-    flex-direction:column;
-    align-items:flex-start;
-  }
 
-  .content{
-    padding:20px;
-  }
+  <link
+    rel="stylesheet"
+    href="css/dashboard.css"
+  >
 
-}
+  <link
+  rel="stylesheet"
+  href="css/historial.css"
+/>
 
-@media(max-width:480px){
+</head>
 
-  .dashboard-card{
-    padding:20px;
-  }
+<body>
 
-  .welcome-banner{
-    padding:25px;
-  }
+  <div class="dashboard">
 
-  .welcome-banner h1{
-    font-size:24px;
-  }
 
-  th,
-  td{
-    font-size:12px;
-    padding:10px;
-  }
 
-}
+
+    <!-- =========================
+    SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+      <div class="logo">
+
+        <h2>
+          AUDITORIA
+        </h2>
+
+        <p>
+          Auditoría Logística
+        </p>
+
+      </div>
+
+
+
+      <nav>
+
+        <ul>
+
+          <!-- DASHBOARD -->
+
+          <li
+            id="dashboardMenu"
+            class="active"
+          >
+
+            🏠 Dashboard
+
+          </li>
+
+
+
+
+          <!-- INVENTARIO -->
+
+          <li id="inventarioMenu">
+
+            📦 Inventario
+
+          </li>
+
+
+
+
+          <!-- AUDITORIAS -->
+
+          <li id="auditoriasMenu">
+
+            📋 Auditorías
+
+          </li>
+
+
+
+
+          <!-- RECEPCION -->
+
+          <li id="recepcionMenu">
+
+            📥 Recepción
+
+          </li>
+
+
+
+          <!-- USUARIOS -->
+
+          <li id="usuariosMenu">
+
+            👥 Usuarios
+
+          </li>
+
+            <li id="historialMenu">
+
+  🕓 Historial
+
+</li>
+          
+
+          <!-- LOGOUT -->
+
+          <li>
+
+            <button
+              id="cerrarSesionBtn"
+              class="logout-btn"
+            >
+
+              Cerrar Sesión
+
+            </button>
+
+          </li>
+
+        </ul>
+
+      </nav>
+
+    </aside>
+
+
+
+
+
+
+    <!-- =========================
+    MAIN
+    ========================= -->
+
+    <main class="main-content">
+
+
+
+      <!-- =========================
+      TOPBAR
+      ========================= -->
+
+      <header class="topbar">
+
+        <div>
+
+          <h1>
+            Dashboard
+          </h1>
+
+        </div>
+
+
+<div class="topbar-right">
+
+
+
+
+  <!-- NOTIFICACIONES -->
+
+  <div
+    class="notificaciones-box"
+    id="notificacionesBox"
+  >
+
+    <div
+      class="campana"
+      id="campanaBtn"
+    >
+
+      🔔
+
+      <span
+        id="contadorNotificaciones"
+      >
+
+        0
+
+      </span>
+
+    </div>
+
+
+<div class="notificaciones-header">
+
+
+  <button
+    class="btn-limpiar-noti"
+    onclick="limpiarNotificaciones()"
+  >
+
+    Limpiar
+
+  </button>
+
+</div>
+
+    <!-- PANEL -->
+
+    <div
+      class="panel-notificaciones"
+      id="panelNotificaciones"
+    >
+
+
+
+      <div
+        id="listaNotificaciones"
+      >
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- USER -->
+
+  <div class="user-info">
+
+    <span id="usuarioNombre">
+
+    </span>
+
+  </div>
+
+</div>
+
+      </header>
+
+
+
+
+
+
+      <!-- =========================
+      CONTENIDO
+      ========================= -->
+
+      <section
+        class="content"
+        id="mainContent"
+      >
+
+
+
+        <!-- =========================
+        WELCOME
+        ========================= -->
+
+        <div class="welcome-banner">
+
+          <div class="welcome-left">
+
+            <div class="welcome-icon">
+
+              📋
+
+            </div>
+
+
+
+            <div>
+
+              <h1>
+
+                Bienvenido al sistema
+
+              </h1>
+
+
+
+              <p>
+
+                Gestiona y controla
+                los procesos de
+                auditoría logística
+                de forma eficiente.
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+
+
+
+        <!-- =========================
+        GRID
+        ========================= -->
+
+        <div class="dashboard-grid">
+
+
+
+
+          <!-- =========================
+          INVENTARIO
+          ========================= -->
+
+          <div
+            id="cardInventario"
+            class="dashboard-card"
+          >
+
+            <div class="card-icon">
+
+              📦
+
+            </div>
+
+
+            <h3>
+
+              Inventario
+
+            </h3>
+
+
+            <p>
+
+              Gestión de inventarios
+              y conteos cíclicos.
+
+            </p>
+
+          </div>
+
+
+
+
+
+
+          <!-- =========================
+          AUDITORIAS
+          ========================= -->
+
+          <div
+            id="cardAuditorias"
+            class="dashboard-card"
+          >
+
+            <div class="card-icon">
+
+              📋
+
+            </div>
+
+
+            <h3>
+
+              Auditorías
+
+            </h3>
+
+
+            <p>
+
+              Control y seguimiento
+              de auditorías.
+
+            </p>
+
+          </div>
+
+
+
+
+
+
+          <!-- =========================
+          RECEPCION
+          ========================= -->
+
+          <div
+            id="cardRecepcion"
+            class="dashboard-card"
+          >
+
+            <div class="card-icon">
+
+              📥
+
+            </div>
+
+
+            <h3>
+
+              Recepción
+
+            </h3>
+
+
+            <p>
+
+              Control de recepción
+              de mercancía.
+
+            </p>
+
+          </div>
+
+
+          <!-- =========================
+          USUARIOS
+          ========================= -->
+
+          <div
+            id="cardUsuarios"
+            class="dashboard-card"
+          >
+
+            <div class="card-icon">
+
+              👥
+
+            </div>
+
+
+            <h3>
+
+              Usuarios
+
+            </h3>
+
+
+            <p>
+
+              Administración
+              de usuarios y roles.
+
+            </p>
+<div
+  id="cardHistorial"
+  class="dashboard-card"
+>
+
+  <div class="card-icon">
+
+    🕓
+
+  </div>
+
+  <h3>
+
+    Historial
+
+  </h3>
+
+  <p>
+
+    Seguimiento de movimientos
+    del sistema.
+
+  </p>
+
+</div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+  LIBRERIAS
+  ========================= -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+  <!-- =========================
+  JS
+  ========================= -->
+
+  <script
+    src="js/dashboard.js?v=13"
+    defer
+  ></script>
+
+</body>
+
+</html>
