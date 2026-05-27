@@ -238,7 +238,7 @@ FORMULARIOS
 input,
 select,
 textarea{
-    width:100%;
+    width:15%;
     padding:14px;
     border:1px solid #d1d5db;
     border-radius:14px;
