@@ -474,3 +474,142 @@ RESPONSIVE
   }
 
 }
+/* =========================
+SCROLL GLOBAL
+========================= */
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+/* =========================
+DASHBOARD
+========================= */
+
+.dashboard{
+  min-height:100vh;
+}
+
+/* =========================
+MAIN CONTENT
+========================= */
+
+.main-content{
+  min-height:100vh;
+  overflow-y:auto;
+}
+
+/* =========================
+CONTENT
+========================= */
+
+.content{
+  width:100%;
+  padding:30px;
+}
+
+/* =========================
+TABLAS
+========================= */
+
+.table-container{
+  overflow-x:auto;
+  width:100%;
+}
+
+/* =========================
+BOTONES RESPONSIVE
+========================= */
+
+button{
+  white-space:nowrap;
+}
+
+/* =========================
+INPUTS
+========================= */
+
+input,
+select,
+textarea{
+  width:100%;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+  }
+
+  .main-content{
+    margin-left:0;
+    width:100%;
+  }
+
+  .dashboard{
+    flex-direction:column;
+  }
+
+  .content{
+    padding:15px;
+  }
+
+  .topbar{
+    padding:15px;
+  }
+
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+
+  .welcome-banner{
+    padding:25px;
+  }
+
+  .welcome-left{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .topbar-right{
+    width:100%;
+    justify-content:space-between;
+  }
+
+}
+
+/* =========================
+TABLET
+========================= */
+
+@media(min-width:769px) and (max-width:1024px){
+
+  .dashboard-grid{
+    grid-template-columns:
+    repeat(2,1fr);
+  }
+
+}
+
+/* =========================
+PANTALLAS GRANDES
+========================= */
+
+@media(min-width:1400px){
+
+  .content{
+    max-width:1600px;
+  }
+
+}
