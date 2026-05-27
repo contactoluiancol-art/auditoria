@@ -102,7 +102,11 @@ document.getElementById(
   'usuarioNombre'
 ).innerText =
 
-`${usuarioLogueado.usuario} | ${usuarioLogueado.rol}`;
+usuarioLogueado.usuario +
+
+' | ' +
+
+usuarioLogueado.rol;
 
 
 
