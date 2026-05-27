@@ -1,4 +1,4 @@
-```javascript id="2u7x0z"
+
 // ======================
 // VALIDAR LIBRERIA SUPABASE
 // ======================
@@ -1028,4 +1028,4 @@ if(cerrarSesionBtn){
 aplicarPermisos();
 
 renderNotificaciones();
-```
+
