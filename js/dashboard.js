@@ -1270,7 +1270,60 @@ window.addEventListener(
 );
 
 
+// ======================
+// GUARDAR HISTORIAL
+// ======================
 
+async function guardarHistorial(
+
+  accion,
+  modulo,
+  descripcion
+
+){
+
+  const usuario =
+
+  usuarioLogueado?.usuario || 'Sistema';
+
+
+
+
+  const { error } =
+
+  await supabaseClient
+
+  .from('historial')
+
+  .insert([
+
+    {
+
+      accion,
+
+      modulo,
+
+      descripcion,
+
+      usuario
+
+    }
+
+  ]);
+
+
+
+
+  if(error){
+
+    console.log(
+      'Error historial:',
+      error
+    );
+
+  }
+
+}
 
 
 // ======================
