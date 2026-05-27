@@ -1,9 +1,9 @@
-
+```javascript id="2u7x0z"
 // ======================
 // VALIDAR LIBRERIA SUPABASE
 // ======================
 
-if (!window.supabase) {
+if(!window.supabase){
 
   alert(
     'Supabase no cargó correctamente'
@@ -25,7 +25,7 @@ const supabaseUrl =
 
 
 const supabaseKey =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'TU_SUPABASE_KEY';
 
 
 
@@ -70,7 +70,7 @@ JSON.parse(
 // VALIDAR SESION
 // ======================
 
-if (!usuarioLogueado) {
+if(!usuarioLogueado){
 
   window.location.href =
   'index.html';
@@ -371,6 +371,14 @@ function mostrarModulo(modulo){
 
 
 
+    if(typeof renderNotificaciones === 'function'){
+
+      renderNotificaciones();
+
+    }
+
+
+
     return;
 
   }
@@ -627,8 +635,6 @@ function cargarScript(
 
 
 
-  // ✅ SIN CACHE DINAMICO
-
   script.src = src;
 
 
@@ -652,6 +658,82 @@ function cargarScript(
   document.body.appendChild(
     script
   );
+
+}
+
+
+
+
+
+// ======================
+// RENDER NOTIFICACIONES
+// ======================
+
+function renderNotificaciones(){
+
+  const lista =
+
+  document.getElementById(
+    'listaNotificaciones'
+  );
+
+
+
+  if(!lista){
+
+    return;
+
+  }
+
+
+
+  let notificaciones =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'notificaciones'
+    )
+
+  ) || [];
+
+
+
+  lista.innerHTML = '';
+
+
+
+  if(notificaciones.length === 0){
+
+    lista.innerHTML =
+
+    '<p class="sin-notificaciones">' +
+
+      'No hay notificaciones' +
+
+    '</p>';
+
+
+
+    return;
+
+  }
+
+
+
+  notificaciones.forEach(function(item){
+
+    lista.innerHTML +=
+
+    '<div class="notificacion-item">' +
+
+      '<p>' + item.mensaje + '</p>' +
+
+      '<span>' + item.fecha + '</span>' +
+
+    '</div>';
+
+  });
 
 }
 
@@ -847,6 +929,74 @@ if(historialMenu){
 
 
 // ======================
+// EVENTOS CARDS DASHBOARD
+// ======================
+
+document.addEventListener(
+
+  'click',
+
+  function(e){
+
+    const card =
+
+    e.target.closest(
+      '.dashboard-card'
+    );
+
+
+
+    if(!card){
+
+      return;
+
+    }
+
+
+
+    const acciones = {
+
+      cardInventario:
+      'inventario',
+
+      cardAuditorias:
+      'auditorias',
+
+      cardRecepcion:
+      'recepcion',
+
+      cardUsuarios:
+      'usuarios',
+
+      cardHistorial:
+      'historial'
+
+    };
+
+
+
+    const modulo =
+    acciones[card.id];
+
+
+
+    if(modulo){
+
+      mostrarModulo(
+        modulo
+      );
+
+    }
+
+  }
+
+);
+
+
+
+
+
+// ======================
 // BOTON CERRAR SESION
 // ======================
 
@@ -877,3 +1027,5 @@ if(cerrarSesionBtn){
 
 aplicarPermisos();
 
+renderNotificaciones();
+```
