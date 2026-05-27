@@ -1,36 +1,158 @@
-<link rel="stylesheet" href="css/historial.css">
-<div class="historial-container">
+<div class="module-container">
 
-  <h1>
+  <!-- HEADER -->
 
-    🕓 Historial del Sistema
+  <div class="module-header">
 
-  </h1>
+    <div>
 
-  <table>
+      <h2>
+        🕓 Historial
+      </h2>
 
-    <thead>
+      <p>
+        Seguimiento de movimientos y acciones del sistema
+      </p>
 
-      <tr>
+    </div>
 
-        <th>Usuario</th>
+  </div>
 
-        <th>Acción</th>
 
-        <th>Módulo</th>
 
-        <th>Descripción</th>
 
-        <th>Fecha</th>
 
-      </tr>
+  <!-- KPIS -->
 
-    </thead>
+  <div class="kpi-grid">
 
-    <tbody id="historialBody">
+    <div class="kpi-card">
 
-    </tbody>
+      <span>
+        Total Registros
+      </span>
 
-  </table>
+      <h3 id="kpiHistorial">
+        0
+      </h3>
+
+    </div>
+
+
+
+
+
+    <div class="kpi-card">
+
+      <span>
+        Inventario
+      </span>
+
+      <h3 id="kpiInventario">
+        0
+      </h3>
+
+    </div>
+
+
+
+
+
+    <div class="kpi-card">
+
+      <span>
+        Auditorías
+      </span>
+
+      <h3 id="kpiAuditorias">
+        0
+      </h3>
+
+    </div>
+
+
+
+
+
+    <div class="kpi-card">
+
+      <span>
+        Recepción
+      </span>
+
+      <h3 id="kpiRecepcion">
+        0
+      </h3>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- TABLA -->
+
+  <div class="module-card">
+
+    <div class="table-header">
+
+      <h3>
+        Movimientos del Sistema
+      </h3>
+
+
+
+
+
+      <input
+        type="text"
+        id="buscarHistorial"
+        placeholder="Buscar movimiento..."
+        class="search-input"
+      >
+
+    </div>
+
+
+
+
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Usuario</th>
+
+            <th>Módulo</th>
+
+            <th>Acción</th>
+
+            <th>Detalle</th>
+
+            <th>Fecha</th>
+
+          </tr>
+
+        </thead>
+
+
+
+
+
+        <tbody id="historialBody">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
 
 </div>
