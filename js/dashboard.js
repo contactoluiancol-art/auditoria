@@ -105,7 +105,21 @@ usuarioLogueado.rol;
 
 
 // ======================
-// OCULTAR MODULOS
+// DASHBOARD ORIGINAL
+// ======================
+
+const dashboardOriginal =
+
+document.getElementById(
+  'mainContent'
+).innerHTML;
+
+
+
+
+
+// ======================
+// OCULTAR MODULO
 // ======================
 
 function ocultarModulo(id){
@@ -130,7 +144,7 @@ function ocultarModulo(id){
 
 
 // ======================
-// OCULTAR CARDS
+// OCULTAR CARD
 // ======================
 
 function ocultarCard(id){
@@ -159,8 +173,6 @@ function ocultarCard(id){
 // ======================
 
 function aplicarPermisos(){
-
-
 
 
 
@@ -212,8 +224,6 @@ function aplicarPermisos(){
       'usuariosMenu'
     );
 
-
-
     ocultarCard(
       'cardUsuarios'
     );
@@ -234,8 +244,6 @@ function aplicarPermisos(){
       'usuariosMenu'
     );
 
-
-
     ocultarCard(
       'cardUsuarios'
     );
@@ -243,20 +251,6 @@ function aplicarPermisos(){
   }
 
 }
-
-
-
-
-
-// ======================
-// DASHBOARD ORIGINAL
-// ======================
-
-const dashboardOriginal =
-
-document.getElementById(
-  'mainContent'
-).innerHTML;
 
 
 
@@ -316,15 +310,31 @@ function mostrarModulo(modulo){
 
         'inventarioScript',
 
-        'js/inventario.js?v=15',
+        'js/inventario.js?v=16',
 
         () => {
 
-          renderInventario();
+          if(typeof renderInventario === 'function'){
 
-          renderHistorial();
+            renderInventario();
 
-          actualizarKPIs();
+          }
+
+
+
+          if(typeof renderHistorial === 'function'){
+
+            renderHistorial();
+
+          }
+
+
+
+          if(typeof actualizarKPIs === 'function'){
+
+            actualizarKPIs();
+
+          }
 
         }
 
@@ -357,11 +367,15 @@ function mostrarModulo(modulo){
 
         'auditoriasScript',
 
-        'js/auditorias.js?v=15',
+        'js/auditorias.js?v=16',
 
         () => {
 
-          renderAuditorias();
+          if(typeof renderAuditorias === 'function'){
+
+            renderAuditorias();
+
+          }
 
         }
 
@@ -394,11 +408,15 @@ function mostrarModulo(modulo){
 
         'usuariosScript',
 
-        'js/usuarios.js?v=15',
+        'js/usuarios.js?v=16',
 
         () => {
 
-          renderUsuarios();
+          if(typeof renderUsuarios === 'function'){
+
+            renderUsuarios();
+
+          }
 
         }
 
@@ -431,7 +449,7 @@ function mostrarModulo(modulo){
 
         'recepcionScript',
 
-        'js/recepcion.js?v=15'
+        'js/recepcion.js?v=16'
 
       );
 
@@ -446,10 +464,14 @@ function mostrarModulo(modulo){
 
 
 // ======================
-// CARGAR SCRIPT
+// CARGAR SCRIPT LIMPIO
 // ======================
 
 function cargarScript(id, src, callback){
+
+  // ======================
+  // ELIMINAR SCRIPT ANTERIOR
+  // ======================
 
   const scriptAnterior =
 
@@ -457,19 +479,19 @@ function cargarScript(id, src, callback){
 
 
 
-
-
   if(scriptAnterior){
 
-    callback?.();
-
-    return;
+    scriptAnterior.remove();
 
   }
 
 
 
 
+
+  // ======================
+  // CREAR SCRIPT NUEVO
+  // ======================
 
   const script =
 
@@ -479,13 +501,21 @@ function cargarScript(id, src, callback){
 
 
 
-  script.src = src;
+  script.src =
+
+  src + '&cache=' + Date.now();
+
+
 
   script.id = id;
 
 
 
 
+
+  // ======================
+  // ONLOAD
+  // ======================
 
   script.onload = () => {
 
@@ -500,6 +530,10 @@ function cargarScript(id, src, callback){
 
 
 
+
+  // ======================
+  // INSERTAR
+  // ======================
 
   document.body.appendChild(
     script
@@ -639,8 +673,6 @@ document.addEventListener(
 
 
 
-
-
     if(!card){
 
       return;
@@ -727,8 +759,6 @@ document.getElementById(
 // ======================
 
 function renderNotificaciones(){
-
-
 
 
 
@@ -965,13 +995,9 @@ campanaBtn?.addEventListener(
 
 
 
-
-
     panelNotificaciones?.classList.toggle(
       'active'
     );
-
-
 
 
 
@@ -987,8 +1013,6 @@ campanaBtn?.addEventListener(
 
 
 
-
-
     notificaciones =
 
     notificaciones.map(item => {
@@ -1001,8 +1025,6 @@ campanaBtn?.addEventListener(
 
 
 
-
-
     localStorage.setItem(
 
       'notificaciones',
@@ -1012,8 +1034,6 @@ campanaBtn?.addEventListener(
       )
 
     );
-
-
 
 
 
@@ -1137,8 +1157,6 @@ function limpiarNotificaciones(){
     '¿Seguro que deseas limpiar todas las notificaciones?'
 
   );
-
-
 
 
 
