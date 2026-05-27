@@ -79,21 +79,7 @@ if(!usuarioLogueado){
 
 
 // ======================
-// MOSTRAR USUARIO
-// ======================
-
-document.getElementById(
-  'usuarioNombre'
-).innerText =
-
-`${usuarioLogueado.usuario} | ${usuarioLogueado.rol}`;
-
-
-
-
-
-// ======================
-// ROL
+// VARIABLES GLOBALES
 // ======================
 
 const rol =
@@ -102,17 +88,25 @@ usuarioLogueado.rol;
 
 
 
-
-
-// ======================
-// DASHBOARD ORIGINAL
-// ======================
-
 const dashboardOriginal =
 
 document.getElementById(
   'mainContent'
 ).innerHTML;
+
+
+
+
+
+// ======================
+// MOSTRAR USUARIO
+// ======================
+
+document.getElementById(
+  'usuarioNombre'
+).innerText =
+
+`${usuarioLogueado.usuario} | ${usuarioLogueado.rol}`;
 
 
 
@@ -194,8 +188,6 @@ function aplicarPermisos(){
       'usuariosMenu'
     );
 
-
-
     ocultarModulo(
       'historialMenu'
     );
@@ -213,8 +205,6 @@ function aplicarPermisos(){
     ocultarCard(
       'cardUsuarios'
     );
-
-
 
     ocultarCard(
       'cardHistorial'
@@ -236,8 +226,6 @@ function aplicarPermisos(){
       'usuariosMenu'
     );
 
-
-
     ocultarCard(
       'cardUsuarios'
     );
@@ -257,8 +245,6 @@ function aplicarPermisos(){
     ocultarModulo(
       'usuariosMenu'
     );
-
-
 
     ocultarCard(
       'cardUsuarios'
@@ -286,9 +272,8 @@ async function guardarHistorial(
 
   const usuario =
 
-  usuarioLogueado?.usuario || 'Sistema';
-
-
+  usuarioLogueado?.usuario ||
+  'Sistema';
 
 
 
@@ -313,8 +298,6 @@ async function guardarHistorial(
     }
 
   ]);
-
-
 
 
 
@@ -347,8 +330,6 @@ function mostrarModulo(modulo){
 
 
 
-
-
   // ======================
   // DASHBOARD
   // ======================
@@ -366,62 +347,51 @@ function mostrarModulo(modulo){
 
 
 
-
-
   // ======================
   // INVENTARIO
   // ======================
 
   if(modulo === 'inventario'){
 
-    fetch('modules/inventario.html')
+    cargarModulo(
 
-    .then(res => res.text())
+      contenido,
 
-    .then(html => {
+      'modules/inventario.html',
 
-      contenido.innerHTML =
-      html;
+      'inventarioScript',
 
-      cargarScript(
+      'js/inventario.js?v=17',
 
-        'inventarioScript',
+      () => {
 
-        'js/inventario.js?v=17',
+        if(typeof renderInventario === 'function'){
 
-        () => {
-
-          if(typeof renderInventario === 'function'){
-
-            renderInventario();
-
-          }
-
-
-
-          if(typeof renderHistorial === 'function'){
-
-            renderHistorial();
-
-          }
-
-
-
-          if(typeof actualizarKPIs === 'function'){
-
-            actualizarKPIs();
-
-          }
+          renderInventario();
 
         }
 
-      );
 
-    });
+
+        if(typeof renderHistorial === 'function'){
+
+          renderHistorial();
+
+        }
+
+
+
+        if(typeof actualizarKPIs === 'function'){
+
+          actualizarKPIs();
+
+        }
+
+      }
+
+    );
 
   }
-
-
 
 
 
@@ -431,38 +401,29 @@ function mostrarModulo(modulo){
 
   else if(modulo === 'auditorias'){
 
-    fetch('modules/auditorias.html')
+    cargarModulo(
 
-    .then(res => res.text())
+      contenido,
 
-    .then(html => {
+      'modules/auditorias.html',
 
-      contenido.innerHTML =
-      html;
+      'auditoriasScript',
 
-      cargarScript(
+      'js/auditorias.js?v=17',
 
-        'auditoriasScript',
+      () => {
 
-        'js/auditorias.js?v=17',
+        if(typeof renderAuditorias === 'function'){
 
-        () => {
-
-          if(typeof renderAuditorias === 'function'){
-
-            renderAuditorias();
-
-          }
+          renderAuditorias();
 
         }
 
-      );
+      }
 
-    });
+    );
 
   }
-
-
 
 
 
@@ -472,38 +433,29 @@ function mostrarModulo(modulo){
 
   else if(modulo === 'usuarios'){
 
-    fetch('modules/usuarios.html')
+    cargarModulo(
 
-    .then(res => res.text())
+      contenido,
 
-    .then(html => {
+      'modules/usuarios.html',
 
-      contenido.innerHTML =
-      html;
+      'usuariosScript',
 
-      cargarScript(
+      'js/usuarios.js?v=17',
 
-        'usuariosScript',
+      () => {
 
-        'js/usuarios.js?v=17',
+        if(typeof renderUsuarios === 'function'){
 
-        () => {
-
-          if(typeof renderUsuarios === 'function'){
-
-            renderUsuarios();
-
-          }
+          renderUsuarios();
 
         }
 
-      );
+      }
 
-    });
+    );
 
   }
-
-
 
 
 
@@ -513,28 +465,19 @@ function mostrarModulo(modulo){
 
   else if(modulo === 'recepcion'){
 
-    fetch('modules/recepcion.html')
+    cargarModulo(
 
-    .then(res => res.text())
+      contenido,
 
-    .then(html => {
+      'modules/recepcion.html',
 
-      contenido.innerHTML =
-      html;
+      'recepcionScript',
 
-      cargarScript(
+      'js/recepcion.js?v=17'
 
-        'recepcionScript',
-
-        'js/recepcion.js?v=17'
-
-      );
-
-    });
+    );
 
   }
-
-
 
 
 
@@ -544,34 +487,27 @@ function mostrarModulo(modulo){
 
   else if(modulo === 'historial'){
 
-    fetch('modules/historial.html')
+    cargarModulo(
 
-    .then(res => res.text())
+      contenido,
 
-    .then(html => {
+      'modules/historial.html',
 
-      contenido.innerHTML =
-      html;
+      'historialScript',
 
-      cargarScript(
+      'js/historial.js?v=17',
 
-        'historialScript',
+      () => {
 
-        'js/historial.js?v=17',
+        if(typeof renderHistorialSistema === 'function'){
 
-        () => {
-
-          if(typeof renderHistorial === 'function'){
-
-            renderHistorial();
-
-          }
+          renderHistorialSistema();
 
         }
 
-      );
+      }
 
-    });
+    );
 
   }
 
@@ -582,16 +518,57 @@ function mostrarModulo(modulo){
 
 
 // ======================
-// CARGAR SCRIPT LIMPIO
+// CARGAR MODULO
 // ======================
 
-function cargarScript(id, src, callback){
+function cargarModulo(
+
+  contenido,
+  htmlPath,
+  scriptId,
+  scriptSrc,
+  callback
+
+){
+
+  fetch(htmlPath)
+
+  .then(res => res.text())
+
+  .then(html => {
+
+    contenido.innerHTML =
+    html;
+
+    cargarScript(
+      scriptId,
+      scriptSrc,
+      callback
+    );
+
+  });
+
+}
+
+
+
+
+
+// ======================
+// CARGAR SCRIPT
+// ======================
+
+function cargarScript(
+
+  id,
+  src,
+  callback
+
+){
 
   const scriptAnterior =
 
   document.getElementById(id);
-
-
 
 
 
@@ -600,8 +577,6 @@ function cargarScript(id, src, callback){
     scriptAnterior.remove();
 
   }
-
-
 
 
 
@@ -623,8 +598,6 @@ function cargarScript(id, src, callback){
 
 
 
-
-
   script.onload = () => {
 
     if(callback){
@@ -634,8 +607,6 @@ function cargarScript(id, src, callback){
     }
 
   };
-
-
 
 
 
@@ -689,8 +660,6 @@ document.getElementById(
 
 
 
-
-
 document.getElementById(
   'inventarioMenu'
 )
@@ -703,8 +672,6 @@ document.getElementById(
   )
 
 );
-
-
 
 
 
@@ -723,8 +690,6 @@ document.getElementById(
 
 
 
-
-
 document.getElementById(
   'usuariosMenu'
 )
@@ -740,8 +705,6 @@ document.getElementById(
 
 
 
-
-
 document.getElementById(
   'recepcionMenu'
 )
@@ -754,8 +717,6 @@ document.getElementById(
   )
 
 );
-
-
 
 
 
@@ -802,60 +763,37 @@ document.addEventListener(
 
 
 
+    const acciones = {
 
+      cardInventario:
+      'inventario',
 
-    if(card.id === 'cardInventario'){
+      cardAuditorias:
+      'auditorias',
 
-      mostrarModulo(
-        'inventario'
-      );
+      cardRecepcion:
+      'recepcion',
 
-    }
+      cardUsuarios:
+      'usuarios',
 
+      cardHistorial:
+      'historial'
 
-
-
-
-    if(card.id === 'cardAuditorias'){
-
-      mostrarModulo(
-        'auditorias'
-      );
-
-    }
+    };
 
 
 
+    const modulo =
 
-
-    if(card.id === 'cardRecepcion'){
-
-      mostrarModulo(
-        'recepcion'
-      );
-
-    }
+    acciones[card.id];
 
 
 
-
-
-    if(card.id === 'cardUsuarios'){
+    if(modulo){
 
       mostrarModulo(
-        'usuarios'
-      );
-
-    }
-
-
-
-
-
-    if(card.id === 'cardHistorial'){
-
-      mostrarModulo(
-        'historial'
+        modulo
       );
 
     }
@@ -924,8 +862,6 @@ function renderNotificaciones(){
 
 
 
-
-
   const notificaciones =
 
   JSON.parse(
@@ -935,8 +871,6 @@ function renderNotificaciones(){
     )
 
   ) || [];
-
-
 
 
 
@@ -956,8 +890,6 @@ function renderNotificaciones(){
 
 
 
-
-
   if(!lista || !contador){
 
     return;
@@ -966,11 +898,7 @@ function renderNotificaciones(){
 
 
 
-
-
   lista.innerHTML = '';
-
-
 
 
 
@@ -982,12 +910,8 @@ function renderNotificaciones(){
 
 
 
-
-
   contador.innerText =
   noLeidas.length;
-
-
 
 
 
@@ -998,8 +922,6 @@ function renderNotificaciones(){
   ? 'none'
 
   : 'flex';
-
-
 
 
 
@@ -1018,8 +940,6 @@ function renderNotificaciones(){
     return;
 
   }
-
-
 
 
 
@@ -1214,8 +1134,6 @@ function eliminarNotificacion(id){
 
 
 
-
-
   notificaciones =
 
   notificaciones.filter(
@@ -1229,8 +1147,6 @@ function eliminarNotificacion(id){
 
 
 
-
-
   localStorage.setItem(
 
     'notificaciones',
@@ -1240,8 +1156,6 @@ function eliminarNotificacion(id){
     )
 
   );
-
-
 
 
 
@@ -1275,13 +1189,9 @@ function limpiarNotificaciones(){
 
 
 
-
-
   localStorage.removeItem(
     'notificaciones'
   );
-
-
 
 
 
