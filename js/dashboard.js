@@ -1,4 +1,4 @@
-```javascript
+
 // ======================
 // VALIDAR LIBRERIA SUPABASE
 // ======================
@@ -1256,4 +1256,4 @@ window.addEventListener(
 aplicarPermisos();
 
 renderNotificaciones();
-```
+
