@@ -1,21 +1,25 @@
-
+```javascript
 // ======================
 // VARIABLES GLOBALES
 // ======================
 
-let inventario =
+if(typeof inventario === 'undefined'){
 
-JSON.parse(
+  var inventario =
 
-  localStorage.getItem(
-    'inventario'
-  )
+  JSON.parse(
 
-) || [];
+    localStorage.getItem(
+      'inventario'
+    )
+
+  ) || [];
+
+}
 
 
 
-let productoActual = null;
+var productoActual = null;
 
 
 
@@ -266,7 +270,11 @@ function buscarProducto(){
 
   productoActual = inventario.find(
 
-    p => p.codigo == codigo
+    function(p){
+
+      return p.codigo == codigo;
+
+    }
 
   );
 
@@ -459,6 +467,14 @@ function guardarHistorial(
 
 ){
 
+  if(!productoActual){
+
+    return;
+
+  }
+
+
+
   let historial =
 
   JSON.parse(
@@ -472,12 +488,15 @@ function guardarHistorial(
 
 
   const index =
+
   historial.findIndex(
 
-    item =>
+    function(item){
 
-    item.codigo ==
-    productoActual.codigo
+      return item.codigo ==
+      productoActual.codigo;
+
+    }
 
   );
 
@@ -494,8 +513,10 @@ function guardarHistorial(
     sistema:
     productoActual.stock,
 
+    fisico:
     fisico,
 
+    diferencia:
     diferencia
 
   };
@@ -542,156 +563,22 @@ function guardarHistorial(
 
 
 // ======================
-// FILTRAR HISTORIAL
-// ======================
-
-function filtrarHistorial(tipo){
-
-  renderHistorial(tipo);
-
-}
-
-
-
-
-
-// ======================
-// RENDER HISTORIAL
-// ======================
-
-function renderHistorial(
-
-  filtro = 'todos'
-
-){
-
-  let historial =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'historial'
-    )
-
-  ) || [];
-
-
-
-  if(filtro === 'exactos'){
-
-    historial = historial.filter(
-
-      item =>
-
-      Number(item.diferencia) === 0
-
-    );
-
-  }
-
-
-
-  else if(filtro === 'faltantes'){
-
-    historial = historial.filter(
-
-      item =>
-
-      Number(item.diferencia) < 0
-
-    );
-
-  }
-
-
-
-  else if(filtro === 'sobrantes'){
-
-    historial = historial.filter(
-
-      item =>
-
-      Number(item.diferencia) > 0
-
-    );
-
-  }
-
-
-
-  const body =
-  document.getElementById(
-    'historialBody'
-  );
-
-
-
-  if(!body){
-
-    return;
-
-  }
-
-
-
-  body.innerHTML = '';
-
-
-
-  historial.forEach(item => {
-
-    body.innerHTML += `
-
-      <tr>
-
-        <td>${item.codigo}</td>
-
-        <td>${item.producto}</td>
-
-        <td>${item.sistema}</td>
-
-        <td>${item.fisico}</td>
-
-        <td>${item.diferencia}</td>
-
-        <td>
-
-          <div class="acciones-tabla">
-
-            <button
-              class="btn-eliminar"
-              onclick="eliminarRegistro('${item.codigo}')"
-            >
-
-              Eliminar
-
-            </button>
-
-          </div>
-
-        </td>
-
-      </tr>
-
-    `;
-
-  });
-
-}
-
-
-
-
-
-// ======================
 // RENDER INVENTARIO
 // ======================
 
 function renderInventario(
 
-  datos = inventario
+  datos
 
 ){
+
+  if(!datos){
+
+    datos = inventario;
+
+  }
+
+
 
   const body =
   document.getElementById(
@@ -723,29 +610,28 @@ function renderInventario(
 
     totalProductos.innerText =
 
-    `Productos cargados: ${datos.length}`;
+    'Productos cargados: ' +
+    datos.length;
 
   }
 
 
 
-  datos.forEach(item => {
+  datos.forEach(function(item){
 
-    body.innerHTML += `
+    body.innerHTML +=
 
-      <tr>
+    '<tr>' +
 
-        <td>${item.codigo || '-'}</td>
+      '<td>' + (item.codigo || '-') + '</td>' +
 
-        <td>${item.producto || '-'}</td>
+      '<td>' + (item.producto || '-') + '</td>' +
 
-        <td>${item.ubicacion || '-'}</td>
+      '<td>' + (item.ubicacion || '-') + '</td>' +
 
-        <td>${item.stock || 0}</td>
+      '<td>' + (item.stock || 0) + '</td>' +
 
-      </tr>
-
-    `;
+    '</tr>';
 
   });
 
@@ -783,7 +669,7 @@ function filtrarInventario(){
 
   const filtrados =
 
-  inventario.filter(item => {
+  inventario.filter(function(item){
 
     return(
 
@@ -820,10 +706,25 @@ function filtrarInventario(){
 
 
 // ======================
-// ELIMINAR REGISTRO
+// RENDER HISTORIAL
 // ======================
 
-function eliminarRegistro(codigo){
+function renderHistorial(){
+
+  const body =
+  document.getElementById(
+    'historialBody'
+  );
+
+
+
+  if(!body){
+
+    return;
+
+  }
+
+
 
   let historial =
 
@@ -837,31 +738,136 @@ function eliminarRegistro(codigo){
 
 
 
-  historial = historial.filter(
-
-    item =>
-
-    item.codigo != codigo
-
-  );
+  body.innerHTML = '';
 
 
 
-  localStorage.setItem(
+  historial.forEach(function(item){
 
-    'historial',
+    body.innerHTML +=
 
-    JSON.stringify(
-      historial
+    '<tr>' +
+
+      '<td>' + item.codigo + '</td>' +
+
+      '<td>' + item.producto + '</td>' +
+
+      '<td>' + item.sistema + '</td>' +
+
+      '<td>' + item.fisico + '</td>' +
+
+      '<td>' + item.diferencia + '</td>' +
+
+    '</tr>';
+
+  });
+
+}
+
+
+
+
+
+// ======================
+// KPIs
+// ======================
+
+function actualizarKPIs(){
+
+  const historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
     )
 
+  ) || [];
+
+
+
+  const total =
+  historial.length;
+
+
+
+  const exactos =
+  historial.filter(function(item){
+
+    return Number(item.diferencia) === 0;
+
+  }).length;
+
+
+
+  const faltantes =
+  historial.filter(function(item){
+
+    return Number(item.diferencia) < 0;
+
+  }).length;
+
+
+
+  const sobrantes =
+  historial.filter(function(item){
+
+    return Number(item.diferencia) > 0;
+
+  }).length;
+
+
+
+  let exactitud = 0;
+
+
+
+  if(total > 0){
+
+    exactitud =
+
+    (
+
+      (exactos / total) * 100
+
+    ).toFixed(1);
+
+  }
+
+
+
+  actualizarTexto(
+    'kpiTotal',
+    total
   );
 
 
 
-  renderHistorial();
+  actualizarTexto(
+    'kpiExactos',
+    exactos
+  );
 
-  actualizarKPIs();
+
+
+  actualizarTexto(
+    'kpiFaltantes',
+    faltantes
+  );
+
+
+
+  actualizarTexto(
+    'kpiSobrantes',
+    sobrantes
+  );
+
+
+
+  actualizarTexto(
+    'kpiExactitud',
+    exactitud + '%'
+  );
 
 }
 
@@ -931,190 +937,6 @@ function exportarExcel(){
 
     'inventario_conteos.xlsx'
 
-  );
-
-}
-
-
-
-
-
-// ======================
-// LIMPIAR FORMULARIO
-// ======================
-
-function limpiarFormulario(){
-
-  limpiarInput(
-    'codigoInput'
-  );
-
-
-
-  limpiarInput(
-    'conteoFisico'
-  );
-
-
-
-  actualizarTexto(
-    'codigoProducto',
-    '-'
-  );
-
-
-
-  actualizarTexto(
-    'nombreProducto',
-    '-'
-  );
-
-
-
-  actualizarTexto(
-    'ubicacionProducto',
-    '-'
-  );
-
-
-
-  actualizarTexto(
-    'stockProducto',
-    '-'
-  );
-
-
-
-  const resultado =
-  document.getElementById(
-    'resultadoTexto'
-  );
-
-
-
-  if(resultado){
-
-    resultado.innerText = '-';
-
-    resultado.className = '';
-
-  }
-
-
-
-  productoActual = null;
-
-}
-
-
-
-
-
-// ======================
-// KPIs
-// ======================
-
-function actualizarKPIs(){
-
-  const historial =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'historial'
-    )
-
-  ) || [];
-
-
-
-  const total =
-  historial.length;
-
-
-
-  const exactos =
-  historial.filter(
-
-    item =>
-
-    Number(item.diferencia) === 0
-
-  ).length;
-
-
-
-  const faltantes =
-  historial.filter(
-
-    item =>
-
-    Number(item.diferencia) < 0
-
-  ).length;
-
-
-
-  const sobrantes =
-  historial.filter(
-
-    item =>
-
-    Number(item.diferencia) > 0
-
-  ).length;
-
-
-
-  let exactitud = 0;
-
-
-
-  if(total > 0){
-
-    exactitud =
-
-    (
-
-      (exactos / total) * 100
-
-    ).toFixed(1);
-
-  }
-
-
-
-  actualizarTexto(
-    'kpiTotal',
-    total
-  );
-
-
-
-  actualizarTexto(
-    'kpiExactos',
-    exactos
-  );
-
-
-
-  actualizarTexto(
-    'kpiFaltantes',
-    faltantes
-  );
-
-
-
-  actualizarTexto(
-    'kpiSobrantes',
-    sobrantes
-  );
-
-
-
-  actualizarTexto(
-    'kpiExactitud',
-    `${exactitud}%`
   );
 
 }
@@ -1217,6 +1039,73 @@ function limpiarInput(id){
 
 
 
+function limpiarFormulario(){
+
+  limpiarInput(
+    'codigoInput'
+  );
+
+
+
+  limpiarInput(
+    'conteoFisico'
+  );
+
+
+
+  actualizarTexto(
+    'codigoProducto',
+    '-'
+  );
+
+
+
+  actualizarTexto(
+    'nombreProducto',
+    '-'
+  );
+
+
+
+  actualizarTexto(
+    'ubicacionProducto',
+    '-'
+  );
+
+
+
+  actualizarTexto(
+    'stockProducto',
+    '-'
+  );
+
+
+
+  const resultado =
+  document.getElementById(
+    'resultadoTexto'
+  );
+
+
+
+  if(resultado){
+
+    resultado.innerText = '-';
+
+    resultado.className = '';
+
+  }
+
+
+
+  productoActual = null;
+
+}
+
+
+
+
+
 // ======================
 // INICIO
 // ======================
@@ -1230,4 +1119,4 @@ setTimeout(function(){
   actualizarKPIs();
 
 }, 100);
-
+```
