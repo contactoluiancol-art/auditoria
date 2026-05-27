@@ -153,10 +153,28 @@ async function guardarAuditoria(){
 
 
   // ======================
+  // HISTORIAL
+  // ======================
+
+  guardarHistorial(
+
+    'CREAR',
+
+    'AUDITORIAS',
+
+    `Se creó auditoría del proceso ${proceso}`
+
+  );
+
+
+
+
+
+  // ======================
   // ACTUALIZAR
   // ======================
 
-  renderAuditorias();
+  await renderAuditorias();
 
   limpiarFormulario();
 
@@ -190,6 +208,14 @@ async function renderAuditorias(){
   document.getElementById(
     'auditoriasBody'
   );
+
+
+
+  if(!body){
+
+    return;
+
+  }
 
 
 
@@ -358,7 +384,7 @@ async function renderAuditorias(){
 
           ${new Date(
             item.created_at
-          ).toLocaleDateString()}
+          ).toLocaleString()}
 
         </td>
 
@@ -454,6 +480,26 @@ async function eliminarAuditoria(id){
 
 
   // ======================
+  // CONSULTAR
+  // ======================
+
+  const { data: auditoriaEliminar } =
+
+  await supabaseClient
+
+  .from('auditorias')
+
+  .select('*')
+
+  .eq('id', id)
+
+  .single();
+
+
+
+
+
+  // ======================
   // DELETE
   // ======================
 
@@ -491,7 +537,41 @@ async function eliminarAuditoria(id){
 
 
 
-  renderAuditorias();
+  // ======================
+  // HISTORIAL
+  // ======================
+
+  guardarHistorial(
+
+    'ELIMINAR',
+
+    'AUDITORIAS',
+
+    `Se eliminó auditoría del proceso ${auditoriaEliminar?.proceso}`
+
+  );
+
+
+
+
+
+  // ======================
+  // ACTUALIZAR
+  // ======================
+
+  await renderAuditorias();
+
+
+
+
+
+  // ======================
+  // ALERTA
+  // ======================
+
+  alert(
+    'Auditoría eliminada'
+  );
 
 }
 
@@ -624,11 +704,37 @@ Cerrado`,
 
 
 
-  renderAuditorias();
+  // ======================
+  // HISTORIAL
+  // ======================
+
+  guardarHistorial(
+
+    'EDITAR',
+
+    'AUDITORIAS',
+
+    `Se actualizó estado de auditoría ${data.proceso}`
+
+  );
 
 
 
 
+
+  // ======================
+  // ACTUALIZAR
+  // ======================
+
+  await renderAuditorias();
+
+
+
+
+
+  // ======================
+  // ALERTA
+  // ======================
 
   alert(
     'Estado actualizado'
@@ -898,7 +1004,7 @@ ${new Date(
 
 
   // ======================
-  // TABLA
+  // DATOS
   // ======================
 
   let y = 80;
@@ -906,8 +1012,6 @@ ${new Date(
 
 
 
-
-  // TITULO TABLA
 
   doc.setFillColor(
     241,
@@ -924,8 +1028,6 @@ ${new Date(
     12,
     'F'
   );
-
-
 
 
 
@@ -948,8 +1050,6 @@ ${new Date(
 
 
 
-
-  // DATOS
 
   const datos = [
 
@@ -984,12 +1084,6 @@ ${new Date(
 
   datos.forEach(item => {
 
-
-
-
-
-    // TITULO
-
     doc.setFillColor(
       248,
       250,
@@ -1008,8 +1102,6 @@ ${new Date(
 
 
 
-
-
     doc.text(
       String(item[0]),
       25,
@@ -1017,10 +1109,6 @@ ${new Date(
     );
 
 
-
-
-
-    // VALOR
 
     doc.setDrawColor(
       230
@@ -1037,15 +1125,11 @@ ${new Date(
 
 
 
-
-
     doc.text(
       String(item[1]),
       75,
       y + 2
     );
-
-
 
 
 
@@ -1082,8 +1166,6 @@ ${new Date(
     12,
     'F'
   );
-
-
 
 
 
