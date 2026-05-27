@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,50 +15,48 @@
     Audit System
   </title>
 
+  <!-- CSS -->
 
-<link
-  rel="stylesheet"
-  href="css/styles.css"
-/>
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
 
-<link
-  rel="stylesheet"
-  href="css/dashboard.css"
-/>
+  <link
+    rel="stylesheet"
+    href="css/dashboard.css"
+  >
 
-<link
-  rel="stylesheet"
-  href="css/inventario.css"
-/>
+  <link
+    rel="stylesheet"
+    href="css/inventario.css"
+  >
 
-<link
-  rel="stylesheet"
-  href="css/auditorias.css"
-/>
+  <link
+    rel="stylesheet"
+    href="css/auditorias.css"
+  >
 
-<link
-  rel="stylesheet"
-  href="css/recepcion.css"
-/>
+  <link
+    rel="stylesheet"
+    href="css/recepcion.css"
+  >
 
-<link
-  rel="stylesheet"
-  href="css/usuarios.css"
-/>
+  <link
+    rel="stylesheet"
+    href="css/usuarios.css"
+  >
 
-<link
-  rel="stylesheet"
-  href="css/historial.css"
-/>
+  <link
+    rel="stylesheet"
+    href="css/historial.css"
+  >
 
 </head>
 
 <body>
 
   <div class="dashboard">
-
-
-
 
     <!-- =========================
     SIDEBAR
@@ -66,6 +65,11 @@
     <aside class="sidebar">
 
       <div class="logo">
+
+        <img
+          src="img/logo-electro.png"
+          alt="Logo"
+        >
 
         <h2>
           AUDITORIA
@@ -79,11 +83,11 @@
 
 
 
+
+
       <nav>
 
         <ul>
-
-          <!-- DASHBOARD -->
 
           <li
             id="dashboardMenu"
@@ -97,7 +101,6 @@
 
 
 
-          <!-- INVENTARIO -->
 
           <li id="inventarioMenu">
 
@@ -108,7 +111,6 @@
 
 
 
-          <!-- AUDITORIAS -->
 
           <li id="auditoriasMenu">
 
@@ -119,7 +121,6 @@
 
 
 
-          <!-- RECEPCION -->
 
           <li id="recepcionMenu">
 
@@ -129,7 +130,7 @@
 
 
 
-          <!-- USUARIOS -->
+
 
           <li id="usuariosMenu">
 
@@ -137,14 +138,19 @@
 
           </li>
 
-            <li id="historialMenu">
 
-  🕓 Historial
 
-</li>
-          
 
-          <!-- LOGOUT -->
+
+          <li id="historialMenu">
+
+            🕓 Historial
+
+          </li>
+
+
+
+
 
           <li>
 
@@ -169,14 +175,11 @@
 
 
 
-
     <!-- =========================
     MAIN
     ========================= -->
 
     <main class="main-content">
-
-
 
       <!-- =========================
       TOPBAR
@@ -186,91 +189,113 @@
 
         <div>
 
-          <h1>
+          <h1 id="tituloModulo">
+
             Dashboard
+
           </h1>
 
         </div>
 
 
-<div class="topbar-right">
 
 
 
+        <div class="topbar-right">
 
-  <!-- NOTIFICACIONES -->
+          <!-- NOTIFICACIONES -->
 
-  <div
-    class="notificaciones-box"
-    id="notificacionesBox"
-  >
+          <div
+            class="notificaciones-box"
+            id="notificacionesBox"
+          >
 
-    <div
-      class="campana"
-      id="campanaBtn"
-    >
+            <div
+              class="campana"
+              id="campanaBtn"
+            >
 
-      🔔
+              🔔
 
-      <span
-        id="contadorNotificaciones"
-      >
+              <span
+                id="contadorNotificaciones"
+              >
 
-        0
+                0
 
-      </span>
+              </span>
 
-    </div>
-
-
-<div class="notificaciones-header">
-
-
-  <button
-    class="btn-limpiar-noti"
-    onclick="limpiarNotificaciones()"
-  >
-
-    Limpiar
-
-  </button>
-
-</div>
-
-    <!-- PANEL -->
-
-    <div
-      class="panel-notificaciones"
-      id="panelNotificaciones"
-    >
-
-
-
-      <div
-        id="listaNotificaciones"
-      >
-
-      </div>
-
-    </div>
-
-  </div>
+            </div>
 
 
 
 
 
-  <!-- USER -->
+            <!-- PANEL -->
 
-  <div class="user-info">
+            <div
+              class="panel-notificaciones"
+              id="panelNotificaciones"
+            >
 
-    <span id="usuarioNombre">
+              <div class="notificaciones-header">
 
-    </span>
+                <h3>
 
-  </div>
+                  Notificaciones
 
-</div>
+                </h3>
+
+
+
+
+
+                <button
+                  class="btn-limpiar-noti"
+                  onclick="limpiarNotificaciones()"
+                >
+
+                  Limpiar
+
+                </button>
+
+              </div>
+
+
+
+
+
+              <div
+                id="listaNotificaciones"
+              >
+
+                <p class="sin-notificaciones">
+
+                  No hay notificaciones
+
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+
+
+          <!-- USER -->
+
+          <div class="user-info">
+
+            <span id="usuarioNombre">
+
+            </span>
+
+          </div>
+
+        </div>
 
       </header>
 
@@ -278,17 +303,14 @@
 
 
 
-
       <!-- =========================
-      CONTENIDO
+      CONTENT
       ========================= -->
 
       <section
         class="content"
         id="mainContent"
       >
-
-
 
         <!-- =========================
         WELCOME
@@ -306,6 +328,8 @@
 
 
 
+
+
             <div>
 
               <h1>
@@ -316,12 +340,14 @@
 
 
 
+
+
               <p>
 
                 Gestiona y controla
-                los procesos de
-                auditoría logística
-                de forma eficiente.
+                auditorías, inventarios,
+                recepción y usuarios
+                de forma profesional.
 
               </p>
 
@@ -335,19 +361,13 @@
 
 
 
-
         <!-- =========================
         GRID
         ========================= -->
 
         <div class="dashboard-grid">
 
-
-
-
-          <!-- =========================
-          INVENTARIO
-          ========================= -->
+          <!-- INVENTARIO -->
 
           <div
             id="cardInventario"
@@ -360,18 +380,16 @@
 
             </div>
 
-
             <h3>
 
               Inventario
 
             </h3>
 
-
             <p>
 
-              Gestión de inventarios
-              y conteos cíclicos.
+              Gestión y control
+              de inventarios.
 
             </p>
 
@@ -381,10 +399,7 @@
 
 
 
-
-          <!-- =========================
-          AUDITORIAS
-          ========================= -->
+          <!-- AUDITORIAS -->
 
           <div
             id="cardAuditorias"
@@ -397,18 +412,16 @@
 
             </div>
 
-
             <h3>
 
               Auditorías
 
             </h3>
 
-
             <p>
 
-              Control y seguimiento
-              de auditorías.
+              Seguimiento de
+              auditorías.
 
             </p>
 
@@ -418,10 +431,7 @@
 
 
 
-
-          <!-- =========================
-          RECEPCION
-          ========================= -->
+          <!-- RECEPCION -->
 
           <div
             id="cardRecepcion"
@@ -434,17 +444,15 @@
 
             </div>
 
-
             <h3>
 
               Recepción
 
             </h3>
 
-
             <p>
 
-              Control de recepción
+              Recepción y control
               de mercancía.
 
             </p>
@@ -452,9 +460,10 @@
           </div>
 
 
-          <!-- =========================
-          USUARIOS
-          ========================= -->
+
+
+
+          <!-- USUARIOS -->
 
           <div
             id="cardUsuarios"
@@ -467,45 +476,51 @@
 
             </div>
 
-
             <h3>
 
               Usuarios
 
             </h3>
 
+            <p>
+
+              Gestión de usuarios
+              y permisos.
+
+            </p>
+
+          </div>
+
+
+
+
+
+          <!-- HISTORIAL -->
+
+          <div
+            id="cardHistorial"
+            class="dashboard-card"
+          >
+
+            <div class="card-icon">
+
+              🕓
+
+            </div>
+
+            <h3>
+
+              Historial
+
+            </h3>
 
             <p>
 
-              Administración
-              de usuarios y roles.
+              Seguimiento de
+              movimientos.
 
             </p>
-<div
-  id="cardHistorial"
-  class="dashboard-card"
->
 
-  <div class="card-icon">
-
-    🕓
-
-  </div>
-
-  <h3>
-
-    Historial
-
-  </h3>
-
-  <p>
-
-    Seguimiento de movimientos
-    del sistema.
-
-  </p>
-
-</div>
           </div>
 
         </div>
@@ -520,27 +535,26 @@
 
 
 
-  <!-- =========================
-  LIBRERIAS
-  ========================= -->
+  <!-- LIBRERIAS -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-  <!-- =========================
-  JS
-  ========================= -->
+
+
+  <!-- JS -->
 
   <script
-    src="js/dashboard.js?v=13"
+    src="js/dashboard.js?v=20"
     defer
   ></script>
 
 </body>
 
 </html>
+```
