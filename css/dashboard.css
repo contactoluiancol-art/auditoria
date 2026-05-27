@@ -1,497 +1,354 @@
 /* =========================
-RESPONSIVE GLOBAL
+LAYOUT
 ========================= */
 
-@media(max-width:1400px){
-
-  .dashboard-grid{
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-  }
-
-}
-
-
-
-
-
-/* =========================
-TABLETS
-========================= */
-
-@media(max-width:1024px){
-
-  /* SIDEBAR */
-
-  .sidebar{
-
-    width:220px;
-
-    padding:20px;
-
-  }
-
-
-
-  .main-content{
-
-    margin-left:220px;
-
-    padding:20px;
-
-  }
-
-
-
-  .dashboard-grid{
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-  }
-
-
-
-  .topbar{
-
-    flex-direction:column;
-
-    align-items:flex-start;
-
-    gap:20px;
-
-  }
-
-
-
-  .topbar-right{
-
-    width:100%;
-
-    justify-content:space-between;
-
-  }
-
-
-
-  .welcome-banner{
-
-    flex-direction:column;
-
-    gap:20px;
-
-  }
-
-
-
-  .table-container{
-
-    overflow-x:auto;
-
-  }
-
-}
-
-
-
-
-
-/* =========================
-TABLETS PEQUEÑAS
-========================= */
-
-@media(max-width:768px){
-
-  /* SIDEBAR */
-
-  .sidebar{
-
-    position:relative;
-
-    width:100%;
-
-    height:auto;
-
-    border-radius:0;
-
-  }
-
-
-
-  .sidebar nav ul{
-
+.dashboard{
     display:flex;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-    justify-content:center;
-
-  }
-
-
-
-  .sidebar li{
-
-    margin-bottom:0;
-
-  }
-
-
-
-  .sidebar li,
-
-  .logout-btn{
-
-    width:auto;
-
-  }
-
-
-
-  .main-content{
-
-    margin-left:0;
-
-    width:100%;
-
-    padding:15px;
-
-  }
-
-
-
-  /* TOPBAR */
-
-  .topbar{
-
-    padding:18px;
-
-    border-radius:18px;
-
-  }
-
-
-
-  .topbar h1{
-
-    font-size:26px;
-
-  }
-
-
-
-  /* DASHBOARD */
-
-  .dashboard-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-
-
-  .dashboard-card{
-
-    width:100%;
-
-  }
-
-
-
-  /* TABLAS */
-
-  table{
-
-    min-width:700px;
-
-  }
-
-
-
-  .table-container{
-
-    overflow-x:auto;
-
-  }
-
-
-
-  /* FORMULARIOS */
-
-  .form-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-
-
-  input,
-
-  select,
-
-  textarea,
-
-  button{
-
-    width:100%;
-
-  }
-
-
-
-  /* WELCOME */
-
-  .welcome-banner{
-
-    padding:20px;
-
-  }
-
-
-
-  .welcome-banner h1{
-
-    font-size:28px;
-
-  }
-
+    min-height:100vh;
+    background:#eef2f7;
 }
 
 
+/* =========================
+SIDEBAR
+========================= */
 
+.sidebar{
+    width:260px;
+    background:#0f2d7a;
+    color:white;
+    padding:25px 20px;
+    position:fixed;
+    height:100vh;
+    overflow-y:auto;
+    box-shadow:4px 0 20px rgba(0,0,0,.15);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.logo img{
+    width:90px;
+    margin-bottom:15px;
+}
+
+.logo h2{
+    font-size:34px;
+    margin-bottom:10px;
+    font-weight:800;
+}
+
+.logo p{
+    color:#d8e2ff;
+    font-size:15px;
+}
 
 
 /* =========================
-CELULARES
+MENU
 ========================= */
 
-@media(max-width:480px){
+.sidebar ul{
+    list-style:none;
+    padding:0;
+}
 
-  body{
+.sidebar li{
+    padding:14px 18px;
+    margin-bottom:12px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:.3s;
+    font-size:17px;
+    font-weight:600;
+}
 
-    overflow-x:hidden;
+.sidebar li:hover{
+    background:rgba(255,255,255,.12);
+}
 
-  }
-
-
-
-  /* LOGIN */
-
-  .login-container{
-
-    width:95%;
-
-    padding:25px;
-
-  }
-
-
-
-  .login-title{
-
-    font-size:24px;
-
-  }
+.sidebar li.active{
+    background:#ffd400;
+    color:#111827;
+}
 
 
+/* =========================
+LOGOUT
+========================= */
 
-  .logo{
-
-    width:100px;
-
-  }
-
-
-
-  /* SIDEBAR */
-
-  .sidebar{
-
-    padding:15px;
-
-  }
-
-
-
-  .sidebar-logo{
-
-    width:90px;
-
-  }
-
-
-
-  .sidebar h2{
-
-    font-size:20px;
-
-  }
-
-
-
-  .sidebar p{
-
-    font-size:13px;
-
-  }
-
-
-
-  .sidebar nav ul{
-
-    flex-direction:column;
-
-  }
-
-
-
-  .sidebar li{
-
+.logout-btn{
     width:100%;
+    border:none;
+    background:#ffd400;
+    color:#111827;
+    padding:14px;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:20px;
+    transition:.3s;
+}
 
-  }
-
-
-
-  /* TOPBAR */
-
-  .topbar{
-
-    padding:15px;
-
-  }
-
-
-
-  .topbar h1{
-
-    font-size:22px;
-
-  }
+.logout-btn:hover{
+    transform:translateY(-2px);
+}
 
 
+/* =========================
+MAIN
+========================= */
 
-  .topbar-right{
+.main-content{
+    margin-left:260px;
+    width:calc(100% - 260px);
+    padding:30px;
+}
 
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    font-size:42px;
+    color:#111827;
+}
+
+.user-info{
+    background:white;
+    padding:12px 20px;
+    border-radius:14px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    font-weight:700;
+}
+
+
+/* =========================
+WELCOME
+========================= */
+
+.welcome-banner{
+    background:white;
+    padding:30px;
+    border-radius:24px;
+    margin-bottom:30px;
+    box-shadow:0 6px 20px rgba(0,0,0,.06);
+}
+
+.welcome-left{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.welcome-icon{
+    width:80px;
+    height:80px;
+    border-radius:20px;
+    background:#ffd400;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+}
+
+.welcome-banner h1{
+    font-size:42px;
+    margin-bottom:10px;
+    color:#111827;
+}
+
+.welcome-banner p{
+    color:#64748b;
+    font-size:18px;
+}
+
+
+/* =========================
+CARDS
+========================= */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.dashboard-card{
+    background:white;
+    padding:30px;
+    border-radius:24px;
+    box-shadow:0 6px 20px rgba(0,0,0,.06);
+    transition:.3s;
+    cursor:pointer;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-6px);
+}
+
+.card-icon{
+    font-size:42px;
+    margin-bottom:20px;
+}
+
+.dashboard-card h3{
+    font-size:28px;
+    margin-bottom:12px;
+    color:#0f2d7a;
+}
+
+.dashboard-card p{
+    color:#64748b;
+    line-height:1.5;
+}
+
+
+/* =========================
+FORMULARIOS
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
     flex-direction:column;
+}
 
-    align-items:flex-start;
+.form-group label{
+    margin-bottom:8px;
+    font-weight:700;
+}
 
-    gap:15px;
-
-  }
-
-
-
-  /* CARDS */
-
-  .dashboard-card{
-
-    padding:20px;
-
-  }
-
-
-
-  .card-icon{
-
-    font-size:32px;
-
-  }
-
-
-
-  .dashboard-card h3{
-
-    font-size:20px;
-
-  }
-
-
-
-  .dashboard-card p{
-
-    font-size:14px;
-
-  }
-
-
-
-  /* TABLAS */
-
-  th,
-
-  td{
-
-    padding:10px;
-
-    font-size:13px;
-
-  }
-
-
-
-  /* BOTONES */
-
-  button{
-
-    font-size:14px;
-
-    padding:12px;
-
-  }
-
-
-
-  .acciones-tabla{
-
-    flex-direction:column;
-
-  }
-
-
-
-  /* NOTIFICACIONES */
-
-  .panel-notificaciones{
-
+input,
+select,
+textarea{
     width:100%;
-
-    right:0;
-
-    left:0;
-
-  }
-
-
-
-  /* WELCOME */
-
-  .welcome-banner{
-
-    padding:18px;
-
-  }
+    padding:14px;
+    border:1px solid #d1d5db;
+    border-radius:14px;
+    font-size:15px;
+    background:white;
+}
 
 
+/* =========================
+BOTONES
+========================= */
 
-  .welcome-banner h1{
+button{
+    border:none;
+    cursor:pointer;
+}
 
-    font-size:24px;
+.btn-primary{
+    background:#ffd400;
+    color:#111827;
+    padding:14px 22px;
+    border-radius:14px;
+    font-weight:700;
+}
 
-  }
+
+/* =========================
+TABLAS
+========================= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+th{
+    background:#0f2d7a;
+    color:white;
+    padding:16px;
+}
+
+td{
+    padding:14px;
+    border-bottom:1px solid #e5e7eb;
+}
 
 
+/* =========================
+RESPONSIVE
+========================= */
 
-  .welcome-banner p{
+@media(max-width:1100px){
 
-    font-size:14px;
+    .sidebar{
+        width:220px;
+    }
 
-  }
+    .main-content{
+        margin-left:220px;
+        width:calc(100% - 220px);
+    }
+
+}
+
+@media(max-width:900px){
+
+    .dashboard{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .main-content{
+        margin-left:0;
+        width:100%;
+        padding:20px;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .welcome-left{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .topbar h1{
+        font-size:30px;
+    }
+
+    .welcome-banner h1{
+        font-size:28px;
+    }
+
+    .dashboard-card{
+        padding:22px;
+    }
 
 }
