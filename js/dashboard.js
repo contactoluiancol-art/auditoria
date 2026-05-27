@@ -41,6 +41,73 @@ window.supabase.createClient(
 
 );
 
+// ======================
+// GUARDAR HISTORIAL
+// ======================
+
+async function guardarHistorial(
+
+  accion,
+  modulo,
+  descripcion
+
+){
+
+  const usuario =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'usuarioLogueado'
+    )
+
+  );
+
+
+
+  if(!usuario){
+
+    return;
+
+  }
+
+
+
+  const { error } =
+
+  await window.supabaseClient
+
+  .from('historial')
+
+  .insert([
+
+    {
+
+      usuario:
+      usuario.usuario,
+
+      accion,
+
+      modulo,
+
+      descripcion
+
+    }
+
+  ]);
+
+
+
+  if(error){
+
+    console.log(
+      'Error historial:',
+      error
+    );
+
+  }
+
+}
 
 
 
