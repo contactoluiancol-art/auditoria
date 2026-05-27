@@ -1,59 +1,497 @@
-*{
-.btn-editar:hover,
-.btn-eliminar:hover,
-.btn-pdf:hover,
-.btn-ver:hover{
-  transform:translateY(-2px);
-  opacity:0.9;
+/* =========================
+RESPONSIVE GLOBAL
+========================= */
+
+@media(max-width:1400px){
+
+  .dashboard-grid{
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+  }
+
 }
 
-.estado-pendiente,
-.estado-revision,
-.estado-cerrado,
-.estado-novedad,
-.estado-revisado{
-  padding:8px 14px;
-  border-radius:30px;
-  font-size:13px;
-  font-weight:700;
-}
 
-.estado-pendiente{
-  background:#fef3c7;
-  color:#92400e;
-}
 
-.estado-revision{
-  background:#dbeafe;
-  color:#1d4ed8;
-}
 
-.estado-cerrado,
-.estado-revisado{
-  background:#dcfce7;
-  color:#166534;
-}
 
-.estado-novedad{
-  background:#fee2e2;
-  color:#991b1b;
-}
+/* =========================
+TABLETS
+========================= */
 
-@media(max-width:900px){
+@media(max-width:1024px){
+
+  /* SIDEBAR */
 
   .sidebar{
-    width:100%;
-    height:auto;
-    position:relative;
+
+    width:220px;
+
+    padding:20px;
+
   }
+
+
 
   .main-content{
-    margin-left:0;
+
+    margin-left:220px;
+
     padding:20px;
+
   }
 
-  .dashboard{
+
+
+  .dashboard-grid{
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+  }
+
+
+
+  .topbar{
+
     flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+  }
+
+
+
+  .topbar-right{
+
+    width:100%;
+
+    justify-content:space-between;
+
+  }
+
+
+
+  .welcome-banner{
+
+    flex-direction:column;
+
+    gap:20px;
+
+  }
+
+
+
+  .table-container{
+
+    overflow-x:auto;
+
+  }
+
+}
+
+
+
+
+
+/* =========================
+TABLETS PEQUEÑAS
+========================= */
+
+@media(max-width:768px){
+
+  /* SIDEBAR */
+
+  .sidebar{
+
+    position:relative;
+
+    width:100%;
+
+    height:auto;
+
+    border-radius:0;
+
+  }
+
+
+
+  .sidebar nav ul{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    justify-content:center;
+
+  }
+
+
+
+  .sidebar li{
+
+    margin-bottom:0;
+
+  }
+
+
+
+  .sidebar li,
+
+  .logout-btn{
+
+    width:auto;
+
+  }
+
+
+
+  .main-content{
+
+    margin-left:0;
+
+    width:100%;
+
+    padding:15px;
+
+  }
+
+
+
+  /* TOPBAR */
+
+  .topbar{
+
+    padding:18px;
+
+    border-radius:18px;
+
+  }
+
+
+
+  .topbar h1{
+
+    font-size:26px;
+
+  }
+
+
+
+  /* DASHBOARD */
+
+  .dashboard-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+
+
+  .dashboard-card{
+
+    width:100%;
+
+  }
+
+
+
+  /* TABLAS */
+
+  table{
+
+    min-width:700px;
+
+  }
+
+
+
+  .table-container{
+
+    overflow-x:auto;
+
+  }
+
+
+
+  /* FORMULARIOS */
+
+  .form-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+
+
+  input,
+
+  select,
+
+  textarea,
+
+  button{
+
+    width:100%;
+
+  }
+
+
+
+  /* WELCOME */
+
+  .welcome-banner{
+
+    padding:20px;
+
+  }
+
+
+
+  .welcome-banner h1{
+
+    font-size:28px;
+
+  }
+
+}
+
+
+
+
+
+/* =========================
+CELULARES
+========================= */
+
+@media(max-width:480px){
+
+  body{
+
+    overflow-x:hidden;
+
+  }
+
+
+
+  /* LOGIN */
+
+  .login-container{
+
+    width:95%;
+
+    padding:25px;
+
+  }
+
+
+
+  .login-title{
+
+    font-size:24px;
+
+  }
+
+
+
+  .logo{
+
+    width:100px;
+
+  }
+
+
+
+  /* SIDEBAR */
+
+  .sidebar{
+
+    padding:15px;
+
+  }
+
+
+
+  .sidebar-logo{
+
+    width:90px;
+
+  }
+
+
+
+  .sidebar h2{
+
+    font-size:20px;
+
+  }
+
+
+
+  .sidebar p{
+
+    font-size:13px;
+
+  }
+
+
+
+  .sidebar nav ul{
+
+    flex-direction:column;
+
+  }
+
+
+
+  .sidebar li{
+
+    width:100%;
+
+  }
+
+
+
+  /* TOPBAR */
+
+  .topbar{
+
+    padding:15px;
+
+  }
+
+
+
+  .topbar h1{
+
+    font-size:22px;
+
+  }
+
+
+
+  .topbar-right{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:15px;
+
+  }
+
+
+
+  /* CARDS */
+
+  .dashboard-card{
+
+    padding:20px;
+
+  }
+
+
+
+  .card-icon{
+
+    font-size:32px;
+
+  }
+
+
+
+  .dashboard-card h3{
+
+    font-size:20px;
+
+  }
+
+
+
+  .dashboard-card p{
+
+    font-size:14px;
+
+  }
+
+
+
+  /* TABLAS */
+
+  th,
+
+  td{
+
+    padding:10px;
+
+    font-size:13px;
+
+  }
+
+
+
+  /* BOTONES */
+
+  button{
+
+    font-size:14px;
+
+    padding:12px;
+
+  }
+
+
+
+  .acciones-tabla{
+
+    flex-direction:column;
+
+  }
+
+
+
+  /* NOTIFICACIONES */
+
+  .panel-notificaciones{
+
+    width:100%;
+
+    right:0;
+
+    left:0;
+
+  }
+
+
+
+  /* WELCOME */
+
+  .welcome-banner{
+
+    padding:18px;
+
+  }
+
+
+
+  .welcome-banner h1{
+
+    font-size:24px;
+
+  }
+
+
+
+  .welcome-banner p{
+
+    font-size:14px;
+
   }
 
 }
