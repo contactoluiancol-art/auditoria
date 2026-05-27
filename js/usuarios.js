@@ -1,43 +1,72 @@
+
 // ======================
 // EVENTO
 // ======================
 
+const guardarAuditoriaBtn =
 document.getElementById(
-  'guardarUsuario'
-)
-?.addEventListener(
-  'click',
-  guardarUsuario
+  'guardarAuditoria'
 );
 
+if(guardarAuditoriaBtn){
+
+  guardarAuditoriaBtn.addEventListener(
+
+    'click',
+
+    guardarAuditoria
+
+  );
+
+}
+
+
+
 
 
 // ======================
-// GUARDAR
+// GUARDAR AUDITORIA
 // ======================
 
-async function guardarUsuario(){
+async function guardarAuditoria(){
 
-  const usuario =
+  const proceso =
   document.getElementById(
-    'usuarioInput'
+    'procesoInput'
   ).value.trim();
 
-  const password =
+
+
+  const hallazgo =
   document.getElementById(
-    'passwordInput'
+    'hallazgoInput'
   ).value.trim();
 
-  const rol =
+
+
+  const responsable =
   document.getElementById(
-    'rolInput'
+    'responsableInput'
+  ).value.trim();
+
+
+
+  const estado =
+  document.getElementById(
+    'estadoInput'
   ).value;
 
 
 
+  if(
 
+    !proceso ||
 
-  if(!usuario || !password){
+    !hallazgo ||
+
+    !responsable
+
+  ){
 
     alert(
       'Complete todos los campos'
@@ -49,53 +78,32 @@ async function guardarUsuario(){
 
 
 
-
-
-  const { data: existeUsuario } =
+  const response =
 
   await window.supabaseClient
 
-  .from('usuarios')
-
-  .select('*')
-
-  .eq('usuario', usuario);
-
-
-
-
-
-  if(existeUsuario.length > 0){
-
-    alert(
-      'El usuario ya existe'
-    );
-
-    return;
-
-  }
-
-
-
-
-
-  const { error } =
-
-  await window.supabaseClient
-
-  .from('usuarios')
+  .from('auditorias')
 
   .insert([
 
     {
-      usuario,
-      password,
-      rol
+
+      proceso: proceso,
+
+      hallazgo: hallazgo,
+
+      responsable: responsable,
+
+      estado: estado
+
     }
 
   ]);
 
 
+
+  const error =
+  response.error;
 
 
 
@@ -104,7 +112,7 @@ async function guardarUsuario(){
     console.log(error);
 
     alert(
-      'Error creando usuario'
+      'Error guardando auditoría'
     );
 
     return;
@@ -113,32 +121,81 @@ async function guardarUsuario(){
 
 
 
+  // ======================
+  // NOTIFICACIONES
+  // ======================
+
+  let notificaciones =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'notificaciones'
+    )
+
+  ) || [];
 
 
-  await guardarHistorial(
 
-    'CREAR',
+  notificaciones.unshift({
 
-    'USUARIOS',
+    mensaje:
 
-    `Se creó usuario ${usuario}`
+    'Nueva auditoría creada: ' +
+    proceso,
+
+
+
+    fecha:
+
+    new Date()
+    .toLocaleString()
+
+  });
+
+
+
+  localStorage.setItem(
+
+    'notificaciones',
+
+    JSON.stringify(
+      notificaciones
+    )
 
   );
 
 
 
+  // ======================
+  // HISTORIAL
+  // ======================
+
+  if(typeof guardarHistorial === 'function'){
+
+    await guardarHistorial(
+
+      'CREAR',
+
+      'AUDITORIAS',
+
+      'Se creó auditoría ' +
+      proceso
+
+    );
+
+  }
 
 
-  await renderUsuarios();
+
+  await renderAuditorias();
 
   limpiarFormulario();
 
 
 
-
-
   alert(
-    'Usuario creado correctamente'
+    'Auditoría guardada'
   );
 
 }
@@ -148,14 +205,14 @@ async function guardarUsuario(){
 
 
 // ======================
-// RENDER
+// RENDER AUDITORIAS
 // ======================
 
-async function renderUsuarios(){
+async function renderAuditorias(){
 
   const body =
   document.getElementById(
-    'usuariosBody'
+    'auditoriasBody'
   );
 
 
@@ -172,13 +229,11 @@ async function renderUsuarios(){
 
 
 
-
-
-  const { data, error } =
+  const response =
 
   await window.supabaseClient
 
-  .from('usuarios')
+  .from('auditorias')
 
   .select('*')
 
@@ -189,6 +244,14 @@ async function renderUsuarios(){
   });
 
 
+
+  const data =
+  response.data;
+
+
+
+  const error =
+  response.error;
 
 
 
@@ -202,23 +265,21 @@ async function renderUsuarios(){
 
 
 
-
-
   if(!data || data.length === 0){
 
-    body.innerHTML = `
+    body.innerHTML =
 
-      <tr>
+    '<tr>' +
 
-        <td colspan="5">
+      '<td colspan="6">' +
 
-          No hay usuarios
+      'No hay auditorías registradas' +
 
-        </td>
+      '</td>' +
 
-      </tr>
+    '</tr>';
 
-    `;
+
 
     return;
 
@@ -226,53 +287,76 @@ async function renderUsuarios(){
 
 
 
+  data.forEach(function(item){
+
+    let estadoClass = '';
 
 
-  data.forEach(item => {
 
-    body.innerHTML += `
+    if(item.estado === 'Pendiente'){
 
-      <tr>
+      estadoClass =
+      'estado-pendiente';
 
-        <td>${item.usuario}</td>
+    }
 
-        <td>${item.password}</td>
+    else if(item.estado === 'En revisión'){
 
-        <td>${item.rol}</td>
+      estadoClass =
+      'estado-revision';
 
-        <td>
+    }
 
-          ${new Date(
-            item.created_at
-          ).toLocaleString()}
+    else{
 
-        </td>
+      estadoClass =
+      'estado-cerrado';
 
-        <td class="acciones-tabla">
+    }
 
-          <button
-            class="btn-eliminar"
-            onclick="eliminarUsuario('${item.id}')"
-          >
 
-            Eliminar
 
-          </button>
+    body.innerHTML +=
 
-          <button
-            class="btn-editar"
-            onclick="editarUsuario('${item.id}')"
-          >
+    '<tr>' +
 
-            Editar
+      '<td>' + item.proceso + '</td>' +
 
-          </button>
+      '<td>' + item.hallazgo + '</td>' +
 
-        </td>
+      '<td>' + item.responsable + '</td>' +
 
-      </tr>
+      '<td>' +
 
-    `;
+        '<span class="' + estadoClass + '">' +
+
+          item.estado +
+
+        '</span>' +
+
+      '</td>' +
+
+      '<td>' +
+
+        new Date(
+
+          item.created_at
+
+        ).toLocaleString() +
+
+      '</td>' +
+
+      '<td class="acciones-tabla">' +
+
+        '<button class="btn-eliminar" onclick="eliminarAuditoria(' + item.id + ')">' +
+
+          'Eliminar' +
+
+        '</button>' +
+
+      '</td>' +
+
+    '</tr>';
 
   });
 
@@ -283,13 +367,13 @@ async function renderUsuarios(){
 
 
 // ======================
-// ELIMINAR
+// ELIMINAR AUDITORIA
 // ======================
 
-async function eliminarUsuario(id){
+async function eliminarAuditoria(id){
 
   const confirmar = confirm(
-    '¿Eliminar usuario?'
+    '¿Desea eliminar esta auditoría?'
   );
 
 
@@ -302,29 +386,11 @@ async function eliminarUsuario(id){
 
 
 
-
-
-  const { data } =
+  const response =
 
   await window.supabaseClient
 
-  .from('usuarios')
-
-  .select('*')
-
-  .eq('id', id)
-
-  .single();
-
-
-
-
-
-  const { error } =
-
-  await window.supabaseClient
-
-  .from('usuarios')
+  .from('auditorias')
 
   .delete()
 
@@ -332,11 +398,18 @@ async function eliminarUsuario(id){
 
 
 
+  const error =
+  response.error;
+
 
 
   if(error){
 
     console.log(error);
+
+    alert(
+      'Error eliminando auditoría'
+    );
 
     return;
 
@@ -344,23 +417,7 @@ async function eliminarUsuario(id){
 
 
 
-
-
-  await guardarHistorial(
-
-    'ELIMINAR',
-
-    'USUARIOS',
-
-    `Se eliminó usuario ${data?.usuario}`
-
-  );
-
-
-
-
-
-  await renderUsuarios();
+  await renderAuditorias();
 
 }
 
@@ -369,142 +426,32 @@ async function eliminarUsuario(id){
 
 
 // ======================
-// EDITAR
-// ======================
-
-async function editarUsuario(id){
-
-  const { data } =
-
-  await window.supabaseClient
-
-  .from('usuarios')
-
-  .select('*')
-
-  .eq('id', id)
-
-  .single();
-
-
-
-
-
-  if(!data){
-
-    return;
-
-  }
-
-
-
-
-
-  const nuevoPassword = prompt(
-    'Nueva contraseña:',
-    data.password
-  );
-
-
-
-  if(nuevoPassword === null){
-
-    return;
-
-  }
-
-
-
-
-
-  const nuevoRol = prompt(
-    'Nuevo rol:',
-    data.rol
-  );
-
-
-
-  if(nuevoRol === null){
-
-    return;
-
-  }
-
-
-
-
-
-  const { error } =
-
-  await window.supabaseClient
-
-  .from('usuarios')
-
-  .update({
-
-    password: nuevoPassword,
-
-    rol: nuevoRol
-
-  })
-
-  .eq('id', id);
-
-
-
-
-
-  if(error){
-
-    console.log(error);
-
-    return;
-
-  }
-
-
-
-
-
-  await guardarHistorial(
-
-    'EDITAR',
-
-    'USUARIOS',
-
-    `Se editó usuario ${data.usuario}`
-
-  );
-
-
-
-
-
-  await renderUsuarios();
-
-}
-
-
-
-
-
-// ======================
-// LIMPIAR
+// LIMPIAR FORMULARIO
 // ======================
 
 function limpiarFormulario(){
 
   document.getElementById(
-    'usuarioInput'
+    'procesoInput'
   ).value = '';
 
-  document.getElementById(
-    'passwordInput'
-  ).value = '';
+
 
   document.getElementById(
-    'rolInput'
-  ).value = 'lider';
+    'hallazgoInput'
+  ).value = '';
+
+
+
+  document.getElementById(
+    'responsableInput'
+  ).value = '';
+
+
+
+  document.getElementById(
+    'estadoInput'
+  ).value = 'Pendiente';
 
 }
 
@@ -516,4 +463,5 @@ function limpiarFormulario(){
 // INICIO
 // ======================
 
-renderUsuarios();
+renderAuditorias();
+
