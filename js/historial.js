@@ -1,28 +1,21 @@
-
 // ======================
-// CLIENTE
-// ======================
-
-const supabaseClient =
-
-window.supabaseClient;
-
-
-
-
-
-// ======================
-// RENDER
+// RENDER HISTORIAL
 // ======================
 
-async function renderHistorial(){
+async function renderHistorialSistema(){
 
   const body =
-
   document.getElementById(
     'historialBody'
   );
 
+
+
+  if(!body){
+
+    return;
+
+  }
 
 
 
@@ -34,7 +27,7 @@ async function renderHistorial(){
 
   const { data, error } =
 
-  await supabaseClient
+  await window.supabaseClient
 
   .from('historial')
 
@@ -92,34 +85,18 @@ async function renderHistorial(){
 
       <tr>
 
-        <td>
+        <td>${item.usuario}</td>
 
-          ${item.usuario}
+        <td>${item.accion}</td>
 
-        </td>
+        <td>${item.modulo}</td>
 
-        <td>
-
-          ${item.accion}
-
-        </td>
-
-        <td>
-
-          ${item.modulo}
-
-        </td>
-
-        <td>
-
-          ${item.descripcion}
-
-        </td>
+        <td>${item.descripcion}</td>
 
         <td>
 
           ${new Date(
-            item.fecha
+            item.created_at
           ).toLocaleString()}
 
         </td>
@@ -140,4 +117,4 @@ async function renderHistorial(){
 // INICIO
 // ======================
 
-renderHistorial();
+renderHistorialSistema();
