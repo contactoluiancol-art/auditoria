@@ -1,88 +1,190 @@
-<div class="usuarios-container">
+<div class="module-container">
 
-  <link rel="stylesheet" href="css/usuarios.css">
-  <h1 class="titulo-usuarios">
-    👥 Gestión de Usuarios
-  </h1>
+  <!-- HEADER -->
 
+  <div class="module-header">
 
-  <!-- FORMULARIO -->
+    <div>
 
-  <div class="usuarios-form">
+      <h2>
+        👥 Usuarios
+      </h2>
 
-    <input
-      type="text"
-      id="usuarioInput"
-      placeholder="Usuario"
-    >
+      <p>
+        Administración de usuarios y roles
+      </p>
 
-
-    <input
-      type="password"
-      id="passwordInput"
-      placeholder="Contraseña"
-    >
-
-
-    <select id="rolInput">
-
-      <option value="admin">
-        Admin
-      </option>
-
-      <option value="lider">
-        Líder
-      </option>
-        <option value="jefe">
-        Jefe
-      </option>
-
-    <option value="auditor">
-  Auditor
-</option>
-
-
-    </select>
-
-
-    <button id="guardarUsuario">
-
-      Crear usuario
-
-    </button>
+    </div>
 
   </div>
 
 
+
+
+
+  <!-- FORM -->
+
+  <div class="module-card">
+
+    <h3>
+      Crear Usuario
+    </h3>
+
+
+
+
+
+    <div class="form-grid">
+
+      <div class="input-group">
+
+        <label>
+          Nombre
+        </label>
+
+        <input
+          type="text"
+          id="nombreUsuario"
+          placeholder="Ingrese nombre"
+        >
+
+      </div>
+
+
+
+
+
+      <div class="input-group">
+
+        <label>
+          Correo
+        </label>
+
+        <input
+          type="email"
+          id="correoUsuario"
+          placeholder="Ingrese correo"
+        >
+
+      </div>
+
+
+
+
+
+      <div class="input-group">
+
+        <label>
+          Rol
+        </label>
+
+        <select id="rolUsuario">
+
+          <option value="Administrador">
+            Administrador
+          </option>
+
+          <option value="Auditor">
+            Auditor
+          </option>
+
+          <option value="Lider">
+            Líder
+          </option>
+
+          <option value="Jefe">
+            Jefe
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+
+
+
+    <div class="button-group">
+
+      <button
+        id="guardarUsuario"
+        class="btn-primary"
+      >
+
+        Guardar Usuario
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+
+
   <!-- TABLA -->
 
-  <div class="tabla-usuarios">
+  <div class="module-card">
 
-    <table>
+    <div class="table-header">
 
-      <thead>
-<tr>
-
-  <th>Usuario</th>
-
-  <th>Contraseña</th>
-
-  <th>Rol</th>
-
-  <th>Fecha</th>
-
-  <th>Acciones</th>
-
-</tr>
-
-      </thead>
+      <h3>
+        Usuarios Registrados
+      </h3>
 
 
-      <tbody id="usuariosBody">
 
-      </tbody>
 
-    </table>
+
+      <input
+        type="text"
+        id="buscarUsuario"
+        placeholder="Buscar usuario..."
+        class="search-input"
+      >
+
+    </div>
+
+
+
+
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Nombre</th>
+
+            <th>Correo</th>
+
+            <th>Rol</th>
+
+            <th>Estado</th>
+
+            <th>Acciones</th>
+
+          </tr>
+
+        </thead>
+
+
+
+
+
+        <tbody id="usuariosBody">
+
+        </tbody>
+
+      </table>
+
+    </div>
 
   </div>
 
