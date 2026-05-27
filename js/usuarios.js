@@ -176,10 +176,28 @@ async function guardarUsuario(){
 
 
   // ======================
+  // HISTORIAL
+  // ======================
+
+  guardarHistorial(
+
+    'CREAR',
+
+    'USUARIOS',
+
+    `Se creó el usuario ${usuario}`
+
+  );
+
+
+
+
+
+  // ======================
   // ACTUALIZAR
   // ======================
 
-  renderUsuarios();
+  await renderUsuarios();
 
   limpiarFormulario();
 
@@ -213,6 +231,14 @@ async function renderUsuarios(){
   document.getElementById(
     'usuariosBody'
   );
+
+
+
+  if(!body){
+
+    return;
+
+  }
 
 
 
@@ -261,14 +287,40 @@ async function renderUsuarios(){
 
 
   // ======================
+  // VALIDAR DUPLICADOS
+  // ======================
+
+  const usuariosUnicos = [];
+
+  const ids = new Set();
+
+
+
+
+
+  data.forEach(item => {
+
+    if(!ids.has(item.id)){
+
+      ids.add(item.id);
+
+      usuariosUnicos.push(item);
+
+    }
+
+  });
+
+
+
+
+
+  // ======================
   // VACIO
   // ======================
 
   if(
 
-    !data ||
-
-    data.length === 0
+    usuariosUnicos.length === 0
 
   ){
 
@@ -298,7 +350,7 @@ async function renderUsuarios(){
   // TABLA
   // ======================
 
-  data.forEach(item => {
+  usuariosUnicos.forEach(item => {
 
     body.innerHTML += `
 
@@ -328,11 +380,23 @@ async function renderUsuarios(){
 
         <td>
 
-          ${item.created_at || ''}
+          ${new Date(item.created_at)
+            .toLocaleString()}
 
         </td>
 
+
+
+
+
+        <!-- ACCIONES -->
+
         <td class="acciones-tabla">
+
+
+
+
+          <!-- ELIMINAR -->
 
           <button
             class="btn-eliminar"
@@ -342,6 +406,12 @@ async function renderUsuarios(){
             Eliminar
 
           </button>
+
+
+
+
+
+          <!-- EDITAR -->
 
           <button
             class="btn-editar"
@@ -391,6 +461,30 @@ async function eliminarUsuario(id){
 
 
 
+  // ======================
+  // CONSULTAR USUARIO
+  // ======================
+
+  const { data: usuarioEliminar } =
+
+  await supabaseClient
+
+  .from('usuarios')
+
+  .select('*')
+
+  .eq('id', id)
+
+  .single();
+
+
+
+
+
+  // ======================
+  // DELETE
+  // ======================
+
   const { error } =
 
   await supabaseClient
@@ -404,6 +498,10 @@ async function eliminarUsuario(id){
 
 
 
+
+  // ======================
+  // ERROR
+  // ======================
 
   if(error){
 
@@ -421,7 +519,41 @@ async function eliminarUsuario(id){
 
 
 
-  renderUsuarios();
+  // ======================
+  // HISTORIAL
+  // ======================
+
+  guardarHistorial(
+
+    'ELIMINAR',
+
+    'USUARIOS',
+
+    `Se eliminó el usuario ${usuarioEliminar?.usuario}`
+
+  );
+
+
+
+
+
+  // ======================
+  // ACTUALIZAR
+  // ======================
+
+  await renderUsuarios();
+
+
+
+
+
+  // ======================
+  // ALERTA
+  // ======================
+
+  alert(
+    'Usuario eliminado'
+  );
 
 }
 
@@ -435,6 +567,10 @@ async function eliminarUsuario(id){
 // ======================
 
 async function editarUsuario(id){
+
+  // ======================
+  // CONSULTAR
+  // ======================
 
   const { data } =
 
@@ -462,6 +598,10 @@ async function editarUsuario(id){
 
 
 
+  // ======================
+  // NUEVA PASSWORD
+  // ======================
+
   const nuevoPassword = prompt(
 
     'Nueva contraseña:',
@@ -485,6 +625,10 @@ async function editarUsuario(id){
 
 
 
+
+  // ======================
+  // NUEVO ROL
+  // ======================
 
   const nuevoRol = prompt(
 
@@ -539,6 +683,10 @@ auditor`,
 
 
 
+  // ======================
+  // ERROR
+  // ======================
+
   if(error){
 
     console.log(error);
@@ -555,11 +703,37 @@ auditor`,
 
 
 
-  renderUsuarios();
+  // ======================
+  // HISTORIAL
+  // ======================
+
+  guardarHistorial(
+
+    'EDITAR',
+
+    'USUARIOS',
+
+    `Se actualizó el usuario ${data.usuario}`
+
+  );
 
 
 
 
+
+  // ======================
+  // ACTUALIZAR
+  // ======================
+
+  await renderUsuarios();
+
+
+
+
+
+  // ======================
+  // ALERTA
+  // ======================
 
   alert(
     'Usuario actualizado'
@@ -595,6 +769,7 @@ function limpiarFormulario(){
   ).value = 'lider';
 
 }
+
 
 
 
