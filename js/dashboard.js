@@ -25,9 +25,15 @@ const supabaseUrl =
 
 
 const supabaseKey =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'TU_SUPABASE_KEY_REAL';
 
 
+
+
+
+// ======================
+// CLIENTE GLOBAL
+// ======================
 
 window.supabaseClient =
 
@@ -275,7 +281,7 @@ async function guardarHistorial(
 
 
 
-  const { error } =
+  const response =
 
   await window.supabaseClient
 
@@ -285,17 +291,22 @@ async function guardarHistorial(
 
     {
 
-      usuario,
+      usuario: usuario,
 
-      accion,
+      accion: accion,
 
-      modulo,
+      modulo: modulo,
 
-      descripcion
+      descripcion: descripcion
 
     }
 
   ]);
+
+
+
+  const error =
+  response.error;
 
 
 
@@ -359,8 +370,6 @@ function mostrarModulo(modulo){
     }
 
 
-
-    renderNotificaciones();
 
     return;
 
@@ -618,8 +627,9 @@ function cargarScript(
 
 
 
-  script.src =
-  src + '&cache=' + Date.now();
+  // ✅ SIN CACHE DINAMICO
+
+  script.src = src;
 
 
 
