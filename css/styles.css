@@ -1,3 +1,4 @@
+
 /* =========================
 IMPORT FUENTE
 ========================= */
@@ -247,11 +248,11 @@ BOTON CERRAR SESION
 
   width:100%;
 
-  height:40px;
+  height:42px;
 
   border:none;
 
-  border-radius:12px;
+  border-radius:14px;
 
   background:
   linear-gradient(
@@ -264,11 +265,14 @@ BOTON CERRAR SESION
 
   font-size:13px;
 
-  font-weight:600;
+  font-weight:700;
 
   cursor:pointer;
 
-  transition:.20s;
+  transition:.25s;
+
+  box-shadow:
+  0 8px 18px rgba(0,0,0,.15);
 
 }
 
@@ -279,7 +283,7 @@ BOTON CERRAR SESION
 .logout-btn:hover{
 
   transform:
-  translateY(-2px);
+  translateY(-3px);
 
 }
 
@@ -314,7 +318,7 @@ TOPBAR
   height:70px;
 
   background:
-  rgba(255,255,255,.78);
+  rgba(255,255,255,.80);
 
   backdrop-filter:blur(12px);
 
@@ -343,7 +347,7 @@ TOPBAR
 
 .topbar h1{
 
-  font-size:26px;
+  font-size:28px;
 
   font-weight:700;
 
@@ -368,231 +372,6 @@ TOPBAR
 
 
 /* =========================
-NOTIFICACIONES
-========================= */
-
-.notificaciones-box{
-
-  position:relative;
-
-}
-
-
-
-
-
-.campana{
-
-  width:46px;
-
-  height:46px;
-
-  border-radius:14px;
-
-  background:white;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  cursor:pointer;
-
-  position:relative;
-
-  font-size:20px;
-
-  box-shadow:
-  0 5px 18px rgba(0,0,0,.08);
-
-}
-
-
-
-
-
-#contadorNotificaciones{
-
-  position:absolute;
-
-  top:-4px;
-
-  right:-4px;
-
-  width:20px;
-
-  height:20px;
-
-  border-radius:50%;
-
-  background:#ef4444;
-
-  color:white;
-
-  font-size:11px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-}
-
-
-
-
-
-.panel-notificaciones{
-
-  display:none;
-
-  position:absolute;
-
-  top:60px;
-
-  right:0;
-
-  width:340px;
-
-  background:white;
-
-  border-radius:18px;
-
-  border:
-  1px solid #e2e8f0;
-
-  box-shadow:
-  0 20px 45px rgba(0,0,0,.18);
-
-  overflow:hidden;
-
-  z-index:9999;
-
-}
-
-
-
-
-
-.panel-notificaciones.active{
-
-  display:block;
-
-}
-
-
-
-
-
-.notificaciones-header{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  padding:14px 16px;
-
-  border-bottom:
-  1px solid #eef2ff;
-
-}
-
-
-
-
-
-#listaNotificaciones{
-
-  max-height:350px;
-
-  overflow-y:auto;
-
-}
-
-
-
-
-
-.notificacion-item{
-
-  padding:14px 16px;
-
-  border-bottom:
-  1px solid #f1f5f9;
-
-}
-
-
-
-
-
-.notificacion-item p{
-
-  font-size:13px;
-
-  line-height:1.5;
-
-  margin-bottom:6px;
-
-}
-
-
-
-
-
-.notificacion-item span{
-
-  font-size:11px;
-
-  color:#64748b;
-
-}
-
-
-
-
-
-.sin-notificaciones{
-
-  padding:20px;
-
-  text-align:center;
-
-  color:#64748b;
-
-}
-
-
-
-
-
-.btn-limpiar-noti{
-
-  border:none;
-
-  background:#ef4444;
-
-  color:white;
-
-  border-radius:8px;
-
-  padding:6px 10px;
-
-  cursor:pointer;
-
-  font-size:11px;
-
-}
-
-
-
-
-
-/* =========================
 USER INFO
 ========================= */
 
@@ -602,9 +381,9 @@ USER INFO
 
   padding:10px 16px;
 
-  border-radius:12px;
+  border-radius:14px;
 
-  font-weight:600;
+  font-weight:700;
 
   box-shadow:
   0 3px 10px rgba(0,0,0,.05);
@@ -646,11 +425,14 @@ WELCOME
 
   border-radius:24px;
 
-  padding:28px;
+  padding:30px;
 
   color:white;
 
   margin-bottom:22px;
+
+  box-shadow:
+  0 15px 35px rgba(37,99,235,.20);
 
 }
 
@@ -674,8 +456,8 @@ WELCOME
 
 .welcome-icon{
 
-  width:65px;
-  height:65px;
+  width:68px;
+  height:68px;
 
   border-radius:18px;
 
@@ -688,7 +470,7 @@ WELCOME
 
   justify-content:center;
 
-  font-size:28px;
+  font-size:30px;
 
 }
 
@@ -698,7 +480,7 @@ WELCOME
 
 .welcome-banner h1{
 
-  font-size:30px;
+  font-size:32px;
 
   margin-bottom:8px;
 
@@ -712,123 +494,7 @@ WELCOME
 
   font-size:14px;
 
-  line-height:1.6;
-
-}
-
-
-
-
-
-/* =========================
-GRID
-========================= */
-
-.dashboard-grid{
-
-  display:grid;
-
-  grid-template-columns:
-  repeat(auto-fit,minmax(220px,1fr));
-
-  gap:18px;
-
-}
-
-
-
-
-
-/* =========================
-CARDS DASHBOARD
-========================= */
-
-.dashboard-card{
-
-  background:white;
-
-  border-radius:18px;
-
-  padding:22px;
-
-  min-height:170px;
-
-  border:
-  1px solid #e2e8f0;
-
-  transition:.25s;
-
-  cursor:pointer;
-
-  box-shadow:
-  0 4px 16px rgba(15,23,42,.06);
-
-}
-
-
-
-
-
-.dashboard-card:hover{
-
-  transform:
-  translateY(-4px);
-
-}
-
-
-
-
-
-.card-icon{
-
-  width:58px;
-  height:58px;
-
-  border-radius:16px;
-
-  background:
-  linear-gradient(
-    135deg,
-    #dbeafe,
-    #bfdbfe
-  );
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:24px;
-
-  margin-bottom:16px;
-
-}
-
-
-
-
-
-.dashboard-card h3{
-
-  font-size:20px;
-
-  margin-bottom:10px;
-
-}
-
-
-
-
-
-.dashboard-card p{
-
-  color:#64748b;
-
-  line-height:1.6;
-
-  font-size:13px;
+  line-height:1.7;
 
 }
 
@@ -845,17 +511,17 @@ CARDS GENERALES
 
   background:white;
 
-  border-radius:18px;
+  border-radius:20px;
 
   border:
   1px solid #e2e8f0;
 
-  padding:18px;
+  padding:20px;
 
-  margin-bottom:18px;
+  margin-bottom:20px;
 
   box-shadow:
-  0 3px 12px rgba(15,23,42,.05);
+  0 4px 16px rgba(15,23,42,.06);
 
 }
 
@@ -978,15 +644,15 @@ INPUTS
   border:
   1px solid #cbd5e1;
 
-  border-radius:12px;
+  border-radius:14px;
 
-  padding:12px 14px;
+  padding:13px 15px;
 
   font-size:13px;
 
   background:white;
 
-  transition:.2s;
+  transition:.25s;
 
 }
 
@@ -1003,7 +669,7 @@ INPUTS
   border-color:#2563eb;
 
   box-shadow:
-  0 0 0 3px rgba(37,99,235,.10);
+  0 0 0 4px rgba(37,99,235,.10);
 
 }
 
@@ -1022,7 +688,7 @@ textarea{
 
 
 /* =========================
-BOTONES
+BOTONES PREMIUM
 ========================= */
 
 .button-group{
@@ -1045,7 +711,9 @@ BOTONES
 .btn-editar,
 .btn-eliminar,
 .btn-pdf,
-.btn-ver{
+.btn-ver,
+.btn-success,
+.btn-danger{
 
   display:inline-flex;
 
@@ -1055,23 +723,28 @@ BOTONES
 
   gap:6px;
 
-  min-width:90px;
+  min-width:100px;
 
-  height:34px;
+  height:40px;
 
-  padding:0 14px;
+  padding:0 18px;
 
   border:none;
 
-  border-radius:10px;
+  border-radius:14px;
 
-  font-size:12px;
+  font-size:13px;
 
-  font-weight:600;
+  font-weight:700;
 
   cursor:pointer;
 
-  transition:.20s;
+  transition:.25s;
+
+  letter-spacing:.3px;
+
+  box-shadow:
+  0 8px 18px rgba(0,0,0,.12);
 
 }
 
@@ -1086,6 +759,41 @@ BOTONES
     135deg,
     #0f172a,
     #2563eb
+  );
+
+  color:white;
+
+}
+
+
+
+
+
+.btn-success{
+
+  background:
+  linear-gradient(
+    135deg,
+    #10b981,
+    #059669
+  );
+
+  color:white;
+
+}
+
+
+
+
+
+.btn-danger,
+.btn-eliminar{
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
   );
 
   color:white;
@@ -1113,30 +821,13 @@ BOTONES
 
 
 
-.btn-eliminar{
-
-  background:
-  linear-gradient(
-    135deg,
-    #ef4444,
-    #dc2626
-  );
-
-  color:white;
-
-}
-
-
-
-
-
 .btn-pdf{
 
   background:
   linear-gradient(
     135deg,
     #111827,
-    #1e293b
+    #1e3a8a
   );
 
   color:white;
@@ -1152,8 +843,8 @@ BOTONES
   background:
   linear-gradient(
     135deg,
-    #10b981,
-    #059669
+    #2563eb,
+    #1d4ed8
   );
 
   color:white;
@@ -1165,13 +856,18 @@ BOTONES
 
 
 .btn-primary:hover,
-.btn-editar:hover,
+.btn-success:hover,
+.btn-danger:hover,
 .btn-eliminar:hover,
+.btn-editar:hover,
 .btn-pdf:hover,
 .btn-ver:hover{
 
   transform:
-  translateY(-2px);
+  translateY(-3px);
+
+  box-shadow:
+  0 14px 25px rgba(0,0,0,.18);
 
 }
 
@@ -1189,7 +885,7 @@ TABLAS
 
   margin-top:10px;
 
-  border-radius:16px;
+  border-radius:18px;
 
 }
 
@@ -1228,13 +924,13 @@ thead{
 
 th{
 
-  padding:13px 14px;
+  padding:16px;
 
   text-align:left;
 
-  font-size:12px;
+  font-size:13px;
 
-  font-weight:600;
+  font-weight:700;
 
 }
 
@@ -1244,9 +940,13 @@ th{
 
 td{
 
-  padding:12px 14px;
+  padding:16px;
 
-  font-size:12px;
+  font-size:13px;
+
+  vertical-align:middle;
+
+  line-height:1.7;
 
 }
 
@@ -1259,7 +959,7 @@ tbody tr{
   border-bottom:
   1px solid #eef2ff;
 
-  transition:.18s;
+  transition:.20s;
 
 }
 
@@ -1279,40 +979,34 @@ tbody tr:hover{
 
 
 /* =========================
-TABLA AUDITORIAS
+TEXTOS LARGOS
 ========================= */
-
-.table-pro{
-
-  table-layout:fixed;
-
-}
-
-
-
-
-
-.table-pro td{
-
-  vertical-align:top;
-
-}
-
-
-
-
 
 .hallazgo-box{
 
-  max-width:100%;
+  max-width:420px;
 
   white-space:normal;
 
   word-break:break-word;
 
-  line-height:1.6;
+  line-height:1.8;
 
   color:#334155;
+
+}
+
+
+
+
+
+.texto-tabla{
+
+  max-width:180px;
+
+  line-height:1.6;
+
+  word-break:break-word;
 
 }
 
@@ -1324,19 +1018,31 @@ TABLA AUDITORIAS
 ESTADOS
 ========================= */
 
+.estado-pendiente,
+.estado-revision,
+.estado-cerrado{
+
+  padding:8px 14px;
+
+  border-radius:30px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  display:inline-block;
+
+}
+
+
+
+
+
 .estado-pendiente{
 
   background:#fee2e2;
 
   color:#dc2626;
-
-  padding:6px 12px;
-
-  border-radius:10px;
-
-  font-size:11px;
-
-  font-weight:600;
 
 }
 
@@ -1350,14 +1056,6 @@ ESTADOS
 
   color:#d97706;
 
-  padding:6px 12px;
-
-  border-radius:10px;
-
-  font-size:11px;
-
-  font-weight:600;
-
 }
 
 
@@ -1369,14 +1067,6 @@ ESTADOS
   background:#dcfce7;
 
   color:#16a34a;
-
-  padding:6px 12px;
-
-  border-radius:10px;
-
-  font-size:11px;
-
-  font-weight:600;
 
 }
 
@@ -1392,9 +1082,11 @@ ACCIONES TABLA
 
   display:flex;
 
-  flex-direction:column;
+  align-items:center;
 
-  gap:8px;
+  gap:10px;
+
+  flex-wrap:wrap;
 
 }
 
@@ -1650,11 +1342,6 @@ RESPONSIVE
   .content{
 
     padding:16px;
-  }
-
-  .dashboard-grid{
-
-    grid-template-columns:1fr;
   }
 
   .form-grid{
