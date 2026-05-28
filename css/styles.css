@@ -857,16 +857,6 @@ KPI GRID
 
 
 
-.kpi-card{
-
-  min-height:90px;
-
-}
-
-
-
-
-
 .kpi-card span{
 
   font-size:12px;
@@ -980,16 +970,6 @@ INPUTS
 
 
 
-textarea{
-
-  resize:none;
-
-}
-
-
-
-
-
 /* =========================
 BUTTON GROUP
 ========================= */
@@ -1011,7 +991,7 @@ BUTTON GROUP
 
 
 /* =========================
-BOTONES PREMIUM
+BOTONES PREMIUM PEQUEÑOS
 ========================= */
 
 .btn-primary,
@@ -1027,11 +1007,11 @@ BOTONES PREMIUM
 
   justify-content:center;
 
-  min-width:78px;
+  min-width:70px;
 
-  height:32px;
+  height:30px;
 
-  padding:0 12px;
+  padding:0 10px;
 
   border:none;
 
@@ -1046,7 +1026,7 @@ BOTONES PREMIUM
   transition:.25s;
 
   box-shadow:
-  0 5px 12px rgba(0,0,0,.10);
+  0 4px 10px rgba(0,0,0,.10);
 
 }
 
@@ -1256,6 +1236,26 @@ tbody tr:hover{
 
 
 /* =========================
+ACCIONES TABLA
+========================= */
+
+.acciones-tabla{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  flex-wrap:wrap;
+
+}
+
+
+
+
+
+/* =========================
 TEXTOS LARGOS
 ========================= */
 
@@ -1266,24 +1266,6 @@ TEXTOS LARGOS
   line-height:1.7;
 
   word-break:break-word;
-
-}
-
-
-
-
-
-/* =========================
-ACCIONES TABLA
-========================= */
-
-.acciones-tabla{
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:6px;
 
 }
 
@@ -1352,149 +1334,6 @@ ESTADOS
 
 
 /* =========================
-PRODUCTO INFO
-========================= */
-
-.producto-layout{
-
-  display:grid;
-
-  grid-template-columns:
-  1.7fr 220px;
-
-  gap:16px;
-
-}
-
-
-
-
-
-.producto-info{
-
-  display:grid;
-
-  grid-template-columns:
-  repeat(2,minmax(180px,1fr));
-
-  gap:12px;
-
-}
-
-
-
-
-
-.info-card{
-
-  background:
-  linear-gradient(
-    135deg,
-    #f8fafc,
-    #eef2ff
-  );
-
-  border:
-  1px solid #dbeafe;
-
-  border-radius:14px;
-
-  padding:14px 16px;
-
-}
-
-
-
-
-
-.info-card span{
-
-  font-size:12px;
-
-  color:#64748b;
-
-  margin-bottom:6px;
-
-  display:block;
-
-}
-
-
-
-
-
-.info-card strong{
-
-  font-size:18px;
-
-}
-
-
-
-
-
-/* =========================
-DIFERENCIA
-========================= */
-
-.diferencia-card{
-
-  background:
-  linear-gradient(
-    135deg,
-    #0f172a,
-    #2563eb
-  );
-
-  border-radius:18px;
-
-  color:white;
-
-  display:flex;
-
-  flex-direction:column;
-
-  justify-content:center;
-
-  align-items:center;
-
-  padding:18px;
-
-  height:170px;
-
-}
-
-
-
-
-
-.diferencia-card span{
-
-  font-size:13px;
-
-  opacity:.85;
-
-  margin-bottom:10px;
-
-}
-
-
-
-
-
-.diferencia-card h2{
-
-  font-size:42px;
-
-  font-weight:700;
-
-}
-
-
-
-
-
-/* =========================
 RESPONSIVE
 ========================= */
 
@@ -1507,22 +1346,6 @@ RESPONSIVE
   .main-content{
     margin-left:220px;
     width:calc(100% - 220px);
-  }
-
-}
-
-
-
-
-
-@media(max-width:900px){
-
-  .producto-layout{
-    grid-template-columns:1fr;
-  }
-
-  .producto-info{
-    grid-template-columns:1fr;
   }
 
 }
