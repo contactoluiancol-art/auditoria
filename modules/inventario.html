@@ -223,9 +223,13 @@
 
   <div class="module-card">
 
-    <h3 class="titulo-seccion">
-      📦 Información Producto
-    </h3>
+    <div class="table-header">
+
+      <h3>
+        📦 Información Producto
+      </h3>
+
+    </div>
 
 
 
@@ -321,73 +325,6 @@
 
 
   <!-- ===================================== -->
-  <!-- TABLA INVENTARIO -->
-  <!-- ===================================== -->
-
-  <div class="module-card">
-
-    <div class="table-header">
-
-      <h3>
-        📋 Inventario Cargado
-      </h3>
-
-
-
-
-
-      <input
-        type="text"
-        id="buscadorInventario"
-        placeholder="Buscar producto..."
-        class="search-input"
-      >
-
-    </div>
-
-
-
-
-
-    <div class="table-container">
-
-      <table>
-
-        <thead>
-
-          <tr>
-
-            <th>Código</th>
-
-            <th>Producto</th>
-
-            <th>Ubicación</th>
-
-            <th>Stock</th>
-
-          </tr>
-
-        </thead>
-
-
-
-
-
-        <tbody id="inventarioBody">
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-
-
-
-  <!-- ===================================== -->
   <!-- HISTORIAL -->
   <!-- ===================================== -->
 
@@ -471,6 +408,73 @@
 
   </div>
 
+
+
+
+
+  <!-- ===================================== -->
+  <!-- INVENTARIO CARGADO -->
+  <!-- ===================================== -->
+
+  <div class="module-card">
+
+    <div class="table-header">
+
+      <h3>
+        📋 Inventario Cargado
+      </h3>
+
+
+
+
+
+      <input
+        type="text"
+        id="buscadorInventario"
+        placeholder="Buscar producto..."
+        class="search-input"
+      >
+
+    </div>
+
+
+
+
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Código</th>
+
+            <th>Producto</th>
+
+            <th>Ubicación</th>
+
+            <th>Stock</th>
+
+          </tr>
+
+        </thead>
+
+
+
+
+
+        <tbody id="inventarioBody">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
 </div>
 
 
@@ -487,3 +491,4 @@
   accept=".xlsx,.xls"
   hidden
 >
+
