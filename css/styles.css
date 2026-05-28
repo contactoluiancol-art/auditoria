@@ -18,10 +18,6 @@ RESET
   box-sizing:border-box;
 }
 
-
-
-
-
 html,
 body{
 
@@ -101,10 +97,6 @@ SIDEBAR
 
 
 
-/* =========================
-LOGO
-========================= */
-
 .logo{
 
   text-align:center;
@@ -119,7 +111,7 @@ LOGO
 
 .logo img{
 
-  width:88px;
+  width:90px;
 
   margin-bottom:14px;
 
@@ -156,10 +148,6 @@ LOGO
 
 
 
-
-/* =========================
-MENU
-========================= */
 
 .sidebar ul{
 
@@ -230,15 +218,11 @@ MENU
 
 
 
-/* =========================
-LOGOUT
-========================= */
-
 .logout-btn{
 
   width:100%;
 
-  height:40px;
+  height:42px;
 
   border:none;
 
@@ -261,7 +245,7 @@ LOGOUT
 
   transition:.25s;
 
-  margin-top:15px;
+  margin-top:16px;
 
 }
 
@@ -397,8 +381,8 @@ NOTIFICACIONES
 
 .notification-btn{
 
-  width:46px;
-  height:46px;
+  width:44px;
+  height:44px;
 
   border:none;
 
@@ -410,7 +394,7 @@ NOTIFICACIONES
 
   position:relative;
 
-  font-size:20px;
+  font-size:18px;
 
   box-shadow:
   0 4px 12px rgba(0,0,0,.08);
@@ -425,11 +409,11 @@ NOTIFICACIONES
 
   position:absolute;
 
-  top:-5px;
-  right:-5px;
+  top:-4px;
+  right:-4px;
 
-  width:22px;
-  height:22px;
+  width:20px;
+  height:20px;
 
   border-radius:50%;
 
@@ -437,7 +421,7 @@ NOTIFICACIONES
 
   color:white;
 
-  font-size:11px;
+  font-size:10px;
 
   font-weight:700;
 
@@ -457,11 +441,11 @@ NOTIFICACIONES
 
   position:absolute;
 
-  top:58px;
+  top:55px;
 
   right:0;
 
-  width:340px;
+  width:320px;
 
   max-height:420px;
 
@@ -496,32 +480,6 @@ NOTIFICACIONES
 
 
 
-.notifications-header{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  margin-bottom:14px;
-
-}
-
-
-
-
-
-.notifications-header h3{
-
-  font-size:15px;
-
-}
-
-
-
-
-
 .notification-item{
 
   background:#f8fafc;
@@ -535,56 +493,9 @@ NOTIFICACIONES
 
   margin-bottom:10px;
 
-  font-size:13px;
-
-  line-height:1.6;
-
-}
-
-
-
-
-
-.btn-limpiar-noti{
-
-  border:none;
-
-  background:
-  linear-gradient(
-    135deg,
-    #ef4444,
-    #dc2626
-  );
-
-  color:white;
-
-  height:30px;
-
-  padding:0 12px;
-
-  border-radius:10px;
-
   font-size:12px;
 
-  font-weight:600;
-
-  cursor:pointer;
-
-}
-
-
-
-
-
-.sin-notificaciones{
-
-  text-align:center;
-
-  color:#64748b;
-
-  font-size:13px;
-
-  padding:20px 0;
+  line-height:1.6;
 
 }
 
@@ -621,15 +532,11 @@ WELCOME
 
   border-radius:24px;
 
-  padding:30px;
+  padding:28px;
 
   color:white;
 
   margin-bottom:24px;
-
-  overflow:hidden;
-
-  position:relative;
 
 }
 
@@ -653,8 +560,8 @@ WELCOME
 
 .welcome-icon{
 
-  width:70px;
-  height:70px;
+  width:68px;
+  height:68px;
 
   border-radius:18px;
 
@@ -667,7 +574,7 @@ WELCOME
 
   justify-content:center;
 
-  font-size:30px;
+  font-size:28px;
 
 }
 
@@ -700,8 +607,32 @@ WELCOME
 
 
 /* =========================
-DASHBOARD GRID
+CARDS
 ========================= */
+
+.module-card,
+.dashboard-card,
+.kpi-card{
+
+  background:white;
+
+  border-radius:20px;
+
+  border:
+  1px solid #e2e8f0;
+
+  padding:20px;
+
+  margin-bottom:20px;
+
+  box-shadow:
+  0 4px 16px rgba(15,23,42,.06);
+
+}
+
+
+
+
 
 .dashboard-grid{
 
@@ -719,18 +650,6 @@ DASHBOARD GRID
 
 
 .dashboard-card{
-
-  background:white;
-
-  border-radius:20px;
-
-  padding:22px;
-
-  border:
-  1px solid #e2e8f0;
-
-  box-shadow:
-  0 4px 16px rgba(15,23,42,.06);
 
   transition:.25s;
 
@@ -787,7 +706,7 @@ DASHBOARD GRID
 
   font-size:20px;
 
-  margin-bottom:10px;
+  margin-bottom:8px;
 
 }
 
@@ -810,34 +729,7 @@ DASHBOARD GRID
 
 
 /* =========================
-CARDS
-========================= */
-
-.module-card,
-.kpi-card{
-
-  background:white;
-
-  border-radius:20px;
-
-  border:
-  1px solid #e2e8f0;
-
-  padding:20px;
-
-  margin-bottom:20px;
-
-  box-shadow:
-  0 4px 16px rgba(15,23,42,.06);
-
-}
-
-
-
-
-
-/* =========================
-KPI GRID
+KPI
 ========================= */
 
 .kpi-grid{
@@ -845,11 +737,9 @@ KPI GRID
   display:grid;
 
   grid-template-columns:
-  repeat(auto-fit,minmax(160px,1fr));
+  repeat(auto-fit,minmax(150px,1fr));
 
   gap:14px;
-
-  margin-bottom:20px;
 
 }
 
@@ -882,7 +772,7 @@ KPI GRID
 
 
 /* =========================
-FORM GRID
+FORMS
 ========================= */
 
 .form-grid{
@@ -899,10 +789,6 @@ FORM GRID
 
 
 
-
-/* =========================
-INPUTS
-========================= */
 
 .input-group{
 
@@ -936,7 +822,7 @@ INPUTS
 
   width:100%;
 
-  padding:13px 15px;
+  padding:13px 14px;
 
   border:
   1px solid #cbd5e1;
@@ -971,14 +857,14 @@ INPUTS
 
 
 /* =========================
-BUTTON GROUP
+BUTTONS
 ========================= */
 
 .button-group{
 
   display:flex;
 
-  gap:10px;
+  gap:8px;
 
   flex-wrap:wrap;
 
@@ -989,10 +875,6 @@ BUTTON GROUP
 
 
 
-
-/* =========================
-BOTONES PREMIUM PEQUEÑOS
-========================= */
 
 .btn-primary,
 .btn-success,
@@ -1007,11 +889,11 @@ BOTONES PREMIUM PEQUEÑOS
 
   justify-content:center;
 
-  min-width:70px;
+  min-width:72px;
 
   height:30px;
 
-  padding:0 10px;
+  padding:0 12px;
 
   border:none;
 
@@ -1144,8 +1026,6 @@ TABLAS
 
   overflow-x:auto;
 
-  margin-top:10px;
-
 }
 
 
@@ -1189,8 +1069,6 @@ th{
 
   font-size:13px;
 
-  font-weight:700;
-
 }
 
 
@@ -1203,9 +1081,9 @@ td{
 
   font-size:13px;
 
-  vertical-align:middle;
-
   line-height:1.7;
+
+  vertical-align:middle;
 
 }
 
@@ -1235,9 +1113,17 @@ tbody tr:hover{
 
 
 
-/* =========================
-ACCIONES TABLA
-========================= */
+.hallazgo-box{
+
+  max-width:320px;
+
+  word-break:break-word;
+
+}
+
+
+
+
 
 .acciones-tabla{
 
@@ -1255,28 +1141,6 @@ ACCIONES TABLA
 
 
 
-/* =========================
-TEXTOS LARGOS
-========================= */
-
-.hallazgo-box{
-
-  max-width:320px;
-
-  line-height:1.7;
-
-  word-break:break-word;
-
-}
-
-
-
-
-
-/* =========================
-ESTADOS
-========================= */
-
 .estado-pendiente,
 .estado-revision,
 .estado-cerrado{
@@ -1288,8 +1152,6 @@ ESTADOS
   font-size:11px;
 
   font-weight:700;
-
-  display:inline-block;
 
 }
 
@@ -1334,6 +1196,149 @@ ESTADOS
 
 
 /* =========================
+PRODUCTO
+========================= */
+
+.producto-layout{
+
+  display:grid;
+
+  grid-template-columns:
+  1.8fr 220px;
+
+  gap:16px;
+
+  align-items:stretch;
+
+}
+
+
+
+
+
+.producto-info{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,minmax(180px,1fr));
+
+  gap:12px;
+
+}
+
+
+
+
+
+.info-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #f8fafc,
+    #eef2ff
+  );
+
+  border:
+  1px solid #dbeafe;
+
+  border-radius:16px;
+
+  padding:16px;
+
+  min-height:95px;
+
+}
+
+
+
+
+
+.info-card span{
+
+  font-size:12px;
+
+  color:#64748b;
+
+  margin-bottom:6px;
+
+  display:block;
+
+}
+
+
+
+
+
+.info-card strong{
+
+  font-size:17px;
+
+  line-height:1.5;
+
+  word-break:break-word;
+
+}
+
+
+
+
+
+.diferencia-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #2563eb
+  );
+
+  border-radius:18px;
+
+  color:white;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:18px;
+
+}
+
+
+
+
+
+.diferencia-card span{
+
+  font-size:13px;
+
+  opacity:.85;
+
+  margin-bottom:8px;
+
+}
+
+
+
+
+
+.diferencia-card h2{
+
+  font-size:40px;
+
+}
+
+
+
+
+
+/* =========================
 RESPONSIVE
 ========================= */
 
@@ -1346,6 +1351,22 @@ RESPONSIVE
   .main-content{
     margin-left:220px;
     width:calc(100% - 220px);
+  }
+
+}
+
+
+
+
+
+@media(max-width:900px){
+
+  .producto-layout{
+    grid-template-columns:1fr;
+  }
+
+  .producto-info{
+    grid-template-columns:1fr;
   }
 
 }
@@ -1379,22 +1400,12 @@ RESPONSIVE
     padding:16px;
   }
 
-  .welcome-left{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
   .content{
     padding:16px;
   }
 
   .form-grid{
     grid-template-columns:1fr;
-  }
-
-  .notifications-dropdown{
-    width:95vw;
-    right:-20px;
   }
 
 }
