@@ -5,7 +5,7 @@
   <div class="table-header">
 
     <h3>
-      Inventario
+      📦Inventario
     </h3>
 
 
@@ -40,6 +40,246 @@
 
 
 
+  <!-- KPIS -->
+
+  <div class="kpi-grid">
+
+    <div class="kpi-card">
+
+      <span>Total Productos</span>
+
+      <h3 id="kpiTotal">
+
+        0
+
+      </h3>
+
+    </div>
+
+
+
+    <div class="kpi-card">
+
+      <span>Exactos</span>
+
+      <h3 id="kpiExactos">
+
+        0
+
+      </h3>
+
+    </div>
+
+
+
+    <div class="kpi-card">
+
+      <span>Faltantes</span>
+
+      <h3 id="kpiFaltantes">
+
+        0
+
+      </h3>
+
+    </div>
+
+
+
+    <div class="kpi-card">
+
+      <span>Sobrantes</span>
+
+      <h3 id="kpiSobrantes">
+
+        0
+
+      </h3>
+
+    </div>
+
+
+
+    <div class="kpi-card">
+
+      <span>Exactitud</span>
+
+      <h3 id="kpiExactitud">
+
+        0%
+
+      </h3>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- FORMULARIO -->
+
+  <div class="module-card">
+
+    <h3>
+      Registrar Conteo
+    </h3>
+
+
+
+    <div class="form-grid">
+
+      <div class="input-group">
+
+        <label>
+          Código
+        </label>
+
+        <input
+          type="text"
+          id="codigoInput"
+          placeholder="Ingrese código"
+        >
+
+      </div>
+
+
+
+      <div class="input-group">
+
+        <label>
+          Conteo Físico
+        </label>
+
+        <input
+          type="number"
+          id="conteoFisico"
+          placeholder="Ingrese conteo"
+        >
+
+      </div>
+
+    </div>
+
+
+
+    <div class="button-group">
+
+      <button
+        id="buscarBtn"
+        class="btn-primary"
+      >
+
+        Buscar
+
+      </button>
+
+
+
+      <button
+        id="guardarConteo"
+        class="btn-success"
+      >
+
+        Guardar Conteo
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- INFO PRODUCTO -->
+
+  <div class="module-card">
+
+    <h3>
+      Información Producto
+    </h3>
+
+
+
+    <div class="info-grid">
+
+      <div class="info-item">
+
+        <span>Código</span>
+
+        <strong id="codigoProducto">
+
+          -
+
+        </strong>
+
+      </div>
+
+
+
+      <div class="info-item">
+
+        <span>Producto</span>
+
+        <strong id="nombreProducto">
+
+          -
+
+        </strong>
+
+      </div>
+
+
+
+      <div class="info-item">
+
+        <span>Ubicación</span>
+
+        <strong id="ubicacionProducto">
+
+          -
+
+        </strong>
+
+      </div>
+
+
+
+      <div class="info-item">
+
+        <span>Stock</span>
+
+        <strong id="stockProducto">
+
+          -
+
+        </strong>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="resultado-box">
+
+      <span>
+        Diferencia
+      </span>
+
+      <h2 id="resultadoTexto">
+
+        -
+
+      </h2>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- TABLA -->
+
   <div class="table-container">
 
     <table>
@@ -72,7 +312,85 @@
 
 </div>
 
-<!-- EXCEL -->
+
+
+<!-- HISTORIAL -->
+
+<div class="module-card">
+
+  <div class="table-header">
+
+    <h3>
+      Historial Conteos
+    </h3>
+
+  </div>
+
+
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Código</th>
+
+          <th>Producto</th>
+
+          <th>Sistema</th>
+
+          <th>Físico</th>
+
+          <th>Diferencia</th>
+
+        </tr>
+
+      </thead>
+
+
+
+      <tbody id="historialBody">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+
+  <div class="button-group bottom-buttons">
+
+    <button
+      id="exportarExcel"
+      class="btn-success"
+    >
+
+      Exportar Excel
+
+    </button>
+
+
+
+    <button
+      id="reiniciarInventario"
+      class="btn-danger"
+    >
+
+      Reiniciar Inventario
+
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- INPUT EXCEL -->
 
 <input
   type="file"
