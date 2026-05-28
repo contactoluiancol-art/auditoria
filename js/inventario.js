@@ -9,8 +9,6 @@ window.inventarioCargado = true;
 
 
 
-
-
 // ======================
 // VARIABLES GLOBALES
 // ======================
@@ -28,8 +26,6 @@ JSON.parse(
 
 
 window.productoActual = null;
-
-
 
 
 
@@ -66,8 +62,6 @@ var buscadorInventario =
 document.getElementById(
   'buscadorInventario'
 );
-
-
 
 
 
@@ -126,8 +120,6 @@ if(buscadorInventario){
   filtrarInventario;
 
 }
-
-
 
 
 
@@ -211,8 +203,6 @@ function leerExcel(e){
 
     renderInventario();
 
-
-
     actualizarKPIs();
 
 
@@ -228,8 +218,6 @@ function leerExcel(e){
   reader.readAsArrayBuffer(file);
 
 }
-
-
 
 
 
@@ -266,7 +254,7 @@ window.renderInventario = function(datos){
 
 
 
-  if(!datos || datos.length === 0){
+  if(datos.length === 0){
 
     body.innerHTML =
 
@@ -295,33 +283,25 @@ window.renderInventario = function(datos){
     '<tr>' +
 
       '<td>' +
-
       (item.codigo || '-') +
-
       '</td>' +
 
 
 
       '<td>' +
-
       (item.producto || '-') +
-
       '</td>' +
 
 
 
       '<td>' +
-
       (item.ubicacion || '-') +
-
       '</td>' +
 
 
 
       '<td>' +
-
       (item.stock || 0) +
-
       '</td>' +
 
     '</tr>';
@@ -329,8 +309,6 @@ window.renderInventario = function(datos){
   });
 
 };
-
-
 
 
 
@@ -405,8 +383,6 @@ function buscarProducto(){
 
 
 
-
-
 // ======================
 // REGISTRAR CONTEO
 // ======================
@@ -446,16 +422,12 @@ function registrarConteo(){
 
 
 
-  // RESULTADO
-
   actualizarTexto(
     'resultadoTexto',
     diferencia
   );
 
 
-
-  // HISTORIAL
 
   var historial =
 
@@ -469,7 +441,20 @@ function registrarConteo(){
 
 
 
-  historial.push({
+  var index = historial.findIndex(
+
+    function(item){
+
+      return item.codigo ==
+      window.productoActual.codigo;
+
+    }
+
+  );
+
+
+
+  var nuevoRegistro = {
 
     codigo:
     window.productoActual.codigo,
@@ -486,7 +471,24 @@ function registrarConteo(){
     diferencia:
     diferencia
 
-  });
+  };
+
+
+
+  if(index !== -1){
+
+    historial[index] =
+    nuevoRegistro;
+
+  }
+
+  else{
+
+    historial.push(
+      nuevoRegistro
+    );
+
+  }
 
 
 
@@ -513,8 +515,6 @@ function registrarConteo(){
   );
 
 }
-
-
 
 
 
@@ -621,11 +621,25 @@ window.renderHistorial = function(filtro){
 
       '<td>' +
 
-        '<button class="btn-danger">' +
 
-        'Eliminar' +
 
-        '</button>' +
+      '<button ' +
+
+      'class="btn-delete-small" ' +
+
+      'onclick="eliminarRegistro(' +
+
+      "'" + item.codigo + "'" +
+
+      ')"' +
+
+      '>' +
+
+      '🗑️' +
+
+      '</button>' +
+
+
 
       '</td>' +
 
@@ -636,6 +650,54 @@ window.renderHistorial = function(filtro){
 };
 
 
+
+// ======================
+// ELIMINAR REGISTRO
+// ======================
+
+window.eliminarRegistro = function(codigo){
+
+  var historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
+  ) || [];
+
+
+
+  historial = historial.filter(
+
+    function(item){
+
+      return item.codigo != codigo;
+
+    }
+
+  );
+
+
+
+  localStorage.setItem(
+
+    'historial',
+
+    JSON.stringify(
+      historial
+    )
+
+  );
+
+
+
+  renderHistorial();
+
+  actualizarKPIs();
+
+};
 
 
 
@@ -648,8 +710,6 @@ window.filtrarHistorial = function(tipo){
   renderHistorial(tipo);
 
 };
-
-
 
 
 
@@ -758,8 +818,6 @@ window.actualizarKPIs = function(){
 
 
 
-
-
 // ======================
 // FILTRAR INVENTARIO
 // ======================
@@ -818,8 +876,6 @@ function filtrarInventario(){
 
 
 
-
-
 // ======================
 // EXPORTAR EXCEL
 // ======================
@@ -835,6 +891,18 @@ function exportarExcel(){
     )
 
   ) || [];
+
+
+
+  if(historial.length === 0){
+
+    alert(
+      'No hay datos'
+    );
+
+    return;
+
+  }
 
 
 
@@ -876,13 +944,25 @@ function exportarExcel(){
 
 
 
-
-
 // ======================
 // REINICIAR
 // ======================
 
 function reiniciarInventario(){
+
+  var confirmar = confirm(
+    '¿Eliminar inventario e historial?'
+  );
+
+
+
+  if(!confirmar){
+
+    return;
+
+  }
+
+
 
   localStorage.removeItem(
     'inventario'
@@ -906,9 +986,14 @@ function reiniciarInventario(){
 
   actualizarKPIs();
 
+
+
+  actualizarTexto(
+    'resultadoTexto',
+    '-'
+  );
+
 }
-
-
 
 
 
@@ -936,8 +1021,6 @@ function actualizarTexto(
   }
 
 }
-
-
 
 
 
