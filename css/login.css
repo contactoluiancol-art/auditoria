@@ -42,7 +42,9 @@ BODY LOGIN
 
   justify-content: center;
 
-  padding: 25px;
+  padding: 15px;
+
+  overflow: hidden;
 
 }
 
@@ -58,9 +60,11 @@ CONTAINER
 
   width: 100%;
 
-  max-width: 1100px;
+  max-width: 1050px;
 
-  min-height: 620px;
+  height: 92vh;
+
+  max-height: 680px;
 
   background: rgba(255,255,255,0.08);
 
@@ -99,17 +103,13 @@ LEFT
 
   align-items: center;
 
-  padding: 45px;
+  padding: 35px;
 
   color: white;
 
   text-align: center;
 
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.02),
-    rgba(255,255,255,0.05)
-  );
+  background: rgba(255,255,255,0.03);
 
 }
 
@@ -119,9 +119,9 @@ LEFT
 
 .login-logo{
 
-  width: 230px;
+  width: 180px;
 
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 
   filter: drop-shadow(
     0 10px 20px rgba(0,0,0,0.35)
@@ -135,13 +135,13 @@ LEFT
 
 .login-left h1{
 
-  font-size: 48px;
+  font-size: 38px;
 
   font-weight: 700;
 
   line-height: 1.1;
 
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 
 }
 
@@ -151,13 +151,13 @@ LEFT
 
 .login-left p{
 
-  font-size: 16px;
+  font-size: 15px;
 
-  opacity: 0.9;
+  max-width: 380px;
 
-  max-width: 420px;
+  line-height: 1.6;
 
-  line-height: 1.7;
+  opacity: 0.95;
 
 }
 
@@ -177,7 +177,7 @@ RIGHT
 
   justify-content: center;
 
-  padding: 35px;
+  padding: 25px;
 
 }
 
@@ -193,13 +193,13 @@ CARD LOGIN
 
   width: 100%;
 
-  max-width: 420px;
+  max-width: 380px;
 
   background: rgba(255,255,255,0.96);
 
-  border-radius: 24px;
+  border-radius: 22px;
 
-  padding: 42px;
+  padding: 35px;
 
   box-shadow:
   0 15px 40px rgba(0,0,0,0.22);
@@ -212,11 +212,11 @@ CARD LOGIN
 
 .login-card h2{
 
-  font-size: 38px;
+  font-size: 32px;
 
   color: #0f172a;
 
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 
   font-weight: 700;
 
@@ -232,11 +232,11 @@ CARD LOGIN
 
   color: #64748b;
 
-  font-size: 15px;
+  font-size: 14px;
 
   display: block;
 
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 
   line-height: 1.6;
 
@@ -252,7 +252,7 @@ INPUTS
 
 .input-group{
 
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 
 }
 
@@ -265,7 +265,7 @@ INPUTS
 
   width: 100%;
 
-  height: 54px;
+  height: 50px;
 
   border: 2px solid #dbe4f0;
 
@@ -273,7 +273,7 @@ INPUTS
 
   padding: 0 16px;
 
-  font-size: 15px;
+  font-size: 14px;
 
   outline: none;
 
@@ -313,7 +313,7 @@ BOTON LOGIN
 
   width: 100%;
 
-  height: 55px;
+  height: 50px;
 
   border: none;
 
@@ -327,7 +327,7 @@ BOTON LOGIN
 
   color: white;
 
-  font-size: 16px;
+  font-size: 15px;
 
   font-weight: 600;
 
@@ -372,6 +372,8 @@ RESPONSIVE
     grid-template-columns: 1fr;
 
     min-height: auto;
+
+    height: auto;
 
   }
 
