@@ -1,25 +1,32 @@
+// ======================
+// EVITAR DUPLICAR SCRIPT
+// ======================
+
+if(typeof window.inventarioCargado === 'undefined'){
+
+window.inventarioCargado = true;
+
+
+
+
 
 // ======================
 // VARIABLES GLOBALES
 // ======================
 
-if(typeof inventario === 'undefined'){
+window.inventario =
 
-  var inventario =
+JSON.parse(
 
-  JSON.parse(
+  localStorage.getItem(
+    'inventario'
+  )
 
-    localStorage.getItem(
-      'inventario'
-    )
-
-  ) || [];
-
-}
+) || [];
 
 
 
-var productoActual = null;
+window.productoActual = null;
 
 
 
@@ -34,25 +41,35 @@ document.getElementById(
   'excelFile'
 );
 
+
+
 var reiniciarInventarioBtn =
 document.getElementById(
   'reiniciarInventario'
 );
+
+
 
 var buscarBtn =
 document.getElementById(
   'buscarBtn'
 );
 
+
+
 var guardarConteoBtn =
 document.getElementById(
   'guardarConteo'
 );
 
+
+
 var exportarExcelBtn =
 document.getElementById(
   'exportarExcel'
 );
+
+
 
 var buscadorInventario =
 document.getElementById(
@@ -69,10 +86,8 @@ document.getElementById(
 
 if(excelFile){
 
-  excelFile.addEventListener(
-    'change',
-    leerExcel
-  );
+  excelFile.onchange =
+  leerExcel;
 
 }
 
@@ -80,13 +95,8 @@ if(excelFile){
 
 if(reiniciarInventarioBtn){
 
-  reiniciarInventarioBtn.addEventListener(
-
-    'click',
-
-    reiniciarInventario
-
-  );
+  reiniciarInventarioBtn.onclick =
+  reiniciarInventario;
 
 }
 
@@ -94,13 +104,8 @@ if(reiniciarInventarioBtn){
 
 if(buscarBtn){
 
-  buscarBtn.addEventListener(
-
-    'click',
-
-    buscarProducto
-
-  );
+  buscarBtn.onclick =
+  buscarProducto;
 
 }
 
@@ -108,13 +113,8 @@ if(buscarBtn){
 
 if(guardarConteoBtn){
 
-  guardarConteoBtn.addEventListener(
-
-    'click',
-
-    registrarConteo
-
-  );
+  guardarConteoBtn.onclick =
+  registrarConteo;
 
 }
 
@@ -122,13 +122,8 @@ if(guardarConteoBtn){
 
 if(exportarExcelBtn){
 
-  exportarExcelBtn.addEventListener(
-
-    'click',
-
-    exportarExcel
-
-  );
+  exportarExcelBtn.onclick =
+  exportarExcel;
 
 }
 
@@ -136,13 +131,8 @@ if(exportarExcelBtn){
 
 if(buscadorInventario){
 
-  buscadorInventario.addEventListener(
-
-    'input',
-
-    filtrarInventario
-
-  );
+  buscadorInventario.oninput =
+  filtrarInventario;
 
 }
 
@@ -156,7 +146,7 @@ if(buscadorInventario){
 
 function leerExcel(e){
 
-  const file =
+  var file =
   e.target.files[0];
 
 
@@ -169,32 +159,38 @@ function leerExcel(e){
 
 
 
-  const reader =
+  var reader =
   new FileReader();
 
 
 
   reader.onload = function(event){
 
-    const data =
+    var data =
+
     new Uint8Array(
       event.target.result
     );
 
 
 
-    const workbook =
+    var workbook =
+
     XLSX.read(
 
       data,
 
-      { type:'array' }
+      {
+
+        type:'array'
+
+      }
 
     );
 
 
 
-    const hoja =
+    var hoja =
 
     workbook.Sheets[
       workbook.SheetNames[0]
@@ -202,7 +198,7 @@ function leerExcel(e){
 
 
 
-    inventario =
+    window.inventario =
 
     XLSX.utils.sheet_to_json(
       hoja
@@ -215,20 +211,20 @@ function leerExcel(e){
       'inventario',
 
       JSON.stringify(
-        inventario
+        window.inventario
       )
 
     );
 
 
 
+    renderInventario();
+
+
+
     alert(
       'Excel cargado correctamente'
     );
-
-
-
-    renderInventario();
 
   };
 
@@ -243,422 +239,20 @@ function leerExcel(e){
 
 
 // ======================
-// BUSCAR PRODUCTO
-// ======================
-
-function buscarProducto(){
-
-  const codigoInput =
-  document.getElementById(
-    'codigoInput'
-  );
-
-
-
-  if(!codigoInput){
-
-    return;
-
-  }
-
-
-
-  const codigo =
-  codigoInput.value;
-
-
-
-  productoActual = inventario.find(
-
-    function(p){
-
-      return p.codigo == codigo;
-
-    }
-
-  );
-
-
-
-  if(!productoActual){
-
-    alert(
-      'Producto no encontrado'
-    );
-
-    return;
-
-  }
-
-
-
-  actualizarTexto(
-    'codigoProducto',
-    productoActual.codigo
-  );
-
-
-
-  actualizarTexto(
-    'nombreProducto',
-    productoActual.producto
-  );
-
-
-
-  actualizarTexto(
-    'ubicacionProducto',
-    productoActual.ubicacion
-  );
-
-
-
-  actualizarTexto(
-    'stockProducto',
-    productoActual.stock
-  );
-
-}
-
-
-
-
-
-// ======================
-// REGISTRAR CONTEO
-// ======================
-
-function registrarConteo(){
-
-  if(!productoActual){
-
-    alert(
-      'Busque un producto'
-    );
-
-    return;
-
-  }
-
-
-
-  const conteoFisico =
-  document.getElementById(
-    'conteoFisico'
-  );
-
-
-
-  if(!conteoFisico){
-
-    return;
-
-  }
-
-
-
-  const fisico = Number(
-    conteoFisico.value
-  );
-
-
-
-  const stockSistema = Number(
-    productoActual.stock
-  );
-
-
-
-  if(
-
-    isNaN(fisico)
-
-    ||
-
-    isNaN(stockSistema)
-
-  ){
-
-    alert(
-      'Valores inválidos'
-    );
-
-    return;
-
-  }
-
-
-
-  const diferencia =
-  fisico - stockSistema;
-
-
-
-  const resultado =
-  document.getElementById(
-    'resultadoTexto'
-  );
-
-
-
-  if(resultado){
-
-    resultado.innerText =
-    diferencia;
-
-    resultado.className =
-    '';
-
-
-
-    if(diferencia < 0){
-
-      resultado.classList.add(
-        'negativo'
-      );
-
-    }
-
-    else if(diferencia > 0){
-
-      resultado.classList.add(
-        'positivo'
-      );
-
-    }
-
-    else{
-
-      resultado.classList.add(
-        'exacto'
-      );
-
-    }
-
-  }
-
-
-
-  guardarHistorial(
-
-    fisico,
-    diferencia
-
-  );
-
-
-
-  limpiarFormulario();
-
-}
-
-
-
-
-
-// ======================
-// GUARDAR HISTORIAL
-// ======================
-
-function guardarHistorial(
-
-  fisico,
-  diferencia
-
-){
-
-  if(!productoActual){
-
-    return;
-
-  }
-
-
-
-  let historial =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'historial'
-    )
-
-  ) || [];
-
-
-
-  const index =
-
-  historial.findIndex(
-
-    function(item){
-
-      return item.codigo ==
-      productoActual.codigo;
-
-    }
-
-  );
-
-
-
-  const nuevoRegistro = {
-
-    codigo:
-    productoActual.codigo,
-
-    producto:
-    productoActual.producto,
-
-    sistema:
-    productoActual.stock,
-
-    fisico:
-    fisico,
-
-    diferencia:
-    diferencia
-
-  };
-
-
-
-  if(index !== -1){
-
-    historial[index] =
-    nuevoRegistro;
-
-  }
-
-  else{
-
-    historial.push(
-      nuevoRegistro
-    );
-
-  }
-
-
-
-  localStorage.setItem(
-
-    'historial',
-
-    JSON.stringify(
-      historial
-    )
-
-  );
-
-
-
-  renderHistorial();
-
-  actualizarKPIs();
-
-}
-
-
-
-
-
-// ======================
-// FILTRAR HISTORIAL
-// ======================
-
-function filtrarHistorial(tipo){
-
-  let historial =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'historial'
-    )
-
-  ) || [];
-
-
-
-  if(tipo === 'exactos'){
-
-    historial = historial.filter(
-
-      function(item){
-
-        return Number(
-          item.diferencia
-        ) === 0;
-
-      }
-
-    );
-
-  }
-
-
-
-  else if(tipo === 'faltantes'){
-
-    historial = historial.filter(
-
-      function(item){
-
-        return Number(
-          item.diferencia
-        ) < 0;
-
-      }
-
-    );
-
-  }
-
-
-
-  else if(tipo === 'sobrantes'){
-
-    historial = historial.filter(
-
-      function(item){
-
-        return Number(
-          item.diferencia
-        ) > 0;
-
-      }
-
-    );
-
-  }
-
-
-
-  renderHistorial(
-    historial
-  );
-
-}
-
-
-
-
-
-// ======================
 // RENDER INVENTARIO
 // ======================
 
-function renderInventario(datos){
+window.renderInventario = function(datos){
 
   if(!datos){
 
-    datos = inventario;
+    datos = window.inventario;
 
   }
 
 
 
-  const body =
+  var body =
   document.getElementById(
     'inventarioBody'
   );
@@ -677,162 +271,15 @@ function renderInventario(datos){
 
 
 
-  const totalProductos =
-  document.getElementById(
-    'totalProductos'
-  );
-
-
-
-  if(totalProductos){
-
-    totalProductos.innerText =
-
-    'Productos cargados: ' +
-    datos.length;
-
-  }
-
-
-
-  datos.forEach(function(item){
-
-    body.innerHTML +=
-
-    '<tr>' +
-
-      '<td>' + (item.codigo || '-') + '</td>' +
-
-      '<td>' + (item.producto || '-') + '</td>' +
-
-      '<td>' + (item.ubicacion || '-') + '</td>' +
-
-      '<td>' + (item.stock || 0) + '</td>' +
-
-    '</tr>';
-
-  });
-
-}
-
-
-
-
-
-// ======================
-// FILTRAR INVENTARIO
-// ======================
-
-function filtrarInventario(){
-
-  const buscador =
-  document.getElementById(
-    'buscadorInventario'
-  );
-
-
-
-  if(!buscador){
-
-    return;
-
-  }
-
-
-
-  const texto =
-  buscador.value.toLowerCase();
-
-
-
-  const filtrados =
-
-  inventario.filter(function(item){
-
-    return(
-
-      String(item.codigo || '')
-      .toLowerCase()
-      .includes(texto)
-
-      ||
-
-      String(item.producto || '')
-      .toLowerCase()
-      .includes(texto)
-
-      ||
-
-      String(item.ubicacion || '')
-      .toLowerCase()
-      .includes(texto)
-
-    );
-
-  });
-
-
-
-  renderInventario(
-    filtrados
-  );
-
-}
-
-
-
-
-
-// ======================
-// RENDER HISTORIAL
-// ======================
-
-function renderHistorial(datos){
-
-  const body =
-  document.getElementById(
-    'historialBody'
-  );
-
-
-
-  if(!body){
-
-    return;
-
-  }
-
-
-
-  if(!datos){
-
-    datos =
-
-    JSON.parse(
-
-      localStorage.getItem(
-        'historial'
-      )
-
-    ) || [];
-
-  }
-
-
-
-  body.innerHTML = '';
-
-
-
-  if(datos.length === 0){
+  if(!datos || datos.length === 0){
 
     body.innerHTML =
 
     '<tr>' +
 
-      '<td colspan="5">' +
+      '<td colspan="4">' +
 
-      'No hay registros' +
+      'No hay inventario cargado' +
 
       '</td>' +
 
@@ -852,19 +299,141 @@ function renderHistorial(datos){
 
     '<tr>' +
 
-      '<td>' + item.codigo + '</td>' +
+      '<td>' +
 
-      '<td>' + item.producto + '</td>' +
+      (item.codigo || '-') +
 
-      '<td>' + item.sistema + '</td>' +
+      '</td>' +
 
-      '<td>' + item.fisico + '</td>' +
 
-      '<td>' + item.diferencia + '</td>' +
+
+      '<td>' +
+
+      (item.producto || '-') +
+
+      '</td>' +
+
+
+
+      '<td>' +
+
+      (item.ubicacion || '-') +
+
+      '</td>' +
+
+
+
+      '<td>' +
+
+      (item.stock || 0) +
+
+      '</td>' +
 
     '</tr>';
 
   });
+
+
+
+  actualizarKPIs();
+
+};
+
+
+
+
+
+// ======================
+// BUSCAR PRODUCTO
+// ======================
+
+function buscarProducto(){
+
+  var codigoInput =
+  document.getElementById(
+    'codigoInput'
+  );
+
+
+
+  if(!codigoInput){
+
+    return;
+
+  }
+
+
+
+  var codigo =
+  codigoInput.value.trim();
+
+
+
+  window.productoActual =
+
+  window.inventario.find(
+
+    function(p){
+
+      return String(
+        p.codigo
+      ) === codigo;
+
+    }
+
+  );
+
+
+
+  if(!window.productoActual){
+
+    alert(
+      'Producto no encontrado'
+    );
+
+    return;
+
+  }
+
+
+
+  actualizarTexto(
+
+    'codigoProducto',
+
+    window.productoActual.codigo
+
+  );
+
+
+
+  actualizarTexto(
+
+    'nombreProducto',
+
+    window.productoActual.producto
+
+  );
+
+
+
+  actualizarTexto(
+
+    'ubicacionProducto',
+
+    window.productoActual.ubicacion
+
+  );
+
+
+
+  actualizarTexto(
+
+    'stockProducto',
+
+    window.productoActual.stock
+
+  );
 
 }
 
@@ -873,12 +442,48 @@ function renderHistorial(datos){
 
 
 // ======================
-// KPIs
+// REGISTRAR CONTEO
 // ======================
 
-function actualizarKPIs(){
+function registrarConteo(){
 
-  const historial =
+  if(!window.productoActual){
+
+    alert(
+      'Busque un producto'
+    );
+
+    return;
+
+  }
+
+
+
+  var conteoFisico =
+  document.getElementById(
+    'conteoFisico'
+  );
+
+
+
+  var fisico = Number(
+    conteoFisico.value
+  );
+
+
+
+  var sistema = Number(
+    window.productoActual.stock
+  );
+
+
+
+  var diferencia =
+  fisico - sistema;
+
+
+
+  var historial =
 
   JSON.parse(
 
@@ -890,87 +495,105 @@ function actualizarKPIs(){
 
 
 
-  const total =
-  historial.length;
+  historial.push({
+
+    codigo:
+    window.productoActual.codigo,
+
+    producto:
+    window.productoActual.producto,
+
+    sistema:
+    sistema,
+
+    fisico:
+    fisico,
+
+    diferencia:
+    diferencia
+
+  });
 
 
 
-  const exactos =
-  historial.filter(function(item){
+  localStorage.setItem(
 
-    return Number(item.diferencia) === 0;
+    'historial',
 
-  }).length;
+    JSON.stringify(
+      historial
+    )
 
-
-
-  const faltantes =
-  historial.filter(function(item){
-
-    return Number(item.diferencia) < 0;
-
-  }).length;
-
-
-
-  const sobrantes =
-  historial.filter(function(item){
-
-    return Number(item.diferencia) > 0;
-
-  }).length;
-
-
-
-  let exactitud = 0;
-
-
-
-  if(total > 0){
-
-    exactitud =
-
-    (
-
-      (exactos / total) * 100
-
-    ).toFixed(1);
-
-  }
-
-
-
-  actualizarTexto(
-    'kpiTotal',
-    total
   );
 
 
 
-  actualizarTexto(
-    'kpiExactos',
-    exactos
+  actualizarKPIs();
+
+
+
+  alert(
+    'Conteo guardado'
+  );
+
+}
+
+
+
+
+
+// ======================
+// FILTRAR INVENTARIO
+// ======================
+
+function filtrarInventario(){
+
+  var texto =
+  buscadorInventario.value
+  .toLowerCase();
+
+
+
+  var filtrados =
+
+  window.inventario.filter(
+
+    function(item){
+
+      return(
+
+        String(
+          item.codigo || ''
+        )
+
+        .toLowerCase()
+
+        .includes(texto)
+
+
+
+        ||
+
+
+
+        String(
+          item.producto || ''
+        )
+
+        .toLowerCase()
+
+        .includes(texto)
+
+      );
+
+    }
+
   );
 
 
 
-  actualizarTexto(
-    'kpiFaltantes',
-    faltantes
-  );
-
-
-
-  actualizarTexto(
-    'kpiSobrantes',
-    sobrantes
-  );
-
-
-
-  actualizarTexto(
-    'kpiExactitud',
-    exactitud + '%'
+  renderInventario(
+    filtrados
   );
 
 }
@@ -985,7 +608,7 @@ function actualizarKPIs(){
 
 function exportarExcel(){
 
-  const historial =
+  var historial =
 
   JSON.parse(
 
@@ -1009,7 +632,7 @@ function exportarExcel(){
 
 
 
-  const worksheet =
+  var worksheet =
 
   XLSX.utils.json_to_sheet(
     historial
@@ -1017,7 +640,7 @@ function exportarExcel(){
 
 
 
-  const workbook =
+  var workbook =
 
   XLSX.utils.book_new();
 
@@ -1039,7 +662,7 @@ function exportarExcel(){
 
     workbook,
 
-    'inventario_conteos.xlsx'
+    'inventario.xlsx'
 
   );
 
@@ -1050,14 +673,36 @@ function exportarExcel(){
 
 
 // ======================
-// REINICIAR INVENTARIO
+// KPIs
+// ======================
+
+window.actualizarKPIs = function(){
+
+  var total =
+  window.inventario.length;
+
+
+
+  actualizarTexto(
+    'kpiTotal',
+    total
+  );
+
+};
+
+
+
+
+
+// ======================
+// REINICIAR
 // ======================
 
 function reiniciarInventario(){
 
-  const confirmar = confirm(
+  var confirmar = confirm(
 
-    '¿Desea eliminar el inventario cargado?'
+    '¿Eliminar inventario?'
 
   );
 
@@ -1071,13 +716,13 @@ function reiniciarInventario(){
 
 
 
-  inventario = [];
-
-
-
   localStorage.removeItem(
     'inventario'
   );
+
+
+
+  window.inventario = [];
 
 
 
@@ -1099,9 +744,14 @@ function reiniciarInventario(){
 // HELPERS
 // ======================
 
-function actualizarTexto(id, valor){
+function actualizarTexto(
 
-  const elemento =
+  id,
+  valor
+
+){
+
+  var elemento =
   document.getElementById(id);
 
 
@@ -1119,103 +769,10 @@ function actualizarTexto(id, valor){
 
 
 
-function limpiarInput(id){
-
-  const input =
-  document.getElementById(id);
-
-
-
-  if(input){
-
-    input.value = '';
-
-  }
-
-}
-
-
-
-
-
-function limpiarFormulario(){
-
-  limpiarInput(
-    'codigoInput'
-  );
-
-
-
-  limpiarInput(
-    'conteoFisico'
-  );
-
-
-
-  actualizarTexto(
-    'codigoProducto',
-    '-'
-  );
-
-
-
-  actualizarTexto(
-    'nombreProducto',
-    '-'
-  );
-
-
-
-  actualizarTexto(
-    'ubicacionProducto',
-    '-'
-  );
-
-
-
-  actualizarTexto(
-    'stockProducto',
-    '-'
-  );
-
-
-
-  const resultado =
-  document.getElementById(
-    'resultadoTexto'
-  );
-
-
-
-  if(resultado){
-
-    resultado.innerText = '-';
-
-    resultado.className = '';
-
-  }
-
-
-
-  productoActual = null;
-
-}
-
-
-
-
-
 // ======================
 // INICIO
 // ======================
 
-setTimeout(function(){
+renderInventario();
 
-  renderInventario();
-
-  renderHistorial();
-
-  actualizarKPIs();
-
-}, 100);
-
+}
