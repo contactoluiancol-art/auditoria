@@ -1,18 +1,36 @@
+
+<!-- ===================================== -->
 <!-- INVENTARIO -->
+<!-- ===================================== -->
 
-<div class="module-card">
+<div class="module-container">
 
-  <div class="table-header">
 
-    <h3>
-      📦Inventario
-    </h3>
+
+
+  <!-- ===================================== -->
+  <!-- HEADER -->
+  <!-- ===================================== -->
+
+  <div class="module-header">
+
+    <div>
+
+      <h2>
+        📦 Inventario
+      </h2>
+
+      <p>
+        Gestión y control de inventarios
+      </p>
+
+    </div>
+
+
 
 
 
     <div class="button-group">
-
-      <!-- BOTON CARGAR EXCEL -->
 
       <button
         class="btn-primary"
@@ -23,24 +41,17 @@
 
       </button>
 
-
-
-      <!-- BUSCADOR -->
-
-      <input
-        type="text"
-        id="buscadorInventario"
-        placeholder="Buscar producto..."
-        class="search-input"
-      >
-
     </div>
 
   </div>
 
 
 
+
+
+  <!-- ===================================== -->
   <!-- KPIS -->
+  <!-- ===================================== -->
 
   <div class="kpi-grid">
 
@@ -49,12 +60,12 @@
       <span>Total Productos</span>
 
       <h3 id="kpiTotal">
-
         0
-
       </h3>
 
     </div>
+
+
 
 
 
@@ -63,12 +74,12 @@
       <span>Exactos</span>
 
       <h3 id="kpiExactos">
-
         0
-
       </h3>
 
     </div>
+
+
 
 
 
@@ -77,12 +88,12 @@
       <span>Faltantes</span>
 
       <h3 id="kpiFaltantes">
-
         0
-
       </h3>
 
     </div>
+
+
 
 
 
@@ -91,12 +102,12 @@
       <span>Sobrantes</span>
 
       <h3 id="kpiSobrantes">
-
         0
-
       </h3>
 
     </div>
+
+
 
 
 
@@ -105,9 +116,7 @@
       <span>Exactitud</span>
 
       <h3 id="kpiExactitud">
-
         0%
-
       </h3>
 
     </div>
@@ -116,13 +125,23 @@
 
 
 
-  <!-- FORMULARIO -->
+
+
+  <!-- ===================================== -->
+  <!-- REGISTRAR CONTEO -->
+  <!-- ===================================== -->
 
   <div class="module-card">
 
-    <h3>
-      Registrar Conteo
-    </h3>
+    <div class="table-header">
+
+      <h3>
+        📝 Registrar Conteo
+      </h3>
+
+    </div>
+
+
 
 
 
@@ -144,6 +163,8 @@
 
 
 
+
+
       <div class="input-group">
 
         <label>
@@ -162,6 +183,8 @@
 
 
 
+
+
     <div class="button-group">
 
       <button
@@ -169,18 +192,20 @@
         class="btn-primary"
       >
 
-        Buscar
+        🔍 Buscar
 
       </button>
+
+
 
 
 
       <button
         id="guardarConteo"
-        class="btn-success"
+        class="btn-primary"
       >
 
-        Guardar Conteo
+        💾 Guardar Conteo
 
       </button>
 
@@ -190,87 +215,102 @@
 
 
 
-  <!-- INFO PRODUCTO -->
+
+
+  <!-- ===================================== -->
+  <!-- INFORMACION PRODUCTO -->
+  <!-- ===================================== -->
 
   <div class="module-card">
 
-    <h3>
-      Información Producto
+    <h3 class="titulo-seccion">
+      📦 Información Producto
     </h3>
 
 
 
-    <div class="info-grid">
 
-      <div class="info-item">
 
-        <span>Código</span>
+    <div class="producto-layout">
 
-        <strong id="codigoProducto">
 
-          -
 
-        </strong>
+
+      <!-- INFORMACION -->
+
+      <div class="producto-info">
+
+        <div class="info-card">
+
+          <span>Código</span>
+
+          <strong id="codigoProducto">
+            -
+          </strong>
+
+        </div>
+
+
+
+
+
+        <div class="info-card">
+
+          <span>Producto</span>
+
+          <strong id="nombreProducto">
+            -
+          </strong>
+
+        </div>
+
+
+
+
+
+        <div class="info-card">
+
+          <span>Ubicación</span>
+
+          <strong id="ubicacionProducto">
+            -
+          </strong>
+
+        </div>
+
+
+
+
+
+        <div class="info-card">
+
+          <span>Stock Sistema</span>
+
+          <strong id="stockProducto">
+            -
+          </strong>
+
+        </div>
 
       </div>
 
 
 
-      <div class="info-item">
 
-        <span>Producto</span>
 
-        <strong id="nombreProducto">
+      <!-- DIFERENCIA -->
 
+      <div class="diferencia-card">
+
+        <span>
+          Diferencia
+        </span>
+
+        <h2 id="resultadoTexto">
           -
-
-        </strong>
+        </h2>
 
       </div>
-
-
-
-      <div class="info-item">
-
-        <span>Ubicación</span>
-
-        <strong id="ubicacionProducto">
-
-          -
-
-        </strong>
-
-      </div>
-
-
-
-      <div class="info-item">
-
-        <span>Stock</span>
-
-        <strong id="stockProducto">
-
-          -
-
-        </strong>
-
-      </div>
-
-    </div>
-
-
-
-    <div class="resultado-box">
-
-      <span>
-        Diferencia
-      </span>
-
-      <h2 id="resultadoTexto">
-
-        -
-
-      </h2>
 
     </div>
 
@@ -278,35 +318,156 @@
 
 
 
-  <!-- TABLA -->
 
-  <div class="table-container">
 
-    <table>
+  <!-- ===================================== -->
+  <!-- TABLA INVENTARIO -->
+  <!-- ===================================== -->
 
-      <thead>
+  <div class="module-card">
 
-        <tr>
+    <div class="table-header">
 
-          <th>Código</th>
-
-          <th>Producto</th>
-
-          <th>Ubicación</th>
-
-          <th>Stock</th>
-
-        </tr>
-
-      </thead>
+      <h3>
+        📋 Inventario Cargado
+      </h3>
 
 
 
-      <tbody id="inventarioBody">
 
-      </tbody>
 
-    </table>
+      <input
+        type="text"
+        id="buscadorInventario"
+        placeholder="Buscar producto..."
+        class="search-input"
+      >
+
+    </div>
+
+
+
+
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Código</th>
+
+            <th>Producto</th>
+
+            <th>Ubicación</th>
+
+            <th>Stock</th>
+
+          </tr>
+
+        </thead>
+
+
+
+
+
+        <tbody id="inventarioBody">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- ===================================== -->
+  <!-- HISTORIAL -->
+  <!-- ===================================== -->
+
+  <div class="module-card">
+
+    <div class="table-header">
+
+      <h3>
+        🕓 Historial Conteos
+      </h3>
+
+    </div>
+
+
+
+
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Código</th>
+
+            <th>Producto</th>
+
+            <th>Sistema</th>
+
+            <th>Físico</th>
+
+            <th>Diferencia</th>
+
+          </tr>
+
+        </thead>
+
+
+
+
+
+        <tbody id="historialBody">
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+
+
+
+    <div class="button-group bottom-buttons">
+
+      <button
+        id="exportarExcel"
+        class="btn-primary"
+      >
+
+        📤 Exportar Excel
+
+      </button>
+
+
+
+
+
+      <button
+        id="reiniciarInventario"
+        class="btn-eliminar"
+      >
+
+        🗑 Reiniciar Inventario
+
+      </button>
+
+    </div>
 
   </div>
 
@@ -314,83 +475,11 @@
 
 
 
-<!-- HISTORIAL -->
-
-<div class="module-card">
-
-  <div class="table-header">
-
-    <h3>
-      Historial Conteos
-    </h3>
-
-  </div>
 
 
-
-  <div class="table-container">
-
-    <table>
-
-      <thead>
-
-        <tr>
-
-          <th>Código</th>
-
-          <th>Producto</th>
-
-          <th>Sistema</th>
-
-          <th>Físico</th>
-
-          <th>Diferencia</th>
-
-        </tr>
-
-      </thead>
-
-
-
-      <tbody id="historialBody">
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-
-
-  <div class="button-group bottom-buttons">
-
-    <button
-      id="exportarExcel"
-      class="btn-success"
-    >
-
-      Exportar Excel
-
-    </button>
-
-
-
-    <button
-      id="reiniciarInventario"
-      class="btn-danger"
-    >
-
-      Reiniciar Inventario
-
-    </button>
-
-  </div>
-
-</div>
-
-
-
+<!-- ===================================== -->
 <!-- INPUT EXCEL -->
+<!-- ===================================== -->
 
 <input
   type="file"
