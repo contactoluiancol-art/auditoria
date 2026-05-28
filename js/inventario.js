@@ -9,6 +9,8 @@ window.inventarioCargado = true;
 
 
 
+
+
 // ======================
 // VARIABLES GLOBALES
 // ======================
@@ -26,6 +28,8 @@ JSON.parse(
 
 
 window.productoActual = null;
+
+
 
 
 
@@ -62,6 +66,8 @@ var buscadorInventario =
 document.getElementById(
   'buscadorInventario'
 );
+
+
 
 
 
@@ -120,6 +126,8 @@ if(buscadorInventario){
   filtrarInventario;
 
 }
+
+
 
 
 
@@ -221,6 +229,8 @@ function leerExcel(e){
 
 
 
+
+
 // ======================
 // RENDER INVENTARIO
 // ======================
@@ -312,6 +322,8 @@ window.renderInventario = function(datos){
 
 
 
+
+
 // ======================
 // BUSCAR PRODUCTO
 // ======================
@@ -383,6 +395,8 @@ function buscarProducto(){
 
 
 
+
+
 // ======================
 // REGISTRAR CONTEO
 // ======================
@@ -422,12 +436,20 @@ function registrarConteo(){
 
 
 
+  // ======================
+  // RESULTADO
+  // ======================
+
   actualizarTexto(
     'resultadoTexto',
     diferencia
   );
 
 
+
+  // ======================
+  // HISTORIAL
+  // ======================
 
   var historial =
 
@@ -475,6 +497,10 @@ function registrarConteo(){
 
 
 
+  // ======================
+  // ACTUALIZAR O CREAR
+  // ======================
+
   if(index !== -1){
 
     historial[index] =
@@ -515,6 +541,8 @@ function registrarConteo(){
   );
 
 }
+
+
 
 
 
@@ -625,7 +653,7 @@ window.renderHistorial = function(filtro){
 
       '<button ' +
 
-      'class="btn-delete-small" ' +
+      'class="btn-eliminar" ' +
 
       'onclick="eliminarRegistro(' +
 
@@ -635,7 +663,7 @@ window.renderHistorial = function(filtro){
 
       '>' +
 
-      '🗑️' +
+      'Eliminar' +
 
       '</button>' +
 
@@ -648,6 +676,8 @@ window.renderHistorial = function(filtro){
   });
 
 };
+
+
 
 
 
@@ -701,6 +731,8 @@ window.eliminarRegistro = function(codigo){
 
 
 
+
+
 // ======================
 // FILTRAR HISTORIAL
 // ======================
@@ -713,8 +745,10 @@ window.filtrarHistorial = function(tipo){
 
 
 
+
+
 // ======================
-// KPIS
+// KPIS REALES
 // ======================
 
 window.actualizarKPIs = function(){
@@ -731,59 +765,137 @@ window.actualizarKPIs = function(){
 
 
 
-  var total =
+  var totalConteos =
   historial.length;
 
 
 
   var exactos =
-  historial.filter(function(item){
-
-    return item.diferencia === 0;
-
-  }).length;
+  0;
 
 
 
   var faltantes =
-  historial.filter(function(item){
-
-    return item.diferencia < 0;
-
-  }).length;
+  0;
 
 
 
   var sobrantes =
-  historial.filter(function(item){
-
-    return item.diferencia > 0;
-
-  }).length;
+  0;
 
 
 
-  var exactitud = 0;
+  var sumaExactitud =
+  0;
 
 
 
-  if(total > 0){
 
-    exactitud =
+
+  historial.forEach(function(item){
+
+    var sistema =
+    Number(item.sistema);
+
+
+
+    var fisico =
+    Number(item.fisico);
+
+
+
+    // EXACTOS
+
+    if(fisico === sistema){
+
+      exactos++;
+
+    }
+
+
+
+    // FALTANTES
+
+    if(fisico < sistema){
+
+      faltantes++;
+
+    }
+
+
+
+    // SOBRANTES
+
+    if(fisico > sistema){
+
+      sobrantes++;
+
+    }
+
+
+
+    // EXACTITUD REAL
+
+    var mayor = Math.max(
+      sistema,
+      fisico
+    );
+
+
+
+    var menor = Math.min(
+      sistema,
+      fisico
+    );
+
+
+
+    var exactitudItem = 0;
+
+
+
+    if(mayor > 0){
+
+      exactitudItem =
+
+      (menor / mayor) * 100;
+
+    }
+
+
+
+    sumaExactitud +=
+    exactitudItem;
+
+  });
+
+
+
+
+
+  var exactitudGeneral =
+  0;
+
+
+
+  if(totalConteos > 0){
+
+    exactitudGeneral =
 
     (
-
-      (exactos / total) * 100
-
+      sumaExactitud /
+      totalConteos
     ).toFixed(1);
 
   }
 
 
 
+
+
   actualizarTexto(
     'kpiTotal',
-    total
+    totalConteos
   );
 
 
@@ -811,10 +923,12 @@ window.actualizarKPIs = function(){
 
   actualizarTexto(
     'kpiExactitud',
-    exactitud + '%'
+    exactitudGeneral + '%'
   );
 
 };
+
+
 
 
 
@@ -873,6 +987,8 @@ function filtrarInventario(){
   );
 
 }
+
+
 
 
 
@@ -944,6 +1060,8 @@ function exportarExcel(){
 
 
 
+
+
 // ======================
 // REINICIAR
 // ======================
@@ -997,6 +1115,8 @@ function reiniciarInventario(){
 
 
 
+
+
 // ======================
 // HELPERS
 // ======================
@@ -1021,6 +1141,8 @@ function actualizarTexto(
   }
 
 }
+
+
 
 
 
