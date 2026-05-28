@@ -1,3 +1,13 @@
+```css
+/* =========================
+IMPORT FUENTE
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+
+
 
 /* =========================
 RESET
@@ -8,6 +18,10 @@ RESET
   padding:0;
   box-sizing:border-box;
 }
+
+
+
+
 
 html,
 body{
@@ -27,6 +41,7 @@ body{
   font-family:'Poppins',sans-serif;
 
   color:#0f172a;
+
 }
 
 
@@ -153,6 +168,10 @@ MENU
 .sidebar ul{
   list-style:none;
 }
+
+
+
+
 
 .sidebar li{
   margin-bottom:10px;
@@ -342,6 +361,200 @@ TOPBAR
   align-items:center;
 
   gap:14px;
+
+}
+
+
+
+
+
+/* =========================
+NOTIFICACIONES
+========================= */
+
+.notificaciones-box{
+
+  position:relative;
+
+}
+
+
+
+
+
+.campana{
+
+  width:45px;
+  height:45px;
+
+  border-radius:14px;
+
+  background:white;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  position:relative;
+
+  cursor:pointer;
+
+  box-shadow:
+  0 3px 10px rgba(0,0,0,.05);
+
+}
+
+
+
+
+
+#contadorNotificaciones{
+
+  position:absolute;
+
+  top:-5px;
+  right:-5px;
+
+  width:20px;
+  height:20px;
+
+  border-radius:50%;
+
+  background:#ef4444;
+
+  color:white;
+
+  font-size:11px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+}
+
+
+
+
+
+.panel-notificaciones{
+
+  display:none;
+
+  position:absolute;
+
+  top:55px;
+
+  right:0;
+
+  width:320px;
+
+  max-height:400px;
+
+  overflow-y:auto;
+
+  background:white;
+
+  border-radius:18px;
+
+  border:
+  1px solid #e2e8f0;
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,.12);
+
+  z-index:9999;
+
+}
+
+
+
+
+
+.panel-notificaciones.active{
+
+  display:block;
+
+}
+
+
+
+
+
+.notificaciones-header{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:16px;
+
+  border-bottom:
+  1px solid #eef2ff;
+
+}
+
+
+
+
+
+.notificacion-item{
+
+  padding:14px 16px;
+
+  border-bottom:
+  1px solid #f1f5f9;
+
+}
+
+
+
+
+
+.notificacion-item p{
+
+  font-size:13px;
+
+  margin-bottom:5px;
+
+}
+
+
+
+
+
+.notificacion-item span{
+
+  font-size:11px;
+
+  color:#64748b;
+
+}
+
+
+
+
+
+.btn-limpiar-noti{
+
+  border:none;
+
+  background:#ef4444;
+
+  color:white;
+
+  border-radius:8px;
+
+  padding:6px 10px;
+
+  cursor:pointer;
+
+  font-size:11px;
 
 }
 
@@ -830,17 +1043,6 @@ BOTONES
 
 
 
-.btn-primary:hover{
-
-  transform:
-  translateY(-2px);
-
-}
-
-
-
-
-
 .btn-editar{
 
   background:
@@ -904,6 +1106,21 @@ BOTONES
   );
 
   color:white;
+
+}
+
+
+
+
+
+.btn-primary:hover,
+.btn-editar:hover,
+.btn-eliminar:hover,
+.btn-pdf:hover,
+.btn-ver:hover{
+
+  transform:
+  translateY(-2px);
 
 }
 
@@ -1142,4 +1359,4 @@ RESPONSIVE
   }
 
 }
-
+```
