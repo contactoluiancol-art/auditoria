@@ -15,12 +15,37 @@
   </title>
 
   <!-- ====================== -->
+  <!-- GOOGLE FONTS -->
+  <!-- ====================== -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- ====================== -->
   <!-- CSS -->
   <!-- ====================== -->
 
   <link
     rel="stylesheet"
     href="css/styles.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/login.css"
   >
 
 </head>
@@ -39,154 +64,210 @@
 
 
 
-  <!-- ====================== -->
-  <!-- LOGIN CONTAINER -->
-  <!-- ====================== -->
+  <!-- ======================
+  LOGIN CONTAINER
+  ====================== -->
 
   <div class="login-container">
 
 
 
 
-    <!-- ====================== -->
-    <!-- LOGO -->
-    <!-- ====================== -->
 
-    <img
+    <!-- ======================
+    LEFT
+    ====================== -->
 
-      src="img/logo-electro.png.png"
+    <div class="login-left">
 
-      class="logo"
+      <img
 
-      alt="Logo Electro Ingeniería"
+        src="img/logo-electro.png.png"
 
-    >
+        class="login-logo"
 
+        alt="Logo Electro Ingeniería"
 
-
-
-
-    <!-- ====================== -->
-    <!-- TITULO -->
-    <!-- ====================== -->
-
-    <h1 class="login-title">
-
-      Sistema Auditoría
-
-    </h1>
-
-
-
-
-
-    <!-- ====================== -->
-    <!-- FORM -->
-    <!-- ====================== -->
-
-    <form id="loginForm">
-
-
-
-
-      <!-- ====================== -->
-      <!-- USUARIO -->
-      <!-- ====================== -->
-
-      <div class="input-group">
-
-        <input
-
-          type="text"
-
-          id="usuario"
-
-          placeholder="Ingrese usuario"
-
-        >
-
-      </div>
-
-
-
-
-
-      <!-- ====================== -->
-      <!-- PASSWORD -->
-      <!-- ====================== -->
-
-      <div class="input-group">
-
-        <input
-
-          type="password"
-
-          id="password"
-
-          placeholder="Ingrese contraseña"
-
-        >
-
-      </div>
-
-
-
-
-
-      <!-- ====================== -->
-      <!-- ROL -->
-      <!-- ====================== -->
-
-      <div class="input-group">
-
-        <select id="rol">
-
-          <option value="admin">
-
-            Admin
-
-          </option>
-
-          <option value="lider">
-
-            Líder
-
-          </option>
-
-          <option value="jefe">
-
-            Jefe
-
-          </option>
-
-          <option value="auditor">
-
-            Auditor
-
-          </option>
-
-        </select>
-
-      </div>
-
-
-
-
-
-      <!-- ====================== -->
-      <!-- BOTON -->
-      <!-- ====================== -->
-
-      <button
-        type="submit"
-        class="btn-login"
       >
 
-        Ingresar
 
-      </button>
 
-    </form>
+
+
+      <h1>
+
+        Bienvenido al Sistema
+        de Auditoría y Gestión
+
+      </h1>
+
+
+
+
+
+      <p>
+
+        Plataforma profesional para el control
+        de inventarios, auditorías, recepción
+        y gestión logística empresarial.
+
+      </p>
+
+    </div>
+
+
+
+
+
+    <!-- ======================
+    RIGHT
+    ====================== -->
+
+    <div class="login-right">
+
+
+
+
+
+      <!-- ======================
+      CARD LOGIN
+      ====================== -->
+
+      <div class="login-card">
+
+        <h2>
+
+          Iniciar Sesión
+
+        </h2>
+
+
+
+
+
+        <span>
+
+          Ingrese sus credenciales
+          para acceder al sistema
+
+        </span>
+
+
+
+
+
+        <!-- ======================
+        FORM
+        ====================== -->
+
+        <form id="loginForm">
+
+
+
+
+
+          <!-- ======================
+          USUARIO
+          ====================== -->
+
+          <div class="input-group">
+
+            <input
+
+              type="text"
+
+              id="usuario"
+
+              placeholder="Ingrese usuario"
+
+            >
+
+          </div>
+
+
+
+
+
+          <!-- ======================
+          PASSWORD
+          ====================== -->
+
+          <div class="input-group">
+
+            <input
+
+              type="password"
+
+              id="password"
+
+              placeholder="Ingrese contraseña"
+
+            >
+
+          </div>
+
+
+
+
+
+          <!-- ======================
+          ROL
+          ====================== -->
+
+          <div class="input-group">
+
+            <select id="rol">
+
+              <option value="admin">
+
+                Admin
+
+              </option>
+
+              <option value="lider">
+
+                Líder
+
+              </option>
+
+              <option value="jefe">
+
+                Jefe
+
+              </option>
+
+              <option value="auditor">
+
+                Auditor
+
+              </option>
+
+            </select>
+
+          </div>
+
+
+
+
+
+          <!-- ======================
+          BOTON
+          ====================== -->
+
+          <button
+            type="submit"
+            class="btn-login"
+          >
+
+            Ingresar al Sistema
+
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
 
   </div>
 
@@ -194,9 +275,9 @@
 
 
 
-  <!-- ====================== -->
-  <!-- SUPABASE -->
-  <!-- ====================== -->
+  <!-- ======================
+  SUPABASE
+  ====================== -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -204,9 +285,9 @@
 
 
 
-  <!-- ====================== -->
-  <!-- LOGIN JS -->
-  <!-- ====================== -->
+  <!-- ======================
+  LOGIN JS
+  ====================== -->
 
   <script src="js/login.js?v=5000"></script>
 
