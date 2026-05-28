@@ -1532,3 +1532,239 @@ RESPONSIVE
   }
 
 }
+
+
+```css
+/* =========================
+TABLA AUDITORIAS
+========================= */
+
+.table-pro{
+
+  table-layout:fixed;
+
+}
+
+
+
+
+
+.table-pro td{
+
+  vertical-align:top;
+
+}
+
+
+
+
+
+/* =========================
+HALLAZGO
+========================= */
+
+.hallazgo-box{
+
+  max-width:100%;
+
+  white-space:normal;
+
+  word-break:break-word;
+
+  line-height:1.6;
+
+  color:#334155;
+
+}
+
+
+
+
+
+/* =========================
+ESTADOS
+========================= */
+
+.estado-pendiente{
+
+  background:#fee2e2;
+
+  color:#dc2626;
+
+  padding:6px 12px;
+
+  border-radius:10px;
+
+  font-size:11px;
+
+  font-weight:600;
+
+}
+
+
+
+
+
+.estado-revision{
+
+  background:#fef3c7;
+
+  color:#d97706;
+
+  padding:6px 12px;
+
+  border-radius:10px;
+
+  font-size:11px;
+
+  font-weight:600;
+
+}
+
+
+
+
+
+.estado-cerrado{
+
+  background:#dcfce7;
+
+  color:#16a34a;
+
+  padding:6px 12px;
+
+  border-radius:10px;
+
+  font-size:11px;
+
+  font-weight:600;
+
+}
+
+
+
+
+
+/* =========================
+ACCIONES
+========================= */
+
+.acciones-tabla{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:8px;
+
+}
+
+
+
+
+
+/* =========================
+BOTONES
+========================= */
+
+.btn-pdf,
+.btn-editar,
+.btn-eliminar{
+
+  width:90px;
+
+  height:32px;
+
+  border:none;
+
+  border-radius:10px;
+
+  font-size:11px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+}
+
+
+
+
+
+.btn-pdf{
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #1e293b
+  );
+
+  color:white;
+
+}
+
+
+
+
+
+.btn-editar{
+
+  background:
+  linear-gradient(
+    135deg,
+    #facc15,
+    #eab308
+  );
+
+  color:#111827;
+
+}
+
+
+
+
+
+.btn-eliminar{
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color:white;
+
+}
+
+
+
+
+
+.btn-pdf:hover,
+.btn-editar:hover,
+.btn-eliminar:hover{
+
+  transform:
+  translateY(-2px);
+
+}
+
+
+
+
+
+/* =========================
+TEXTAREA
+========================= */
+
+textarea{
+
+  resize:none;
+
+}
+
+
