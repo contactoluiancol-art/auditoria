@@ -1350,3 +1350,373 @@ RESPONSIVE
   }
 
 }
+
+/* =========================================
+FIX FINAL PREMIUM DASHBOARD
+========================================= */
+
+
+
+
+
+/* =========================
+TOPBAR FIX
+========================= */
+
+.topbar{
+
+  position:sticky;
+
+  top:0;
+
+  z-index:1000;
+
+  height:78px;
+
+  background:
+  rgba(255,255,255,.92);
+
+  backdrop-filter:blur(12px);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:0 28px;
+
+  overflow:visible;
+
+}
+
+
+
+
+
+.topbar-right{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:18px;
+
+}
+
+
+
+
+
+/* =========================
+NOTIFICACIONES FIX
+========================= */
+
+.notifications-container{
+
+  position:relative;
+
+}
+
+
+
+
+
+.notifications-dropdown{
+
+  position:absolute;
+
+  top:60px;
+
+  right:0;
+
+  width:340px;
+
+  max-height:420px;
+
+  overflow-y:auto;
+
+  background:white;
+
+  border-radius:18px;
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,.18);
+
+  padding:14px;
+
+  display:none;
+
+  z-index:99999;
+
+}
+
+
+
+
+
+.notifications-dropdown.active{
+
+  display:block;
+
+}
+
+
+
+
+
+.notification-item{
+
+  padding:12px;
+
+  border-radius:12px;
+
+  margin-bottom:10px;
+
+  background:#f8fafc;
+
+  border:
+  1px solid #e2e8f0;
+
+  font-size:13px;
+
+  line-height:1.6;
+
+}
+
+
+
+
+
+/* =========================
+WELCOME FIX
+========================= */
+
+.welcome-banner{
+
+  position:relative;
+
+  overflow:hidden;
+
+  z-index:1;
+
+}
+
+
+
+
+
+.welcome-banner h1,
+.welcome-banner p,
+.welcome-left{
+
+  position:relative;
+
+  z-index:2;
+
+}
+
+
+
+
+
+/* =========================
+BOTONES PREMIUM PEQUEÑOS
+========================= */
+
+.btn-pdf,
+.btn-editar,
+.btn-eliminar{
+
+  min-width:82px !important;
+
+  height:34px !important;
+
+  padding:0 14px !important;
+
+  border:none;
+
+  border-radius:12px;
+
+  font-size:12px !important;
+
+  font-weight:700;
+
+  box-shadow:
+  0 6px 14px rgba(0,0,0,.12);
+
+}
+
+
+
+
+
+.btn-pdf{
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #1e3a8a
+  );
+
+  color:white;
+
+}
+
+
+
+
+
+.btn-editar{
+
+  background:
+  linear-gradient(
+    135deg,
+    #facc15,
+    #eab308
+  );
+
+  color:#111827;
+
+}
+
+
+
+
+
+.btn-eliminar{
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color:white;
+
+}
+
+
+
+
+
+.btn-pdf:hover,
+.btn-editar:hover,
+.btn-eliminar:hover{
+
+  transform:
+  translateY(-2px);
+
+}
+
+
+
+
+
+/* =========================
+ACCIONES TABLA
+========================= */
+
+.acciones-tabla{
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:flex-start;
+
+  gap:10px;
+
+}
+
+
+
+
+
+/* =========================
+TABLAS FIX
+========================= */
+
+.table-container{
+
+  overflow-x:auto;
+
+}
+
+
+
+
+
+table{
+
+  width:100%;
+
+  border-collapse:collapse;
+
+}
+
+
+
+
+
+th{
+
+  padding:14px;
+
+  font-size:13px;
+
+}
+
+
+
+
+
+td{
+
+  padding:14px;
+
+  font-size:13px;
+
+  vertical-align:middle;
+
+}
+
+
+
+
+
+/* =========================
+TEXTOS LARGOS
+========================= */
+
+.hallazgo-box{
+
+  max-width:320px;
+
+  line-height:1.7;
+
+  word-break:break-word;
+
+}
+
+
+
+
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+  .notifications-dropdown{
+
+    width:95vw;
+
+    right:-20px;
+
+  }
+
+}
