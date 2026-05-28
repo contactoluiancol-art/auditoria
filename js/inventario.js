@@ -1,3 +1,4 @@
+
 // ======================
 // EVITAR DUPLICAR SCRIPT
 // ======================
@@ -41,35 +42,25 @@ document.getElementById(
   'excelFile'
 );
 
-
-
 var reiniciarInventarioBtn =
 document.getElementById(
   'reiniciarInventario'
 );
-
-
 
 var buscarBtn =
 document.getElementById(
   'buscarBtn'
 );
 
-
-
 var guardarConteoBtn =
 document.getElementById(
   'guardarConteo'
 );
 
-
-
 var exportarExcelBtn =
 document.getElementById(
   'exportarExcel'
 );
-
-
 
 var buscadorInventario =
 document.getElementById(
@@ -222,6 +213,10 @@ function leerExcel(e){
 
 
 
+    actualizarKPIs();
+
+
+
     alert(
       'Excel cargado correctamente'
     );
@@ -333,10 +328,6 @@ window.renderInventario = function(datos){
 
   });
 
-
-
-  actualizarKPIs();
-
 };
 
 
@@ -349,23 +340,10 @@ window.renderInventario = function(datos){
 
 function buscarProducto(){
 
-  var codigoInput =
+  var codigo =
   document.getElementById(
     'codigoInput'
-  );
-
-
-
-  if(!codigoInput){
-
-    return;
-
-  }
-
-
-
-  var codigo =
-  codigoInput.value.trim();
+  ).value.trim();
 
 
 
@@ -398,41 +376,29 @@ function buscarProducto(){
 
 
   actualizarTexto(
-
     'codigoProducto',
-
     window.productoActual.codigo
-
   );
 
 
 
   actualizarTexto(
-
     'nombreProducto',
-
     window.productoActual.producto
-
   );
 
 
 
   actualizarTexto(
-
     'ubicacionProducto',
-
     window.productoActual.ubicacion
-
   );
 
 
 
   actualizarTexto(
-
     'stockProducto',
-
     window.productoActual.stock
-
   );
 
 }
@@ -459,15 +425,12 @@ function registrarConteo(){
 
 
 
-  var conteoFisico =
-  document.getElementById(
-    'conteoFisico'
-  );
-
-
-
   var fisico = Number(
-    conteoFisico.value
+
+    document.getElementById(
+      'conteoFisico'
+    ).value
+
   );
 
 
@@ -482,6 +445,17 @@ function registrarConteo(){
   fisico - sistema;
 
 
+
+  // RESULTADO
+
+  actualizarTexto(
+    'resultadoTexto',
+    diferencia
+  );
+
+
+
+  // HISTORIAL
 
   var historial =
 
@@ -528,6 +502,8 @@ function registrarConteo(){
 
 
 
+  renderHistorial();
+
   actualizarKPIs();
 
 
@@ -537,6 +513,248 @@ function registrarConteo(){
   );
 
 }
+
+
+
+
+
+// ======================
+// RENDER HISTORIAL
+// ======================
+
+window.renderHistorial = function(filtro){
+
+  var historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
+  ) || [];
+
+
+
+  if(filtro === 'exactos'){
+
+    historial = historial.filter(
+
+      function(item){
+
+        return item.diferencia === 0;
+
+      }
+
+    );
+
+  }
+
+
+
+  if(filtro === 'faltantes'){
+
+    historial = historial.filter(
+
+      function(item){
+
+        return item.diferencia < 0;
+
+      }
+
+    );
+
+  }
+
+
+
+  if(filtro === 'sobrantes'){
+
+    historial = historial.filter(
+
+      function(item){
+
+        return item.diferencia > 0;
+
+      }
+
+    );
+
+  }
+
+
+
+  var body =
+  document.getElementById(
+    'historialBody'
+  );
+
+
+
+  if(!body){
+
+    return;
+
+  }
+
+
+
+  body.innerHTML = '';
+
+
+
+  historial.forEach(function(item){
+
+    body.innerHTML +=
+
+    '<tr>' +
+
+      '<td>' + item.codigo + '</td>' +
+
+      '<td>' + item.producto + '</td>' +
+
+      '<td>' + item.sistema + '</td>' +
+
+      '<td>' + item.fisico + '</td>' +
+
+      '<td>' + item.diferencia + '</td>' +
+
+      '<td>' +
+
+        '<button class="btn-danger">' +
+
+        'Eliminar' +
+
+        '</button>' +
+
+      '</td>' +
+
+    '</tr>';
+
+  });
+
+};
+
+
+
+
+
+// ======================
+// FILTRAR HISTORIAL
+// ======================
+
+window.filtrarHistorial = function(tipo){
+
+  renderHistorial(tipo);
+
+};
+
+
+
+
+
+// ======================
+// KPIS
+// ======================
+
+window.actualizarKPIs = function(){
+
+  var historial =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'historial'
+    )
+
+  ) || [];
+
+
+
+  var total =
+  historial.length;
+
+
+
+  var exactos =
+  historial.filter(function(item){
+
+    return item.diferencia === 0;
+
+  }).length;
+
+
+
+  var faltantes =
+  historial.filter(function(item){
+
+    return item.diferencia < 0;
+
+  }).length;
+
+
+
+  var sobrantes =
+  historial.filter(function(item){
+
+    return item.diferencia > 0;
+
+  }).length;
+
+
+
+  var exactitud = 0;
+
+
+
+  if(total > 0){
+
+    exactitud =
+
+    (
+
+      (exactos / total) * 100
+
+    ).toFixed(1);
+
+  }
+
+
+
+  actualizarTexto(
+    'kpiTotal',
+    total
+  );
+
+
+
+  actualizarTexto(
+    'kpiExactos',
+    exactos
+  );
+
+
+
+  actualizarTexto(
+    'kpiFaltantes',
+    faltantes
+  );
+
+
+
+  actualizarTexto(
+    'kpiSobrantes',
+    sobrantes
+  );
+
+
+
+  actualizarTexto(
+    'kpiExactitud',
+    exactitud + '%'
+  );
+
+};
 
 
 
@@ -620,18 +838,6 @@ function exportarExcel(){
 
 
 
-  if(historial.length === 0){
-
-    alert(
-      'No hay datos'
-    );
-
-    return;
-
-  }
-
-
-
   var worksheet =
 
   XLSX.utils.json_to_sheet(
@@ -673,51 +879,19 @@ function exportarExcel(){
 
 
 // ======================
-// KPIs
-// ======================
-
-window.actualizarKPIs = function(){
-
-  var total =
-  window.inventario.length;
-
-
-
-  actualizarTexto(
-    'kpiTotal',
-    total
-  );
-
-};
-
-
-
-
-
-// ======================
 // REINICIAR
 // ======================
 
 function reiniciarInventario(){
 
-  var confirmar = confirm(
-
-    '¿Eliminar inventario?'
-
+  localStorage.removeItem(
+    'inventario'
   );
 
 
 
-  if(!confirmar){
-
-    return;
-
-  }
-
-
-
   localStorage.removeItem(
-    'inventario'
+    'historial'
   );
 
 
@@ -728,11 +902,9 @@ function reiniciarInventario(){
 
   renderInventario();
 
+  renderHistorial();
 
-
-  alert(
-    'Inventario reiniciado'
-  );
+  actualizarKPIs();
 
 }
 
@@ -775,4 +947,9 @@ function actualizarTexto(
 
 renderInventario();
 
+renderHistorial();
+
+actualizarKPIs();
+
 }
+
