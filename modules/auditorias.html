@@ -1,3 +1,4 @@
+
 <div class="module-container">
 
   <!-- HEADER -->
@@ -22,19 +23,25 @@
 
 
 
-  <!-- FORM -->
+  <!-- FORMULARIO -->
 
   <div class="module-card">
 
-    <h3>
-      Nueva Auditoría
-    </h3>
+    <div class="table-header">
+
+      <h3>
+        Nueva Auditoría
+      </h3>
+
+    </div>
 
 
 
 
 
     <div class="form-grid">
+
+      <!-- PROCESO -->
 
       <div class="input-group">
 
@@ -54,23 +61,7 @@
 
 
 
-      <div class="input-group">
-
-        <label>
-          Hallazgo
-        </label>
-
-        <input
-          type="text"
-          id="hallazgoInput"
-          placeholder="Ingrese hallazgo"
-        >
-
-      </div>
-
-
-
-
+      <!-- RESPONSABLE -->
 
       <div class="input-group">
 
@@ -89,6 +80,8 @@
 
 
 
+
+      <!-- ESTADO -->
 
       <div class="input-group">
 
@@ -119,6 +112,28 @@
 
 
 
+
+    <!-- HALLAZGO -->
+
+    <div class="input-group textarea-group">
+
+      <label>
+        Hallazgo
+      </label>
+
+      <textarea
+        id="hallazgoInput"
+        rows="4"
+        placeholder="Ingrese hallazgo de auditoría"
+      ></textarea>
+
+    </div>
+
+
+
+
+
+    <!-- BOTONES -->
 
     <div class="button-group">
 
@@ -157,23 +172,35 @@
 
     <div class="table-container">
 
-      <table>
+      <table class="table-pro">
 
         <thead>
 
           <tr>
 
-            <th>Proceso</th>
+            <th style="width: 12%;">
+              Proceso
+            </th>
 
-            <th>Hallazgo</th>
+            <th style="width: 38%;">
+              Hallazgo
+            </th>
 
-            <th>Responsable</th>
+            <th style="width: 12%;">
+              Responsable
+            </th>
 
-            <th>Estado</th>
+            <th style="width: 12%;">
+              Estado
+            </th>
 
-            <th>Fecha</th>
+            <th style="width: 14%;">
+              Fecha
+            </th>
 
-            <th>Acciones</th>
+            <th style="width: 12%;">
+              Acciones
+            </th>
 
           </tr>
 
@@ -194,3 +221,4 @@
   </div>
 
 </div>
+
