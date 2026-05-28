@@ -1,4 +1,4 @@
-
+```css
 /* =========================
 IMPORT FUENTE
 ========================= */
@@ -385,6 +385,7 @@ NOTIFICACIONES
 .campana{
 
   width:45px;
+
   height:45px;
 
   border-radius:14px;
@@ -397,12 +398,14 @@ NOTIFICACIONES
 
   justify-content:center;
 
-  position:relative;
-
   cursor:pointer;
 
+  position:relative;
+
+  font-size:20px;
+
   box-shadow:
-  0 3px 10px rgba(0,0,0,.05);
+  0 5px 18px rgba(0,0,0,.08);
 
 }
 
@@ -414,10 +417,12 @@ NOTIFICACIONES
 
   position:absolute;
 
-  top:-5px;
-  right:-5px;
+  top:-4px;
+
+  right:-4px;
 
   width:20px;
+
   height:20px;
 
   border-radius:50%;
@@ -446,15 +451,11 @@ NOTIFICACIONES
 
   position:absolute;
 
-  top:55px;
+  top:60px;
 
   right:0;
 
-  width:320px;
-
-  max-height:400px;
-
-  overflow-y:auto;
+  width:340px;
 
   background:white;
 
@@ -464,7 +465,9 @@ NOTIFICACIONES
   1px solid #e2e8f0;
 
   box-shadow:
-  0 15px 35px rgba(0,0,0,.12);
+  0 20px 45px rgba(0,0,0,.18);
+
+  overflow:hidden;
 
   z-index:9999;
 
@@ -492,10 +495,22 @@ NOTIFICACIONES
 
   justify-content:space-between;
 
-  padding:16px;
+  padding:14px 16px;
 
   border-bottom:
   1px solid #eef2ff;
+
+}
+
+
+
+
+
+#listaNotificaciones{
+
+  max-height:350px;
+
+  overflow-y:auto;
 
 }
 
@@ -520,7 +535,9 @@ NOTIFICACIONES
 
   font-size:13px;
 
-  margin-bottom:5px;
+  line-height:1.5;
+
+  margin-bottom:6px;
 
 }
 
@@ -531,6 +548,20 @@ NOTIFICACIONES
 .notificacion-item span{
 
   font-size:11px;
+
+  color:#64748b;
+
+}
+
+
+
+
+
+.sin-notificaciones{
+
+  padding:20px;
+
+  text-align:center;
 
   color:#64748b;
 
@@ -1359,4 +1390,4 @@ RESPONSIVE
   }
 
 }
-
+```
