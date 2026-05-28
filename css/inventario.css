@@ -304,3 +304,75 @@ RESPONSIVE
   }
 
 }
+
+/* =========================
+BOTONES PEQUEÑOS
+========================= */
+
+.bottom-buttons button{
+
+  padding: 8px 14px;
+
+  font-size: 12px;
+
+  border-radius: 8px;
+
+}
+
+
+
+.btn-delete-small{
+
+  background: #e53935;
+
+  border: none;
+
+  color: white;
+
+  padding: 4px 8px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+}
+
+
+
+.btn-delete-small:hover{
+
+  opacity: 0.8;
+
+}
+
+
+
+/* =========================
+RESULTADO DIFERENCIA
+========================= */
+
+.resultado-box{
+
+  margin-top: 15px;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  width: 180px;
+
+}
+
+
+
+.resultado-box h2{
+
+  font-size: 20px;
+
+  margin-top: 5px;
+
+}
+
+
