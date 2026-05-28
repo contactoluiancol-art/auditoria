@@ -1,4 +1,4 @@
-```javascript
+
 // ======================
 // VARIABLES GLOBALES
 // ======================
@@ -1218,4 +1218,4 @@ setTimeout(function(){
   actualizarKPIs();
 
 }, 100);
-```
+
