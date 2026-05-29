@@ -33,7 +33,7 @@ if(btnGuardarAuditoria){
 
 
 // ======================
-// GUARDAR
+// GUARDAR AUDITORIA
 // ======================
 
 async function guardarAuditoria(){
@@ -132,6 +132,10 @@ async function guardarAuditoria(){
 
     console.log(error);
 
+    alert(
+      'Error guardando auditoría'
+    );
+
   }
 
 }
@@ -141,7 +145,7 @@ async function guardarAuditoria(){
 
 
 // ======================
-// RENDER
+// RENDER AUDITORIAS
 // ======================
 
 async function renderAuditorias(){
@@ -152,6 +156,14 @@ async function renderAuditorias(){
     document.getElementById(
       'auditoriasBody'
     );
+
+
+
+    if(!body){
+
+      return;
+
+    }
 
 
 
@@ -186,7 +198,21 @@ async function renderAuditorias(){
 
 
 
-    if(!data){
+    if(!data || data.length === 0){
+
+      body.innerHTML =
+
+      '<tr>' +
+
+      '<td colspan="6">' +
+
+      'No hay auditorías registradas' +
+
+      '</td>' +
+
+      '</tr>';
+
+
 
       return;
 
@@ -360,7 +386,7 @@ async function renderAuditorias(){
 
 
 // ======================
-// PDF PREMIUM
+// PDF EJECUTIVO PREMIUM
 // ======================
 
 window.generarPDF = async function(id){
@@ -394,11 +420,62 @@ window.generarPDF = async function(id){
 
     const { jsPDF } = window.jspdf;
 
-    var doc = new jsPDF();
+
+
+    var doc = new jsPDF(
+
+      'p',
+      'mm',
+      'a4'
+
+    );
 
 
 
+
+
+    // ======================
+    // FECHA
+    // ======================
+
+    var fechaActual =
+
+    new Date()
+    .toLocaleString(
+      'es-CO'
+    );
+
+
+
+
+
+    // ======================
+    // FONDO
+    // ======================
+
+    doc.setFillColor(
+      248,
+      250,
+      252
+    );
+
+
+
+    doc.rect(
+      0,
+      0,
+      210,
+      297,
+      'F'
+    );
+
+
+
+
+
+    // ======================
     // HEADER
+    // ======================
 
     doc.setFillColor(
       15,
@@ -412,13 +489,65 @@ window.generarPDF = async function(id){
       0,
       0,
       210,
-      40,
+      38,
       'F'
     );
 
 
 
+
+
+    // ======================
+    // LOGO
+    // ======================
+
+    try{
+
+      var logo =
+
+      document.querySelector(
+        '.logo img'
+      );
+
+
+
+      if(logo){
+
+        doc.addImage(
+
+          logo,
+
+          'PNG',
+
+          14,
+
+          6,
+
+          24,
+
+          24
+
+        );
+
+      }
+
+    }
+
+    catch(error){
+
+      console.log(
+        'Logo no encontrado'
+      );
+
+    }
+
+
+
+
+
+    // ======================
     // TITULO
+    // ======================
 
     doc.setTextColor(
       255,
@@ -432,15 +561,55 @@ window.generarPDF = async function(id){
 
 
 
-    doc.text(
-      'REPORTE AUDITORIA',
-      20,
-      24
+    doc.setFont(
+      'helvetica',
+      'bold'
     );
 
 
 
-    // BODY
+    doc.text(
+
+      'REPORTE EJECUTIVO',
+
+      48,
+
+      17
+
+    );
+
+
+
+
+
+    doc.setFontSize(13);
+
+
+
+    doc.setFont(
+      'helvetica',
+      'normal'
+    );
+
+
+
+    doc.text(
+
+      'Auditoría Corporativa',
+
+      48,
+
+      25
+
+    );
+
+
+
+
+
+    // ======================
+    // FECHA
+    // ======================
 
     doc.setTextColor(
       15,
@@ -450,62 +619,260 @@ window.generarPDF = async function(id){
 
 
 
-    doc.setFontSize(13);
+    doc.setFontSize(10);
+
+
+
+    doc.text(
+
+      'Fecha generación: ' +
+      fechaActual,
+
+      15,
+
+      50
+
+    );
+
+
+
+
+
+    // ======================
+    // CARD
+    // ======================
+
+    doc.setFillColor(
+      255,
+      255,
+      255
+    );
+
+
+
+    doc.roundedRect(
+
+      15,
+
+      58,
+
+      180,
+
+      60,
+
+      5,
+
+      5,
+
+      'F'
+
+    );
+
+
+
+
+
+    // ======================
+    // TITULO CARD
+    // ======================
+
+    doc.setFontSize(15);
+
+
+
+    doc.setFont(
+      'helvetica',
+      'bold'
+    );
+
+
+
+    doc.text(
+
+      'Información Auditoría',
+
+      22,
+
+      72
+
+    );
+
+
+
+
+
+    // ======================
+    // DATOS
+    // ======================
+
+    doc.setFontSize(11);
+
+
+
+    doc.setFont(
+      'helvetica',
+      'normal'
+    );
 
 
 
     doc.text(
       'Proceso:',
-      20,
-      60
+      22,
+      86
+    );
+
+
+
+    doc.setFont(
+      'helvetica',
+      'bold'
     );
 
 
 
     doc.text(
       String(data.proceso),
-      60,
-      60
+      55,
+      86
+    );
+
+
+
+
+
+    doc.setFont(
+      'helvetica',
+      'normal'
     );
 
 
 
     doc.text(
       'Responsable:',
-      20,
-      80
+      22,
+      98
+    );
+
+
+
+    doc.setFont(
+      'helvetica',
+      'bold'
     );
 
 
 
     doc.text(
       String(data.responsable),
-      60,
-      80
+      55,
+      98
+    );
+
+
+
+
+
+    doc.setFont(
+      'helvetica',
+      'normal'
     );
 
 
 
     doc.text(
       'Estado:',
-      20,
-      100
+      120,
+      86
+    );
+
+
+
+
+
+    // ======================
+    // COLOR ESTADO
+    // ======================
+
+    if(data.estado === 'Pendiente'){
+
+      doc.setTextColor(
+        220,
+        38,
+        38
+      );
+
+    }
+
+    else if(data.estado === 'En revisión'){
+
+      doc.setTextColor(
+        217,
+        119,
+        6
+      );
+
+    }
+
+    else{
+
+      doc.setTextColor(
+        22,
+        163,
+        74
+      );
+
+    }
+
+
+
+
+
+    doc.setFont(
+      'helvetica',
+      'bold'
     );
 
 
 
     doc.text(
       String(data.estado),
-      60,
-      100
+      145,
+      86
+    );
+
+
+
+
+
+    doc.setTextColor(
+      15,
+      23,
+      42
+    );
+
+
+
+
+
+    doc.setFont(
+      'helvetica',
+      'normal'
     );
 
 
 
     doc.text(
       'Fecha:',
-      20,
-      120
+      120,
+      98
+    );
+
+
+
+    doc.setFont(
+      'helvetica',
+      'bold'
     );
 
 
@@ -513,72 +880,186 @@ window.generarPDF = async function(id){
     doc.text(
 
       new Date(
-
         data.created_at
-
       ).toLocaleString(
-
         'es-CO'
-
       ),
 
-      60,
+      145,
 
-      120
+      98
 
     );
 
 
 
+
+
+    // ======================
     // HALLAZGO
+    // ======================
+
+    doc.setFillColor(
+      239,
+      246,
+      255
+    );
+
+
+
+    doc.roundedRect(
+
+      15,
+
+      130,
+
+      180,
+
+      90,
+
+      5,
+
+      5,
+
+      'F'
+
+    );
+
+
+
+
+
+    doc.setFontSize(14);
+
+
+
+    doc.setFont(
+      'helvetica',
+      'bold'
+    );
+
+
 
     doc.text(
-      'Hallazgo:',
-      20,
+
+      'Hallazgo Detectado',
+
+      22,
+
       145
+
     );
 
 
 
-    var texto =
+
+
+    doc.setFontSize(11);
+
+
+
+    doc.setFont(
+      'helvetica',
+      'normal'
+    );
+
+
+
+    var textoHallazgo =
 
     doc.splitTextToSize(
 
-      data.hallazgo,
+      String(data.hallazgo),
 
       160
 
     );
+
+
 
 
 
     doc.text(
-      texto,
-      20,
-      160
+
+      textoHallazgo,
+
+      22,
+
+      158
+
     );
 
 
 
+
+
+    // ======================
     // FOOTER
+    // ======================
 
-    doc.setFontSize(10);
+    doc.setFillColor(
+      15,
+      23,
+      42
+    );
+
+
+
+    doc.rect(
+      0,
+      280,
+      210,
+      17,
+      'F'
+    );
+
+
+
+
+
+    doc.setTextColor(
+      255,
+      255,
+      255
+    );
+
+
+
+    doc.setFontSize(9);
 
 
 
     doc.text(
 
-      'Sistema Auditoria y Gestion',
+      'Electroingeniería - Sistema Corporativo de Auditoría',
 
-      20,
+      15,
 
-      285
+      289
 
     );
 
 
 
-    // DESCARGA
+
+
+    doc.text(
+
+      'Reporte generado automáticamente',
+
+      125,
+
+      289
+
+    );
+
+
+
+
+
+    // ======================
+    // GUARDAR PDF
+    // ======================
 
     doc.save(
 
@@ -596,6 +1077,10 @@ window.generarPDF = async function(id){
 
     console.log(error);
 
+    alert(
+      'Error generando PDF'
+    );
+
   }
 
 };
@@ -610,37 +1095,53 @@ window.generarPDF = async function(id){
 
 window.eliminarAuditoria = async function(id){
 
-  var confirmar = confirm(
-    '¿Eliminar auditoría?'
-  );
+  try{
+
+    var confirmar = confirm(
+      '¿Eliminar auditoría?'
+    );
 
 
 
-  if(!confirmar){
+    if(!confirmar){
 
-    return;
+      return;
+
+    }
+
+
+
+    await window.supabaseClient
+
+    .from('auditorias')
+
+    .delete()
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    );
+
+
+
+    renderAuditorias();
+
+
+
+    alert(
+      'Auditoría eliminada'
+    );
 
   }
 
+  catch(error){
 
+    console.log(error);
 
-  await window.supabaseClient
-
-  .from('auditorias')
-
-  .delete()
-
-  .eq(
-
-    'id',
-
-    Number(id)
-
-  );
-
-
-
-  renderAuditorias();
+  }
 
 };
 
@@ -654,42 +1155,58 @@ window.eliminarAuditoria = async function(id){
 
 window.editarEstado = async function(id){
 
-  var nuevoEstado = prompt(
-    'Nuevo estado:'
-  );
+  try{
+
+    var nuevoEstado = prompt(
+      'Nuevo estado:'
+    );
 
 
 
-  if(!nuevoEstado){
+    if(!nuevoEstado){
 
-    return;
+      return;
+
+    }
+
+
+
+    await window.supabaseClient
+
+    .from('auditorias')
+
+    .update({
+
+      estado:
+      nuevoEstado
+
+    })
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    );
+
+
+
+    renderAuditorias();
+
+
+
+    alert(
+      'Estado actualizado'
+    );
 
   }
 
+  catch(error){
 
+    console.log(error);
 
-  await window.supabaseClient
-
-  .from('auditorias')
-
-  .update({
-
-    estado:
-    nuevoEstado
-
-  })
-
-  .eq(
-
-    'id',
-
-    Number(id)
-
-  );
-
-
-
-  renderAuditorias();
+  }
 
 };
 
