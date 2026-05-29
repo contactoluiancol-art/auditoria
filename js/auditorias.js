@@ -393,6 +393,10 @@ window.generarPDF = async function(id){
 
   try{
 
+    // ======================
+    // CONSULTAR AUDITORIA
+    // ======================
+
     var response =
 
     await window.supabaseClient
@@ -418,6 +422,22 @@ window.generarPDF = async function(id){
 
 
 
+    if(!data){
+
+      alert(
+        'Auditoría no encontrada'
+      );
+
+      return;
+
+    }
+
+
+
+    // ======================
+    // JSPDF
+    // ======================
+
     const { jsPDF } = window.jspdf;
 
 
@@ -435,28 +455,33 @@ window.generarPDF = async function(id){
 
 
     // ======================
-    // FECHA
+    // COLORES
     // ======================
 
-    var fechaActual =
+    var azulOscuro = [15,23,42];
 
-    new Date()
-    .toLocaleString(
-      'es-CO'
-    );
+    var azul = [37,99,235];
+
+    var gris = [100,116,139];
+
+    var grisClaro = [226,232,240];
+
+    var fondo = [248,250,252];
 
 
 
 
 
     // ======================
-    // FONDO
+    // FONDO GENERAL
     // ======================
 
     doc.setFillColor(
-      248,
-      250,
-      252
+
+      fondo[0],
+      fondo[1],
+      fondo[2]
+
     );
 
 
@@ -478,9 +503,11 @@ window.generarPDF = async function(id){
     // ======================
 
     doc.setFillColor(
-      15,
-      23,
-      42
+
+      azulOscuro[0],
+      azulOscuro[1],
+      azulOscuro[2]
+
     );
 
 
@@ -489,7 +516,32 @@ window.generarPDF = async function(id){
       0,
       0,
       210,
-      38,
+      48,
+      'F'
+    );
+
+
+
+
+
+    // ======================
+    // DECORACION HEADER
+    // ======================
+
+    doc.setFillColor(
+
+      azul[0],
+      azul[1],
+      azul[2]
+
+    );
+
+
+
+    doc.circle(
+      195,
+      8,
+      34,
       'F'
     );
 
@@ -519,13 +571,13 @@ window.generarPDF = async function(id){
 
           'PNG',
 
-          14,
+          15,
 
-          6,
+          8,
 
-          24,
+          28,
 
-          24
+          28
 
         );
 
@@ -536,7 +588,7 @@ window.generarPDF = async function(id){
     catch(error){
 
       console.log(
-        'Logo no encontrado'
+        'No se pudo cargar el logo'
       );
 
     }
@@ -557,10 +609,6 @@ window.generarPDF = async function(id){
 
 
 
-    doc.setFontSize(22);
-
-
-
     doc.setFont(
       'helvetica',
       'bold'
@@ -568,13 +616,17 @@ window.generarPDF = async function(id){
 
 
 
+    doc.setFontSize(25);
+
+
+
     doc.text(
 
       'REPORTE EJECUTIVO',
 
-      48,
+      52,
 
-      17
+      20
 
     );
 
@@ -595,11 +647,11 @@ window.generarPDF = async function(id){
 
     doc.text(
 
-      'Auditoría Corporativa',
+      'Sistema Corporativo de Auditoría',
 
-      48,
+      52,
 
-      25
+      30
 
     );
 
@@ -612,9 +664,11 @@ window.generarPDF = async function(id){
     // ======================
 
     doc.setTextColor(
-      15,
-      23,
-      42
+
+      gris[0],
+      gris[1],
+      gris[2]
+
     );
 
 
@@ -626,11 +680,15 @@ window.generarPDF = async function(id){
     doc.text(
 
       'Fecha generación: ' +
-      fechaActual,
+
+      new Date()
+      .toLocaleString(
+        'es-CO'
+      ),
 
       15,
 
-      50
+      58
 
     );
 
@@ -639,7 +697,7 @@ window.generarPDF = async function(id){
 
 
     // ======================
-    // CARD
+    // CARD GENERAL
     // ======================
 
     doc.setFillColor(
@@ -654,17 +712,47 @@ window.generarPDF = async function(id){
 
       15,
 
-      58,
+      66,
 
       180,
 
-      60,
+      65,
 
-      5,
+      6,
 
-      5,
+      6,
 
       'F'
+
+    );
+
+
+
+
+
+    doc.setDrawColor(
+
+      grisClaro[0],
+      grisClaro[1],
+      grisClaro[2]
+
+    );
+
+
+
+    doc.roundedRect(
+
+      15,
+
+      66,
+
+      180,
+
+      65,
+
+      6,
+
+      6
 
     );
 
@@ -676,7 +764,13 @@ window.generarPDF = async function(id){
     // TITULO CARD
     // ======================
 
-    doc.setFontSize(15);
+    doc.setTextColor(
+
+      azulOscuro[0],
+      azulOscuro[1],
+      azulOscuro[2]
+
+    );
 
 
 
@@ -687,14 +781,39 @@ window.generarPDF = async function(id){
 
 
 
+    doc.setFontSize(16);
+
+
+
     doc.text(
 
-      'Información Auditoría',
+      'Información General',
 
       22,
 
-      72
+      82
 
+    );
+
+
+
+
+
+    doc.setDrawColor(
+
+      azul[0],
+      azul[1],
+      azul[2]
+
+    );
+
+
+
+    doc.line(
+      22,
+      86,
+      82,
+      86
     );
 
 
@@ -716,10 +835,60 @@ window.generarPDF = async function(id){
 
 
 
+    doc.setTextColor(
+
+      gris[0],
+      gris[1],
+      gris[2]
+
+    );
+
+
+
     doc.text(
       'Proceso:',
       22,
-      86
+      102
+    );
+
+
+
+    doc.text(
+      'Responsable:',
+      22,
+      114
+    );
+
+
+
+    doc.text(
+      'Estado:',
+      120,
+      102
+    );
+
+
+
+    doc.text(
+      'Fecha:',
+      120,
+      114
+    );
+
+
+
+
+
+    // ======================
+    // VALORES
+    // ======================
+
+    doc.setTextColor(
+
+      azulOscuro[0],
+      azulOscuro[1],
+      azulOscuro[2]
+
     );
 
 
@@ -734,31 +903,7 @@ window.generarPDF = async function(id){
     doc.text(
       String(data.proceso),
       55,
-      86
-    );
-
-
-
-
-
-    doc.setFont(
-      'helvetica',
-      'normal'
-    );
-
-
-
-    doc.text(
-      'Responsable:',
-      22,
-      98
-    );
-
-
-
-    doc.setFont(
-      'helvetica',
-      'bold'
+      102
     );
 
 
@@ -766,71 +911,7 @@ window.generarPDF = async function(id){
     doc.text(
       String(data.responsable),
       55,
-      98
-    );
-
-
-
-
-
-    doc.setFont(
-      'helvetica',
-      'normal'
-    );
-
-
-
-    doc.text(
-      'Estado:',
-      120,
-      86
-    );
-
-
-
-
-
-    // ======================
-    // COLOR ESTADO
-    // ======================
-
-    if(data.estado === 'Pendiente'){
-
-      doc.setTextColor(
-        220,
-        38,
-        38
-      );
-
-    }
-
-    else if(data.estado === 'En revisión'){
-
-      doc.setTextColor(
-        217,
-        119,
-        6
-      );
-
-    }
-
-    else{
-
-      doc.setTextColor(
-        22,
-        163,
-        74
-      );
-
-    }
-
-
-
-
-
-    doc.setFont(
-      'helvetica',
-      'bold'
+      114
     );
 
 
@@ -838,41 +919,7 @@ window.generarPDF = async function(id){
     doc.text(
       String(data.estado),
       145,
-      86
-    );
-
-
-
-
-
-    doc.setTextColor(
-      15,
-      23,
-      42
-    );
-
-
-
-
-
-    doc.setFont(
-      'helvetica',
-      'normal'
-    );
-
-
-
-    doc.text(
-      'Fecha:',
-      120,
-      98
-    );
-
-
-
-    doc.setFont(
-      'helvetica',
-      'bold'
+      102
     );
 
 
@@ -887,7 +934,7 @@ window.generarPDF = async function(id){
 
       145,
 
-      98
+      114
 
     );
 
@@ -900,8 +947,8 @@ window.generarPDF = async function(id){
     // ======================
 
     doc.setFillColor(
-      239,
-      246,
+      255,
+      255,
       255
     );
 
@@ -911,15 +958,15 @@ window.generarPDF = async function(id){
 
       15,
 
-      130,
+      145,
 
       180,
 
-      90,
+      88,
 
-      5,
+      6,
 
-      5,
+      6,
 
       'F'
 
@@ -929,14 +976,46 @@ window.generarPDF = async function(id){
 
 
 
-    doc.setFontSize(14);
+    doc.setDrawColor(
+
+      grisClaro[0],
+      grisClaro[1],
+      grisClaro[2]
+
+    );
 
 
+
+    doc.roundedRect(
+
+      15,
+
+      145,
+
+      180,
+
+      88,
+
+      6,
+
+      6
+
+    );
+
+
+
+
+
+    // TITULO
 
     doc.setFont(
       'helvetica',
       'bold'
     );
+
+
+
+    doc.setFontSize(16);
 
 
 
@@ -946,7 +1025,7 @@ window.generarPDF = async function(id){
 
       22,
 
-      145
+      160
 
     );
 
@@ -954,13 +1033,46 @@ window.generarPDF = async function(id){
 
 
 
-    doc.setFontSize(11);
+    doc.setDrawColor(
+
+      azul[0],
+      azul[1],
+      azul[2]
+
+    );
 
 
+
+    doc.line(
+      22,
+      164,
+      92,
+      164
+    );
+
+
+
+
+
+    // TEXTO
 
     doc.setFont(
       'helvetica',
       'normal'
+    );
+
+
+
+    doc.setFontSize(11);
+
+
+
+    doc.setTextColor(
+
+      gris[0],
+      gris[1],
+      gris[2]
+
     );
 
 
@@ -985,8 +1097,163 @@ window.generarPDF = async function(id){
 
       22,
 
-      158
+      178
 
+    );
+
+
+
+
+
+    // ======================
+    // OBSERVACIONES
+    // ======================
+
+    doc.setFont(
+      'helvetica',
+      'bold'
+    );
+
+
+
+    doc.setFontSize(15);
+
+
+
+    doc.setTextColor(
+
+      azulOscuro[0],
+      azulOscuro[1],
+      azulOscuro[2]
+
+    );
+
+
+
+    doc.text(
+
+      'Observaciones',
+
+      22,
+
+      245
+
+    );
+
+
+
+
+
+    doc.line(
+      22,
+      249,
+      72,
+      249
+    );
+
+
+
+
+
+    doc.setFont(
+      'helvetica',
+      'normal'
+    );
+
+
+
+    doc.setFontSize(10);
+
+
+
+    var observacion =
+
+    'Se recomienda realizar seguimiento y control sobre el hallazgo identificado para garantizar la mejora continua del proceso auditado.';
+
+
+
+
+
+    var textoObservacion =
+
+    doc.splitTextToSize(
+
+      observacion,
+
+      165
+
+    );
+
+
+
+
+
+    doc.text(
+
+      textoObservacion,
+
+      22,
+
+      260
+
+    );
+
+
+
+
+
+    // ======================
+    // FIRMAS
+    // ======================
+
+    doc.setDrawColor(
+      180,
+      180,
+      180
+    );
+
+
+
+    // AUDITOR
+
+    doc.line(
+      25,
+      278,
+      80,
+      278
+    );
+
+
+
+    doc.setFontSize(10);
+
+
+
+    doc.text(
+      'Firma Auditor',
+      38,
+      284
+    );
+
+
+
+
+
+    // RESPONSABLE
+
+    doc.line(
+      125,
+      278,
+      180,
+      278
+    );
+
+
+
+    doc.text(
+      'Firma Responsable',
+      132,
+      284
     );
 
 
@@ -998,18 +1265,20 @@ window.generarPDF = async function(id){
     // ======================
 
     doc.setFillColor(
-      15,
-      23,
-      42
+
+      azulOscuro[0],
+      azulOscuro[1],
+      azulOscuro[2]
+
     );
 
 
 
     doc.rect(
       0,
-      280,
+      288,
       210,
-      17,
+      9,
       'F'
     );
 
@@ -1025,7 +1294,7 @@ window.generarPDF = async function(id){
 
 
 
-    doc.setFontSize(9);
+    doc.setFontSize(8);
 
 
 
@@ -1035,7 +1304,7 @@ window.generarPDF = async function(id){
 
       15,
 
-      289
+      294
 
     );
 
@@ -1045,11 +1314,11 @@ window.generarPDF = async function(id){
 
     doc.text(
 
-      'Reporte generado automáticamente',
+      'Reporte Ejecutivo',
 
-      125,
+      165,
 
-      289
+      294
 
     );
 
@@ -1058,7 +1327,7 @@ window.generarPDF = async function(id){
 
 
     // ======================
-    // GUARDAR PDF
+    // GUARDAR
     // ======================
 
     doc.save(
