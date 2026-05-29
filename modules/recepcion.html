@@ -106,6 +106,8 @@
 
     <div class="form-grid">
 
+      <!-- PROVEEDOR -->
+
       <div class="input-group">
 
         <label>
@@ -123,6 +125,8 @@
 
 
 
+
+      <!-- MATERIAL -->
 
       <div class="input-group">
 
@@ -142,6 +146,46 @@
 
 
 
+      <!-- TIPO -->
+
+      <div class="input-group">
+
+        <label>
+          Tipo Recepción
+        </label>
+
+        <select id="tipoRecepcionInput">
+
+          <option value="Cajas">
+            📦 Cajas
+          </option>
+
+          <option value="Unidades">
+            🔌 Unidades
+          </option>
+
+          <option value="Cable Metro">
+            🧵 Cable por Metro
+          </option>
+
+          <option value="Rollos">
+            🎞️ Rollos
+          </option>
+
+          <option value="Carretos">
+            🛞 Carretos
+          </option>
+
+        </select>
+
+      </div>
+
+
+
+
+
+      <!-- CANTIDAD -->
+
       <div class="input-group">
 
         <label>
@@ -159,6 +203,8 @@
 
 
 
+
+      <!-- REVISADAS -->
 
       <div class="input-group">
 
@@ -178,6 +224,8 @@
 
 
 
+      <!-- NOVEDADES -->
+
       <div class="input-group">
 
         <label>
@@ -195,6 +243,8 @@
 
 
 
+
+      <!-- FALTANTES -->
 
       <div class="input-group">
 
@@ -214,6 +264,8 @@
 
 
 
+      <!-- ESTADO -->
+
       <div class="input-group">
 
         <label>
@@ -226,16 +278,16 @@
             Pendiente
           </option>
 
-          <option value="En revisión">
-            En revisión
+          <option value="En validación">
+            En validación
           </option>
 
           <option value="Novedad">
             Novedad
           </option>
 
-          <option value="Revisado">
-            Revisado
+          <option value="Gestionado">
+            Gestionado
           </option>
 
         </select>
@@ -248,10 +300,12 @@
 
 
 
+    <!-- OBSERVACION -->
+
     <div class="input-group textarea-group">
 
       <label>
-        Observación
+        Observación Recepción
       </label>
 
       <textarea
@@ -264,6 +318,28 @@
 
 
 
+
+    <!-- PDF -->
+
+    <div class="input-group">
+
+      <label>
+        Adjuntar PDF / Remisión
+      </label>
+
+      <input
+        type="file"
+        id="pdfInput"
+        accept=".pdf"
+      >
+
+    </div>
+
+
+
+
+
+    <!-- BOTON -->
 
     <div class="button-group">
 
@@ -302,7 +378,7 @@
 
     <div class="table-container">
 
-      <table>
+      <table class="table-pro">
 
         <thead>
 
@@ -311,6 +387,8 @@
             <th>Proveedor</th>
 
             <th>Material</th>
+
+            <th>Tipo</th>
 
             <th>Cantidad</th>
 
@@ -324,7 +402,9 @@
 
             <th>Fecha</th>
 
-            <th>Observación</th>
+            <th>PDF</th>
+
+            <th>Comentario</th>
 
             <th>Acciones</th>
 
