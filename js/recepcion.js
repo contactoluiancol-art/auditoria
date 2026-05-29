@@ -1,14 +1,17 @@
 // ======================
-// USUARIO LOGUEADO
+// EVITAR DUPLICAR
 // ======================
 
+if(typeof window.recepcionCargado === 'undefined'){
+
+window.recepcionCargado = true;
 
 
 
 
 
 // ======================
-// EVENTO
+// BOTON
 // ======================
 
 document.getElementById(
@@ -22,224 +25,386 @@ document.getElementById(
 
 
 
+
 // ======================
 // GUARDAR RECEPCION
 // ======================
 
-function guardarRecepcion(){
+async function guardarRecepcion(){
 
-  const proveedor =
-  document.getElementById(
-    'proveedorInput'
-  ).value;
+  try{
 
+    // ======================
+    // CAMPOS
+    // ======================
 
-
-  const material =
-  document.getElementById(
-    'materialInput'
-  ).value;
-
-
-
-  const cantidad =
-  Number(
+    const proveedor =
     document.getElementById(
-      'cantidadInput'
-    ).value
-  );
+      'proveedorInput'
+    ).value.trim();
 
 
 
-  const revisadas =
-  Number(
+    const material =
     document.getElementById(
-      'revisadasInput'
-    ).value
-  );
+      'materialInput'
+    ).value.trim();
 
 
 
-  const novedades =
-  Number(
+    const tipoRecepcion =
     document.getElementById(
-      'novedadesInput'
-    ).value
-  );
+      'tipoRecepcionInput'
+    ).value;
 
 
 
-  const faltantes =
-  Number(
-    document.getElementById(
-      'faltantesInput'
-    ).value
-  );
+    const cantidad =
+    Number(
 
+      document.getElementById(
+        'cantidadInput'
+      ).value
 
-
-  const observacion =
-  document.getElementById(
-    'observacionInput'
-  ).value;
-
-
-
-  const estado =
-  document.getElementById(
-    'estadoRecepcionInput'
-  ).value;
-
-
-
-
-
-  // VALIDAR
-
-  if(
-
-    !proveedor ||
-
-    !material ||
-
-    !cantidad ||
-
-    !revisadas
-
-  ){
-
-    alert(
-      'Complete todos los campos'
     );
 
-    return;
-
-  }
 
 
+    const revisadas =
+    Number(
+
+      document.getElementById(
+        'revisadasInput'
+      ).value
+
+    );
 
 
 
-  // CALCULOS
+    const novedades =
+    Number(
 
-  const porcentajeRevisado =
+      document.getElementById(
+        'novedadesInput'
+      ).value
+
+    );
+
+
+
+    const faltantes =
+    Number(
+
+      document.getElementById(
+        'faltantesInput'
+      ).value
+
+    );
+
+
+
+    const observacion =
+    document.getElementById(
+      'observacionInput'
+    ).value.trim();
+
+
+
+    const estado =
+    document.getElementById(
+      'estadoRecepcionInput'
+    ).value;
+
+
+
+    const pdfFile =
+    document.getElementById(
+      'pdfInput'
+    ).files[0];
+
+
+
+
+
+    // ======================
+    // VALIDAR
+    // ======================
+
+    if(
+
+      !proveedor ||
+      !material ||
+      !cantidad ||
+      !revisadas
+
+    ){
+
+      alert(
+        'Complete todos los campos'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // PORCENTAJE
+    // ======================
+
+    const porcentajeRevisado =
 
     (
+
       revisadas /
       cantidad
+
     ) * 100;
 
 
 
 
 
-  // STORAGE
+    // ======================
+    // PDF URL
+    // ======================
 
-  const recepciones = JSON.parse(
-
-    localStorage.getItem(
-      'recepciones'
-    )
-
-  ) || [];
+    let pdfUrl = '';
 
 
 
 
 
-  // NUEVA RECEPCION
+    // ======================
+    // SUBIR PDF
+    // ======================
 
-  const nuevaRecepcion = {
+    if(pdfFile){
 
-    id: Date.now(),
+      const nombreArchivo =
 
-    proveedor,
-
-    material,
-
-    cantidad,
-
-    revisadas,
-
-    novedades,
-
-    faltantes,
-
-    observacion,
-
-    estado,
-
-    porcentajeRevisado:
-    porcentajeRevisado
-    .toFixed(1),
-
-    fecha:
-    new Date()
-    .toLocaleDateString()
-
-  };
+      Date.now() +
+      '_' +
+      pdfFile.name;
 
 
 
 
 
-  // GUARDAR
+      const subida =
 
-  recepciones.push(
-    nuevaRecepcion
-  );
+      await window.supabaseClient
 
+      .storage
 
+      .from(
+        'recepciones-pdf'
+      )
 
-  localStorage.setItem(
+      .upload(
 
-    'recepciones',
+        nombreArchivo,
 
-    JSON.stringify(
-      recepciones
-    )
+        pdfFile
 
-  );
-
-
+      );
 
 
 
-  // NOTIFICACION
 
-  crearNotificacion(
 
-`Nueva recepción:
+      if(subida.error){
+
+        console.log(
+          subida.error
+        );
+
+        alert(
+          'Error subiendo PDF'
+        );
+
+        return;
+
+      }
+
+
+
+
+
+      const urlData =
+
+      window.supabaseClient
+
+      .storage
+
+      .from(
+        'recepciones-pdf'
+      )
+
+      .getPublicUrl(
+        nombreArchivo
+      );
+
+
+
+
+
+      pdfUrl =
+      urlData.data.publicUrl;
+
+    }
+
+
+
+
+
+    // ======================
+    // INSERTAR
+    // ======================
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .insert([
+
+      {
+
+        proveedor:
+        proveedor,
+
+        material:
+        material,
+
+        tipo_recepcion:
+        tipoRecepcion,
+
+        cantidad:
+        cantidad,
+
+        revisadas:
+        revisadas,
+
+        novedades:
+        novedades,
+
+        faltantes:
+        faltantes,
+
+        porcentaje_revisado:
+        porcentajeRevisado
+        .toFixed(1),
+
+        observacion:
+        observacion,
+
+        comentario_validacion:
+        '',
+
+        estado:
+        estado,
+
+        pdf_url:
+        pdfUrl,
+
+        usuario_recepcion:
+        usuarioLogueado.nombre ||
+
+        'Usuario',
+
+        created_at:
+        new Date()
+        .toISOString()
+
+      }
+
+    ]);
+
+
+
+
+
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      alert(
+        'Error guardando recepción'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // NOTIFICACION
+    // ======================
+
+    crearNotificacion(
+
+`Nueva recepción registrada
+
+Proveedor:
+${proveedor}
+
+Material:
 ${material}
 
-Cajas recibidas:
+Tipo:
+${tipoRecepcion}
+
+Cantidad:
 ${cantidad}
-
-Cajas revisadas:
-${revisadas}
-
-Cajas novedad:
-${novedades}
-
-Unidades faltantes:
-${faltantes}
 
 Estado:
 ${estado}`
 
-  );
+    );
 
 
 
 
 
-  // ACTUALIZAR
+    // ======================
+    // ACTUALIZAR
+    // ======================
 
-  renderRecepciones();
+    renderRecepciones();
 
-  actualizarKPIsRecepcion();
+    actualizarKPIsRecepcion();
 
-  limpiarFormulario();
+    limpiarFormulario();
+
+
+
+
+
+    alert(
+      'Recepción guardada correctamente'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    alert(
+      'Error general'
+    );
+
+  }
 
 }
 
@@ -251,74 +416,85 @@ ${estado}`
 // RENDER
 // ======================
 
-function renderRecepciones(){
+async function renderRecepciones(){
 
-  const recepciones = JSON.parse(
+  try{
 
-    localStorage.getItem(
-      'recepciones'
-    )
-
-  ) || [];
-
-
-
-  const body =
-  document.getElementById(
-    'recepcionesBody'
-  );
+    const body =
+    document.getElementById(
+      'recepcionesBody'
+    );
 
 
 
-  body.innerHTML = '';
+    if(!body){
+
+      return;
+
+    }
 
 
 
 
 
-  recepciones.forEach(item => {
-
-    let estadoClass = '';
+    body.innerHTML = '';
 
 
 
 
-    // ESTADOS
 
-    if(
-      item.estado ===
-      'Pendiente'
+    const response =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .select('*')
+
+    .order(
+
+      'id',
+
+      {
+
+        ascending:false
+
+      }
+
+    );
+
+
+
+
+
+    const recepciones =
+    response.data;
+
+
+
+
+
+    if(!recepciones ||
+
+      recepciones.length === 0
+
     ){
 
-      estadoClass =
-      'estado-pendiente';
+      body.innerHTML =
 
-    }
+      '<tr>' +
 
-    else if(
-      item.estado ===
-      'En revisión'
-    ){
+      '<td colspan="12">' +
 
-      estadoClass =
-      'estado-revision';
+      'No hay recepciones registradas' +
 
-    }
+      '</td>' +
 
-    else if(
-      item.estado ===
-      'Novedad'
-    ){
+      '</tr>';
 
-      estadoClass =
-      'estado-novedad';
 
-    }
 
-    else{
-
-      estadoClass =
-      'estado-revisado';
+      return;
 
     }
 
@@ -326,111 +502,212 @@ function renderRecepciones(){
 
 
 
+    recepciones.forEach(item => {
 
-    body.innerHTML += `
+      let estadoClass = '';
 
-      <tr>
 
-        <td>
-          ${item.proveedor}
-        </td>
 
-        <td>
-          ${item.material}
-        </td>
 
-        <td>
-          ${item.cantidad}
-        </td>
 
-        <td>
-          ${item.revisadas}
-        </td>
+      if(
 
-        <td>
-          ${item.porcentajeRevisado}%
-        </td>
+        item.estado ===
+        'Pendiente'
 
-        <td>
-          ${item.novedades}
-        </td>
+      ){
 
-        <td>
+        estadoClass =
+        'estado-pendiente';
 
-          <span
-            class="${estadoClass}"
-          >
+      }
 
-            ${item.estado}
+      else if(
 
-          </span>
+        item.estado ===
+        'En validación'
 
-        </td>
+      ){
 
-        <td>
-          ${item.fecha}
-        </td>
+        estadoClass =
+        'estado-revision';
 
-        <td>
+      }
 
-          <button
-            class="btn-ver"
-            onclick='verObservacion(${JSON.stringify(item.observacion)})'
-          >
+      else if(
 
-            👁 Ver
+        item.estado ===
+        'Novedad'
 
-          </button>
+      ){
 
-        </td>
+        estadoClass =
+        'estado-novedad';
 
-        <td class="acciones-tabla">
+      }
 
-          <button
-            class="btn-editar"
-            onclick="editarRecepcion(${item.id})"
-          >
+      else{
 
-            Editar
+        estadoClass =
+        'estado-revisado';
 
-          </button>
+      }
 
-          ${
 
-            usuarioLogueado.rol === 'admin' ||
 
-            usuarioLogueado.rol === 'auditor' ||
 
-            usuarioLogueado.rol === 'jefe'
 
-            ?
+      body.innerHTML += `
 
-            `
+        <tr>
 
-            <button
-              class="btn-eliminar"
-              onclick="eliminarRecepcion(${item.id})"
+          <td>
+            ${item.proveedor || '-'}
+          </td>
+
+          <td>
+            ${item.material || '-'}
+          </td>
+
+          <td>
+            ${item.tipo_recepcion || '-'}
+          </td>
+
+          <td>
+            ${item.cantidad || 0}
+          </td>
+
+          <td>
+            ${item.revisadas || 0}
+          </td>
+
+          <td>
+            ${item.porcentaje_revisado || 0}%
+          </td>
+
+          <td>
+            ${item.novedades || 0}
+          </td>
+
+          <td>
+
+            <span
+              class="${estadoClass}"
             >
 
-              Eliminar
+              ${item.estado}
+
+            </span>
+
+          </td>
+
+          <td>
+
+            ${new Date(
+
+              item.created_at
+
+            ).toLocaleString('es-CO')}
+
+          </td>
+
+
+
+
+
+          <td>
+
+            ${
+
+              item.pdf_url
+
+              ?
+
+              `
+
+              <button
+                class="btn-ver"
+                onclick="window.open('${item.pdf_url}')"
+              >
+
+                Ver PDF
+
+              </button>
+
+              `
+
+              :
+
+              '-'
+
+            }
+
+          </td>
+
+
+
+
+
+          <td>
+
+            <button
+              class="btn-ver"
+              onclick='verComentario(${JSON.stringify(item.comentario_validacion || "")})'
+            >
+
+              Ver
 
             </button>
 
-            `
+          </td>
 
-            :
 
-            ''
 
-          }
 
-        </td>
 
-      </tr>
+          <td>
 
-    `;
+            <div class="acciones-tabla">
 
-  });
+              <button
+                class="btn-editar"
+                onclick="validarRecepcion(${item.id})"
+              >
+
+                Validar
+
+              </button>
+
+
+
+
+
+              <button
+                class="btn-eliminar"
+                onclick="eliminarRecepcion(${item.id})"
+              >
+
+                Eliminar
+
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    });
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
 
 }
 
@@ -439,21 +716,162 @@ function renderRecepciones(){
 
 
 // ======================
-// VER OBSERVACION
+// VALIDAR RECEPCION
 // ======================
 
-function verObservacion(observacion){
+window.validarRecepcion = async function(id){
+
+  try{
+
+    const comentario = prompt(
+
+      'Ingrese comentario de validación'
+
+    );
+
+
+
+    if(comentario === null){
+
+      return;
+
+    }
+
+
+
+
+
+    const nuevoEstado = prompt(
+
+`Nuevo estado:
+
+Pendiente
+En validación
+Novedad
+Gestionado`
+
+    );
+
+
+
+    if(!nuevoEstado){
+
+      return;
+
+    }
+
+
+
+
+
+    const update =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .update({
+
+      comentario_validacion:
+      comentario,
+
+      estado:
+      nuevoEstado,
+
+      usuario_validacion:
+
+      usuarioLogueado.nombre ||
+
+      'Validador'
+
+    })
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    );
+
+
+
+
+
+    if(update.error){
+
+      console.log(
+        update.error
+      );
+
+      alert(
+        'Error actualizando'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    crearNotificacion(
+
+`Recepción validada
+
+Comentario:
+${comentario}
+
+Estado:
+${nuevoEstado}`
+
+    );
+
+
+
+
+
+    renderRecepciones();
+
+
+
+
+
+    alert(
+      'Recepción validada'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+
+
+
+
+// ======================
+// VER COMENTARIO
+// ======================
+
+window.verComentario = function(comentario){
 
   if(
 
-    !observacion ||
+    !comentario ||
 
-    observacion.trim() === ''
+    comentario.trim() === ''
 
   ){
 
     alert(
-      'Sin observaciones'
+      'Sin comentarios'
     );
 
     return;
@@ -462,15 +880,17 @@ function verObservacion(observacion){
 
 
 
+
+
   alert(
 
-`OBSERVACIÓN:
+`COMENTARIO VALIDACIÓN
 
-${observacion}`
+${comentario}`
 
   );
 
-}
+};
 
 
 
@@ -480,135 +900,85 @@ ${observacion}`
 // ELIMINAR
 // ======================
 
-function eliminarRecepcion(id){
+window.eliminarRecepcion = async function(id){
 
-  let recepciones = JSON.parse(
+  try{
 
-    localStorage.getItem(
-      'recepciones'
-    )
-
-  ) || [];
+    const confirmar = confirm(
+      '¿Eliminar recepción?'
+    );
 
 
 
-  recepciones = recepciones.filter(
+    if(!confirmar){
 
-    item =>
+      return;
 
-    String(item.id) !==
-    String(id)
-
-  );
-
-
-
-  localStorage.setItem(
-
-    'recepciones',
-
-    JSON.stringify(
-      recepciones
-    )
-
-  );
-
-
-
-  renderRecepciones();
-
-  actualizarKPIsRecepcion();
-
-}
+    }
 
 
 
 
 
-// ======================
-// EDITAR
-// ======================
+    const eliminar =
 
-function editarRecepcion(id){
+    await window.supabaseClient
 
-  const recepciones = JSON.parse(
+    .from('recepciones')
 
-    localStorage.getItem(
-      'recepciones'
-    )
+    .delete()
 
-  ) || [];
+    .eq(
 
+      'id',
 
+      Number(id)
 
-  const recepcion = recepciones.find(
-
-    item =>
-
-    String(item.id) ===
-    String(id)
-
-  );
+    );
 
 
 
-  if(!recepcion){
 
-    return;
+
+    if(eliminar.error){
+
+      console.log(
+        eliminar.error
+      );
+
+      alert(
+        'Error eliminando'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    renderRecepciones();
+
+    actualizarKPIsRecepcion();
+
+
+
+
+
+    alert(
+      'Recepción eliminada'
+    );
 
   }
 
+  catch(error){
 
-
-
-
-  const nuevoEstado = prompt(
-
-`Nuevo estado:
-
-Pendiente
-En revisión
-Revisado
-Novedad`,
-
-    recepcion.estado
-
-  );
-
-
-
-
-
-  if(!nuevoEstado){
-
-    return;
+    console.log(error);
 
   }
 
-
-
-  recepcion.estado =
-  nuevoEstado;
-
-
-
-
-
-  localStorage.setItem(
-
-    'recepciones',
-
-    JSON.stringify(
-      recepciones
-    )
-
-  );
-
-
-
-  renderRecepciones();
-
-}
+};
 
 
 
@@ -618,50 +988,80 @@ Novedad`,
 // KPI
 // ======================
 
-function actualizarKPIsRecepcion(){
+async function actualizarKPIsRecepcion(){
 
-  const recepciones = JSON.parse(
+  try{
 
-    localStorage.getItem(
-      'recepciones'
-    )
+    const response =
 
-  ) || [];
+    await window.supabaseClient
 
+    .from('recepciones')
 
-
-
-
-  document.getElementById(
-    'kpiRecepciones'
-  ).innerText =
-
-  recepciones.length;
+    .select('*');
 
 
 
 
 
-  let totalRevisado = 0;
+    const recepciones =
+    response.data || [];
 
 
 
 
 
-  recepciones.forEach(item => {
+    document.getElementById(
+      'kpiRecepciones'
+    ).innerText =
 
-    totalRevisado +=
-    Number(
-      item.porcentajeRevisado
-    );
-
-  });
+    recepciones.length;
 
 
 
 
 
-  const promedio =
+    let totalRevisado = 0;
+
+    let totalNovedades = 0;
+
+    let totalFaltantes = 0;
+
+
+
+
+
+    recepciones.forEach(item => {
+
+      totalRevisado +=
+
+      Number(
+        item.porcentaje_revisado || 0
+      );
+
+
+
+      totalNovedades +=
+
+      Number(
+        item.novedades || 0
+      );
+
+
+
+      totalFaltantes +=
+
+      Number(
+        item.faltantes || 0
+      );
+
+    });
+
+
+
+
+
+    const promedio =
 
     recepciones.length > 0
 
@@ -678,65 +1078,39 @@ function actualizarKPIsRecepcion(){
 
 
 
-  document.getElementById(
-    'kpiRevisado'
-  ).innerText =
+    document.getElementById(
+      'kpiRevisado'
+    ).innerText =
 
-  `${promedio.toFixed(1)}%`;
-
-
-
-
-
-  let totalNovedades = 0;
+    promedio.toFixed(1) + '%';
 
 
 
 
 
-  recepciones.forEach(item => {
+    document.getElementById(
+      'kpiNovedades'
+    ).innerText =
 
-    totalNovedades +=
-    Number(item.novedades);
-
-  });
-
-
-
-
-
-  document.getElementById(
-    'kpiNovedades'
-  ).innerText =
-
-  totalNovedades;
+    totalNovedades;
 
 
 
 
 
-  let totalFaltantes = 0;
+    document.getElementById(
+      'kpiFaltantes'
+    ).innerText =
 
+    totalFaltantes;
 
+  }
 
+  catch(error){
 
+    console.log(error);
 
-  recepciones.forEach(item => {
-
-    totalFaltantes +=
-    Number(item.faltantes);
-
-  });
-
-
-
-
-
-  document.getElementById(
-    'kpiFaltantes'
-  ).innerText =
-
-  totalFaltantes;
+  }
 
 }
 
@@ -760,6 +1134,8 @@ function crearNotificacion(mensaje){
 
 
 
+
+
   const nueva = {
 
     id: Date.now(),
@@ -776,9 +1152,13 @@ function crearNotificacion(mensaje){
 
 
 
+
+
   notificaciones.unshift(
     nueva
   );
+
+
 
 
 
@@ -795,8 +1175,6 @@ function crearNotificacion(mensaje){
 
 
 
-
-  // TIEMPO REAL
 
   window.dispatchEvent(
 
@@ -864,6 +1242,12 @@ function limpiarFormulario(){
     'estadoRecepcionInput'
   ).value = 'Pendiente';
 
+
+
+  document.getElementById(
+    'pdfInput'
+  ).value = '';
+
 }
 
 
@@ -877,3 +1261,5 @@ function limpiarFormulario(){
 renderRecepciones();
 
 actualizarKPIsRecepcion();
+
+}
