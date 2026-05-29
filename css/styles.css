@@ -1409,3 +1409,64 @@ RESPONSIVE
   }
 
 }
+
+/* =========================
+BOTON VER PREMIUM
+========================= */
+
+.btn-ver{
+
+  border:none;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #2563eb
+  );
+
+  color:white;
+
+  padding:10px 16px;
+
+  border-radius:12px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  min-width:90px;
+
+  box-shadow:
+  0 6px 14px rgba(37,99,235,.25);
+
+}
+
+
+
+
+
+.btn-ver:hover{
+
+  transform:
+  translateY(-2px);
+
+  box-shadow:
+  0 10px 18px rgba(37,99,235,.35);
+
+}
+
+
+
+
+
+.btn-ver:active{
+
+  transform:
+  scale(.98);
+
+}
