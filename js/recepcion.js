@@ -34,10 +34,6 @@ async function guardarRecepcion(){
 
   try{
 
-    // ======================
-    // CAMPOS
-    // ======================
-
     const proveedor =
     document.getElementById(
       'proveedorInput'
@@ -61,44 +57,36 @@ async function guardarRecepcion(){
 
     const cantidad =
     Number(
-
       document.getElementById(
         'cantidadInput'
       ).value
-
     );
 
 
 
     const revisadas =
     Number(
-
       document.getElementById(
         'revisadasInput'
       ).value
-
     );
 
 
 
     const novedades =
     Number(
-
       document.getElementById(
         'novedadesInput'
       ).value
-
     );
 
 
 
     const faltantes =
     Number(
-
       document.getElementById(
         'faltantesInput'
       ).value
-
     );
 
 
@@ -158,10 +146,8 @@ async function guardarRecepcion(){
     const porcentajeRevisado =
 
     (
-
       revisadas /
       cantidad
-
     ) * 100;
 
 
@@ -169,7 +155,7 @@ async function guardarRecepcion(){
 
 
     // ======================
-    // PDF URL
+    // PDF
     // ======================
 
     let pdfUrl = '';
@@ -297,8 +283,7 @@ async function guardarRecepcion(){
         faltantes,
 
         porcentaje_revisado:
-        porcentajeRevisado
-        .toFixed(1),
+        porcentajeRevisado.toFixed(1),
 
         observacion:
         observacion,
@@ -474,7 +459,9 @@ async function renderRecepciones(){
 
 
 
-    if(!recepciones ||
+    if(
+
+      !recepciones ||
 
       recepciones.length === 0
 
@@ -484,7 +471,7 @@ async function renderRecepciones(){
 
       '<tr>' +
 
-      '<td colspan="12">' +
+      '<td colspan="13">' +
 
       'No hay recepciones registradas' +
 
@@ -604,9 +591,7 @@ async function renderRecepciones(){
           <td>
 
             ${new Date(
-
               item.created_at
-
             ).toLocaleString('es-CO')}
 
           </td>
@@ -614,6 +599,8 @@ async function renderRecepciones(){
 
 
 
+
+          <!-- PDF -->
 
           <td>
 
@@ -648,14 +635,16 @@ async function renderRecepciones(){
 
 
 
+          <!-- OBSERVACION -->
+
           <td>
 
             <button
               class="btn-ver"
-              onclick='verComentario(${JSON.stringify(item.comentario_validacion || "")})'
+              onclick='verObservacion(${JSON.stringify(item.observacion || "")})'
             >
 
-              Ver
+              Ver Observación
 
             </button>
 
@@ -664,6 +653,27 @@ async function renderRecepciones(){
 
 
 
+
+          <!-- COMENTARIO -->
+
+          <td>
+
+            <button
+              class="btn-ver"
+              onclick='verComentario(${JSON.stringify(item.comentario_validacion || "")})'
+            >
+
+              Ver Comentario
+
+            </button>
+
+          </td>
+
+
+
+
+
+          <!-- ACCIONES -->
 
           <td>
 
@@ -710,6 +720,86 @@ async function renderRecepciones(){
   }
 
 }
+
+
+
+
+
+// ======================
+// VER OBSERVACION
+// ======================
+
+window.verObservacion = function(observacion){
+
+  if(
+
+    !observacion ||
+
+    observacion.trim() === ''
+
+  ){
+
+    alert(
+      'Sin observaciones'
+    );
+
+    return;
+
+  }
+
+
+
+
+
+  alert(
+
+`OBSERVACIÓN RECEPCIÓN
+
+${observacion}`
+
+  );
+
+};
+
+
+
+
+
+// ======================
+// VER COMENTARIO
+// ======================
+
+window.verComentario = function(comentario){
+
+  if(
+
+    !comentario ||
+
+    comentario.trim() === ''
+
+  ){
+
+    alert(
+      'Sin comentarios'
+    );
+
+    return;
+
+  }
+
+
+
+
+
+  alert(
+
+`COMENTARIO VALIDACIÓN
+
+${comentario}`
+
+  );
+
+};
 
 
 
@@ -849,46 +939,6 @@ ${nuevoEstado}`
     console.log(error);
 
   }
-
-};
-
-
-
-
-
-// ======================
-// VER COMENTARIO
-// ======================
-
-window.verComentario = function(comentario){
-
-  if(
-
-    !comentario ||
-
-    comentario.trim() === ''
-
-  ){
-
-    alert(
-      'Sin comentarios'
-    );
-
-    return;
-
-  }
-
-
-
-
-
-  alert(
-
-`COMENTARIO VALIDACIÓN
-
-${comentario}`
-
-  );
 
 };
 
