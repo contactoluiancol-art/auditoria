@@ -1,10 +1,10 @@
 // ======================
-// EVITAR DUPLICAR SCRIPT
+// EVITAR DUPLICAR
 // ======================
 
-if(typeof window.auditoriasCargado === 'undefined'){
+if(typeof window.usuariosCargado === 'undefined'){
 
-window.auditoriasCargado = true;
+window.usuariosCargado = true;
 
 
 
@@ -14,18 +14,18 @@ window.auditoriasCargado = true;
 // EVENTO
 // ======================
 
-var guardarAuditoriaBtn =
+var guardarUsuarioBtn =
 document.getElementById(
-  'guardarAuditoria'
+  'guardarUsuario'
 );
 
-if(guardarAuditoriaBtn){
+if(guardarUsuarioBtn){
 
-  guardarAuditoriaBtn.addEventListener(
+  guardarUsuarioBtn.addEventListener(
 
     'click',
 
-    guardarAuditoria
+    guardarUsuario
 
   );
 
@@ -36,214 +36,189 @@ if(guardarAuditoriaBtn){
 
 
 // ======================
-// GUARDAR AUDITORIA
+// GUARDAR USUARIO
 // ======================
 
-async function guardarAuditoria(){
+async function guardarUsuario(){
 
-  const proceso =
-  document.getElementById(
-    'procesoInput'
-  ).value.trim();
+  try{
 
-
-
-  const hallazgo =
-  document.getElementById(
-    'hallazgoInput'
-  ).value.trim();
+    const nombre =
+    document.getElementById(
+      'nombreUsuario'
+    ).value.trim();
 
 
 
-  const responsable =
-  document.getElementById(
-    'responsableInput'
-  ).value.trim();
+    const correo =
+    document.getElementById(
+      'correoUsuario'
+    ).value.trim();
 
 
 
-  const estado =
-  document.getElementById(
-    'estadoInput'
-  ).value;
+    const rol =
+    document.getElementById(
+      'rolUsuario'
+    ).value;
 
 
 
 
 
-  // ======================
-  // VALIDAR
-  // ======================
+    // ======================
+    // VALIDAR
+    // ======================
 
-  if(
+    if(
 
-    !proceso ||
+      !nombre ||
 
-    !hallazgo ||
+      !correo ||
 
-    !responsable
+      !rol
 
-  ){
+    ){
 
-    alert(
-      'Complete todos los campos'
-    );
+      alert(
+        'Complete todos los campos'
+      );
 
-    return;
-
-  }
-
-
-
-
-
-  // ======================
-  // INSERTAR
-  // ======================
-
-  const response =
-
-  await window.supabaseClient
-
-  .from('auditorias')
-
-  .insert([
-
-    {
-
-      proceso: proceso,
-
-      hallazgo: hallazgo,
-
-      responsable: responsable,
-
-      estado: estado
+      return;
 
     }
 
-  ]);
+
+
+
+
+    // ======================
+    // INSERTAR
+    // ======================
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('usuarios')
+
+    .insert([
+
+      {
+
+        nombre:
+        nombre,
+
+        correo:
+        correo,
+
+        rol:
+        rol,
+
+        estado:
+        'Activo'
+
+      }
+
+    ]);
 
 
 
 
 
-  const error =
-  response.error;
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      alert(
+        'Error guardando usuario'
+      );
+
+      return;
+
+    }
 
 
 
 
 
-  // ======================
-  // ERROR
-  // ======================
+    // ======================
+    // NOTIFICACION
+    // ======================
 
-  if(error){
+    let notificaciones =
+
+    JSON.parse(
+
+      localStorage.getItem(
+        'notificaciones'
+      )
+
+    ) || [];
+
+
+
+
+
+    notificaciones.unshift({
+
+      mensaje:
+
+      'Nuevo usuario creado: ' +
+      nombre,
+
+
+
+      fecha:
+
+      new Date()
+      .toLocaleString()
+
+    });
+
+
+
+
+
+    localStorage.setItem(
+
+      'notificaciones',
+
+      JSON.stringify(
+        notificaciones
+      )
+
+    );
+
+
+
+
+
+    // ======================
+    // ACTUALIZAR
+    // ======================
+
+    renderUsuarios();
+
+    limpiarFormulario();
+
+
+
+
+
+    alert(
+      'Usuario guardado'
+    );
+
+  }
+
+  catch(error){
 
     console.log(error);
 
-    alert(
-      'Error guardando auditoría'
-    );
-
-    return;
-
   }
-
-
-
-
-
-  // ======================
-  // NOTIFICACIONES
-  // ======================
-
-  let notificaciones =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'notificaciones'
-    )
-
-  ) || [];
-
-
-
-
-
-  notificaciones.unshift({
-
-    mensaje:
-
-    'Nueva auditoría creada: ' +
-    proceso,
-
-
-
-    fecha:
-
-    new Date()
-    .toLocaleString()
-
-  });
-
-
-
-
-
-  localStorage.setItem(
-
-    'notificaciones',
-
-    JSON.stringify(
-      notificaciones
-    )
-
-  );
-
-
-
-
-
-  // ======================
-  // HISTORIAL
-  // ======================
-
-  if(typeof guardarHistorial === 'function'){
-
-    await guardarHistorial(
-
-      'CREAR',
-
-      'AUDITORIAS',
-
-      'Se creó auditoría ' +
-      proceso
-
-    );
-
-  }
-
-
-
-
-
-  // ======================
-  // ACTUALIZAR
-  // ======================
-
-  await renderAuditorias();
-
-  limpiarFormulario();
-
-
-
-
-
-  alert(
-    'Auditoría guardada'
-  );
 
 }
 
@@ -252,87 +227,27 @@ async function guardarAuditoria(){
 
 
 // ======================
-// RENDER AUDITORIAS
+// RENDER USUARIOS
 // ======================
 
-async function renderAuditorias(){
+async function renderUsuarios(){
 
-  const body =
-  document.getElementById(
-    'auditoriasBody'
-  );
+  try{
 
-
-
-  if(!body){
-
-    return;
-
-  }
+    const body =
+    document.getElementById(
+      'usuariosBody'
+    );
 
 
 
+    if(!body){
 
-
-  body.innerHTML =
-
-  '<tr>' +
-
-    '<td colspan="6">' +
-
-    'Cargando auditorías...' +
-
-    '</td>' +
-
-  '</tr>';
-
-
-
-
-
-  const response =
-
-  await window.supabaseClient
-
-  .from('auditorias')
-
-  .select('*')
-
-  .order(
-
-    'id',
-
-    {
-
-      ascending: false
+      return;
 
     }
 
-  );
 
-
-
-
-
-  const data =
-  response.data;
-
-
-
-  const error =
-  response.error;
-
-
-
-
-
-  // ======================
-  // ERROR
-  // ======================
-
-  if(error){
-
-    console.log(error);
 
 
 
@@ -340,9 +255,9 @@ async function renderAuditorias(){
 
     '<tr>' +
 
-      '<td colspan="6">' +
+      '<td colspan="5">' +
 
-      'Error cargando auditorías' +
+      'Cargando usuarios...' +
 
       '</td>' +
 
@@ -350,226 +265,203 @@ async function renderAuditorias(){
 
 
 
-    return;
+
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('usuarios')
+
+    .select('*')
+
+    .order(
+
+      'id',
+
+      {
+
+        ascending:false
+
+      }
+
+    );
+
+
+
+
+
+    const data =
+    response.data;
+
+
+
+    const error =
+    response.error;
+
+
+
+
+
+    if(error){
+
+      console.log(error);
+
+
+
+      body.innerHTML =
+
+      '<tr>' +
+
+        '<td colspan="5">' +
+
+        'Error cargando usuarios' +
+
+        '</td>' +
+
+      '</tr>';
+
+
+
+      return;
+
+    }
+
+
+
+
+
+    body.innerHTML = '';
+
+
+
+
+
+    if(!data || data.length === 0){
+
+      body.innerHTML =
+
+      '<tr>' +
+
+        '<td colspan="5">' +
+
+        'No hay usuarios registrados' +
+
+        '</td>' +
+
+      '</tr>';
+
+
+
+      return;
+
+    }
+
+
+
+
+
+    data.forEach(function(item){
+
+      body.innerHTML +=
+
+      '<tr>' +
+
+
+
+
+
+        '<td>' +
+
+          item.nombre +
+
+        '</td>' +
+
+
+
+
+
+        '<td>' +
+
+          item.correo +
+
+        '</td>' +
+
+
+
+
+
+        '<td>' +
+
+          item.rol +
+
+        '</td>' +
+
+
+
+
+
+        '<td>' +
+
+          '<span class="estado-cerrado">' +
+
+            (item.estado || 'Activo') +
+
+          '</span>' +
+
+        '</td>' +
+
+
+
+
+
+        '<td>' +
+
+          '<div class="acciones-tabla">' +
+
+
+
+
+
+            '<button ' +
+
+              'class="btn-eliminar" ' +
+
+              'onclick="eliminarUsuario(' +
+
+              item.id +
+
+              ')"' +
+
+            '>' +
+
+              'Eliminar' +
+
+            '</button>' +
+
+
+
+
+
+          '</div>' +
+
+        '</td>' +
+
+
+
+
+
+      '</tr>';
+
+    });
 
   }
 
+  catch(error){
 
-
-
-
-  // ======================
-  // LIMPIAR
-  // ======================
-
-  body.innerHTML = '';
-
-
-
-
-
-  // ======================
-  // SIN DATOS
-  // ======================
-
-  if(!data || data.length === 0){
-
-    body.innerHTML =
-
-    '<tr>' +
-
-      '<td colspan="6">' +
-
-      'No hay auditorías registradas' +
-
-      '</td>' +
-
-    '</tr>';
-
-
-
-    return;
+    console.log(error);
 
   }
-
-
-
-
-
-  // ======================
-  // RECORRER
-  // ======================
-
-  data.forEach(function(item){
-
-    let estadoClass = '';
-
-
-
-
-
-    // ======================
-    // ESTADOS
-    // ======================
-
-    if(item.estado === 'Pendiente'){
-
-      estadoClass =
-      'estado-pendiente';
-
-    }
-
-    else if(item.estado === 'En revisión'){
-
-      estadoClass =
-      'estado-revision';
-
-    }
-
-    else{
-
-      estadoClass =
-      'estado-cerrado';
-
-    }
-
-
-
-
-
-    // ======================
-    // TABLA
-    // ======================
-
-    body.innerHTML +=
-
-    '<tr>' +
-
-
-
-
-
-      '<td>' +
-
-        item.proceso +
-
-      '</td>' +
-
-
-
-
-
-      '<td class="hallazgo-box">' +
-
-        item.hallazgo +
-
-      '</td>' +
-
-
-
-
-
-      '<td>' +
-
-        item.responsable +
-
-      '</td>' +
-
-
-
-
-
-      '<td>' +
-
-        '<span class="' + estadoClass + '">' +
-
-          item.estado +
-
-        '</span>' +
-
-      '</td>' +
-
-
-
-
-
-      '<td>' +
-
-        new Date(
-
-          item.created_at
-
-        ).toLocaleString(
-
-          'es-CO'
-
-        ) +
-
-      '</td>' +
-
-
-
-
-
-      '<td>' +
-
-        '<div class="acciones-tabla">' +
-
-
-
-
-
-          '<button ' +
-
-            'class="btn-editar" ' +
-
-            'onclick="editarEstado(' +
-
-            item.id +
-
-            ')"' +
-
-          '>' +
-
-            'Editar' +
-
-          '</button>' +
-
-
-
-
-
-          '<button ' +
-
-            'class="btn-eliminar" ' +
-
-            'onclick="eliminarAuditoria(' +
-
-            item.id +
-
-            ')"' +
-
-          '>' +
-
-            'Eliminar' +
-
-          '</button>' +
-
-
-
-
-
-        '</div>' +
-
-      '</td>' +
-
-
-
-
-
-    '</tr>';
-
-  });
 
 }
 
@@ -578,137 +470,86 @@ async function renderAuditorias(){
 
 
 // ======================
-// EDITAR ESTADO
+// ELIMINAR USUARIO
 // ======================
 
-window.editarEstado = async function(id){
+window.eliminarUsuario = async function(id){
 
-  const response =
+  try{
 
-  await window.supabaseClient
-
-  .from('auditorias')
-
-  .select('*')
-
-  .eq(
-
-    'id',
-
-    id
-
-  )
-
-  .single();
+    const confirmar = confirm(
+      '¿Eliminar usuario?'
+    );
 
 
 
 
 
-  const data =
-  response.data;
+    if(!confirmar){
 
+      return;
 
-
-  const error =
-  response.error;
-
+    }
 
 
 
 
-  if(error){
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('usuarios')
+
+    .delete()
+
+    .eq(
+
+      'id',
+
+      id
+
+    );
+
+
+
+
+
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      alert(
+        'Error eliminando usuario'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    renderUsuarios();
+
+
+
+
+
+    alert(
+      'Usuario eliminado'
+    );
+
+  }
+
+  catch(error){
 
     console.log(error);
 
-    alert(
-      'Error buscando auditoría'
-    );
-
-    return;
-
   }
-
-
-
-
-
-  const nuevoEstado = prompt(
-
-`Nuevo estado:
-
-Pendiente
-En revisión
-Cerrado`,
-
-    data.estado
-
-  );
-
-
-
-
-
-  if(!nuevoEstado){
-
-    return;
-
-  }
-
-
-
-
-
-  const update =
-
-  await window.supabaseClient
-
-  .from('auditorias')
-
-  .update({
-
-    estado:
-    nuevoEstado
-
-  })
-
-  .eq(
-
-    'id',
-
-    id
-
-  );
-
-
-
-
-
-  if(update.error){
-
-    console.log(update.error);
-
-    alert(
-      'Error actualizando'
-    );
-
-    return;
-
-  }
-
-
-
-
-
-  await renderAuditorias();
-
-
-
-
-
-  alert(
-    'Estado actualizado'
-  );
 
 };
 
@@ -717,115 +558,89 @@ Cerrado`,
 
 
 // ======================
-// ELIMINAR AUDITORIA
+// BUSCAR USUARIO
 // ======================
 
-window.eliminarAuditoria = async function(id){
+const buscarUsuario =
+document.getElementById(
+  'buscarUsuario'
+);
 
-  const confirmar = confirm(
-    '¿Desea eliminar esta auditoría?'
+
+
+
+
+if(buscarUsuario){
+
+  buscarUsuario.addEventListener(
+
+    'keyup',
+
+    function(){
+
+      const filtro =
+      this.value.toLowerCase();
+
+
+
+      const filas =
+      document.querySelectorAll(
+        '#usuariosBody tr'
+      );
+
+
+
+
+
+      filas.forEach(fila => {
+
+        fila.style.display =
+
+        fila.innerText
+        .toLowerCase()
+        .includes(filtro)
+
+        ?
+
+        ''
+
+        :
+
+        'none';
+
+      });
+
+    }
+
   );
 
-
-
-
-
-  if(!confirmar){
-
-    return;
-
-  }
-
-
-
-
-
-  const response =
-
-  await window.supabaseClient
-
-  .from('auditorias')
-
-  .delete()
-
-  .eq(
-
-    'id',
-
-    id
-
-  );
-
-
-
-
-
-  const error =
-  response.error;
-
-
-
-
-
-  if(error){
-
-    console.log(error);
-
-    alert(
-      'Error eliminando auditoría'
-    );
-
-    return;
-
-  }
-
-
-
-
-
-  await renderAuditorias();
-
-
-
-
-
-  alert(
-    'Auditoría eliminada'
-  );
-
-};
+}
 
 
 
 
 
 // ======================
-// LIMPIAR FORMULARIO
+// LIMPIAR
 // ======================
 
 function limpiarFormulario(){
 
   document.getElementById(
-    'procesoInput'
+    'nombreUsuario'
   ).value = '';
 
 
 
   document.getElementById(
-    'hallazgoInput'
+    'correoUsuario'
   ).value = '';
 
 
 
   document.getElementById(
-    'responsableInput'
-  ).value = '';
-
-
-
-  document.getElementById(
-    'estadoInput'
-  ).value = 'Pendiente';
+    'rolUsuario'
+  ).value = 'Administrador';
 
 }
 
@@ -837,6 +652,6 @@ function limpiarFormulario(){
 // INICIO
 // ======================
 
-renderAuditorias();
+renderUsuarios();
 
 }
