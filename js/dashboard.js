@@ -1255,7 +1255,103 @@ if(historialMenu){
 
 }
 
+// ======================
+// EVENTOS CARDS DASHBOARD
+// ======================
 
+document.addEventListener(
+
+  'click',
+
+  function(e){
+
+    const card =
+
+    e.target.closest(
+      '.dashboard-card'
+    );
+
+
+
+    if(!card){
+
+      return;
+
+    }
+
+
+
+    // ======================
+    // INVENTARIO
+    // ======================
+
+    if(card.id === 'cardInventario'){
+
+      mostrarModulo(
+        'inventario'
+      );
+
+    }
+
+
+
+    // ======================
+    // RECEPCION
+    // ======================
+
+    else if(card.id === 'cardRecepcion'){
+
+      mostrarModulo(
+        'recepcion'
+      );
+
+    }
+
+
+
+    // ======================
+    // AUDITORIAS
+    // ======================
+
+    else if(card.id === 'cardAuditorias'){
+
+      mostrarModulo(
+        'auditorias'
+      );
+
+    }
+
+
+
+    // ======================
+    // USUARIOS
+    // ======================
+
+    else if(card.id === 'cardUsuarios'){
+
+      mostrarModulo(
+        'usuarios'
+      );
+
+    }
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    else if(card.id === 'cardHistorial'){
+
+      mostrarModulo(
+        'historial'
+      );
+
+    }
+
+  }
+
+);
 
 
 
