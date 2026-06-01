@@ -15,9 +15,14 @@ window.usuariosCargado = true;
 // ======================
 
 var guardarUsuarioBtn =
+
 document.getElementById(
   'guardarUsuario'
 );
+
+
+
+
 
 if(guardarUsuarioBtn){
 
@@ -42,6 +47,38 @@ if(guardarUsuarioBtn){
 async function guardarUsuario(){
 
   try{
+
+
+
+
+
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !window.permisosUsuario.usuarios ||
+
+      !window.permisosUsuario.usuarios.crear
+
+    ){
+
+      alert(
+        'No tiene permisos para crear usuarios'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // INPUTS
+    // ======================
 
     const usuario =
 
@@ -461,9 +498,12 @@ async function renderUsuarios(){
   try{
 
     const body =
+
     document.getElementById(
       'usuariosBody'
     );
+
+
 
 
 
@@ -572,6 +612,8 @@ async function renderUsuarios(){
 
 
 
+        // USUARIO
+
         '<td>' +
 
           (item.usuario || '-') +
@@ -582,6 +624,8 @@ async function renderUsuarios(){
 
 
 
+        // ROL
+
         '<td>' +
 
           (item.rol || '-') +
@@ -591,6 +635,8 @@ async function renderUsuarios(){
 
 
 
+
+        // ESTADO
 
         '<td>' +
 
@@ -610,6 +656,8 @@ async function renderUsuarios(){
 
 
 
+        // ACCIONES
+
         '<td>' +
 
           '<div class="acciones-tabla">' +
@@ -617,6 +665,16 @@ async function renderUsuarios(){
 
 
 
+
+            (
+
+              window.permisosUsuario.usuarios &&
+
+              window.permisosUsuario.usuarios.editar
+
+            )
+
+            ?
 
             '<button ' +
 
@@ -632,11 +690,31 @@ async function renderUsuarios(){
 
               'Editar' +
 
-            '</button>' +
+            '</button>'
+
+            :
+
+            ''
 
 
 
 
+
+            +
+
+
+
+
+
+            (
+
+              window.permisosUsuario.usuarios &&
+
+              window.permisosUsuario.usuarios.eliminar
+
+            )
+
+            ?
 
             '<button ' +
 
@@ -652,13 +730,17 @@ async function renderUsuarios(){
 
               'Eliminar' +
 
-            '</button>' +
+            '</button>'
+
+            :
+
+            ''
 
 
 
 
 
-          '</div>' +
+          + '</div>' +
 
         '</td>' +
 
@@ -691,6 +773,34 @@ async function renderUsuarios(){
 window.editarUsuario = async function(id){
 
   try{
+
+
+
+
+
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !window.permisosUsuario.usuarios ||
+
+      !window.permisosUsuario.usuarios.editar
+
+    ){
+
+      alert(
+        'No tiene permisos para editar usuarios'
+      );
+
+      return;
+
+    }
+
+
+
+
 
     const response =
 
@@ -881,6 +991,34 @@ window.eliminarUsuario = async function(id){
 
   try{
 
+
+
+
+
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !window.permisosUsuario.usuarios ||
+
+      !window.permisosUsuario.usuarios.eliminar
+
+    ){
+
+      alert(
+        'No tiene permisos para eliminar usuarios'
+      );
+
+      return;
+
+    }
+
+
+
+
+
     const confirmar = confirm(
       '¿Eliminar usuario?'
     );
@@ -1017,6 +1155,7 @@ window.eliminarUsuario = async function(id){
 // ======================
 
 const buscarUsuario =
+
 document.getElementById(
   'buscarUsuario'
 );
@@ -1038,7 +1177,10 @@ if(buscarUsuario){
 
 
 
+
+
       const filas =
+
       document.querySelectorAll(
         '#usuariosBody tr'
       );
@@ -1087,9 +1229,13 @@ function limpiarFormulario(){
 
 
 
+
+
   document.getElementById(
     'passwordInput'
   ).value = '';
+
+
 
 
 
