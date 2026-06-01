@@ -1,8 +1,4 @@
-INVENTARIO.JS
 
-REEMPLAZA TODO EL ARCHIVO COMPLETO.
-
-```javascript
 // ======================
 // EVITAR DUPLICAR SCRIPT
 // ======================
