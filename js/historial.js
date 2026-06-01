@@ -1,3 +1,4 @@
+
 // ======================
 // EVITAR DUPLICAR
 // ======================
@@ -11,71 +12,10 @@ window.historialCargado = true;
 
 
 // ======================
-// VALIDAR PERMISOS
-// ======================
-
-function tienePermiso(
-
-  modulo,
-  accion
-
-){
-
-  // ======================
-  // ADMIN
-  // ======================
-
-  if(
-
-    window.usuarioLogueado &&
-
-    window.usuarioLogueado.rol === 'admin'
-
-  ){
-
-    return true;
-
-  }
-
-
-
-
-
-  // ======================
-  // VALIDAR
-  // ======================
-
-  if(
-
-    !window.permisosUsuario ||
-
-    !window.permisosUsuario[modulo]
-
-  ){
-
-    return false;
-
-  }
-
-
-
-  return Boolean(
-
-    window.permisosUsuario[modulo][accion]
-
-  );
-
-}
-
-
-
-
-
-// ======================
 // RENDER HISTORIAL
 // ======================
 
-async function renderHistorialSistema(){
+window.renderHistorialSistema = async function(){
 
   try{
 
@@ -174,69 +114,27 @@ async function renderHistorialSistema(){
 
 
 
-      const kpiHistorial =
       document.getElementById(
         'kpiHistorial'
-      );
+      ).innerText = '0';
 
 
 
-      const kpiInventario =
       document.getElementById(
         'kpiInventario'
-      );
+      ).innerText = '0';
 
 
 
-      const kpiAuditorias =
       document.getElementById(
         'kpiAuditorias'
-      );
+      ).innerText = '0';
 
 
 
-      const kpiRecepcion =
       document.getElementById(
         'kpiRecepcion'
-      );
-
-
-
-
-
-      if(kpiHistorial){
-
-        kpiHistorial.innerText =
-        '0';
-
-      }
-
-
-
-      if(kpiInventario){
-
-        kpiInventario.innerText =
-        '0';
-
-      }
-
-
-
-      if(kpiAuditorias){
-
-        kpiAuditorias.innerText =
-        '0';
-
-      }
-
-
-
-      if(kpiRecepcion){
-
-        kpiRecepcion.innerText =
-        '0';
-
-      }
+      ).innerText = '0';
 
 
 
@@ -252,18 +150,11 @@ async function renderHistorialSistema(){
     // KPIS
     // ======================
 
-    const kpiHistorial =
     document.getElementById(
       'kpiHistorial'
-    );
+    ).innerText =
 
-
-
-    if(kpiHistorial){
-
-      kpiHistorial.innerText =
-      data.length;
-    }
+    data.length;
 
 
 
@@ -284,10 +175,6 @@ async function renderHistorialSistema(){
     // ======================
 
     data.forEach(item => {
-
-      // ======================
-      // KPIS
-      // ======================
 
       if(item.modulo === 'INVENTARIO'){
 
@@ -310,10 +197,6 @@ async function renderHistorialSistema(){
 
 
 
-
-      // ======================
-      // FECHA
-      // ======================
 
       let fechaTexto = '-';
 
@@ -339,10 +222,6 @@ async function renderHistorialSistema(){
 
 
 
-      // ======================
-      // BOTON ELIMINAR
-      // ======================
-
       let botonEliminar = '';
 
 
@@ -351,7 +230,7 @@ async function renderHistorialSistema(){
 
       if(
 
-        tienePermiso(
+        window.tienePermiso(
           'historial',
           'eliminar'
         )
@@ -376,10 +255,6 @@ async function renderHistorialSistema(){
 
 
 
-
-      // ======================
-      // TABLA
-      // ======================
 
       body.innerHTML += `
 
@@ -455,50 +330,31 @@ async function renderHistorialSistema(){
     // ACTUALIZAR KPIS
     // ======================
 
-    const kpiInventario =
     document.getElementById(
       'kpiInventario'
-    );
+    ).innerText =
+
+    inventario;
 
 
 
-    const kpiAuditorias =
+
+
     document.getElementById(
       'kpiAuditorias'
-    );
+    ).innerText =
+
+    auditorias;
 
 
 
-    const kpiRecepcion =
+
+
     document.getElementById(
       'kpiRecepcion'
-    );
+    ).innerText =
 
-
-
-
-
-    if(kpiInventario){
-
-      kpiInventario.innerText =
-      inventario;
-    }
-
-
-
-    if(kpiAuditorias){
-
-      kpiAuditorias.innerText =
-      auditorias;
-    }
-
-
-
-    if(kpiRecepcion){
-
-      kpiRecepcion.innerText =
-      recepcion;
-    }
+    recepcion;
 
   }
 
@@ -508,7 +364,7 @@ async function renderHistorialSistema(){
 
   }
 
-}
+};
 
 
 
@@ -524,7 +380,7 @@ window.eliminarHistorial = async function(id){
 
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'historial',
         'eliminar'
       )
@@ -532,7 +388,7 @@ window.eliminarHistorial = async function(id){
     ){
 
       alert(
-        'No tiene permisos para eliminar historial'
+        'No tiene permisos'
       );
 
       return;
@@ -633,7 +489,7 @@ window.eliminarTodoHistorial = async function(){
 
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'historial',
         'eliminar'
       )
@@ -641,7 +497,7 @@ window.eliminarTodoHistorial = async function(){
     ){
 
       alert(
-        'No tiene permisos para eliminar historial'
+        'No tiene permisos'
       );
 
       return;
@@ -769,65 +625,27 @@ window.eliminarTodoHistorial = async function(){
 
 
 
-    const kpiHistorial =
     document.getElementById(
       'kpiHistorial'
-    );
+    ).innerText = '0';
 
 
 
-    const kpiInventario =
     document.getElementById(
       'kpiInventario'
-    );
+    ).innerText = '0';
 
 
 
-    const kpiAuditorias =
     document.getElementById(
       'kpiAuditorias'
-    );
+    ).innerText = '0';
 
 
 
-    const kpiRecepcion =
     document.getElementById(
       'kpiRecepcion'
-    );
-
-
-
-
-
-    if(kpiHistorial){
-
-      kpiHistorial.innerText =
-      '0';
-    }
-
-
-
-    if(kpiInventario){
-
-      kpiInventario.innerText =
-      '0';
-    }
-
-
-
-    if(kpiAuditorias){
-
-      kpiAuditorias.innerText =
-      '0';
-    }
-
-
-
-    if(kpiRecepcion){
-
-      kpiRecepcion.innerText =
-      '0';
-    }
+    ).innerText = '0';
 
 
 
@@ -940,7 +758,7 @@ function aplicarPermisosHistorial(){
 
     btnEliminarTodo &&
 
-    !tienePermiso(
+    !window.tienePermiso(
       'historial',
       'eliminar'
     )
@@ -967,3 +785,4 @@ aplicarPermisosHistorial();
 renderHistorialSistema();
 
 }
+```
