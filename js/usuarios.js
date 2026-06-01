@@ -1,9 +1,20 @@
+// ======================
+// EVITAR DUPLICAR SCRIPT
+// ======================
+
+if(typeof window.auditoriasCargado === 'undefined'){
+
+window.auditoriasCargado = true;
+
+
+
+
 
 // ======================
 // EVENTO
 // ======================
 
-const guardarAuditoriaBtn =
+var guardarAuditoriaBtn =
 document.getElementById(
   'guardarAuditoria'
 );
@@ -58,6 +69,12 @@ async function guardarAuditoria(){
 
 
 
+
+
+  // ======================
+  // VALIDAR
+  // ======================
+
   if(
 
     !proceso ||
@@ -77,6 +94,12 @@ async function guardarAuditoria(){
   }
 
 
+
+
+
+  // ======================
+  // INSERTAR
+  // ======================
 
   const response =
 
@@ -102,10 +125,18 @@ async function guardarAuditoria(){
 
 
 
+
+
   const error =
   response.error;
 
 
+
+
+
+  // ======================
+  // ERROR
+  // ======================
 
   if(error){
 
@@ -118,6 +149,8 @@ async function guardarAuditoria(){
     return;
 
   }
+
+
 
 
 
@@ -134,6 +167,8 @@ async function guardarAuditoria(){
     )
 
   ) || [];
+
+
 
 
 
@@ -155,6 +190,8 @@ async function guardarAuditoria(){
 
 
 
+
+
   localStorage.setItem(
 
     'notificaciones',
@@ -164,6 +201,8 @@ async function guardarAuditoria(){
     )
 
   );
+
+
 
 
 
@@ -188,9 +227,17 @@ async function guardarAuditoria(){
 
 
 
+
+
+  // ======================
+  // ACTUALIZAR
+  // ======================
+
   await renderAuditorias();
 
   limpiarFormulario();
+
+
 
 
 
@@ -225,7 +272,21 @@ async function renderAuditorias(){
 
 
 
-  body.innerHTML = '';
+
+
+  body.innerHTML =
+
+  '<tr>' +
+
+    '<td colspan="6">' +
+
+    'Cargando auditorías...' +
+
+    '</td>' +
+
+  '</tr>';
+
+
 
 
 
@@ -237,11 +298,19 @@ async function renderAuditorias(){
 
   .select('*')
 
-  .order('id', {
+  .order(
 
-    ascending: false
+    'id',
 
-  });
+    {
+
+      ascending: false
+
+    }
+
+  );
+
+
 
 
 
@@ -255,15 +324,53 @@ async function renderAuditorias(){
 
 
 
+
+
+  // ======================
+  // ERROR
+  // ======================
+
   if(error){
 
     console.log(error);
+
+
+
+    body.innerHTML =
+
+    '<tr>' +
+
+      '<td colspan="6">' +
+
+      'Error cargando auditorías' +
+
+      '</td>' +
+
+    '</tr>';
+
+
 
     return;
 
   }
 
 
+
+
+
+  // ======================
+  // LIMPIAR
+  // ======================
+
+  body.innerHTML = '';
+
+
+
+
+
+  // ======================
+  // SIN DATOS
+  // ======================
 
   if(!data || data.length === 0){
 
@@ -287,11 +394,23 @@ async function renderAuditorias(){
 
 
 
+
+
+  // ======================
+  // RECORRER
+  // ======================
+
   data.forEach(function(item){
 
     let estadoClass = '';
 
 
+
+
+
+    // ======================
+    // ESTADOS
+    // ======================
 
     if(item.estado === 'Pendiente'){
 
@@ -316,15 +435,49 @@ async function renderAuditorias(){
 
 
 
+
+
+    // ======================
+    // TABLA
+    // ======================
+
     body.innerHTML +=
 
     '<tr>' +
 
-      '<td>' + item.proceso + '</td>' +
 
-      '<td>' + item.hallazgo + '</td>' +
 
-      '<td>' + item.responsable + '</td>' +
+
+
+      '<td>' +
+
+        item.proceso +
+
+      '</td>' +
+
+
+
+
+
+      '<td class="hallazgo-box">' +
+
+        item.hallazgo +
+
+      '</td>' +
+
+
+
+
+
+      '<td>' +
+
+        item.responsable +
+
+      '</td>' +
+
+
+
+
 
       '<td>' +
 
@@ -336,25 +489,83 @@ async function renderAuditorias(){
 
       '</td>' +
 
+
+
+
+
       '<td>' +
 
         new Date(
 
           item.created_at
 
-        ).toLocaleString() +
+        ).toLocaleString(
+
+          'es-CO'
+
+        ) +
 
       '</td>' +
 
-      '<td class="acciones-tabla">' +
 
-        '<button class="btn-eliminar" onclick="eliminarAuditoria(' + item.id + ')">' +
 
-          'Eliminar' +
 
-        '</button>' +
+
+      '<td>' +
+
+        '<div class="acciones-tabla">' +
+
+
+
+
+
+          '<button ' +
+
+            'class="btn-editar" ' +
+
+            'onclick="editarEstado(' +
+
+            item.id +
+
+            ')"' +
+
+          '>' +
+
+            'Editar' +
+
+          '</button>' +
+
+
+
+
+
+          '<button ' +
+
+            'class="btn-eliminar" ' +
+
+            'onclick="eliminarAuditoria(' +
+
+            item.id +
+
+            ')"' +
+
+          '>' +
+
+            'Eliminar' +
+
+          '</button>' +
+
+
+
+
+
+        '</div>' +
 
       '</td>' +
+
+
+
+
 
     '</tr>';
 
@@ -367,14 +578,155 @@ async function renderAuditorias(){
 
 
 // ======================
+// EDITAR ESTADO
+// ======================
+
+window.editarEstado = async function(id){
+
+  const response =
+
+  await window.supabaseClient
+
+  .from('auditorias')
+
+  .select('*')
+
+  .eq(
+
+    'id',
+
+    id
+
+  )
+
+  .single();
+
+
+
+
+
+  const data =
+  response.data;
+
+
+
+  const error =
+  response.error;
+
+
+
+
+
+  if(error){
+
+    console.log(error);
+
+    alert(
+      'Error buscando auditoría'
+    );
+
+    return;
+
+  }
+
+
+
+
+
+  const nuevoEstado = prompt(
+
+`Nuevo estado:
+
+Pendiente
+En revisión
+Cerrado`,
+
+    data.estado
+
+  );
+
+
+
+
+
+  if(!nuevoEstado){
+
+    return;
+
+  }
+
+
+
+
+
+  const update =
+
+  await window.supabaseClient
+
+  .from('auditorias')
+
+  .update({
+
+    estado:
+    nuevoEstado
+
+  })
+
+  .eq(
+
+    'id',
+
+    id
+
+  );
+
+
+
+
+
+  if(update.error){
+
+    console.log(update.error);
+
+    alert(
+      'Error actualizando'
+    );
+
+    return;
+
+  }
+
+
+
+
+
+  await renderAuditorias();
+
+
+
+
+
+  alert(
+    'Estado actualizado'
+  );
+
+};
+
+
+
+
+
+// ======================
 // ELIMINAR AUDITORIA
 // ======================
 
-async function eliminarAuditoria(id){
+window.eliminarAuditoria = async function(id){
 
   const confirmar = confirm(
     '¿Desea eliminar esta auditoría?'
   );
+
+
 
 
 
@@ -386,6 +738,8 @@ async function eliminarAuditoria(id){
 
 
 
+
+
   const response =
 
   await window.supabaseClient
@@ -394,12 +748,22 @@ async function eliminarAuditoria(id){
 
   .delete()
 
-  .eq('id', id);
+  .eq(
+
+    'id',
+
+    id
+
+  );
+
+
 
 
 
   const error =
   response.error;
+
+
 
 
 
@@ -417,9 +781,19 @@ async function eliminarAuditoria(id){
 
 
 
+
+
   await renderAuditorias();
 
-}
+
+
+
+
+  alert(
+    'Auditoría eliminada'
+  );
+
+};
 
 
 
@@ -465,3 +839,4 @@ function limpiarFormulario(){
 
 renderAuditorias();
 
+}
