@@ -747,18 +747,32 @@ function mostrarModulo(modulo){
   // DASHBOARD
   // ======================
 
-  if(modulo === 'dashboard'){
+if(modulo === 'dashboard'){
 
-    contenido.innerHTML =
-    dashboardOriginal;
+  contenido.innerHTML =
+  dashboardOriginal;
 
 
 
-    aplicarPermisos();
+  aplicarPermisos();
 
-    return;
 
-  }
+
+  // ======================
+  // RECARGAR NOTIFICACIONES
+  // ======================
+
+  setTimeout(function(){
+
+    renderNotificaciones();
+
+  },100);
+
+
+
+  return;
+
+}
 
 
 
@@ -988,7 +1002,105 @@ function cargarScript(
 
 }
 
+// ======================
+// RENDER NOTIFICACIONES
+// ======================
 
+function renderNotificaciones(){
+
+  const lista =
+
+  document.getElementById(
+    'listaNotificaciones'
+  );
+
+
+
+  if(!lista){
+
+    return;
+
+  }
+
+
+
+  let notificaciones =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'notificaciones'
+    )
+
+  ) || [];
+
+
+
+  lista.innerHTML = '';
+
+
+
+  // ======================
+  // SIN NOTIFICACIONES
+  // ======================
+
+  if(notificaciones.length === 0){
+
+    lista.innerHTML =
+
+    '<p class="sin-notificaciones">' +
+
+      'No hay notificaciones' +
+
+    '</p>';
+
+
+
+    return;
+
+  }
+
+
+
+  // ======================
+  // RECORRER
+  // ======================
+
+  notificaciones.forEach(function(item){
+
+    lista.innerHTML +=
+
+    '<div class="notificacion-item">' +
+
+      '<p>' + item.mensaje + '</p>' +
+
+      '<span>' + item.fecha + '</span>' +
+
+    '</div>';
+
+  });
+
+}
+
+
+
+
+
+// ======================
+// ACTUALIZAR NOTIFICACIONES
+// ======================
+
+window.addEventListener(
+
+  'nuevaNotificacion',
+
+  function(){
+
+    renderNotificaciones();
+
+  }
+
+);
 
 
 
@@ -1360,3 +1472,5 @@ document.addEventListener(
 // ======================
 
 aplicarPermisos();
+
+renderNotificaciones();
