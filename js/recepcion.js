@@ -11,16 +11,66 @@ window.recepcionCargado = true;
 
 
 // ======================
+// VALIDAR PERMISOS
+// ======================
+
+function tienePermiso(
+
+  modulo,
+  accion
+
+){
+
+  if(
+
+    !window.permisosUsuario ||
+
+    !window.permisosUsuario[modulo]
+
+  ){
+
+    return false;
+
+  }
+
+
+
+  return Boolean(
+
+    window.permisosUsuario[modulo][accion]
+
+  );
+
+}
+
+
+
+
+
+// ======================
 // BOTON
 // ======================
 
+const guardarRecepcionBtn =
 document.getElementById(
   'guardarRecepcion'
-)
-.addEventListener(
-  'click',
-  guardarRecepcion
 );
+
+
+
+
+
+if(guardarRecepcionBtn){
+
+  guardarRecepcionBtn.addEventListener(
+
+    'click',
+
+    guardarRecepcion
+
+  );
+
+}
 
 
 
@@ -33,6 +83,31 @@ document.getElementById(
 async function guardarRecepcion(){
 
   try{
+
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !tienePermiso(
+        'recepcion',
+        'crear'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para crear recepciones'
+      );
+
+      return;
+
+    }
+
+
+
+
 
     const proveedor =
     document.getElementById(
@@ -298,7 +373,7 @@ async function guardarRecepcion(){
         pdfUrl,
 
         usuario_recepcion:
-        usuarioLogueado.nombre ||
+        usuarioLogueado.usuario ||
 
         'Usuario',
 
@@ -325,6 +400,29 @@ async function guardarRecepcion(){
       );
 
       return;
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'CREAR',
+
+        'RECEPCION',
+
+        'Se registró recepción de ' +
+        material
+
+      );
 
     }
 
@@ -711,27 +809,73 @@ async function renderRecepciones(){
 
             <div class="acciones-tabla">
 
-              <button
-                class="btn-editar"
-                onclick="validarRecepcion(${item.id})"
-              >
-
-                Validar
-
-              </button>
 
 
 
 
+              ${
 
-              <button
-                class="btn-eliminar"
-                onclick="eliminarRecepcion(${item.id})"
-              >
+                tienePermiso(
+                  'recepcion',
+                  'editar'
+                )
 
-                Eliminar
+                ?
 
-              </button>
+                `
+
+                <button
+                  class="btn-editar"
+                  onclick="validarRecepcion(${item.id})"
+                >
+
+                  Validar
+
+                </button>
+
+                `
+
+                :
+
+                ''
+
+              }
+
+
+
+
+
+              ${
+
+                tienePermiso(
+                  'recepcion',
+                  'eliminar'
+                )
+
+                ?
+
+                `
+
+                <button
+                  class="btn-eliminar"
+                  onclick="eliminarRecepcion(${item.id})"
+                >
+
+                  Eliminar
+
+                </button>
+
+                `
+
+                :
+
+                ''
+
+              }
+
+
+
+
 
             </div>
 
@@ -845,6 +989,31 @@ window.validarRecepcion = async function(id){
 
   try{
 
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !tienePermiso(
+        'recepcion',
+        'editar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para validar recepciones'
+      );
+
+      return;
+
+    }
+
+
+
+
+
     const comentario = prompt(
 
       'Ingrese comentario de validación'
@@ -876,6 +1045,8 @@ Gestionado`
 
 
 
+
+
     if(!nuevoEstado){
 
       return;
@@ -902,7 +1073,7 @@ Gestionado`
 
       usuario_validacion:
 
-      usuarioLogueado.nombre ||
+      usuarioLogueado.usuario ||
 
       'Validador'
 
@@ -931,6 +1102,29 @@ Gestionado`
       );
 
       return;
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'EDITAR',
+
+        'RECEPCION',
+
+        'Se validó recepción ID ' +
+        id
+
+      );
 
     }
 
@@ -986,6 +1180,31 @@ window.eliminarRecepcion = async function(id){
 
   try{
 
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !tienePermiso(
+        'recepcion',
+        'eliminar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para eliminar recepciones'
+      );
+
+      return;
+
+    }
+
+
+
+
+
     const confirmar = confirm(
       '¿Eliminar recepción?'
     );
@@ -997,6 +1216,35 @@ window.eliminarRecepcion = async function(id){
       return;
 
     }
+
+
+
+
+
+    const consulta =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .select('*')
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    )
+
+    .single();
+
+
+
+
+
+    const recepcion =
+    consulta.data;
 
 
 
@@ -1033,6 +1281,29 @@ window.eliminarRecepcion = async function(id){
       );
 
       return;
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'ELIMINAR',
+
+        'RECEPCION',
+
+        'Se eliminó recepción de ' +
+        recepcion.material
+
+      );
 
     }
 
@@ -1105,10 +1376,6 @@ async function actualizarKPIsRecepcion(){
 
 
 
-    // ======================
-    // TOTAL HISTORIAL
-    // ======================
-
     document.getElementById(
       'kpiRecepciones'
     ).innerText =
@@ -1118,10 +1385,6 @@ async function actualizarKPIsRecepcion(){
 
 
 
-
-    // ======================
-    // SI NO HAY RECEPCIONES
-    // ======================
 
     if(recepciones.length === 0){
 
@@ -1150,10 +1413,6 @@ async function actualizarKPIsRecepcion(){
 
 
 
-
-    // ======================
-    // SOLO ULTIMA RECEPCION
-    // ======================
 
     const ultimaRecepcion =
     recepciones[0];
@@ -1345,10 +1604,45 @@ function limpiarFormulario(){
 
 
 
+// ======================
+// APLICAR PERMISOS UI
+// ======================
+
+function aplicarPermisosRecepcion(){
+
+  // ======================
+  // BOTON CREAR
+  // ======================
+
+  if(
+
+    !tienePermiso(
+      'recepcion',
+      'crear'
+    )
+
+  ){
+
+    if(guardarRecepcionBtn){
+
+      guardarRecepcionBtn.style.display =
+      'none';
+
+    }
+
+  }
+
+}
+
+
+
+
 
 // ======================
 // INICIO
 // ======================
+
+aplicarPermisosRecepcion();
 
 renderRecepciones();
 
