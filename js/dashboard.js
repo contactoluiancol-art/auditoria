@@ -85,6 +85,20 @@ if(!window.usuarioLogueado){
 
 
 // ======================
+// DASHBOARD ORIGINAL
+// ======================
+
+const dashboardOriginal =
+
+document.getElementById(
+  'mainContent'
+).innerHTML;
+
+
+
+
+
+// ======================
 // PERMISOS GLOBALES
 // ======================
 
@@ -142,6 +156,7 @@ window.tienePermiso = function(
   if(
 
     window.usuarioLogueado &&
+
     window.usuarioLogueado.rol === 'admin'
 
   ){
@@ -729,6 +744,27 @@ function mostrarModulo(modulo){
 
 
   // ======================
+  // DASHBOARD
+  // ======================
+
+  if(modulo === 'dashboard'){
+
+    contenido.innerHTML =
+    dashboardOriginal;
+
+
+
+    aplicarPermisos();
+
+    return;
+
+  }
+
+
+
+
+
+  // ======================
   // INVENTARIO
   // ======================
 
@@ -1008,13 +1044,54 @@ if(cerrarSesionBtn){
 
 
 // ======================
-// EVENTOS MENUS
+// MENU DASHBOARD
+// ======================
+
+const dashboardMenu =
+
+document.getElementById(
+  'dashboardMenu'
+);
+
+
+
+
+
+if(dashboardMenu){
+
+  dashboardMenu.addEventListener(
+
+    'click',
+
+    function(){
+
+      mostrarModulo(
+        'dashboard'
+      );
+
+    }
+
+  );
+
+}
+
+
+
+
+
+// ======================
+// MENU INVENTARIO
 // ======================
 
 const inventarioMenu =
+
 document.getElementById(
   'inventarioMenu'
 );
+
+
+
+
 
 if(inventarioMenu){
 
@@ -1038,10 +1115,19 @@ if(inventarioMenu){
 
 
 
+// ======================
+// MENU RECEPCION
+// ======================
+
 const recepcionMenu =
+
 document.getElementById(
   'recepcionMenu'
 );
+
+
+
+
 
 if(recepcionMenu){
 
@@ -1065,10 +1151,19 @@ if(recepcionMenu){
 
 
 
+// ======================
+// MENU AUDITORIAS
+// ======================
+
 const auditoriasMenu =
+
 document.getElementById(
   'auditoriasMenu'
 );
+
+
+
+
 
 if(auditoriasMenu){
 
@@ -1092,10 +1187,19 @@ if(auditoriasMenu){
 
 
 
+// ======================
+// MENU USUARIOS
+// ======================
+
 const usuariosMenu =
+
 document.getElementById(
   'usuariosMenu'
 );
+
+
+
+
 
 if(usuariosMenu){
 
@@ -1119,10 +1223,19 @@ if(usuariosMenu){
 
 
 
+// ======================
+// MENU HISTORIAL
+// ======================
+
 const historialMenu =
+
 document.getElementById(
   'historialMenu'
 );
+
+
+
+
 
 if(historialMenu){
 
