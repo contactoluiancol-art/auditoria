@@ -141,6 +141,30 @@ function tienePermiso(
 
 ){
 
+  // ======================
+  // ADMIN
+  // ======================
+
+  if(
+
+    window.usuarioLogueado &&
+
+    window.usuarioLogueado.rol === 'admin'
+
+  ){
+
+    return true;
+
+  }
+
+
+
+
+
+  // ======================
+  // VALIDAR
+  // ======================
+
   if(
 
     !window.permisosUsuario ||
@@ -172,10 +196,6 @@ function tienePermiso(
 // ======================
 
 function leerExcel(e){
-
-  // ======================
-  // VALIDAR
-  // ======================
 
   if(
 
@@ -436,10 +456,6 @@ window.renderInventario = function(datos){
 
 window.eliminarProducto = function(codigo){
 
-  // ======================
-  // VALIDAR
-  // ======================
-
   if(
 
     !tienePermiso(
@@ -607,10 +623,6 @@ function buscarProducto(){
 
 function registrarConteo(){
 
-  // ======================
-  // VALIDAR
-  // ======================
-
   if(
 
     !tienePermiso(
@@ -663,20 +675,12 @@ function registrarConteo(){
 
 
 
-  // ======================
-  // RESULTADO
-  // ======================
-
   actualizarTexto(
     'resultadoTexto',
     diferencia
   );
 
 
-
-  // ======================
-  // HISTORIAL
-  // ======================
 
   var historial =
 
@@ -723,10 +727,6 @@ function registrarConteo(){
   };
 
 
-
-  // ======================
-  // ACTUALIZAR O CREAR
-  // ======================
 
   if(index !== -1){
 
@@ -933,10 +933,6 @@ window.renderHistorial = function(filtro){
 
 window.eliminarRegistro = function(codigo){
 
-  // ======================
-  // VALIDAR
-  // ======================
-
   if(
 
     !tienePermiso(
@@ -1017,7 +1013,7 @@ window.filtrarHistorial = function(tipo){
 
 
 // ======================
-// KPIS REALES
+// KPIS
 // ======================
 
 window.actualizarKPIs = function(){
@@ -1039,23 +1035,13 @@ window.actualizarKPIs = function(){
 
 
 
-  var exactos =
-  0;
+  var exactos = 0;
 
+  var faltantes = 0;
 
+  var sobrantes = 0;
 
-  var faltantes =
-  0;
-
-
-
-  var sobrantes =
-  0;
-
-
-
-  var sumaExactitud =
-  0;
+  var sumaExactitud = 0;
 
 
 
@@ -1136,8 +1122,7 @@ window.actualizarKPIs = function(){
 
 
 
-  var exactitudGeneral =
-  0;
+  var exactitudGeneral = 0;
 
 
 
@@ -1261,10 +1246,6 @@ function filtrarInventario(){
 
 function exportarExcel(){
 
-  // ======================
-  // VALIDAR
-  // ======================
-
   if(
 
     !tienePermiso(
@@ -1353,10 +1334,6 @@ function exportarExcel(){
 // ======================
 
 function reiniciarInventario(){
-
-  // ======================
-  // VALIDAR
-  // ======================
 
   if(
 
