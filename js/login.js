@@ -1,11 +1,14 @@
-
 // ======================
-// VALIDAR LIBRERIA SUPABASE
+// VALIDAR LIBRERIA
 // ======================
 
 if(!window.supabase){
 
   alert(
+    'Error cargando Supabase'
+  );
+
+  throw new Error(
     'Supabase no cargó correctamente'
   );
 
@@ -16,15 +19,17 @@ if(!window.supabase){
 
 
 // ======================
-// CONEXION GLOBAL SUPABASE
+// CONEXION SUPABASE
 // ======================
 
 const supabaseUrl =
+
 'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
 
 
 const supabaseKey =
+
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
 
 
@@ -49,17 +54,13 @@ window.supabase.createClient(
 
 
 // ======================
-// USUARIO LOGUEADO
+// FORM LOGIN
 // ======================
 
-window.usuarioLogueado =
+const form =
 
-JSON.parse(
-
-  localStorage.getItem(
-    'usuarioLogueado'
-  )
-
+document.getElementById(
+  'loginForm'
 );
 
 
@@ -67,13 +68,14 @@ JSON.parse(
 
 
 // ======================
-// VALIDAR SESION
+// VALIDAR FORM
 // ======================
 
-if(!window.usuarioLogueado){
+if(!form){
 
-  window.location.href =
-  'index.html';
+  console.log(
+    'Formulario login no encontrado'
+  );
 
 }
 
@@ -82,129 +84,19 @@ if(!window.usuarioLogueado){
 
 
 // ======================
-// VARIABLES GLOBALES
+// EVENTO LOGIN
 // ======================
 
-const dashboardOriginal =
+if(form){
 
-document.getElementById(
-  'mainContent'
-).innerHTML;
+  form.addEventListener(
 
+    'submit',
 
-
-
-
-// ======================
-// PERMISOS GLOBALES
-// ======================
-
-window.permisosUsuario = {};
-
-
-
-
-
-// ======================
-// MOSTRAR USUARIO
-// ======================
-
-document.getElementById(
-  'usuarioNombre'
-).innerText =
-
-window.usuarioLogueado.usuario +
-
-' | ' +
-
-window.usuarioLogueado.rol;
-
-
-
-
-
-// ======================
-// FUNCION GLOBAL PERMISOS
-// ======================
-
-window.tienePermiso = function(
-
-  modulo,
-  accion
-
-){
-
-  // ======================
-  // ADMIN
-  // ======================
-
-  if(
-
-    window.usuarioLogueado &&
-
-    window.usuarioLogueado.rol === 'admin'
-
-  ){
-
-    return true;
-
-  }
-
-
-
-
-
-  // ======================
-  // VALIDAR
-  // ======================
-
-  if(
-
-    !window.permisosUsuario ||
-
-    !window.permisosUsuario[modulo]
-
-  ){
-
-    return false;
-
-  }
-
-
-
-
-
-  return Boolean(
-
-    window.permisosUsuario[modulo][accion]
+    login
 
   );
 
-};
-
-
-
-
-
-// ======================
-// OCULTAR MODULO
-// ======================
-
-function ocultarModulo(id){
-
-  const elemento =
-
-  document.getElementById(id);
-
-
-
-  if(elemento){
-
-    elemento.style.display =
-    'none';
-
-  }
-
 }
 
 
@@ -212,141 +104,66 @@ function ocultarModulo(id){
 
 
 // ======================
-// OCULTAR CARD
+// LOGIN
 // ======================
 
-function ocultarCard(id){
-
-  const card =
-
-  document.getElementById(id);
-
-
-
-  if(card){
-
-    card.style.display =
-    'none';
-
-  }
-
-}
-
-
-
-
-
-// ======================
-// MOSTRAR MODULO
-// ======================
-
-function mostrarElemento(id){
-
-  const elemento =
-
-  document.getElementById(id);
-
-
-
-  if(elemento){
-
-    elemento.style.display =
-    '';
-
-  }
-
-}
-
-
-
-
-
-// ======================
-// MOSTRAR CARD
-// ======================
-
-function mostrarCard(id){
-
-  const card =
-
-  document.getElementById(id);
-
-
-
-  if(card){
-
-    card.style.display =
-    '';
-
-  }
-
-}
-
-
-
-
-
-// ======================
-// APLICAR PERMISOS
-// ======================
-
-async function aplicarPermisos(){
+async function login(e){
 
   try{
 
     // ======================
-    // ADMIN
+    // EVITAR RECARGA
+    // ======================
+
+    e.preventDefault();
+
+
+
+
+
+    // ======================
+    // INPUT USUARIO
+    // ======================
+
+    const usuarioInput =
+
+    document.getElementById(
+      'usuario'
+    );
+
+
+
+
+
+    // ======================
+    // INPUT PASSWORD
+    // ======================
+
+    const passwordInput =
+
+    document.getElementById(
+      'password'
+    );
+
+
+
+
+
+    // ======================
+    // VALIDAR INPUTS
     // ======================
 
     if(
 
-      window.usuarioLogueado.rol === 'admin'
+      !usuarioInput ||
+
+      !passwordInput
 
     ){
 
-      mostrarElemento(
-        'inventarioMenu'
+      alert(
+        'Inputs no encontrados'
       );
-
-      mostrarElemento(
-        'recepcionMenu'
-      );
-
-      mostrarElemento(
-        'auditoriasMenu'
-      );
-
-      mostrarElemento(
-        'usuariosMenu'
-      );
-
-      mostrarElemento(
-        'historialMenu'
-      );
-
-
-
-      mostrarCard(
-        'cardInventario'
-      );
-
-      mostrarCard(
-        'cardRecepcion'
-      );
-
-      mostrarCard(
-        'cardAuditorias'
-      );
-
-      mostrarCard(
-        'cardUsuarios'
-      );
-
-      mostrarCard(
-        'cardHistorial'
-      );
-
-
 
       return;
 
@@ -357,14 +174,61 @@ async function aplicarPermisos(){
 
 
     // ======================
-    // CONSULTAR PERMISOS
+    // VALORES
+    // ======================
+
+    const usuario =
+
+    usuarioInput.value
+    .trim()
+    .toLowerCase();
+
+
+
+
+
+    const password =
+
+    passwordInput.value
+    .trim();
+
+
+
+
+
+    // ======================
+    // VALIDAR VACIOS
+    // ======================
+
+    if(
+
+      !usuario ||
+
+      !password
+
+    ){
+
+      alert(
+        'Complete todos los campos'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // CONSULTAR USUARIO
     // ======================
 
     const response =
 
     await window.supabaseClient
 
-    .from('permisos')
+    .from('usuarios')
 
     .select('*')
 
@@ -372,7 +236,129 @@ async function aplicarPermisos(){
 
       'usuario',
 
-      window.usuarioLogueado.usuario
+      usuario
+
+    )
+
+    .eq(
+
+      'password',
+
+      password
+
+    )
+
+    .limit(1);
+
+
+
+
+
+    // ======================
+    // DATA
+    // ======================
+
+    const data =
+    response.data;
+
+
+
+    const error =
+    response.error;
+
+
+
+
+
+    // ======================
+    // ERROR SUPABASE
+    // ======================
+
+    if(error){
+
+      console.log(error);
+
+      alert(
+        'Error conectando con Supabase'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // VALIDAR USUARIO
+    // ======================
+
+    if(
+
+      !data ||
+
+      data.length === 0
+
+    ){
+
+      alert(
+        'Usuario o contraseña incorrectos'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // USUARIO DATA
+    // ======================
+
+    const usuarioData =
+    data[0];
+
+
+
+
+
+    // ======================
+    // VALIDAR ESTADO
+    // ======================
+
+    if(
+
+      usuarioData.estado ===
+      'Inactivo'
+
+    ){
+
+      alert(
+        'Usuario inactivo'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // GUARDAR SESION
+    // ======================
+
+    localStorage.setItem(
+
+      'usuarioLogueado',
+
+      JSON.stringify(
+        usuarioData
+      )
 
     );
 
@@ -380,323 +366,41 @@ async function aplicarPermisos(){
 
 
 
-    const permisos =
-    response.data || [];
+    // ======================
+    // LOGIN EXITOSO
+    // ======================
+
+    alert(
+
+`Bienvenido ${usuarioData.usuario}
+
+Rol:
+${usuarioData.rol}`
+
+    );
 
 
 
 
 
     // ======================
-    // LIMPIAR
+    // REDIRECCIONAR
     // ======================
 
-    window.permisosUsuario = {};
+    window.location.href =
 
-
-
-
-
-    // ======================
-    // MAPA
-    // ======================
-
-    permisos.forEach(item => {
-
-      window.permisosUsuario[
-        item.modulo
-      ] = {
-
-        ver:
-        item.ver,
-
-        crear:
-        item.crear,
-
-        editar:
-        item.editar,
-
-        eliminar:
-        item.eliminar
-
-      };
-
-    });
-
-
-
-
-
-    // ======================
-    // INVENTARIO
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'inventario',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'inventarioMenu'
-      );
-
-
-
-      mostrarCard(
-        'cardInventario'
-      );
-
-    }
-
-    else{
-
-      ocultarModulo(
-        'inventarioMenu'
-      );
-
-
-
-      ocultarCard(
-        'cardInventario'
-      );
-
-    }
-
-
-
-
-
-    // ======================
-    // RECEPCION
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'recepcion',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'recepcionMenu'
-      );
-
-
-
-      mostrarCard(
-        'cardRecepcion'
-      );
-
-    }
-
-    else{
-
-      ocultarModulo(
-        'recepcionMenu'
-      );
-
-
-
-      ocultarCard(
-        'cardRecepcion'
-      );
-
-    }
-
-
-
-
-
-    // ======================
-    // AUDITORIAS
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'auditorias',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'auditoriasMenu'
-      );
-
-
-
-      mostrarCard(
-        'cardAuditorias'
-      );
-
-    }
-
-    else{
-
-      ocultarModulo(
-        'auditoriasMenu'
-      );
-
-
-
-      ocultarCard(
-        'cardAuditorias'
-      );
-
-    }
-
-
-
-
-
-    // ======================
-    // USUARIOS
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'usuarios',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'usuariosMenu'
-      );
-
-
-
-      mostrarCard(
-        'cardUsuarios'
-      );
-
-    }
-
-    else{
-
-      ocultarModulo(
-        'usuariosMenu'
-      );
-
-
-
-      ocultarCard(
-        'cardUsuarios'
-      );
-
-    }
-
-
-
-
-
-    // ======================
-    // HISTORIAL
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'historial',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'historialMenu'
-      );
-
-
-
-      mostrarCard(
-        'cardHistorial'
-      );
-
-    }
-
-    else{
-
-      ocultarModulo(
-        'historialMenu'
-      );
-
-
-
-      ocultarCard(
-        'cardHistorial'
-      );
-
-    }
+    'dashboard.html';
 
   }
 
   catch(error){
 
     console.log(error);
+
+    alert(
+      'Error general en login'
+    );
 
   }
 
 }
-
-
-
-
-
-// ======================
-// GUARDAR HISTORIAL
-// ======================
-
-window.guardarHistorial = async function(
-
-  accion,
-  modulo,
-  descripcion
-
-){
-
-  try{
-
-    await window.supabaseClient
-
-    .from('historial')
-
-    .insert([
-
-      {
-
-        usuario:
-        window.usuarioLogueado.usuario,
-
-        accion:
-        accion,
-
-        modulo:
-        modulo,
-
-        descripcion:
-        descripcion
-
-      }
-
-    ]);
-
-  }
-
-  catch(error){
-
-    console.log(error);
-
-  }
-
-};
-
