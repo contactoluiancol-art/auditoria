@@ -813,4 +813,4 @@ aplicarPermisosHistorial();
 renderHistorialSistema();
 
 }
-```
+
