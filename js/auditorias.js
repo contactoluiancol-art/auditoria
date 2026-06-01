@@ -43,6 +43,30 @@ function tienePermiso(
 
 ){
 
+  // ======================
+  // ADMIN
+  // ======================
+
+  if(
+
+    window.usuarioLogueado &&
+
+    window.usuarioLogueado.rol === 'admin'
+
+  ){
+
+    return true;
+
+  }
+
+
+
+
+
+  // ======================
+  // VALIDAR
+  // ======================
+
   if(
 
     !window.permisosUsuario ||
@@ -76,10 +100,6 @@ function tienePermiso(
 async function guardarAuditoria(){
 
   try{
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
 
     if(
 
@@ -201,10 +221,6 @@ async function guardarAuditoria(){
 
 
 
-
-    // ======================
-    // HISTORIAL
-    // ======================
 
     if(typeof guardarHistorial === 'function'){
 
@@ -464,10 +480,6 @@ async function renderAuditorias(){
 
 
 
-      // ======================
-      // PDF
-      // ======================
-
       (
 
         tienePermiso(
@@ -503,10 +515,6 @@ async function renderAuditorias(){
 
 
 
-      // ======================
-      // EDITAR
-      // ======================
-
       (
 
         tienePermiso(
@@ -541,10 +549,6 @@ async function renderAuditorias(){
 
 
 
-
-      // ======================
-      // ELIMINAR
-      // ======================
 
       (
 
@@ -614,10 +618,6 @@ async function renderAuditorias(){
 window.generarPDF = async function(id){
 
   try{
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
 
     if(
 
@@ -701,10 +701,6 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // COLORES
-    // ======================
-
     var azulOscuro = [15,23,42];
 
     var azul = [37,99,235];
@@ -718,10 +714,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // ======================
-    // FONDO
-    // ======================
 
     doc.setFillColor(
 
@@ -744,10 +736,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // ======================
-    // HEADER
-    // ======================
 
     doc.setFillColor(
 
@@ -792,10 +780,6 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // LOGO
-    // ======================
-
     try{
 
       var logo =
@@ -839,10 +823,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // ======================
-    // TITULO
-    // ======================
 
     doc.setTextColor(
       255,
@@ -902,10 +882,6 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // FECHA
-    // ======================
-
     doc.setTextColor(
 
       gris[0],
@@ -938,10 +914,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // ======================
-    // CARD GENERAL
-    // ======================
 
     doc.setFillColor(
       255,
@@ -1003,10 +975,6 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // TITULO CARD
-    // ======================
-
     doc.setTextColor(
 
       azulOscuro[0],
@@ -1063,10 +1031,6 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // DATOS
-    // ======================
-
     doc.setFontSize(11);
 
 
@@ -1121,10 +1085,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // ======================
-    // VALORES
-    // ======================
 
     doc.setTextColor(
 
@@ -1184,10 +1144,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // ======================
-    // HALLAZGO
-    // ======================
 
     doc.setFillColor(
       255,
@@ -1344,10 +1300,6 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // OBSERVACIONES
-    // ======================
-
     doc.setFont(
       'helvetica',
       'bold'
@@ -1441,10 +1393,6 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // FIRMAS
-    // ======================
-
     doc.setDrawColor(
       180,
       180,
@@ -1494,10 +1442,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // ======================
-    // FOOTER
-    // ======================
 
     doc.setFillColor(
 
@@ -1561,10 +1505,6 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // GUARDAR
-    // ======================
-
     doc.save(
 
       'Auditoria_' +
@@ -1600,10 +1540,6 @@ window.generarPDF = async function(id){
 window.eliminarAuditoria = async function(id){
 
   try{
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
 
     if(
 
@@ -1689,10 +1625,6 @@ window.eliminarAuditoria = async function(id){
 
 
 
-    // ======================
-    // HISTORIAL
-    // ======================
-
     if(typeof guardarHistorial === 'function'){
 
       await guardarHistorial(
@@ -1743,10 +1675,6 @@ window.eliminarAuditoria = async function(id){
 window.editarEstado = async function(id){
 
   try{
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
 
     if(
 
@@ -1807,10 +1735,6 @@ window.editarEstado = async function(id){
 
 
 
-
-    // ======================
-    // HISTORIAL
-    // ======================
 
     if(typeof guardarHistorial === 'function'){
 
@@ -1894,10 +1818,6 @@ function limpiarFormulario(){
 // ======================
 
 function aplicarPermisosAuditorias(){
-
-  // ======================
-  // CREAR
-  // ======================
 
   if(
 
