@@ -66,10 +66,6 @@ async function guardarUsuario(){
 
 
 
-    // ======================
-    // VALIDAR
-    // ======================
-
     if(
 
       !nombre ||
@@ -92,10 +88,6 @@ async function guardarUsuario(){
 
 
 
-    // ======================
-    // INSERTAR
-    // ======================
-
     const response =
 
     await window.supabaseClient
@@ -116,7 +108,10 @@ async function guardarUsuario(){
         rol,
 
         estado:
-        'Activo'
+        'Activo',
+
+        password:
+        '123456'
 
       }
 
@@ -143,62 +138,6 @@ async function guardarUsuario(){
 
 
 
-
-    // ======================
-    // NOTIFICACION
-    // ======================
-
-    let notificaciones =
-
-    JSON.parse(
-
-      localStorage.getItem(
-        'notificaciones'
-      )
-
-    ) || [];
-
-
-
-
-
-    notificaciones.unshift({
-
-      mensaje:
-
-      'Nuevo usuario creado: ' +
-      nombre,
-
-
-
-      fecha:
-
-      new Date()
-      .toLocaleString()
-
-    });
-
-
-
-
-
-    localStorage.setItem(
-
-      'notificaciones',
-
-      JSON.stringify(
-        notificaciones
-      )
-
-    );
-
-
-
-
-
-    // ======================
-    // ACTUALIZAR
-    // ======================
 
     renderUsuarios();
 
@@ -227,7 +166,7 @@ async function guardarUsuario(){
 
 
 // ======================
-// RENDER USUARIOS
+// RENDER
 // ======================
 
 async function renderUsuarios(){
@@ -251,17 +190,7 @@ async function renderUsuarios(){
 
 
 
-    body.innerHTML =
-
-    '<tr>' +
-
-      '<td colspan="5">' +
-
-      'Cargando usuarios...' +
-
-      '</td>' +
-
-    '</tr>';
+    body.innerHTML = '';
 
 
 
@@ -296,45 +225,6 @@ async function renderUsuarios(){
 
 
 
-    const error =
-    response.error;
-
-
-
-
-
-    if(error){
-
-      console.log(error);
-
-
-
-      body.innerHTML =
-
-      '<tr>' +
-
-        '<td colspan="5">' +
-
-        'Error cargando usuarios' +
-
-        '</td>' +
-
-      '</tr>';
-
-
-
-      return;
-
-    }
-
-
-
-
-
-    body.innerHTML = '';
-
-
-
 
 
     if(!data || data.length === 0){
@@ -343,11 +233,11 @@ async function renderUsuarios(){
 
       '<tr>' +
 
-        '<td colspan="5">' +
+      '<td colspan="3">' +
 
-        'No hay usuarios registrados' +
+      'No hay usuarios registrados' +
 
-        '</td>' +
+      '</td>' +
 
       '</tr>';
 
@@ -366,26 +256,6 @@ async function renderUsuarios(){
       body.innerHTML +=
 
       '<tr>' +
-
-
-
-
-
-        '<td>' +
-
-          item.nombre +
-
-        '</td>' +
-
-
-
-
-
-        '<td>' +
-
-          item.correo +
-
-        '</td>' +
 
 
 
@@ -418,6 +288,26 @@ async function renderUsuarios(){
         '<td>' +
 
           '<div class="acciones-tabla">' +
+
+
+
+
+
+            '<button ' +
+
+              'class="btn-editar" ' +
+
+              'onclick="editarUsuario(' +
+
+              item.id +
+
+              ')"' +
+
+            '>' +
+
+              'Editar' +
+
+            '</button>' +
 
 
 
@@ -470,7 +360,195 @@ async function renderUsuarios(){
 
 
 // ======================
-// ELIMINAR USUARIO
+// EDITAR USUARIO
+// ======================
+
+window.editarUsuario = async function(id){
+
+  try{
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('usuarios')
+
+    .select('*')
+
+    .eq(
+
+      'id',
+
+      id
+
+    )
+
+    .single();
+
+
+
+
+
+    const usuario =
+    response.data;
+
+
+
+
+
+    if(!usuario){
+
+      alert(
+        'Usuario no encontrado'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    const nuevoRol = prompt(
+
+`Nuevo rol:
+
+Administrador
+Auditor
+Lider
+Jefe`,
+
+      usuario.rol
+
+    );
+
+
+
+
+
+    if(!nuevoRol){
+
+      return;
+
+    }
+
+
+
+
+
+    const nuevaPassword = prompt(
+
+      'Nueva contraseña:',
+
+      usuario.password || ''
+
+    );
+
+
+
+
+
+    if(nuevaPassword === null){
+
+      return;
+
+    }
+
+
+
+
+
+    const nuevoEstado = prompt(
+
+`Nuevo estado:
+
+Activo
+Inactivo`,
+
+      usuario.estado || 'Activo'
+
+    );
+
+
+
+
+
+    const update =
+
+    await window.supabaseClient
+
+    .from('usuarios')
+
+    .update({
+
+      rol:
+      nuevoRol,
+
+      password:
+      nuevaPassword,
+
+      estado:
+      nuevoEstado
+
+    })
+
+    .eq(
+
+      'id',
+
+      id
+
+    );
+
+
+
+
+
+    if(update.error){
+
+      console.log(
+        update.error
+      );
+
+      alert(
+        'Error actualizando usuario'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    renderUsuarios();
+
+
+
+
+
+    alert(
+      'Usuario actualizado'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+
+
+
+
+// ======================
+// ELIMINAR
 // ======================
 
 window.eliminarUsuario = async function(id){
@@ -552,69 +630,6 @@ window.eliminarUsuario = async function(id){
   }
 
 };
-
-
-
-
-
-// ======================
-// BUSCAR USUARIO
-// ======================
-
-const buscarUsuario =
-document.getElementById(
-  'buscarUsuario'
-);
-
-
-
-
-
-if(buscarUsuario){
-
-  buscarUsuario.addEventListener(
-
-    'keyup',
-
-    function(){
-
-      const filtro =
-      this.value.toLowerCase();
-
-
-
-      const filas =
-      document.querySelectorAll(
-        '#usuariosBody tr'
-      );
-
-
-
-
-
-      filas.forEach(fila => {
-
-        fila.style.display =
-
-        fila.innerText
-        .toLowerCase()
-        .includes(filtro)
-
-        ?
-
-        ''
-
-        :
-
-        'none';
-
-      });
-
-    }
-
-  );
-
-}
 
 
 
