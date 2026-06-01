@@ -552,29 +552,57 @@ async function renderRecepciones(){
             ${item.proveedor || '-'}
           </td>
 
+
+
+
+
           <td>
             ${item.material || '-'}
           </td>
+
+
+
+
 
           <td>
             ${item.tipo_recepcion || '-'}
           </td>
 
+
+
+
+
           <td>
             ${item.cantidad || 0}
           </td>
+
+
+
+
 
           <td>
             ${item.revisadas || 0}
           </td>
 
+
+
+
+
           <td>
             ${item.porcentaje_revisado || 0}%
           </td>
 
+
+
+
+
           <td>
             ${item.novedades || 0}
           </td>
+
+
+
+
 
           <td>
 
@@ -587,6 +615,10 @@ async function renderRecepciones(){
             </span>
 
           </td>
+
+
+
+
 
           <td>
 
@@ -1035,7 +1067,7 @@ window.eliminarRecepcion = async function(id){
 
 
 // ======================
-// KPI
+// KPI RECEPCION
 // ======================
 
 async function actualizarKPIsRecepcion(){
@@ -1048,7 +1080,19 @@ async function actualizarKPIsRecepcion(){
 
     .from('recepciones')
 
-    .select('*');
+    .select('*')
+
+    .order(
+
+      'id',
+
+      {
+
+        ascending:false
+
+      }
+
+    );
 
 
 
@@ -1061,6 +1105,10 @@ async function actualizarKPIsRecepcion(){
 
 
 
+    // ======================
+    // TOTAL HISTORIAL
+    // ======================
+
     document.getElementById(
       'kpiRecepciones'
     ).innerText =
@@ -1071,58 +1119,44 @@ async function actualizarKPIsRecepcion(){
 
 
 
-    let totalRevisado = 0;
+    // ======================
+    // SI NO HAY RECEPCIONES
+    // ======================
 
-    let totalNovedades = 0;
+    if(recepciones.length === 0){
 
-    let totalFaltantes = 0;
-
-
-
-
-
-    recepciones.forEach(item => {
-
-      totalRevisado +=
-
-      Number(
-        item.porcentaje_revisado || 0
-      );
+      document.getElementById(
+        'kpiRevisado'
+      ).innerText = '0%';
 
 
 
-      totalNovedades +=
-
-      Number(
-        item.novedades || 0
-      );
+      document.getElementById(
+        'kpiNovedades'
+      ).innerText = '0';
 
 
 
-      totalFaltantes +=
+      document.getElementById(
+        'kpiFaltantes'
+      ).innerText = '0';
 
-      Number(
-        item.faltantes || 0
-      );
 
-    });
+
+      return;
+
+    }
 
 
 
 
 
-    const promedio =
+    // ======================
+    // SOLO ULTIMA RECEPCION
+    // ======================
 
-    recepciones.length > 0
-
-    ?
-
-    totalRevisado /
-    recepciones.length
-
-    :
-
-    0;
+    const ultimaRecepcion =
+    recepciones[0];
 
 
 
@@ -1132,7 +1166,12 @@ async function actualizarKPIsRecepcion(){
       'kpiRevisado'
     ).innerText =
 
-    promedio.toFixed(1) + '%';
+    Number(
+
+      ultimaRecepcion
+      .porcentaje_revisado || 0
+
+    ).toFixed(1) + '%';
 
 
 
@@ -1142,7 +1181,8 @@ async function actualizarKPIsRecepcion(){
       'kpiNovedades'
     ).innerText =
 
-    totalNovedades;
+    ultimaRecepcion
+    .novedades || 0;
 
 
 
@@ -1152,7 +1192,8 @@ async function actualizarKPIsRecepcion(){
       'kpiFaltantes'
     ).innerText =
 
-    totalFaltantes;
+    ultimaRecepcion
+    .faltantes || 0;
 
   }
 
@@ -1299,6 +1340,7 @@ function limpiarFormulario(){
   ).value = '';
 
 }
+
 
 
 
