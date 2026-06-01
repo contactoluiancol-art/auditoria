@@ -494,3 +494,90 @@ if(buscarHistorial){
 renderHistorialSistema();
 
 }
+
+
+// ======================
+// ELIMINAR TODO
+// ======================
+
+window.eliminarTodoHistorial = async function(){
+
+  try{
+
+    const confirmar = confirm(
+
+      '¿Desea eliminar TODO el historial?'
+
+    );
+
+
+
+
+
+    if(!confirmar){
+
+      return;
+
+    }
+
+
+
+
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('historial')
+
+    .delete()
+
+    .neq(
+
+      'id',
+
+      0
+
+    );
+
+
+
+
+
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      alert(
+        'Error eliminando historial'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    renderHistorialSistema();
+
+
+
+
+
+    alert(
+      'Historial eliminado correctamente'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
