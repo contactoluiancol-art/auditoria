@@ -689,10 +689,15 @@ document.getElementById(
 
 if(cerrarSesionBtn){
 
-elemento.addEventListener(
-  'click',
-  cerrarSesion
+cerrarSesionBtn.addEventListener(
+
+'click',
+
+cerrarSesion
+
 );
+
+}
 
 }
 // ======================
