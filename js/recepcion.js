@@ -644,7 +644,7 @@ async function renderRecepciones(){
               onclick='verObservacion(${JSON.stringify(item.observacion || "")})'
             >
 
-              Ver Observación
+              Ver
 
             </button>
 
@@ -663,7 +663,7 @@ async function renderRecepciones(){
               onclick='verComentario(${JSON.stringify(item.comentario_validacion || "")})'
             >
 
-              Ver Comentario
+              Ver
 
             </button>
 
