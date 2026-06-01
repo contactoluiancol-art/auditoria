@@ -142,7 +142,6 @@ window.tienePermiso = function(
   if(
 
     window.usuarioLogueado &&
-
     window.usuarioLogueado.rol === 'admin'
 
   ){
@@ -665,25 +664,6 @@ window.guardarHistorial = async function(
 
   try{
 
-    const usuario =
-
-    window.usuarioLogueado &&
-    window.usuarioLogueado.usuario
-
-    ?
-
-    window.usuarioLogueado.usuario
-
-    :
-
-    'Sistema';
-
-
-
-
-
-    const response =
-
     await window.supabaseClient
 
     .from('historial')
@@ -693,7 +673,7 @@ window.guardarHistorial = async function(
       {
 
         usuario:
-        usuario,
+        window.usuarioLogueado.usuario,
 
         accion:
         accion,
@@ -708,18 +688,6 @@ window.guardarHistorial = async function(
 
     ]);
 
-
-
-
-
-    if(response.error){
-
-      console.log(
-        response.error
-      );
-
-    }
-
   }
 
   catch(error){
@@ -729,6 +697,260 @@ window.guardarHistorial = async function(
   }
 
 };
+
+
+
+
+
+// ======================
+// MOSTRAR MODULO
+// ======================
+
+function mostrarModulo(modulo){
+
+  const contenido =
+
+  document.getElementById(
+    'mainContent'
+  );
+
+
+
+
+
+  if(!contenido){
+
+    return;
+
+  }
+
+
+
+
+
+  // ======================
+  // INVENTARIO
+  // ======================
+
+  if(modulo === 'inventario'){
+
+    cargarModulo(
+
+      contenido,
+
+      'modules/inventario.html',
+
+      'inventarioScript',
+
+      'js/inventario.js?v=30'
+
+    );
+
+  }
+
+
+
+
+
+  // ======================
+  // RECEPCION
+  // ======================
+
+  else if(modulo === 'recepcion'){
+
+    cargarModulo(
+
+      contenido,
+
+      'modules/recepcion.html',
+
+      'recepcionScript',
+
+      'js/recepcion.js?v=30'
+
+    );
+
+  }
+
+
+
+
+
+  // ======================
+  // AUDITORIAS
+  // ======================
+
+  else if(modulo === 'auditorias'){
+
+    cargarModulo(
+
+      contenido,
+
+      'modules/auditorias.html',
+
+      'auditoriasScript',
+
+      'js/auditorias.js?v=30'
+
+    );
+
+  }
+
+
+
+
+
+  // ======================
+  // USUARIOS
+  // ======================
+
+  else if(modulo === 'usuarios'){
+
+    cargarModulo(
+
+      contenido,
+
+      'modules/usuarios.html',
+
+      'usuariosScript',
+
+      'js/usuarios.js?v=30'
+
+    );
+
+  }
+
+
+
+
+
+  // ======================
+  // HISTORIAL
+  // ======================
+
+  else if(modulo === 'historial'){
+
+    cargarModulo(
+
+      contenido,
+
+      'modules/historial.html',
+
+      'historialScript',
+
+      'js/historial.js?v=30'
+
+    );
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// CARGAR MODULO
+// ======================
+
+function cargarModulo(
+
+  contenido,
+  htmlPath,
+  scriptId,
+  scriptSrc
+
+){
+
+  fetch(htmlPath)
+
+  .then(function(res){
+
+    return res.text();
+
+  })
+
+  .then(function(html){
+
+    contenido.innerHTML =
+    html;
+
+
+
+    cargarScript(
+
+      scriptId,
+      scriptSrc
+
+    );
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+  });
+
+}
+
+
+
+
+
+// ======================
+// CARGAR SCRIPT
+// ======================
+
+function cargarScript(
+
+  id,
+  src
+
+){
+
+  const anterior =
+
+  document.getElementById(id);
+
+
+
+
+
+  if(anterior){
+
+    anterior.remove();
+
+  }
+
+
+
+
+
+  const script =
+
+  document.createElement(
+    'script'
+  );
+
+
+
+
+
+  script.src = src;
+
+  script.id = id;
+
+
+
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
 
 
 
@@ -786,18 +1008,13 @@ if(cerrarSesionBtn){
 
 
 // ======================
-// MENU INVENTARIO
+// EVENTOS MENUS
 // ======================
 
 const inventarioMenu =
-
 document.getElementById(
   'inventarioMenu'
 );
-
-
-
-
 
 if(inventarioMenu){
 
@@ -807,8 +1024,8 @@ if(inventarioMenu){
 
     function(){
 
-      console.log(
-        'Inventario abierto'
+      mostrarModulo(
+        'inventario'
       );
 
     }
@@ -821,19 +1038,10 @@ if(inventarioMenu){
 
 
 
-// ======================
-// MENU RECEPCION
-// ======================
-
 const recepcionMenu =
-
 document.getElementById(
   'recepcionMenu'
 );
-
-
-
-
 
 if(recepcionMenu){
 
@@ -843,8 +1051,8 @@ if(recepcionMenu){
 
     function(){
 
-      console.log(
-        'Recepción abierta'
+      mostrarModulo(
+        'recepcion'
       );
 
     }
@@ -857,19 +1065,10 @@ if(recepcionMenu){
 
 
 
-// ======================
-// MENU AUDITORIAS
-// ======================
-
 const auditoriasMenu =
-
 document.getElementById(
   'auditoriasMenu'
 );
-
-
-
-
 
 if(auditoriasMenu){
 
@@ -879,8 +1078,8 @@ if(auditoriasMenu){
 
     function(){
 
-      console.log(
-        'Auditorías abiertas'
+      mostrarModulo(
+        'auditorias'
       );
 
     }
@@ -893,19 +1092,10 @@ if(auditoriasMenu){
 
 
 
-// ======================
-// MENU USUARIOS
-// ======================
-
 const usuariosMenu =
-
 document.getElementById(
   'usuariosMenu'
 );
-
-
-
-
 
 if(usuariosMenu){
 
@@ -915,8 +1105,8 @@ if(usuariosMenu){
 
     function(){
 
-      console.log(
-        'Usuarios abiertos'
+      mostrarModulo(
+        'usuarios'
       );
 
     }
@@ -929,19 +1119,10 @@ if(usuariosMenu){
 
 
 
-// ======================
-// MENU HISTORIAL
-// ======================
-
 const historialMenu =
-
 document.getElementById(
   'historialMenu'
 );
-
-
-
-
 
 if(historialMenu){
 
@@ -951,8 +1132,8 @@ if(historialMenu){
 
     function(){
 
-      console.log(
-        'Historial abierto'
+      mostrarModulo(
+        'historial'
       );
 
     }
