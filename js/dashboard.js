@@ -1,4 +1,3 @@
-
 // ======================
 // VALIDAR LIBRERIA SUPABASE
 // ======================
@@ -85,11 +84,6 @@ if(!usuarioLogueado){
 // VARIABLES GLOBALES
 // ======================
 
-const rol =
-usuarioLogueado.rol;
-
-
-
 const dashboardOriginal =
 
 document.getElementById(
@@ -172,83 +166,202 @@ function ocultarCard(id){
 // APLICAR PERMISOS
 // ======================
 
-function aplicarPermisos(){
+async function aplicarPermisos(){
 
-  // ======================
-  // LIDER
-  // ======================
+  try{
 
-  if(rol === 'lider'){
+    // ======================
+    // CONSULTAR PERMISOS
+    // ======================
 
-    ocultarModulo(
-      'inventarioMenu'
+    const response =
+
+    await window.supabaseClient
+
+    .from('permisos')
+
+    .select('*')
+
+    .eq(
+
+      'usuario',
+
+      usuarioLogueado.usuario
+
     );
 
-    ocultarModulo(
-      'auditoriasMenu'
-    );
-
-    ocultarModulo(
-      'usuariosMenu'
-    );
-
-    ocultarModulo(
-      'historialMenu'
-    );
 
 
 
-    ocultarCard(
-      'cardInventario'
-    );
 
-    ocultarCard(
-      'cardAuditorias'
-    );
+    const permisos =
+    response.data || [];
 
-    ocultarCard(
-      'cardUsuarios'
-    );
 
-    ocultarCard(
-      'cardHistorial'
-    );
+
+
+
+    // ======================
+    // MAPA
+    // ======================
+
+    const mapa = {};
+
+
+
+
+
+    permisos.forEach(item => {
+
+      mapa[item.modulo] = item;
+
+    });
+
+
+
+
+
+    // ======================
+    // INVENTARIO
+    // ======================
+
+    if(
+
+      !mapa.inventario ||
+
+      !mapa.inventario.ver
+
+    ){
+
+      ocultarModulo(
+        'inventarioMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardInventario'
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // RECEPCION
+    // ======================
+
+    if(
+
+      !mapa.recepcion ||
+
+      !mapa.recepcion.ver
+
+    ){
+
+      ocultarModulo(
+        'recepcionMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardRecepcion'
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // AUDITORIAS
+    // ======================
+
+    if(
+
+      !mapa.auditorias ||
+
+      !mapa.auditorias.ver
+
+    ){
+
+      ocultarModulo(
+        'auditoriasMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardAuditorias'
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // USUARIOS
+    // ======================
+
+    if(
+
+      !mapa.usuarios ||
+
+      !mapa.usuarios.ver
+
+    ){
+
+      ocultarModulo(
+        'usuariosMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardUsuarios'
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(
+
+      !mapa.historial ||
+
+      !mapa.historial.ver
+
+    ){
+
+      ocultarModulo(
+        'historialMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardHistorial'
+      );
+
+    }
 
   }
 
+  catch(error){
 
-
-  // ======================
-  // AUDITOR
-  // ======================
-
-  if(rol === 'auditor'){
-
-    ocultarModulo(
-      'usuariosMenu'
-    );
-
-    ocultarCard(
-      'cardUsuarios'
-    );
-
-  }
-
-
-
-  // ======================
-  // JEFE
-  // ======================
-
-  if(rol === 'jefe'){
-
-    ocultarModulo(
-      'usuariosMenu'
-    );
-
-    ocultarCard(
-      'cardUsuarios'
-    );
+    console.log(error);
 
   }
 
@@ -281,6 +394,8 @@ async function guardarHistorial(
 
 
 
+
+
   const response =
 
   await window.supabaseClient
@@ -305,8 +420,12 @@ async function guardarHistorial(
 
 
 
+
+
   const error =
   response.error;
+
+
 
 
 
@@ -329,7 +448,7 @@ async function guardarHistorial(
 // MOSTRAR MODULOS
 // ======================
 
-function mostrarModulo(modulo){
+async function mostrarModulo(modulo){
 
   const contenido =
 
@@ -339,11 +458,15 @@ function mostrarModulo(modulo){
 
 
 
+
+
   const notificacionesBox =
 
   document.getElementById(
     'notificacionesBox'
   );
+
+
 
 
 
@@ -358,7 +481,11 @@ function mostrarModulo(modulo){
 
 
 
-    aplicarPermisos();
+
+
+    await aplicarPermisos();
+
+
 
 
 
@@ -371,6 +498,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
     if(typeof renderNotificaciones === 'function'){
 
       renderNotificaciones();
@@ -379,9 +508,13 @@ function mostrarModulo(modulo){
 
 
 
+
+
     return;
 
   }
+
+
 
 
 
@@ -395,6 +528,8 @@ function mostrarModulo(modulo){
     'none';
 
   }
+
+
 
 
 
@@ -424,6 +559,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
         if(typeof actualizarKPIs === 'function'){
 
           actualizarKPIs();
@@ -435,6 +572,8 @@ function mostrarModulo(modulo){
     );
 
   }
+
+
 
 
 
@@ -470,6 +609,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // USUARIOS
   // ======================
@@ -502,6 +643,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // RECEPCION
   // ======================
@@ -521,6 +664,8 @@ function mostrarModulo(modulo){
     );
 
   }
+
+
 
 
 
@@ -587,6 +732,10 @@ function cargarModulo(
     contenido.innerHTML =
     html;
 
+
+
+
+
     cargarScript(
       scriptId,
       scriptSrc,
@@ -619,11 +768,15 @@ function cargarScript(
 
 
 
+
+
   if(anterior){
 
     anterior.remove();
 
   }
+
+
 
 
 
@@ -635,11 +788,13 @@ function cargarScript(
 
 
 
+
+
   script.src = src;
 
-
-
   script.id = id;
+
+
 
 
 
@@ -652,6 +807,8 @@ function cargarScript(
     }
 
   };
+
+
 
 
 
@@ -679,11 +836,15 @@ function renderNotificaciones(){
 
 
 
+
+
   if(!lista){
 
     return;
 
   }
+
+
 
 
 
@@ -699,7 +860,11 @@ function renderNotificaciones(){
 
 
 
+
+
   lista.innerHTML = '';
+
+
 
 
 
@@ -715,9 +880,13 @@ function renderNotificaciones(){
 
 
 
+
+
     return;
 
   }
+
+
 
 
 
@@ -753,6 +922,8 @@ function cerrarSesion(){
 
 
 
+
+
   window.location.href =
   'index.html';
 
@@ -770,6 +941,10 @@ const dashboardMenu =
 document.getElementById(
   'dashboardMenu'
 );
+
+
+
+
 
 if(dashboardMenu){
 
@@ -798,6 +973,10 @@ document.getElementById(
   'inventarioMenu'
 );
 
+
+
+
+
 if(inventarioMenu){
 
   inventarioMenu.addEventListener(
@@ -824,6 +1003,10 @@ const auditoriasMenu =
 document.getElementById(
   'auditoriasMenu'
 );
+
+
+
+
 
 if(auditoriasMenu){
 
@@ -852,6 +1035,10 @@ document.getElementById(
   'usuariosMenu'
 );
 
+
+
+
+
 if(usuariosMenu){
 
   usuariosMenu.addEventListener(
@@ -879,6 +1066,10 @@ document.getElementById(
   'recepcionMenu'
 );
 
+
+
+
+
 if(recepcionMenu){
 
   recepcionMenu.addEventListener(
@@ -905,6 +1096,10 @@ const historialMenu =
 document.getElementById(
   'historialMenu'
 );
+
+
+
+
 
 if(historialMenu){
 
@@ -946,11 +1141,15 @@ document.addEventListener(
 
 
 
+
+
     if(!card){
 
       return;
 
     }
+
+
 
 
 
@@ -975,8 +1174,12 @@ document.addEventListener(
 
 
 
+
+
     const modulo =
     acciones[card.id];
+
+
 
 
 
@@ -1005,6 +1208,10 @@ document.getElementById(
   'cerrarSesionBtn'
 );
 
+
+
+
+
 if(cerrarSesionBtn){
 
   cerrarSesionBtn.addEventListener(
@@ -1028,4 +1235,3 @@ if(cerrarSesionBtn){
 aplicarPermisos();
 
 renderNotificaciones();
-
