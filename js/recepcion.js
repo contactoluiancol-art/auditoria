@@ -423,10 +423,6 @@ ${estado}`
 
 
 
-    // ======================
-    // ACTUALIZAR
-    // ======================
-
     renderRecepciones();
 
     actualizarKPIsRecepcion();
@@ -463,7 +459,7 @@ ${estado}`
 // RENDER
 // ======================
 
-window.renderRecepciones = async function(){
+async function renderRecepciones(){
 
   try{
 
@@ -851,7 +847,7 @@ window.renderRecepciones = async function(){
 
   }
 
-};
+}
 
 
 
@@ -968,7 +964,7 @@ window.validarRecepcion = async function(id){
 
     const comentario = prompt(
 
-      'Ingrese comentario'
+      'Ingrese comentario de validación'
 
     );
 
@@ -1278,10 +1274,10 @@ window.eliminarRecepcion = async function(id){
 
 
 // ======================
-// KPIS
+// KPI RECEPCION
 // ======================
 
-window.actualizarKPIsRecepcion = async function(){
+async function actualizarKPIsRecepcion(){
 
   try{
 
@@ -1402,7 +1398,7 @@ window.actualizarKPIsRecepcion = async function(){
 
   }
 
-};
+}
 
 
 
@@ -1545,7 +1541,7 @@ function limpiarFormulario(){
 
 
 // ======================
-// PERMISOS UI
+// APLICAR PERMISOS UI
 // ======================
 
 function aplicarPermisosRecepcion(){
