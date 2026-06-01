@@ -11,7 +11,7 @@
       </h2>
 
       <p>
-        Administración de usuarios y roles
+        Administración de usuarios y permisos
       </p>
 
     </div>
@@ -36,18 +36,18 @@
 
     <div class="form-grid">
 
-      <!-- NOMBRE -->
+      <!-- USUARIO -->
 
       <div class="input-group">
 
         <label>
-          Nombre
+          Usuario
         </label>
 
         <input
           type="text"
-          id="nombreUsuario"
-          placeholder="Ingrese nombre"
+          id="usuarioInput"
+          placeholder="Ingrese usuario"
         >
 
       </div>
@@ -56,18 +56,18 @@
 
 
 
-      <!-- CORREO -->
+      <!-- PASSWORD -->
 
       <div class="input-group">
 
         <label>
-          Correo
+          Contraseña
         </label>
 
         <input
-          type="email"
-          id="correoUsuario"
-          placeholder="Ingrese correo"
+          type="password"
+          id="passwordInput"
+          placeholder="Ingrese contraseña"
         >
 
       </div>
@@ -86,20 +86,24 @@
 
         <select id="rolUsuario">
 
-          <option value="Administrador">
-            Administrador
+          <option value="admin">
+            admin
           </option>
 
-          <option value="Auditor">
-            Auditor
+          <option value="lider">
+            lider
           </option>
 
-          <option value="Lider">
-            Líder
+          <option value="jefe">
+            jefe
           </option>
 
-          <option value="Jefe">
-            Jefe
+          <option value="auditor">
+            auditor
+          </option>
+
+          <option value="compras">
+            compras
           </option>
 
         </select>
@@ -168,15 +172,19 @@
 
           <tr>
 
-            <th style="width:35%;">
+            <th style="width:25%;">
+              Usuario
+            </th>
+
+            <th style="width:20%;">
               Rol
             </th>
 
-            <th style="width:25%;">
+            <th style="width:20%;">
               Estado
             </th>
 
-            <th style="width:40%;">
+            <th style="width:35%;">
               Acciones
             </th>
 
