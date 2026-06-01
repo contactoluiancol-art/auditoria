@@ -1455,4 +1455,4 @@ renderHistorial();
 actualizarKPIs();
 
 }
-```
+
