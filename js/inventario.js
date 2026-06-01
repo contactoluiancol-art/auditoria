@@ -1,81 +1,15 @@
+INVENTARIO.JS
 
+REEMPLAZA TODO EL ARCHIVO COMPLETO.
+
+```javascript
 // ======================
-// VALIDAR LIBRERIA SUPABASE
-// ======================
-
-if(!window.supabase){
-
-  alert(
-    'Supabase no cargó correctamente'
-  );
-
-}
-
-
-
-
-
-// ======================
-// CONEXION GLOBAL SUPABASE
+// EVITAR DUPLICAR SCRIPT
 // ======================
 
-const supabaseUrl =
-'https://hurxdjoiafkjoyrmyhbd.supabase.co';
+if(typeof window.inventarioCargado === 'undefined'){
 
-
-
-const supabaseKey =
-'TU_SUPABASE_KEY';
-
-
-
-
-
-// ======================
-// CLIENTE GLOBAL
-// ======================
-
-window.supabaseClient =
-
-window.supabase.createClient(
-
-  supabaseUrl,
-  supabaseKey
-
-);
-
-
-
-
-
-// ======================
-// USUARIO LOGUEADO
-// ======================
-
-window.usuarioLogueado =
-
-JSON.parse(
-
-  localStorage.getItem(
-    'usuarioLogueado'
-  )
-
-);
-
-
-
-
-
-// ======================
-// VALIDAR SESION
-// ======================
-
-if(!window.usuarioLogueado){
-
-  window.location.href =
-  'index.html';
-
-}
+window.inventarioCargado = true;
 
 
 
@@ -85,99 +19,368 @@ if(!window.usuarioLogueado){
 // VARIABLES GLOBALES
 // ======================
 
-const dashboardOriginal =
+window.inventario =
 
+JSON.parse(
+
+  localStorage.getItem(
+    'inventario'
+  )
+
+) || [];
+
+
+
+window.productoActual = null;
+
+
+
+
+
+// ======================
+// ELEMENTOS
+// ======================
+
+var excelFile =
 document.getElementById(
-  'mainContent'
-).innerHTML;
+  'excelFile'
+);
 
-
-
-
-
-// ======================
-// PERMISOS GLOBALES
-// ======================
-
-window.permisosUsuario = {};
-
-
-
-
-
-// ======================
-// MOSTRAR USUARIO
-// ======================
-
+var reiniciarInventarioBtn =
 document.getElementById(
-  'usuarioNombre'
-).innerText =
+  'reiniciarInventario'
+);
 
-window.usuarioLogueado.usuario +
+var buscarBtn =
+document.getElementById(
+  'buscarBtn'
+);
 
-' | ' +
+var guardarConteoBtn =
+document.getElementById(
+  'guardarConteo'
+);
 
-window.usuarioLogueado.rol;
+var exportarExcelBtn =
+document.getElementById(
+  'exportarExcel'
+);
+
+var buscadorInventario =
+document.getElementById(
+  'buscadorInventario'
+);
 
 
 
 
 
 // ======================
-// FUNCION GLOBAL PERMISOS
+// EVENTOS
 // ======================
 
-window.tienePermiso = function(
+if(excelFile){
 
-  modulo,
-  accion
+  excelFile.onchange =
+  leerExcel;
 
-){
+}
 
-  // ======================
-  // ADMIN
-  // ======================
+
+
+if(reiniciarInventarioBtn){
+
+  reiniciarInventarioBtn.onclick =
+  reiniciarInventario;
+
+}
+
+
+
+if(buscarBtn){
+
+  buscarBtn.onclick =
+  buscarProducto;
+
+}
+
+
+
+if(guardarConteoBtn){
+
+  guardarConteoBtn.onclick =
+  registrarConteo;
+
+}
+
+
+
+if(exportarExcelBtn){
+
+  exportarExcelBtn.onclick =
+  exportarExcel;
+
+}
+
+
+
+if(buscadorInventario){
+
+  buscadorInventario.oninput =
+  filtrarInventario;
+
+}
+
+
+
+
+
+// ======================
+// LEER EXCEL
+// ======================
+
+function leerExcel(e){
 
   if(
 
-    window.usuarioLogueado &&
-    window.usuarioLogueado.rol === 'admin'
+    !window.tienePermiso(
+      'inventario',
+      'crear'
+    )
 
   ){
 
-    return true;
+    alert(
+      'No tiene permisos'
+    );
+
+    return;
 
   }
 
 
 
+  var file =
+  e.target.files[0];
 
 
-  // ======================
-  // VALIDAR
-  // ======================
 
-  if(
+  if(!file){
 
-    !window.permisosUsuario ||
-
-    !window.permisosUsuario[modulo]
-
-  ){
-
-    return false;
+    return;
 
   }
 
 
 
+  var reader =
+  new FileReader();
 
 
-  return Boolean(
 
-    window.permisosUsuario[modulo][accion]
+  reader.onload = function(event){
 
+    var data =
+
+    new Uint8Array(
+      event.target.result
+    );
+
+
+
+    var workbook =
+
+    XLSX.read(
+
+      data,
+
+      {
+
+        type:'array'
+
+      }
+
+    );
+
+
+
+    var hoja =
+
+    workbook.Sheets[
+      workbook.SheetNames[0]
+    ];
+
+
+
+    window.inventario =
+
+    XLSX.utils.sheet_to_json(
+      hoja
+    );
+
+
+
+    localStorage.setItem(
+
+      'inventario',
+
+      JSON.stringify(
+        window.inventario
+      )
+
+    );
+
+
+
+    renderInventario();
+
+    actualizarKPIs();
+
+
+
+    alert(
+      'Excel cargado'
+    );
+
+  };
+
+
+
+  reader.readAsArrayBuffer(file);
+
+}
+
+
+
+
+
+// ======================
+// RENDER
+// ======================
+
+window.renderInventario = function(datos){
+
+  if(!datos){
+
+    datos = window.inventario;
+
+  }
+
+
+
+  var body =
+  document.getElementById(
+    'inventarioBody'
   );
+
+
+
+  if(!body){
+
+    return;
+
+  }
+
+
+
+  body.innerHTML = '';
+
+
+
+  if(datos.length === 0){
+
+    body.innerHTML =
+
+    '<tr>' +
+
+      '<td colspan="5">' +
+
+      'No hay inventario' +
+
+      '</td>' +
+
+    '</tr>';
+
+
+
+    return;
+
+  }
+
+
+
+  datos.forEach(function(item){
+
+    body.innerHTML +=
+
+    '<tr>' +
+
+      '<td>' +
+      (item.codigo || '-') +
+      '</td>' +
+
+
+
+      '<td>' +
+      (item.producto || '-') +
+      '</td>' +
+
+
+
+      '<td>' +
+      (item.ubicacion || '-') +
+      '</td>' +
+
+
+
+      '<td>' +
+      (item.stock || 0) +
+      '</td>' +
+
+
+
+      '<td>' +
+
+
+
+
+
+      (
+
+        window.tienePermiso(
+          'inventario',
+          'eliminar'
+        )
+
+        ?
+
+        '<button class="btn-eliminar" onclick="eliminarProducto(' +
+
+        "'" + item.codigo + "'" +
+
+        ')">' +
+
+        'Eliminar' +
+
+        '</button>'
+
+        :
+
+        '-'
+
+      )
+
+
+
+
+
+      + '</td>' +
+
+    '</tr>';
+
+  });
 
 };
 
+}
+```
