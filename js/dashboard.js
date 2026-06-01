@@ -24,7 +24,7 @@ const supabaseUrl =
 
 
 const supabaseKey =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'TU_SUPABASE_KEY';
 
 
 
@@ -163,12 +163,120 @@ function ocultarCard(id){
 
 
 // ======================
+// MOSTRAR MODULO
+// ======================
+
+function mostrarElemento(id){
+
+  const elemento =
+
+  document.getElementById(id);
+
+
+
+  if(elemento){
+
+    elemento.style.display =
+    '';
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// MOSTRAR CARD
+// ======================
+
+function mostrarCard(id){
+
+  const card =
+
+  document.getElementById(id);
+
+
+
+  if(card){
+
+    card.style.display =
+    '';
+
+  }
+
+}
+
+
+
+
+
+// ======================
 // APLICAR PERMISOS
 // ======================
 
 async function aplicarPermisos(){
 
   try{
+
+    // ======================
+    // ADMIN VE TODO
+    // ======================
+
+    if(usuarioLogueado.rol === 'admin'){
+
+      mostrarElemento(
+        'inventarioMenu'
+      );
+
+      mostrarElemento(
+        'recepcionMenu'
+      );
+
+      mostrarElemento(
+        'auditoriasMenu'
+      );
+
+      mostrarElemento(
+        'usuariosMenu'
+      );
+
+      mostrarElemento(
+        'historialMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardInventario'
+      );
+
+      mostrarCard(
+        'cardRecepcion'
+      );
+
+      mostrarCard(
+        'cardAuditorias'
+      );
+
+      mostrarCard(
+        'cardUsuarios'
+      );
+
+      mostrarCard(
+        'cardHistorial'
+      );
+
+
+
+      return;
+
+    }
+
+
+
+
 
     // ======================
     // CONSULTAR PERMISOS
@@ -227,11 +335,25 @@ async function aplicarPermisos(){
 
     if(
 
-      !mapa.inventario ||
+      mapa.inventario &&
 
-      !mapa.inventario.ver
+      mapa.inventario.ver
 
     ){
+
+      mostrarElemento(
+        'inventarioMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardInventario'
+      );
+
+    }
+
+    else{
 
       ocultarModulo(
         'inventarioMenu'
@@ -255,11 +377,25 @@ async function aplicarPermisos(){
 
     if(
 
-      !mapa.recepcion ||
+      mapa.recepcion &&
 
-      !mapa.recepcion.ver
+      mapa.recepcion.ver
 
     ){
+
+      mostrarElemento(
+        'recepcionMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardRecepcion'
+      );
+
+    }
+
+    else{
 
       ocultarModulo(
         'recepcionMenu'
@@ -283,11 +419,25 @@ async function aplicarPermisos(){
 
     if(
 
-      !mapa.auditorias ||
+      mapa.auditorias &&
 
-      !mapa.auditorias.ver
+      mapa.auditorias.ver
 
     ){
+
+      mostrarElemento(
+        'auditoriasMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardAuditorias'
+      );
+
+    }
+
+    else{
 
       ocultarModulo(
         'auditoriasMenu'
@@ -311,11 +461,25 @@ async function aplicarPermisos(){
 
     if(
 
-      !mapa.usuarios ||
+      mapa.usuarios &&
 
-      !mapa.usuarios.ver
+      mapa.usuarios.ver
 
     ){
+
+      mostrarElemento(
+        'usuariosMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardUsuarios'
+      );
+
+    }
+
+    else{
 
       ocultarModulo(
         'usuariosMenu'
@@ -339,11 +503,25 @@ async function aplicarPermisos(){
 
     if(
 
-      !mapa.historial ||
+      mapa.historial &&
 
-      !mapa.historial.ver
+      mapa.historial.ver
 
     ){
+
+      mostrarElemento(
+        'historialMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardHistorial'
+      );
+
+    }
+
+    else{
 
       ocultarModulo(
         'historialMenu'
@@ -556,8 +734,6 @@ async function mostrarModulo(modulo){
           renderInventario();
 
         }
-
-
 
 
 
@@ -942,10 +1118,6 @@ document.getElementById(
   'dashboardMenu'
 );
 
-
-
-
-
 if(dashboardMenu){
 
   dashboardMenu.addEventListener(
@@ -972,10 +1144,6 @@ const inventarioMenu =
 document.getElementById(
   'inventarioMenu'
 );
-
-
-
-
 
 if(inventarioMenu){
 
@@ -1004,10 +1172,6 @@ document.getElementById(
   'auditoriasMenu'
 );
 
-
-
-
-
 if(auditoriasMenu){
 
   auditoriasMenu.addEventListener(
@@ -1034,10 +1198,6 @@ const usuariosMenu =
 document.getElementById(
   'usuariosMenu'
 );
-
-
-
-
 
 if(usuariosMenu){
 
@@ -1066,10 +1226,6 @@ document.getElementById(
   'recepcionMenu'
 );
 
-
-
-
-
 if(recepcionMenu){
 
   recepcionMenu.addEventListener(
@@ -1096,10 +1252,6 @@ const historialMenu =
 document.getElementById(
   'historialMenu'
 );
-
-
-
-
 
 if(historialMenu){
 
