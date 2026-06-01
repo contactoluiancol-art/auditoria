@@ -107,17 +107,17 @@ accion
 
 if(
 
-```
+
 window.usuarioLogueado &&
 
 window.usuarioLogueado.rol === 'admin'
-```
+
 
 ){
 
-```
+
 return true;
-```
+
 
 }
 
@@ -127,25 +127,25 @@ return true;
 
 if(
 
-```
+
 !window.permisosUsuario ||
 
 !window.permisosUsuario[modulo]
-```
+
 
 ){
 
-```
+
 return false;
-```
+
 
 }
 
 return Boolean(
 
-```
+
 window.permisosUsuario[modulo][accion]
-```
+
 
 );
 
@@ -163,9 +163,9 @@ document.getElementById(id);
 
 if(elemento){
 
-```
+
 elemento.style.display = '';
-```
+
 
 }
 
@@ -183,9 +183,9 @@ document.getElementById(id);
 
 if(elemento){
 
-```
+
 elemento.style.display = 'none';
-```
+
 
 }
 
@@ -203,9 +203,9 @@ document.getElementById(id);
 
 if(card){
 
-```
+
 card.style.display = '';
-```
+
 
 }
 
@@ -239,7 +239,7 @@ async function aplicarPermisos(){
 
 try{
 
-```
+
 // ======================
 // ADMIN
 // ======================
@@ -387,9 +387,7 @@ permisos.forEach(item => {
 
 
 
-// ======================
 // INVENTARIO
-// ======================
 
 if(
 
@@ -404,8 +402,6 @@ if(
     'inventarioMenu'
   );
 
-
-
   mostrarCard(
     'cardInventario'
   );
@@ -418,8 +414,6 @@ else{
     'inventarioMenu'
   );
 
-
-
   ocultarCard(
     'cardInventario'
   );
@@ -430,9 +424,7 @@ else{
 
 
 
-// ======================
 // RECEPCION
-// ======================
 
 if(
 
@@ -447,8 +439,6 @@ if(
     'recepcionMenu'
   );
 
-
-
   mostrarCard(
     'cardRecepcion'
   );
@@ -461,8 +451,6 @@ else{
     'recepcionMenu'
   );
 
-
-
   ocultarCard(
     'cardRecepcion'
   );
@@ -473,9 +461,7 @@ else{
 
 
 
-// ======================
 // AUDITORIAS
-// ======================
 
 if(
 
@@ -490,8 +476,6 @@ if(
     'auditoriasMenu'
   );
 
-
-
   mostrarCard(
     'cardAuditorias'
   );
@@ -504,8 +488,6 @@ else{
     'auditoriasMenu'
   );
 
-
-
   ocultarCard(
     'cardAuditorias'
   );
@@ -516,9 +498,7 @@ else{
 
 
 
-// ======================
 // USUARIOS
-// ======================
 
 if(
 
@@ -533,8 +513,6 @@ if(
     'usuariosMenu'
   );
 
-
-
   mostrarCard(
     'cardUsuarios'
   );
@@ -547,8 +525,6 @@ else{
     'usuariosMenu'
   );
 
-
-
   ocultarCard(
     'cardUsuarios'
   );
@@ -559,9 +535,7 @@ else{
 
 
 
-// ======================
 // HISTORIAL
-// ======================
 
 if(
 
@@ -576,8 +550,6 @@ if(
     'historialMenu'
   );
 
-
-
   mostrarCard(
     'cardHistorial'
   );
@@ -590,22 +562,20 @@ else{
     'historialMenu'
   );
 
-
-
   ocultarCard(
     'cardHistorial'
   );
 
 }
-```
+
 
 }
 
 catch(error){
 
-```
+
 console.log(error);
-```
+
 
 }
 
@@ -625,7 +595,6 @@ descripcion
 
 try{
 
-```
 const usuario =
 
 window.usuarioLogueado &&
@@ -680,15 +649,14 @@ if(response.error){
   );
 
 }
-```
+
 
 }
 
 catch(error){
 
-```
 console.log(error);
-```
+
 
 }
 
@@ -723,11 +691,6 @@ if(cerrarSesionBtn){
 
 cerrarSesionBtn.addEventListener(
 
-```
-'click',
-
-cerrarSesion
-```
 
 );
 
