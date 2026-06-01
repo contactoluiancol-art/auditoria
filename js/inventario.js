@@ -1,4 +1,3 @@
-
 // ======================
 // EVITAR DUPLICAR SCRIPT
 // ======================
@@ -132,10 +131,70 @@ if(buscadorInventario){
 
 
 // ======================
+// VALIDAR PERMISO
+// ======================
+
+function tienePermiso(
+
+  modulo,
+  accion
+
+){
+
+  if(
+
+    !window.permisosUsuario ||
+
+    !window.permisosUsuario[modulo]
+
+  ){
+
+    return false;
+
+  }
+
+
+
+  return Boolean(
+
+    window.permisosUsuario[modulo][accion]
+
+  );
+
+}
+
+
+
+
+
+// ======================
 // LEER EXCEL
 // ======================
 
 function leerExcel(e){
+
+  // ======================
+  // VALIDAR
+  // ======================
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'crear'
+    )
+
+  ){
+
+    alert(
+      'No tiene permisos para cargar inventario'
+    );
+
+    return;
+
+  }
+
+
 
   var file =
   e.target.files[0];
@@ -270,7 +329,7 @@ window.renderInventario = function(datos){
 
     '<tr>' +
 
-      '<td colspan="4">' +
+      '<td colspan="5">' +
 
       'No hay inventario cargado' +
 
@@ -314,9 +373,135 @@ window.renderInventario = function(datos){
       (item.stock || 0) +
       '</td>' +
 
+
+
+      '<td>' +
+
+
+
+
+
+      (
+
+        tienePermiso(
+          'inventario',
+          'eliminar'
+        )
+
+        ?
+
+        '<button ' +
+
+          'class="btn-eliminar" ' +
+
+          'onclick="eliminarProducto(' +
+
+          "'" + item.codigo + "'" +
+
+          ')"' +
+
+        '>' +
+
+          'Eliminar' +
+
+        '</button>'
+
+        :
+
+        '-'
+
+      )
+
+
+
+
+
+      + '</td>' +
+
+
+
     '</tr>';
 
   });
+
+};
+
+
+
+
+
+// ======================
+// ELIMINAR PRODUCTO
+// ======================
+
+window.eliminarProducto = function(codigo){
+
+  // ======================
+  // VALIDAR
+  // ======================
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'eliminar'
+    )
+
+  ){
+
+    alert(
+      'No tiene permisos para eliminar productos'
+    );
+
+    return;
+
+  }
+
+
+
+  var confirmar = confirm(
+    '¿Eliminar producto?'
+  );
+
+
+
+  if(!confirmar){
+
+    return;
+
+  }
+
+
+
+  window.inventario =
+
+  window.inventario.filter(
+
+    function(item){
+
+      return item.codigo != codigo;
+
+    }
+
+  );
+
+
+
+  localStorage.setItem(
+
+    'inventario',
+
+    JSON.stringify(
+      window.inventario
+    )
+
+  );
+
+
+
+  renderInventario();
+
+  actualizarKPIs();
 
 };
 
@@ -329,6 +514,25 @@ window.renderInventario = function(datos){
 // ======================
 
 function buscarProducto(){
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'ver'
+    )
+
+  ){
+
+    alert(
+      'No tiene permisos para ver inventario'
+    );
+
+    return;
+
+  }
+
+
 
   var codigo =
   document.getElementById(
@@ -402,6 +606,29 @@ function buscarProducto(){
 // ======================
 
 function registrarConteo(){
+
+  // ======================
+  // VALIDAR
+  // ======================
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'editar'
+    )
+
+  ){
+
+    alert(
+      'No tiene permisos para registrar conteos'
+    );
+
+    return;
+
+  }
+
+
 
   if(!window.productoActual){
 
@@ -651,25 +878,44 @@ window.renderHistorial = function(filtro){
 
 
 
-      '<button ' +
-
-      'class="btn-eliminar" ' +
-
-      'onclick="eliminarRegistro(' +
-
-      "'" + item.codigo + "'" +
-
-      ')"' +
-
-      '>' +
-
-      'Eliminar' +
-
-      '</button>' +
 
 
+      (
 
-      '</td>' +
+        tienePermiso(
+          'inventario',
+          'eliminar'
+        )
+
+        ?
+
+        '<button ' +
+
+        'class="btn-eliminar" ' +
+
+        'onclick="eliminarRegistro(' +
+
+        "'" + item.codigo + "'" +
+
+        ')"' +
+
+        '>' +
+
+        'Eliminar' +
+
+        '</button>'
+
+        :
+
+        '-'
+
+      )
+
+
+
+
+
+      + '</td>' +
 
     '</tr>';
 
@@ -686,6 +932,29 @@ window.renderHistorial = function(filtro){
 // ======================
 
 window.eliminarRegistro = function(codigo){
+
+  // ======================
+  // VALIDAR
+  // ======================
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'eliminar'
+    )
+
+  ){
+
+    alert(
+      'No tiene permisos para eliminar registros'
+    );
+
+    return;
+
+  }
+
+
 
   var historial =
 
@@ -804,7 +1073,7 @@ window.actualizarKPIs = function(){
 
 
 
-    // EXACTOS
+
 
     if(fisico === sistema){
 
@@ -814,8 +1083,6 @@ window.actualizarKPIs = function(){
 
 
 
-    // FALTANTES
-
     if(fisico < sistema){
 
       faltantes++;
@@ -824,8 +1091,6 @@ window.actualizarKPIs = function(){
 
 
 
-    // SOBRANTES
-
     if(fisico > sistema){
 
       sobrantes++;
@@ -833,8 +1098,6 @@ window.actualizarKPIs = function(){
     }
 
 
-
-    // EXACTITUD REAL
 
     var mayor = Math.max(
       sistema,
@@ -998,6 +1261,29 @@ function filtrarInventario(){
 
 function exportarExcel(){
 
+  // ======================
+  // VALIDAR
+  // ======================
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'ver'
+    )
+
+  ){
+
+    alert(
+      'No tiene permisos para exportar'
+    );
+
+    return;
+
+  }
+
+
+
   var historial =
 
   JSON.parse(
@@ -1067,6 +1353,29 @@ function exportarExcel(){
 // ======================
 
 function reiniciarInventario(){
+
+  // ======================
+  // VALIDAR
+  // ======================
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'eliminar'
+    )
+
+  ){
+
+    alert(
+      'No tiene permisos para reiniciar inventario'
+    );
+
+    return;
+
+  }
+
+
 
   var confirmar = confirm(
     '¿Eliminar inventario e historial?'
@@ -1147,8 +1456,80 @@ function actualizarTexto(
 
 
 // ======================
+// OCULTAR BOTONES
+// ======================
+
+function aplicarPermisosInventario(){
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'crear'
+    )
+
+  ){
+
+    if(excelFile){
+
+      excelFile.style.display =
+      'none';
+
+    }
+
+  }
+
+
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'editar'
+    )
+
+  ){
+
+    if(guardarConteoBtn){
+
+      guardarConteoBtn.style.display =
+      'none';
+
+    }
+
+  }
+
+
+
+  if(
+
+    !tienePermiso(
+      'inventario',
+      'eliminar'
+    )
+
+  ){
+
+    if(reiniciarInventarioBtn){
+
+      reiniciarInventarioBtn.style.display =
+      'none';
+
+    }
+
+  }
+
+}
+
+
+
+
+
+// ======================
 // INICIO
 // ======================
+
+aplicarPermisosInventario();
 
 renderInventario();
 
@@ -1157,4 +1538,3 @@ renderHistorial();
 actualizarKPIs();
 
 }
-
