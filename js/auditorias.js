@@ -1062,4 +1062,4 @@ aplicarPermisosAuditorias();
 renderAuditorias();
 
 }
-```
+
