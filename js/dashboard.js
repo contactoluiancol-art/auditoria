@@ -283,4 +283,4 @@ async function aplicarPermisos(){
 // ======================
 
 aplicarPermisos();
-
+```
