@@ -33,12 +33,74 @@ if(btnGuardarAuditoria){
 
 
 // ======================
+// VALIDAR PERMISOS
+// ======================
+
+function tienePermiso(
+
+  modulo,
+  accion
+
+){
+
+  if(
+
+    !window.permisosUsuario ||
+
+    !window.permisosUsuario[modulo]
+
+  ){
+
+    return false;
+
+  }
+
+
+
+  return Boolean(
+
+    window.permisosUsuario[modulo][accion]
+
+  );
+
+}
+
+
+
+
+
+// ======================
 // GUARDAR AUDITORIA
 // ======================
 
 async function guardarAuditoria(){
 
   try{
+
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !tienePermiso(
+        'auditorias',
+        'crear'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para crear auditorías'
+      );
+
+      return;
+
+    }
+
+
+
+
 
     var proceso =
     document.getElementById(
@@ -68,6 +130,8 @@ async function guardarAuditoria(){
 
 
 
+
+
     if(
 
       !proceso ||
@@ -85,6 +149,10 @@ async function guardarAuditoria(){
     }
 
 
+
+
+
+    const response =
 
     await window.supabaseClient
 
@@ -116,9 +184,52 @@ async function guardarAuditoria(){
 
 
 
+
+
+    if(response.error){
+
+      console.log(response.error);
+
+      alert(
+        'Error guardando auditoría'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'CREAR',
+
+        'AUDITORIAS',
+
+        'Se creó auditoría del proceso ' +
+        proceso
+
+      );
+
+    }
+
+
+
+
+
     await renderAuditorias();
 
     limpiarFormulario();
+
+
 
 
 
@@ -167,7 +278,11 @@ async function renderAuditorias(){
 
 
 
+
+
     body.innerHTML = '';
+
+
 
 
 
@@ -193,8 +308,12 @@ async function renderAuditorias(){
 
 
 
+
+
     var data =
     response.data;
+
+
 
 
 
@@ -220,9 +339,13 @@ async function renderAuditorias(){
 
 
 
+
+
     data.forEach(function(item){
 
       var estadoClass = '';
+
+
 
 
 
@@ -249,9 +372,13 @@ async function renderAuditorias(){
 
 
 
+
+
       body.innerHTML +=
 
       '<tr>' +
+
+
 
 
 
@@ -267,6 +394,8 @@ async function renderAuditorias(){
 
 
 
+
+
       '<td>' +
 
       '<div class="hallazgo-box">' +
@@ -279,11 +408,15 @@ async function renderAuditorias(){
 
 
 
+
+
       '<td>' +
 
       item.responsable +
 
       '</td>' +
+
+
 
 
 
@@ -303,6 +436,8 @@ async function renderAuditorias(){
 
 
 
+
+
       '<td>' +
 
       new Date(
@@ -319,51 +454,138 @@ async function renderAuditorias(){
 
 
 
+
+
       '<td>' +
 
       '<div class="acciones-tabla">' +
 
 
 
-      '<button class="btn-pdf" onclick="generarPDF(' +
-
-      item.id +
-
-      ')">' +
-
-      'PDF' +
-
-      '</button>' +
 
 
+      // ======================
+      // PDF
+      // ======================
 
-      '<button class="btn-editar" onclick="editarEstado(' +
+      (
 
-      item.id +
+        tienePermiso(
+          'auditorias',
+          'ver'
+        )
 
-      ')">' +
+        ?
 
-      'Editar' +
+        '<button class="btn-pdf" onclick="generarPDF(' +
 
-      '</button>' +
+        item.id +
+
+        ')">' +
+
+        'PDF' +
+
+        '</button>'
+
+        :
+
+        ''
+
+      )
 
 
 
-      '<button class="btn-eliminar" onclick="eliminarAuditoria(' +
 
-      item.id +
 
-      ')">' +
+      +
 
-      'Eliminar' +
 
-      '</button>' +
+
+
+
+      // ======================
+      // EDITAR
+      // ======================
+
+      (
+
+        tienePermiso(
+          'auditorias',
+          'editar'
+        )
+
+        ?
+
+        '<button class="btn-editar" onclick="editarEstado(' +
+
+        item.id +
+
+        ')">' +
+
+        'Editar' +
+
+        '</button>'
+
+        :
+
+        ''
+
+      )
+
+
+
+
+
+      +
+
+
+
+
+
+      // ======================
+      // ELIMINAR
+      // ======================
+
+      (
+
+        tienePermiso(
+          'auditorias',
+          'eliminar'
+        )
+
+        ?
+
+        '<button class="btn-eliminar" onclick="eliminarAuditoria(' +
+
+        item.id +
+
+        ')">' +
+
+        'Eliminar' +
+
+        '</button>'
+
+        :
+
+        ''
+
+      )
+
+
+
+
+
+      +
+
+
 
 
 
       '</div>' +
 
       '</td>' +
+
+
 
 
 
@@ -394,8 +616,29 @@ window.generarPDF = async function(id){
   try{
 
     // ======================
-    // CONSULTAR AUDITORIA
+    // VALIDAR PERMISO
     // ======================
+
+    if(
+
+      !tienePermiso(
+        'auditorias',
+        'ver'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para generar PDF'
+      );
+
+      return;
+
+    }
+
+
+
+
 
     var response =
 
@@ -417,8 +660,12 @@ window.generarPDF = async function(id){
 
 
 
+
+
     var data =
     response.data;
+
+
 
 
 
@@ -434,11 +681,11 @@ window.generarPDF = async function(id){
 
 
 
-    // ======================
-    // JSPDF
-    // ======================
+
 
     const { jsPDF } = window.jspdf;
+
+
 
 
 
@@ -473,7 +720,7 @@ window.generarPDF = async function(id){
 
 
     // ======================
-    // FONDO GENERAL
+    // FONDO
     // ======================
 
     doc.setFillColor(
@@ -523,10 +770,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // ======================
-    // DECORACION HEADER
-    // ======================
 
     doc.setFillColor(
 
@@ -1006,8 +1249,6 @@ window.generarPDF = async function(id){
 
 
 
-    // TITULO
-
     doc.setFont(
       'helvetica',
       'bold'
@@ -1053,8 +1294,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // TEXTO
 
     doc.setFont(
       'helvetica',
@@ -1214,8 +1453,6 @@ window.generarPDF = async function(id){
 
 
 
-    // AUDITOR
-
     doc.line(
       25,
       278,
@@ -1238,8 +1475,6 @@ window.generarPDF = async function(id){
 
 
 
-
-    // RESPONSABLE
 
     doc.line(
       125,
@@ -1366,6 +1601,31 @@ window.eliminarAuditoria = async function(id){
 
   try{
 
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !tienePermiso(
+        'auditorias',
+        'eliminar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para eliminar auditorías'
+      );
+
+      return;
+
+    }
+
+
+
+
+
     var confirmar = confirm(
       '¿Eliminar auditoría?'
     );
@@ -1377,6 +1637,37 @@ window.eliminarAuditoria = async function(id){
       return;
 
     }
+
+
+
+
+
+    const consulta =
+
+    await window.supabaseClient
+
+    .from('auditorias')
+
+    .select('*')
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    )
+
+    .single();
+
+
+
+
+
+    const auditoria =
+    consulta.data;
+
+
 
 
 
@@ -1396,7 +1687,34 @@ window.eliminarAuditoria = async function(id){
 
 
 
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'ELIMINAR',
+
+        'AUDITORIAS',
+
+        'Se eliminó auditoría ' +
+        auditoria.proceso
+
+      );
+
+    }
+
+
+
+
+
     renderAuditorias();
+
+
 
 
 
@@ -1426,6 +1744,31 @@ window.editarEstado = async function(id){
 
   try{
 
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !tienePermiso(
+        'auditorias',
+        'editar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para editar auditorías'
+      );
+
+      return;
+
+    }
+
+
+
+
+
     var nuevoEstado = prompt(
       'Nuevo estado:'
     );
@@ -1437,6 +1780,8 @@ window.editarEstado = async function(id){
       return;
 
     }
+
+
 
 
 
@@ -1461,7 +1806,34 @@ window.editarEstado = async function(id){
 
 
 
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'EDITAR',
+
+        'AUDITORIAS',
+
+        'Se actualizó estado de auditoría ID ' +
+        id
+
+      );
+
+    }
+
+
+
+
+
     renderAuditorias();
+
+
 
 
 
@@ -1518,8 +1890,44 @@ function limpiarFormulario(){
 
 
 // ======================
+// APLICAR PERMISOS UI
+// ======================
+
+function aplicarPermisosAuditorias(){
+
+  // ======================
+  // CREAR
+  // ======================
+
+  if(
+
+    !tienePermiso(
+      'auditorias',
+      'crear'
+    )
+
+  ){
+
+    if(btnGuardarAuditoria){
+
+      btnGuardarAuditoria.style.display =
+      'none';
+
+    }
+
+  }
+
+}
+
+
+
+
+
+// ======================
 // INICIO
 // ======================
+
+aplicarPermisosAuditorias();
 
 renderAuditorias();
 
