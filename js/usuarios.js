@@ -152,7 +152,7 @@ async function guardarUsuario(){
 
 
     // ======================
-    // INSERTAR
+    // INSERTAR USUARIO
     // ======================
 
     const response =
@@ -197,6 +197,198 @@ async function guardarUsuario(){
 
       alert(
         'Error guardando usuario'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // GUARDAR PERMISOS
+    // ======================
+
+    const permisos = [
+
+      {
+
+        usuario: usuario,
+
+        modulo:'inventario',
+
+        ver:
+        document.getElementById(
+          'inventarioVer'
+        ).checked,
+
+        crear:
+        document.getElementById(
+          'inventarioCrear'
+        ).checked,
+
+        editar:
+        document.getElementById(
+          'inventarioEditar'
+        ).checked,
+
+        eliminar:
+        document.getElementById(
+          'inventarioEliminar'
+        ).checked
+
+      },
+
+
+
+
+
+      {
+
+        usuario: usuario,
+
+        modulo:'recepcion',
+
+        ver:
+        document.getElementById(
+          'recepcionVer'
+        ).checked,
+
+        crear:
+        document.getElementById(
+          'recepcionCrear'
+        ).checked,
+
+        editar:
+        document.getElementById(
+          'recepcionEditar'
+        ).checked,
+
+        eliminar:
+        document.getElementById(
+          'recepcionEliminar'
+        ).checked
+
+      },
+
+
+
+
+
+      {
+
+        usuario: usuario,
+
+        modulo:'auditorias',
+
+        ver:
+        document.getElementById(
+          'auditoriasVer'
+        ).checked,
+
+        crear:
+        document.getElementById(
+          'auditoriasCrear'
+        ).checked,
+
+        editar:
+        document.getElementById(
+          'auditoriasEditar'
+        ).checked,
+
+        eliminar:
+        document.getElementById(
+          'auditoriasEliminar'
+        ).checked
+
+      },
+
+
+
+
+
+      {
+
+        usuario: usuario,
+
+        modulo:'usuarios',
+
+        ver:
+        document.getElementById(
+          'usuariosVer'
+        ).checked,
+
+        crear:
+        document.getElementById(
+          'usuariosCrear'
+        ).checked,
+
+        editar:
+        document.getElementById(
+          'usuariosEditar'
+        ).checked,
+
+        eliminar:
+        document.getElementById(
+          'usuariosEliminar'
+        ).checked
+
+      },
+
+
+
+
+
+      {
+
+        usuario: usuario,
+
+        modulo:'historial',
+
+        ver:
+        document.getElementById(
+          'historialVer'
+        ).checked,
+
+        crear:false,
+
+        editar:false,
+
+        eliminar:
+        document.getElementById(
+          'historialEliminar'
+        ).checked
+
+      }
+
+    ];
+
+
+
+
+
+    const permisosResponse =
+
+    await window.supabaseClient
+
+    .from('permisos')
+
+    .insert(permisos);
+
+
+
+
+
+    if(permisosResponse.error){
+
+      console.log(
+        permisosResponse.error
+      );
+
+      alert(
+        'Error guardando permisos'
       );
 
       return;
@@ -380,10 +572,6 @@ async function renderUsuarios(){
 
 
 
-        // ======================
-        // USUARIO
-        // ======================
-
         '<td>' +
 
           (item.usuario || '-') +
@@ -394,10 +582,6 @@ async function renderUsuarios(){
 
 
 
-        // ======================
-        // ROL
-        // ======================
-
         '<td>' +
 
           (item.rol || '-') +
@@ -407,10 +591,6 @@ async function renderUsuarios(){
 
 
 
-
-        // ======================
-        // ESTADO
-        // ======================
 
         '<td>' +
 
@@ -430,10 +610,6 @@ async function renderUsuarios(){
 
 
 
-        // ======================
-        // ACCIONES
-        // ======================
-
         '<td>' +
 
           '<div class="acciones-tabla">' +
@@ -441,8 +617,6 @@ async function renderUsuarios(){
 
 
 
-
-            // EDITAR
 
             '<button ' +
 
@@ -463,8 +637,6 @@ async function renderUsuarios(){
 
 
 
-
-            // ELIMINAR
 
             '<button ' +
 
@@ -563,10 +735,6 @@ window.editarUsuario = async function(id){
 
 
 
-    // ======================
-    // PASSWORD
-    // ======================
-
     const nuevaPassword = prompt(
 
       'Nueva contraseña:',
@@ -588,10 +756,6 @@ window.editarUsuario = async function(id){
 
 
 
-
-    // ======================
-    // ROL
-    // ======================
 
     const nuevoRol = prompt(
 
@@ -621,10 +785,6 @@ compras`,
 
 
 
-    // ======================
-    // ESTADO
-    // ======================
-
     const nuevoEstado = prompt(
 
 `Nuevo estado:
@@ -639,10 +799,6 @@ Inactivo`,
 
 
 
-
-    // ======================
-    // UPDATE
-    // ======================
 
     const update =
 
@@ -675,10 +831,6 @@ Inactivo`,
 
 
 
-    // ======================
-    // ERROR
-    // ======================
-
     if(update.error){
 
       console.log(
@@ -690,29 +842,6 @@ Inactivo`,
       );
 
       return;
-
-    }
-
-
-
-
-
-    // ======================
-    // HISTORIAL
-    // ======================
-
-    if(typeof guardarHistorial === 'function'){
-
-      await guardarHistorial(
-
-        'EDITAR',
-
-        'USUARIOS',
-
-        'Se actualizó el usuario ' +
-        usuario.usuario
-
-      );
 
     }
 
@@ -770,10 +899,6 @@ window.eliminarUsuario = async function(id){
 
 
 
-    // ======================
-    // CONSULTAR
-    // ======================
-
     const consulta =
 
     await window.supabaseClient
@@ -803,10 +928,6 @@ window.eliminarUsuario = async function(id){
 
 
 
-    // ======================
-    // ELIMINAR
-    // ======================
-
     const response =
 
     await window.supabaseClient
@@ -827,10 +948,6 @@ window.eliminarUsuario = async function(id){
 
 
 
-    // ======================
-    // ERROR
-    // ======================
-
     if(response.error){
 
       console.log(
@@ -850,23 +967,22 @@ window.eliminarUsuario = async function(id){
 
 
     // ======================
-    // HISTORIAL
+    // ELIMINAR PERMISOS
     // ======================
 
-    if(typeof guardarHistorial === 'function'){
+    await window.supabaseClient
 
-      await guardarHistorial(
+    .from('permisos')
 
-        'ELIMINAR',
+    .delete()
 
-        'USUARIOS',
+    .eq(
 
-        'Se eliminó el usuario ' +
-        usuario.usuario
+      'usuario',
 
-      );
+      usuario.usuario
 
-    }
+    );
 
 
 
@@ -980,6 +1096,26 @@ function limpiarFormulario(){
   document.getElementById(
     'rolUsuario'
   ).value = 'admin';
+
+
+
+
+
+  // ======================
+  // LIMPIAR CHECKBOXES
+  // ======================
+
+  document.querySelectorAll(
+
+    '.permisos-container input[type="checkbox"]'
+
+  )
+
+  .forEach(check => {
+
+    check.checked = false;
+
+  });
 
 }
 
