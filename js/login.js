@@ -30,7 +30,7 @@ const supabaseUrl =
 
 const supabaseKey =
 
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'TU_SUPABASE_KEY';
 
 
 
@@ -89,9 +89,12 @@ if(form){
 
 async function login(e){
 
+  // ======================
   // EVITAR RECARGA
+  // ======================
 
   e.preventDefault();
+
 
 
 
@@ -106,7 +109,9 @@ async function login(e){
     'usuario'
   )
   .value
-  .trim();
+  .trim()
+  .toLowerCase();
+
 
 
 
@@ -122,28 +127,16 @@ async function login(e){
 
 
 
-  const rol =
-
-  document.getElementById(
-    'rol'
-  )
-  .value;
-
-
-
-
 
   // ======================
-  // VALIDAR CAMPOS
+  // VALIDAR
   // ======================
 
   if(
 
     !usuario ||
 
-    !password ||
-
-    !rol
+    !password
 
   ){
 
@@ -163,7 +156,7 @@ async function login(e){
   // CONSULTAR USUARIO
   // ======================
 
-  const { data, error } =
+  const response =
 
   await supabaseClient
 
@@ -171,13 +164,35 @@ async function login(e){
 
   .select('*')
 
-  .eq('usuario', usuario)
+  .eq(
 
-  .eq('password', password)
+    'usuario',
 
-  .eq('rol', rol)
+    usuario
+
+  )
+
+  .eq(
+
+    'password',
+
+    password
+
+  )
 
   .limit(1);
+
+
+
+
+
+  const data =
+  response.data;
+
+
+
+  const error =
+  response.error;
 
 
 
@@ -189,10 +204,7 @@ async function login(e){
 
   if(error){
 
-    console.log(
-      'ERROR SUPABASE:',
-      error
-    );
+    console.log(error);
 
     alert(
       'Error conectando con Supabase'
@@ -231,6 +243,40 @@ async function login(e){
 
 
   // ======================
+  // USUARIO
+  // ======================
+
+  const usuarioData =
+  data[0];
+
+
+
+
+
+  // ======================
+  // VALIDAR ESTADO
+  // ======================
+
+  if(
+
+    usuarioData.estado ===
+    'Inactivo'
+
+  ){
+
+    alert(
+      'Usuario inactivo'
+    );
+
+    return;
+
+  }
+
+
+
+
+
+  // ======================
   // GUARDAR SESION
   // ======================
 
@@ -239,7 +285,7 @@ async function login(e){
     'usuarioLogueado',
 
     JSON.stringify(
-      data[0]
+      usuarioData
     )
 
   );
@@ -253,7 +299,12 @@ async function login(e){
   // ======================
 
   alert(
-    'Login correcto'
+
+`Bienvenido ${usuarioData.usuario}
+
+Rol:
+${usuarioData.rol}`
+
   );
 
 
