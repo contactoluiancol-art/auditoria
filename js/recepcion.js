@@ -21,6 +21,30 @@ function tienePermiso(
 
 ){
 
+  // ======================
+  // ADMIN
+  // ======================
+
+  if(
+
+    window.usuarioLogueado &&
+
+    window.usuarioLogueado.rol === 'admin'
+
+  ){
+
+    return true;
+
+  }
+
+
+
+
+
+  // ======================
+  // VALIDAR
+  // ======================
+
   if(
 
     !window.permisosUsuario ||
@@ -83,10 +107,6 @@ if(guardarRecepcionBtn){
 async function guardarRecepcion(){
 
   try{
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
 
     if(
 
@@ -189,10 +209,6 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // VALIDAR
-    // ======================
-
     if(
 
       !proveedor ||
@@ -214,10 +230,6 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // PORCENTAJE
-    // ======================
-
     const porcentajeRevisado =
 
     (
@@ -229,19 +241,11 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // PDF
-    // ======================
-
     let pdfUrl = '';
 
 
 
 
-
-    // ======================
-    // SUBIR PDF
-    // ======================
 
     if(pdfFile){
 
@@ -321,10 +325,6 @@ async function guardarRecepcion(){
 
 
 
-
-    // ======================
-    // INSERTAR
-    // ======================
 
     const response =
 
@@ -407,10 +407,6 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // HISTORIAL
-    // ======================
-
     if(typeof guardarHistorial === 'function'){
 
       await guardarHistorial(
@@ -429,10 +425,6 @@ async function guardarRecepcion(){
 
 
 
-
-    // ======================
-    // NOTIFICACION
-    // ======================
 
     crearNotificacion(
 
@@ -458,10 +450,6 @@ ${estado}`
 
 
 
-
-    // ======================
-    // ACTUALIZAR
-    // ======================
 
     renderRecepciones();
 
@@ -989,10 +977,6 @@ window.validarRecepcion = async function(id){
 
   try{
 
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
-
     if(
 
       !tienePermiso(
@@ -1109,10 +1093,6 @@ Gestionado`
 
 
 
-    // ======================
-    // HISTORIAL
-    // ======================
-
     if(typeof guardarHistorial === 'function'){
 
       await guardarHistorial(
@@ -1179,10 +1159,6 @@ ${nuevoEstado}`
 window.eliminarRecepcion = async function(id){
 
   try{
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
 
     if(
 
@@ -1288,10 +1264,6 @@ window.eliminarRecepcion = async function(id){
 
 
 
-    // ======================
-    // HISTORIAL
-    // ======================
-
     if(typeof guardarHistorial === 'function'){
 
       await guardarHistorial(
@@ -1376,11 +1348,41 @@ async function actualizarKPIsRecepcion(){
 
 
 
+    const kpiRecepciones =
     document.getElementById(
       'kpiRecepciones'
-    ).innerText =
+    );
 
-    recepciones.length;
+
+
+    const kpiRevisado =
+    document.getElementById(
+      'kpiRevisado'
+    );
+
+
+
+    const kpiNovedades =
+    document.getElementById(
+      'kpiNovedades'
+    );
+
+
+
+    const kpiFaltantes =
+    document.getElementById(
+      'kpiFaltantes'
+    );
+
+
+
+
+
+    if(kpiRecepciones){
+
+      kpiRecepciones.innerText =
+      recepciones.length;
+    }
 
 
 
@@ -1388,21 +1390,27 @@ async function actualizarKPIsRecepcion(){
 
     if(recepciones.length === 0){
 
-      document.getElementById(
-        'kpiRevisado'
-      ).innerText = '0%';
+      if(kpiRevisado){
+
+        kpiRevisado.innerText =
+        '0%';
+      }
 
 
 
-      document.getElementById(
-        'kpiNovedades'
-      ).innerText = '0';
+      if(kpiNovedades){
+
+        kpiNovedades.innerText =
+        '0';
+      }
 
 
 
-      document.getElementById(
-        'kpiFaltantes'
-      ).innerText = '0';
+      if(kpiFaltantes){
+
+        kpiFaltantes.innerText =
+        '0';
+      }
 
 
 
@@ -1421,38 +1429,44 @@ async function actualizarKPIsRecepcion(){
 
 
 
-    document.getElementById(
-      'kpiRevisado'
-    ).innerText =
+    if(kpiRevisado){
 
-    Number(
+      kpiRevisado.innerText =
+
+      Number(
+
+        ultimaRecepcion
+        .porcentaje_revisado || 0
+
+      ).toFixed(1) + '%';
+
+    }
+
+
+
+
+
+    if(kpiNovedades){
+
+      kpiNovedades.innerText =
 
       ultimaRecepcion
-      .porcentaje_revisado || 0
+      .novedades || 0;
 
-    ).toFixed(1) + '%';
-
-
-
-
-
-    document.getElementById(
-      'kpiNovedades'
-    ).innerText =
-
-    ultimaRecepcion
-    .novedades || 0;
+    }
 
 
 
 
 
-    document.getElementById(
-      'kpiFaltantes'
-    ).innerText =
+    if(kpiFaltantes){
 
-    ultimaRecepcion
-    .faltantes || 0;
+      kpiFaltantes.innerText =
+
+      ultimaRecepcion
+      .faltantes || 0;
+
+    }
 
   }
 
@@ -1609,10 +1623,6 @@ function limpiarFormulario(){
 // ======================
 
 function aplicarPermisosRecepcion(){
-
-  // ======================
-  // BOTON CREAR
-  // ======================
 
   if(
 
