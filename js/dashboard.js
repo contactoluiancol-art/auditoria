@@ -100,9 +100,7 @@ accion
 
 ){
 
-// ======================
 // ADMIN
-// ======================
 
 if(
 
@@ -120,9 +118,7 @@ return true;
 
 }
 
-// ======================
 // VALIDAR
-// ======================
 
 if(
 
@@ -239,9 +235,7 @@ async function aplicarPermisos(){
 try{
 
 ```
-// ======================
 // ADMIN
-// ======================
 
 if(
 
@@ -249,49 +243,17 @@ if(
 
 ){
 
-  mostrarElemento(
-    'inventarioMenu'
-  );
+  mostrarElemento('inventarioMenu');
+  mostrarElemento('recepcionMenu');
+  mostrarElemento('auditoriasMenu');
+  mostrarElemento('usuariosMenu');
+  mostrarElemento('historialMenu');
 
-  mostrarElemento(
-    'recepcionMenu'
-  );
-
-  mostrarElemento(
-    'auditoriasMenu'
-  );
-
-  mostrarElemento(
-    'usuariosMenu'
-  );
-
-  mostrarElemento(
-    'historialMenu'
-  );
-
-
-
-  mostrarCard(
-    'cardInventario'
-  );
-
-  mostrarCard(
-    'cardRecepcion'
-  );
-
-  mostrarCard(
-    'cardAuditorias'
-  );
-
-  mostrarCard(
-    'cardUsuarios'
-  );
-
-  mostrarCard(
-    'cardHistorial'
-  );
-
-
+  mostrarCard('cardInventario');
+  mostrarCard('cardRecepcion');
+  mostrarCard('cardAuditorias');
+  mostrarCard('cardUsuarios');
+  mostrarCard('cardHistorial');
 
   return;
 
@@ -301,9 +263,7 @@ if(
 
 
 
-// ======================
-// CONSULTAR PERMISOS
-// ======================
+// CONSULTAR
 
 const response =
 
@@ -346,9 +306,7 @@ response.data || [];
 
 
 
-// ======================
 // LIMPIAR
-// ======================
 
 window.permisosUsuario = {};
 
@@ -356,9 +314,7 @@ window.permisosUsuario = {};
 
 
 
-// ======================
 // MAPA
-// ======================
 
 permisos.forEach(item => {
 
@@ -386,9 +342,7 @@ permisos.forEach(item => {
 
 
 
-// ======================
 // INVENTARIO
-// ======================
 
 if(
 
@@ -403,8 +357,6 @@ if(
     'inventarioMenu'
   );
 
-
-
   mostrarCard(
     'cardInventario'
   );
@@ -417,8 +369,6 @@ else{
     'inventarioMenu'
   );
 
-
-
   ocultarCard(
     'cardInventario'
   );
@@ -429,9 +379,7 @@ else{
 
 
 
-// ======================
 // RECEPCION
-// ======================
 
 if(
 
@@ -446,8 +394,6 @@ if(
     'recepcionMenu'
   );
 
-
-
   mostrarCard(
     'cardRecepcion'
   );
@@ -460,8 +406,6 @@ else{
     'recepcionMenu'
   );
 
-
-
   ocultarCard(
     'cardRecepcion'
   );
@@ -472,9 +416,7 @@ else{
 
 
 
-// ======================
 // AUDITORIAS
-// ======================
 
 if(
 
@@ -489,8 +431,6 @@ if(
     'auditoriasMenu'
   );
 
-
-
   mostrarCard(
     'cardAuditorias'
   );
@@ -503,8 +443,6 @@ else{
     'auditoriasMenu'
   );
 
-
-
   ocultarCard(
     'cardAuditorias'
   );
@@ -515,9 +453,7 @@ else{
 
 
 
-// ======================
 // USUARIOS
-// ======================
 
 if(
 
@@ -532,8 +468,6 @@ if(
     'usuariosMenu'
   );
 
-
-
   mostrarCard(
     'cardUsuarios'
   );
@@ -546,8 +480,6 @@ else{
     'usuariosMenu'
   );
 
-
-
   ocultarCard(
     'cardUsuarios'
   );
@@ -558,9 +490,7 @@ else{
 
 
 
-// ======================
 // HISTORIAL
-// ======================
 
 if(
 
@@ -575,8 +505,6 @@ if(
     'historialMenu'
   );
 
-
-
   mostrarCard(
     'cardHistorial'
   );
@@ -588,8 +516,6 @@ else{
   ocultarElemento(
     'historialMenu'
   );
-
-
 
   ocultarCard(
     'cardHistorial'
@@ -713,6 +639,7 @@ window.location.href =
 // ======================
 
 const cerrarSesionBtn =
+
 document.getElementById(
 'cerrarSesionBtn'
 );
