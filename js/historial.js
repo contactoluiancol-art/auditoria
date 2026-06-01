@@ -109,6 +109,38 @@ async function renderHistorialSistema(){
 
       `;
 
+
+
+
+
+      // ======================
+      // LIMPIAR KPIS
+      // ======================
+
+      document.getElementById(
+        'kpiHistorial'
+      ).innerText = '0';
+
+
+
+      document.getElementById(
+        'kpiInventario'
+      ).innerText = '0';
+
+
+
+      document.getElementById(
+        'kpiAuditorias'
+      ).innerText = '0';
+
+
+
+      document.getElementById(
+        'kpiRecepcion'
+      ).innerText = '0';
+
+
+
       return;
 
     }
@@ -132,7 +164,9 @@ async function renderHistorialSistema(){
 
 
     let inventario = 0;
+
     let auditorias = 0;
+
     let recepcion = 0;
 
 
@@ -425,6 +459,205 @@ window.eliminarHistorial = async function(id){
 
 
 // ======================
+// ELIMINAR TODO
+// ======================
+
+window.eliminarTodoHistorial = async function(){
+
+  try{
+
+    const confirmar = confirm(
+
+      '¿Desea eliminar TODO el historial?'
+
+    );
+
+
+
+
+
+    if(!confirmar){
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // CONSULTAR IDS
+    // ======================
+
+    const consulta =
+
+    await window.supabaseClient
+
+    .from('historial')
+
+    .select('id');
+
+
+
+
+
+    if(consulta.error){
+
+      console.log(
+        consulta.error
+      );
+
+      alert(
+        'Error consultando historial'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    const registros =
+    consulta.data || [];
+
+
+
+
+
+    // ======================
+    // VALIDAR
+    // ======================
+
+    if(registros.length === 0){
+
+      alert(
+        'No hay historial'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // IDS
+    // ======================
+
+    const ids =
+
+    registros.map(item => item.id);
+
+
+
+
+
+    // ======================
+    // ELIMINAR
+    // ======================
+
+    const eliminar =
+
+    await window.supabaseClient
+
+    .from('historial')
+
+    .delete()
+
+    .in(
+
+      'id',
+
+      ids
+
+    );
+
+
+
+
+
+    if(eliminar.error){
+
+      console.log(
+        eliminar.error
+      );
+
+      alert(
+        'Error eliminando historial'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // LIMPIAR KPIS
+    // ======================
+
+    document.getElementById(
+      'kpiHistorial'
+    ).innerText = '0';
+
+
+
+    document.getElementById(
+      'kpiInventario'
+    ).innerText = '0';
+
+
+
+    document.getElementById(
+      'kpiAuditorias'
+    ).innerText = '0';
+
+
+
+    document.getElementById(
+      'kpiRecepcion'
+    ).innerText = '0';
+
+
+
+
+
+    // ======================
+    // ACTUALIZAR TABLA
+    // ======================
+
+    renderHistorialSistema();
+
+
+
+
+
+    alert(
+      'Historial eliminado correctamente'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+
+
+
+
+// ======================
 // BUSCADOR
 // ======================
 
@@ -494,90 +727,3 @@ if(buscarHistorial){
 renderHistorialSistema();
 
 }
-
-
-// ======================
-// ELIMINAR TODO
-// ======================
-
-window.eliminarTodoHistorial = async function(){
-
-  try{
-
-    const confirmar = confirm(
-
-      '¿Desea eliminar TODO el historial?'
-
-    );
-
-
-
-
-
-    if(!confirmar){
-
-      return;
-
-    }
-
-
-
-
-
-    const response =
-
-    await window.supabaseClient
-
-    .from('historial')
-
-    .delete()
-
-    .neq(
-
-      'id',
-
-      0
-
-    );
-
-
-
-
-
-    if(response.error){
-
-      console.log(
-        response.error
-      );
-
-      alert(
-        'Error eliminando historial'
-      );
-
-      return;
-
-    }
-
-
-
-
-
-    renderHistorialSistema();
-
-
-
-
-
-    alert(
-      'Historial eliminado correctamente'
-    );
-
-  }
-
-  catch(error){
-
-    console.log(error);
-
-  }
-
-};
