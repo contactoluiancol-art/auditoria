@@ -1,4 +1,4 @@
-```javascript
+
 // ======================
 // VALIDAR LIBRERIA SUPABASE
 // ======================
@@ -699,4 +699,4 @@ window.guardarHistorial = async function(
   }
 
 };
-```
+
