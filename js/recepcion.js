@@ -1,3 +1,4 @@
+
 // ======================
 // EVITAR DUPLICAR
 // ======================
@@ -5,67 +6,6 @@
 if(typeof window.recepcionCargado === 'undefined'){
 
 window.recepcionCargado = true;
-
-
-
-
-
-// ======================
-// VALIDAR PERMISOS
-// ======================
-
-function tienePermiso(
-
-  modulo,
-  accion
-
-){
-
-  // ======================
-  // ADMIN
-  // ======================
-
-  if(
-
-    window.usuarioLogueado &&
-
-    window.usuarioLogueado.rol === 'admin'
-
-  ){
-
-    return true;
-
-  }
-
-
-
-
-
-  // ======================
-  // VALIDAR
-  // ======================
-
-  if(
-
-    !window.permisosUsuario ||
-
-    !window.permisosUsuario[modulo]
-
-  ){
-
-    return false;
-
-  }
-
-
-
-  return Boolean(
-
-    window.permisosUsuario[modulo][accion]
-
-  );
-
-}
 
 
 
@@ -108,9 +48,13 @@ async function guardarRecepcion(){
 
   try{
 
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'recepcion',
         'crear'
       )
@@ -118,7 +62,7 @@ async function guardarRecepcion(){
     ){
 
       alert(
-        'No tiene permisos para crear recepciones'
+        'No tiene permisos'
       );
 
       return;
@@ -209,6 +153,10 @@ async function guardarRecepcion(){
 
 
 
+    // ======================
+    // VALIDAR
+    // ======================
+
     if(
 
       !proveedor ||
@@ -230,6 +178,10 @@ async function guardarRecepcion(){
 
 
 
+    // ======================
+    // PORCENTAJE
+    // ======================
+
     const porcentajeRevisado =
 
     (
@@ -241,11 +193,19 @@ async function guardarRecepcion(){
 
 
 
+    // ======================
+    // PDF
+    // ======================
+
     let pdfUrl = '';
 
 
 
 
+
+    // ======================
+    // SUBIR PDF
+    // ======================
 
     if(pdfFile){
 
@@ -325,6 +285,10 @@ async function guardarRecepcion(){
 
 
 
+
+    // ======================
+    // INSERTAR
+    // ======================
 
     const response =
 
@@ -407,6 +371,10 @@ async function guardarRecepcion(){
 
 
 
+    // ======================
+    // HISTORIAL
+    // ======================
+
     if(typeof guardarHistorial === 'function'){
 
       await guardarHistorial(
@@ -425,6 +393,10 @@ async function guardarRecepcion(){
 
 
 
+
+    // ======================
+    // NOTIFICACION
+    // ======================
 
     crearNotificacion(
 
@@ -450,6 +422,10 @@ ${estado}`
 
 
 
+
+    // ======================
+    // ACTUALIZAR
+    // ======================
 
     renderRecepciones();
 
@@ -487,7 +463,7 @@ ${estado}`
 // RENDER
 // ======================
 
-async function renderRecepciones(){
+window.renderRecepciones = async function(){
 
   try{
 
@@ -718,8 +694,6 @@ async function renderRecepciones(){
 
 
 
-          <!-- PDF -->
-
           <td>
 
             ${
@@ -753,8 +727,6 @@ async function renderRecepciones(){
 
 
 
-          <!-- OBSERVACION -->
-
           <td>
 
             <button
@@ -771,8 +743,6 @@ async function renderRecepciones(){
 
 
 
-
-          <!-- COMENTARIO -->
 
           <td>
 
@@ -791,8 +761,6 @@ async function renderRecepciones(){
 
 
 
-          <!-- ACCIONES -->
-
           <td>
 
             <div class="acciones-tabla">
@@ -803,7 +771,7 @@ async function renderRecepciones(){
 
               ${
 
-                tienePermiso(
+                window.tienePermiso(
                   'recepcion',
                   'editar'
                 )
@@ -835,7 +803,7 @@ async function renderRecepciones(){
 
               ${
 
-                tienePermiso(
+                window.tienePermiso(
                   'recepcion',
                   'eliminar'
                 )
@@ -883,7 +851,7 @@ async function renderRecepciones(){
 
   }
 
-}
+};
 
 
 
@@ -979,7 +947,7 @@ window.validarRecepcion = async function(id){
 
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'recepcion',
         'editar'
       )
@@ -987,7 +955,7 @@ window.validarRecepcion = async function(id){
     ){
 
       alert(
-        'No tiene permisos para validar recepciones'
+        'No tiene permisos'
       );
 
       return;
@@ -1000,7 +968,7 @@ window.validarRecepcion = async function(id){
 
     const comentario = prompt(
 
-      'Ingrese comentario de validación'
+      'Ingrese comentario'
 
     );
 
@@ -1162,7 +1130,7 @@ window.eliminarRecepcion = async function(id){
 
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'recepcion',
         'eliminar'
       )
@@ -1170,7 +1138,7 @@ window.eliminarRecepcion = async function(id){
     ){
 
       alert(
-        'No tiene permisos para eliminar recepciones'
+        'No tiene permisos'
       );
 
       return;
@@ -1310,10 +1278,10 @@ window.eliminarRecepcion = async function(id){
 
 
 // ======================
-// KPI RECEPCION
+// KPIS
 // ======================
 
-async function actualizarKPIsRecepcion(){
+window.actualizarKPIsRecepcion = async function(){
 
   try{
 
@@ -1348,41 +1316,11 @@ async function actualizarKPIsRecepcion(){
 
 
 
-    const kpiRecepciones =
     document.getElementById(
       'kpiRecepciones'
-    );
+    ).innerText =
 
-
-
-    const kpiRevisado =
-    document.getElementById(
-      'kpiRevisado'
-    );
-
-
-
-    const kpiNovedades =
-    document.getElementById(
-      'kpiNovedades'
-    );
-
-
-
-    const kpiFaltantes =
-    document.getElementById(
-      'kpiFaltantes'
-    );
-
-
-
-
-
-    if(kpiRecepciones){
-
-      kpiRecepciones.innerText =
-      recepciones.length;
-    }
+    recepciones.length;
 
 
 
@@ -1390,27 +1328,21 @@ async function actualizarKPIsRecepcion(){
 
     if(recepciones.length === 0){
 
-      if(kpiRevisado){
-
-        kpiRevisado.innerText =
-        '0%';
-      }
+      document.getElementById(
+        'kpiRevisado'
+      ).innerText = '0%';
 
 
 
-      if(kpiNovedades){
-
-        kpiNovedades.innerText =
-        '0';
-      }
+      document.getElementById(
+        'kpiNovedades'
+      ).innerText = '0';
 
 
 
-      if(kpiFaltantes){
-
-        kpiFaltantes.innerText =
-        '0';
-      }
+      document.getElementById(
+        'kpiFaltantes'
+      ).innerText = '0';
 
 
 
@@ -1429,44 +1361,38 @@ async function actualizarKPIsRecepcion(){
 
 
 
-    if(kpiRevisado){
+    document.getElementById(
+      'kpiRevisado'
+    ).innerText =
 
-      kpiRevisado.innerText =
-
-      Number(
-
-        ultimaRecepcion
-        .porcentaje_revisado || 0
-
-      ).toFixed(1) + '%';
-
-    }
-
-
-
-
-
-    if(kpiNovedades){
-
-      kpiNovedades.innerText =
+    Number(
 
       ultimaRecepcion
-      .novedades || 0;
+      .porcentaje_revisado || 0
 
-    }
-
-
+    ).toFixed(1) + '%';
 
 
 
-    if(kpiFaltantes){
 
-      kpiFaltantes.innerText =
 
-      ultimaRecepcion
-      .faltantes || 0;
+    document.getElementById(
+      'kpiNovedades'
+    ).innerText =
 
-    }
+    ultimaRecepcion
+    .novedades || 0;
+
+
+
+
+
+    document.getElementById(
+      'kpiFaltantes'
+    ).innerText =
+
+    ultimaRecepcion
+    .faltantes || 0;
 
   }
 
@@ -1476,7 +1402,7 @@ async function actualizarKPIsRecepcion(){
 
   }
 
-}
+};
 
 
 
@@ -1619,14 +1545,14 @@ function limpiarFormulario(){
 
 
 // ======================
-// APLICAR PERMISOS UI
+// PERMISOS UI
 // ======================
 
 function aplicarPermisosRecepcion(){
 
   if(
 
-    !tienePermiso(
+    !window.tienePermiso(
       'recepcion',
       'crear'
     )
@@ -1659,3 +1585,4 @@ renderRecepciones();
 actualizarKPIsRecepcion();
 
 }
+```
