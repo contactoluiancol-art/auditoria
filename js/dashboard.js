@@ -689,13 +689,21 @@ document.getElementById(
 
 if(cerrarSesionBtn){
 
-cerrarSesionBtn.addEventListener(
-
-
+elemento.addEventListener(
+  'click',
+  cerrarSesion
 );
 
 }
+// ======================
+// MENU INVENTARIO
+// ======================
 
+const inventarioMenu =
+
+document.getElementById(
+'inventarioMenu'
+);
 // ======================
 // INICIO
 // ======================
