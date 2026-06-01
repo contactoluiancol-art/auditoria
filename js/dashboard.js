@@ -24,7 +24,7 @@ const supabaseUrl =
 
 
 const supabaseKey =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'TU_SUPABASE_KEY';
 
 
 
@@ -51,7 +51,7 @@ window.supabase.createClient(
 // USUARIO LOGUEADO
 // ======================
 
-const usuarioLogueado =
+window.usuarioLogueado =
 
 JSON.parse(
 
@@ -69,7 +69,7 @@ JSON.parse(
 // VALIDAR SESION
 // ======================
 
-if(!usuarioLogueado){
+if(!window.usuarioLogueado){
 
   window.location.href =
   'index.html';
@@ -105,6 +105,69 @@ window.permisosUsuario = {};
 
 
 // ======================
+// VALIDAR PERMISOS GLOBAL
+// ======================
+
+window.tienePermiso = function(
+
+  modulo,
+  accion
+
+){
+
+  // ======================
+  // ADMIN VE TODO
+  // ======================
+
+  if(
+
+    window.usuarioLogueado &&
+
+    window.usuarioLogueado.rol === 'admin'
+
+  ){
+
+    return true;
+
+  }
+
+
+
+
+
+  // ======================
+  // VALIDAR
+  // ======================
+
+  if(
+
+    !window.permisosUsuario ||
+
+    !window.permisosUsuario[modulo]
+
+  ){
+
+    return false;
+
+  }
+
+
+
+
+
+  return Boolean(
+
+    window.permisosUsuario[modulo][accion]
+
+  );
+
+};
+
+
+
+
+
+// ======================
 // MOSTRAR USUARIO
 // ======================
 
@@ -112,11 +175,11 @@ document.getElementById(
   'usuarioNombre'
 ).innerText =
 
-usuarioLogueado.usuario +
+window.usuarioLogueado.usuario +
 
 ' | ' +
 
-usuarioLogueado.rol;
+window.usuarioLogueado.rol;
 
 
 
@@ -223,63 +286,6 @@ function mostrarCard(id){
 
 
 // ======================
-// VALIDAR PERMISOS
-// ======================
-
-function tienePermiso(
-
-  modulo,
-  accion
-
-){
-
-  // ======================
-  // ADMIN VE TODO
-  // ======================
-
-  if(usuarioLogueado.rol === 'admin'){
-
-    return true;
-
-  }
-
-
-
-
-
-  // ======================
-  // VALIDAR
-  // ======================
-
-  if(
-
-    !window.permisosUsuario ||
-
-    !window.permisosUsuario[modulo]
-
-  ){
-
-    return false;
-
-  }
-
-
-
-
-
-  return Boolean(
-
-    window.permisosUsuario[modulo][accion]
-
-  );
-
-}
-
-
-
-
-
-// ======================
 // APLICAR PERMISOS
 // ======================
 
@@ -291,7 +297,7 @@ async function aplicarPermisos(){
     // ADMIN VE TODO
     // ======================
 
-    if(usuarioLogueado.rol === 'admin'){
+    if(window.usuarioLogueado.rol === 'admin'){
 
       mostrarElemento(
         'inventarioMenu'
@@ -361,7 +367,7 @@ async function aplicarPermisos(){
 
       'usuario',
 
-      usuarioLogueado.usuario
+      window.usuarioLogueado.usuario
 
     );
 
@@ -422,7 +428,7 @@ async function aplicarPermisos(){
 
     if(
 
-      tienePermiso(
+      window.tienePermiso(
         'inventario',
         'ver'
       )
@@ -465,7 +471,7 @@ async function aplicarPermisos(){
 
     if(
 
-      tienePermiso(
+      window.tienePermiso(
         'recepcion',
         'ver'
       )
@@ -508,7 +514,7 @@ async function aplicarPermisos(){
 
     if(
 
-      tienePermiso(
+      window.tienePermiso(
         'auditorias',
         'ver'
       )
@@ -551,7 +557,7 @@ async function aplicarPermisos(){
 
     if(
 
-      tienePermiso(
+      window.tienePermiso(
         'usuarios',
         'ver'
       )
@@ -594,7 +600,7 @@ async function aplicarPermisos(){
 
     if(
 
-      tienePermiso(
+      window.tienePermiso(
         'historial',
         'ver'
       )
@@ -655,10 +661,10 @@ async function guardarHistorial(
 
   const usuario =
 
-  usuarioLogueado &&
-  usuarioLogueado.usuario
+  window.usuarioLogueado &&
+  window.usuarioLogueado.usuario
 
-  ? usuarioLogueado.usuario
+  ? window.usuarioLogueado.usuario
 
   : 'Sistema';
 
@@ -728,7 +734,7 @@ async function mostrarModulo(modulo){
 
     modulo !== 'dashboard' &&
 
-    !tienePermiso(
+    !window.tienePermiso(
       modulo,
       'ver'
     )
@@ -844,7 +850,7 @@ async function mostrarModulo(modulo){
 
       'inventarioScript',
 
-      'js/inventario.js?v=20',
+      'js/inventario.js?v=21',
 
       function(){
 
@@ -886,7 +892,7 @@ async function mostrarModulo(modulo){
 
       'auditoriasScript',
 
-      'js/auditorias.js?v=20',
+      'js/auditorias.js?v=21',
 
       function(){
 
@@ -920,7 +926,7 @@ async function mostrarModulo(modulo){
 
       'usuariosScript',
 
-      'js/usuarios.js?v=20',
+      'js/usuarios.js?v=21',
 
       function(){
 
@@ -954,7 +960,7 @@ async function mostrarModulo(modulo){
 
       'recepcionScript',
 
-      'js/recepcion.js?v=20'
+      'js/recepcion.js?v=21'
 
     );
 
@@ -978,7 +984,7 @@ async function mostrarModulo(modulo){
 
       'historialScript',
 
-      'js/historial.js?v=20',
+      'js/historial.js?v=21',
 
       function(){
 
