@@ -28,7 +28,7 @@ const supabaseUrl =
 
 
 const supabaseKey =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'eyJhbGciOiJIUzI1NiIsInJlYiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
 
 
 
@@ -85,14 +85,28 @@ if(!window.usuarioLogueado){
 
 
 // ======================
+// MAIN CONTENT
+// ======================
+
+const mainContent =
+
+document.getElementById(
+  'mainContent'
+);
+
+
+
+
+
+// ======================
 // DASHBOARD ORIGINAL
 // ======================
 
 const dashboardOriginal =
 
-document.getElementById(
-  'mainContent'
-).innerHTML;
+mainContent
+? mainContent.innerHTML
+: '';
 
 
 
@@ -718,6 +732,110 @@ window.guardarHistorial = async function(
 
 
 // ======================
+// RENDER NOTIFICACIONES
+// ======================
+
+function renderNotificaciones(){
+
+  const lista =
+
+  document.getElementById(
+    'listaNotificaciones'
+  );
+
+
+
+  if(!lista){
+
+    return;
+
+  }
+
+
+
+  const notificaciones =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'notificaciones'
+    )
+
+  ) || [];
+
+
+
+  lista.innerHTML = '';
+
+
+
+  // ======================
+  // SIN NOTIFICACIONES
+  // ======================
+
+  if(notificaciones.length === 0){
+
+    lista.innerHTML =
+
+    '<p class="sin-notificaciones">' +
+
+      'No hay notificaciones' +
+
+    '</p>';
+
+
+
+    return;
+
+  }
+
+
+
+  // ======================
+  // RECORRER
+  // ======================
+
+  notificaciones.reverse().forEach(function(item){
+
+    lista.innerHTML +=
+
+    '<div class="notificacion-item">' +
+
+      '<p>' + item.mensaje + '</p>' +
+
+      '<span>' + item.fecha + '</span>' +
+
+    '</div>';
+
+  });
+
+}
+
+
+
+
+
+// ======================
+// EVENTO NUEVA NOTIFICACION
+// ======================
+
+window.addEventListener(
+
+  'nuevaNotificacion',
+
+  function(){
+
+    renderNotificaciones();
+
+  }
+
+);
+
+
+
+
+
+// ======================
 // MOSTRAR MODULO
 // ======================
 
@@ -731,8 +849,6 @@ function mostrarModulo(modulo){
 
 
 
-
-
   if(!contenido){
 
     return;
@@ -741,40 +857,30 @@ function mostrarModulo(modulo){
 
 
 
-
-
   // ======================
   // DASHBOARD
   // ======================
 
-if(modulo === 'dashboard'){
+  if(modulo === 'dashboard'){
 
-  contenido.innerHTML =
-  dashboardOriginal;
-
-
-
-  aplicarPermisos();
+    contenido.innerHTML =
+    dashboardOriginal;
 
 
 
-  // ======================
-  // RECARGAR NOTIFICACIONES
-  // ======================
+    setTimeout(function(){
 
-  setTimeout(function(){
+      aplicarPermisos();
 
-    renderNotificaciones();
+      renderNotificaciones();
 
-  },100);
+    },100);
 
 
 
-  return;
+    return;
 
-}
-
-
+  }
 
 
 
@@ -800,8 +906,6 @@ if(modulo === 'dashboard'){
 
 
 
-
-
   // ======================
   // RECEPCION
   // ======================
@@ -821,8 +925,6 @@ if(modulo === 'dashboard'){
     );
 
   }
-
-
 
 
 
@@ -848,8 +950,6 @@ if(modulo === 'dashboard'){
 
 
 
-
-
   // ======================
   // USUARIOS
   // ======================
@@ -869,8 +969,6 @@ if(modulo === 'dashboard'){
     );
 
   }
-
-
 
 
 
@@ -1002,105 +1100,7 @@ function cargarScript(
 
 }
 
-// ======================
-// RENDER NOTIFICACIONES
-// ======================
 
-function renderNotificaciones(){
-
-  const lista =
-
-  document.getElementById(
-    'listaNotificaciones'
-  );
-
-
-
-  if(!lista){
-
-    return;
-
-  }
-
-
-
-  let notificaciones =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'notificaciones'
-    )
-
-  ) || [];
-
-
-
-  lista.innerHTML = '';
-
-
-
-  // ======================
-  // SIN NOTIFICACIONES
-  // ======================
-
-  if(notificaciones.length === 0){
-
-    lista.innerHTML =
-
-    '<p class="sin-notificaciones">' +
-
-      'No hay notificaciones' +
-
-    '</p>';
-
-
-
-    return;
-
-  }
-
-
-
-  // ======================
-  // RECORRER
-  // ======================
-
-  notificaciones.forEach(function(item){
-
-    lista.innerHTML +=
-
-    '<div class="notificacion-item">' +
-
-      '<p>' + item.mensaje + '</p>' +
-
-      '<span>' + item.fecha + '</span>' +
-
-    '</div>';
-
-  });
-
-}
-
-
-
-
-
-// ======================
-// ACTUALIZAR NOTIFICACIONES
-// ======================
-
-window.addEventListener(
-
-  'nuevaNotificacion',
-
-  function(){
-
-    renderNotificaciones();
-
-  }
-
-);
 
 
 
@@ -1367,6 +1367,10 @@ if(historialMenu){
 
 }
 
+
+
+
+
 // ======================
 // EVENTOS CARDS DASHBOARD
 // ======================
@@ -1464,6 +1468,8 @@ document.addEventListener(
   }
 
 );
+
+
 
 
 
