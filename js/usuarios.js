@@ -43,34 +43,51 @@ async function guardarUsuario(){
 
   try{
 
-    const nombre =
+    const usuario =
+
     document.getElementById(
-      'nombreUsuario'
-    ).value.trim();
+      'usuarioInput'
+    )
+    .value
+    .trim()
+    .toLowerCase();
 
 
 
-    const correo =
+
+
+    const password =
+
     document.getElementById(
-      'correoUsuario'
-    ).value.trim();
+      'passwordInput'
+    )
+    .value
+    .trim();
+
+
 
 
 
     const rol =
+
     document.getElementById(
       'rolUsuario'
-    ).value;
+    )
+    .value;
 
 
 
 
+
+    // ======================
+    // VALIDAR
+    // ======================
 
     if(
 
-      !nombre ||
+      !usuario ||
 
-      !correo ||
+      !password ||
 
       !rol
 
@@ -88,6 +105,56 @@ async function guardarUsuario(){
 
 
 
+    // ======================
+    // VALIDAR EXISTENTE
+    // ======================
+
+    const existente =
+
+    await window.supabaseClient
+
+    .from('usuarios')
+
+    .select('*')
+
+    .eq(
+
+      'usuario',
+
+      usuario
+
+    )
+
+    .limit(1);
+
+
+
+
+
+    if(
+
+      existente.data &&
+
+      existente.data.length > 0
+
+    ){
+
+      alert(
+        'El usuario ya existe'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // INSERTAR
+    // ======================
+
     const response =
 
     await window.supabaseClient
@@ -98,20 +165,17 @@ async function guardarUsuario(){
 
       {
 
-        nombre:
-        nombre,
+        usuario:
+        usuario,
 
-        correo:
-        correo,
+        password:
+        password,
 
         rol:
         rol,
 
         estado:
-        'Activo',
-
-        password:
-        '123456'
+        'Activo'
 
       }
 
@@ -120,6 +184,10 @@ async function guardarUsuario(){
 
 
 
+
+    // ======================
+    // ERROR
+    // ======================
 
     if(response.error){
 
@@ -139,6 +207,33 @@ async function guardarUsuario(){
 
 
 
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'CREAR',
+
+        'USUARIOS',
+
+        'Se creó el usuario ' +
+        usuario
+
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // ACTUALIZAR
+    // ======================
+
     renderUsuarios();
 
     limpiarFormulario();
@@ -148,7 +243,7 @@ async function guardarUsuario(){
 
 
     alert(
-      'Usuario guardado'
+      'Usuario guardado correctamente'
     );
 
   }
@@ -227,13 +322,17 @@ async function renderUsuarios(){
 
 
 
+    // ======================
+    // SIN DATOS
+    // ======================
+
     if(!data || data.length === 0){
 
       body.innerHTML =
 
       '<tr>' +
 
-      '<td colspan="3">' +
+      '<td colspan="4">' +
 
       'No hay usuarios registrados' +
 
@@ -251,7 +350,27 @@ async function renderUsuarios(){
 
 
 
+    // ======================
+    // RECORRER
+    // ======================
+
     data.forEach(function(item){
+
+      let estadoClase =
+
+      item.estado === 'Activo'
+
+      ?
+
+      'estado-cerrado'
+
+      :
+
+      'estado-pendiente';
+
+
+
+
 
       body.innerHTML +=
 
@@ -261,9 +380,13 @@ async function renderUsuarios(){
 
 
 
+        // ======================
+        // USUARIO
+        // ======================
+
         '<td>' +
 
-          item.rol +
+          (item.usuario || '-') +
 
         '</td>' +
 
@@ -271,9 +394,31 @@ async function renderUsuarios(){
 
 
 
+        // ======================
+        // ROL
+        // ======================
+
         '<td>' +
 
-          '<span class="estado-cerrado">' +
+          (item.rol || '-') +
+
+        '</td>' +
+
+
+
+
+
+        // ======================
+        // ESTADO
+        // ======================
+
+        '<td>' +
+
+          '<span class="' +
+
+            estadoClase +
+
+          '">' +
 
             (item.estado || 'Activo') +
 
@@ -285,6 +430,10 @@ async function renderUsuarios(){
 
 
 
+        // ======================
+        // ACCIONES
+        // ======================
+
         '<td>' +
 
           '<div class="acciones-tabla">' +
@@ -292,6 +441,8 @@ async function renderUsuarios(){
 
 
 
+
+            // EDITAR
 
             '<button ' +
 
@@ -312,6 +463,8 @@ async function renderUsuarios(){
 
 
 
+
+            // ELIMINAR
 
             '<button ' +
 
@@ -410,32 +563,9 @@ window.editarUsuario = async function(id){
 
 
 
-    const nuevoRol = prompt(
-
-`Nuevo rol:
-
-Administrador
-Auditor
-Lider
-Jefe`,
-
-      usuario.rol
-
-    );
-
-
-
-
-
-    if(!nuevoRol){
-
-      return;
-
-    }
-
-
-
-
+    // ======================
+    // PASSWORD
+    // ======================
 
     const nuevaPassword = prompt(
 
@@ -459,6 +589,42 @@ Jefe`,
 
 
 
+    // ======================
+    // ROL
+    // ======================
+
+    const nuevoRol = prompt(
+
+`Nuevo rol:
+
+admin
+lider
+jefe
+auditor
+compras`,
+
+      usuario.rol
+
+    );
+
+
+
+
+
+    if(!nuevoRol){
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // ESTADO
+    // ======================
+
     const nuevoEstado = prompt(
 
 `Nuevo estado:
@@ -474,6 +640,10 @@ Inactivo`,
 
 
 
+    // ======================
+    // UPDATE
+    // ======================
+
     const update =
 
     await window.supabaseClient
@@ -482,11 +652,11 @@ Inactivo`,
 
     .update({
 
-      rol:
-      nuevoRol,
-
       password:
       nuevaPassword,
+
+      rol:
+      nuevoRol,
 
       estado:
       nuevoEstado
@@ -505,6 +675,10 @@ Inactivo`,
 
 
 
+    // ======================
+    // ERROR
+    // ======================
+
     if(update.error){
 
       console.log(
@@ -516,6 +690,29 @@ Inactivo`,
       );
 
       return;
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'EDITAR',
+
+        'USUARIOS',
+
+        'Se actualizó el usuario ' +
+        usuario.usuario
+
+      );
 
     }
 
@@ -573,6 +770,43 @@ window.eliminarUsuario = async function(id){
 
 
 
+    // ======================
+    // CONSULTAR
+    // ======================
+
+    const consulta =
+
+    await window.supabaseClient
+
+    .from('usuarios')
+
+    .select('*')
+
+    .eq(
+
+      'id',
+
+      id
+
+    )
+
+    .single();
+
+
+
+
+
+    const usuario =
+    consulta.data;
+
+
+
+
+
+    // ======================
+    // ELIMINAR
+    // ======================
+
     const response =
 
     await window.supabaseClient
@@ -593,6 +827,10 @@ window.eliminarUsuario = async function(id){
 
 
 
+    // ======================
+    // ERROR
+    // ======================
+
     if(response.error){
 
       console.log(
@@ -604,6 +842,29 @@ window.eliminarUsuario = async function(id){
       );
 
       return;
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(typeof guardarHistorial === 'function'){
+
+      await guardarHistorial(
+
+        'ELIMINAR',
+
+        'USUARIOS',
+
+        'Se eliminó el usuario ' +
+        usuario.usuario
+
+      );
 
     }
 
@@ -636,26 +897,89 @@ window.eliminarUsuario = async function(id){
 
 
 // ======================
+// BUSCADOR
+// ======================
+
+const buscarUsuario =
+document.getElementById(
+  'buscarUsuario'
+);
+
+
+
+
+
+if(buscarUsuario){
+
+  buscarUsuario.addEventListener(
+
+    'keyup',
+
+    function(){
+
+      const filtro =
+      this.value.toLowerCase();
+
+
+
+      const filas =
+      document.querySelectorAll(
+        '#usuariosBody tr'
+      );
+
+
+
+
+
+      filas.forEach(fila => {
+
+        fila.style.display =
+
+        fila.innerText
+        .toLowerCase()
+        .includes(filtro)
+
+        ?
+
+        ''
+
+        :
+
+        'none';
+
+      });
+
+    }
+
+  );
+
+}
+
+
+
+
+
+// ======================
 // LIMPIAR
 // ======================
 
 function limpiarFormulario(){
 
   document.getElementById(
-    'nombreUsuario'
+    'usuarioInput'
   ).value = '';
 
 
 
   document.getElementById(
-    'correoUsuario'
+    'passwordInput'
   ).value = '';
 
 
 
   document.getElementById(
     'rolUsuario'
-  ).value = 'Administrador';
+  ).value = 'admin';
 
 }
 
