@@ -1,4 +1,3 @@
-
 // ======================
 // EVITAR DUPLICAR
 // ======================
@@ -16,6 +15,7 @@ window.recepcionCargado = true;
 // ======================
 
 const guardarRecepcionBtn =
+
 document.getElementById(
   'guardarRecepcion'
 );
@@ -23,6 +23,10 @@ document.getElementById(
 
 
 
+
+// ======================
+// EVENTO BOTON
+// ======================
 
 if(guardarRecepcionBtn){
 
@@ -33,6 +37,141 @@ if(guardarRecepcionBtn){
     guardarRecepcion
 
   );
+
+}
+
+
+
+
+
+// ======================
+// CREAR NOTIFICACION
+// ======================
+
+function crearNotificacion(mensaje){
+
+  try{
+
+    // ======================
+    // OBTENER
+    // ======================
+
+    let notificaciones =
+
+    JSON.parse(
+
+      localStorage.getItem(
+        'notificaciones'
+      )
+
+    ) || [];
+
+
+
+
+
+    // ======================
+    // NUEVA
+    // ======================
+
+    const nuevaNotificacion = {
+
+      id:
+      Date.now(),
+
+      mensaje:
+      mensaje,
+
+      leida:
+      false,
+
+      fecha:
+      new Date()
+      .toLocaleString('es-CO')
+
+    };
+
+
+
+
+
+    // ======================
+    // AGREGAR
+    // ======================
+
+    notificaciones.unshift(
+      nuevaNotificacion
+    );
+
+
+
+
+
+    // ======================
+    // GUARDAR
+    // ======================
+
+    localStorage.setItem(
+
+      'notificaciones',
+
+      JSON.stringify(
+        notificaciones
+      )
+
+    );
+
+
+
+
+
+    // ======================
+    // ACTUALIZAR DASHBOARD
+    // ======================
+
+    if(
+
+      typeof window.renderNotificaciones ===
+      'function'
+
+    ){
+
+      window.renderNotificaciones();
+
+    }
+
+
+
+
+
+    // ======================
+    // EVENTO GLOBAL
+    // ======================
+
+    window.dispatchEvent(
+
+      new CustomEvent(
+
+        'nuevaNotificacion',
+
+        {
+
+          detail:
+          nuevaNotificacion
+
+        }
+
+      )
+
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
 
 }
 
@@ -73,78 +212,118 @@ async function guardarRecepcion(){
 
 
 
+    // ======================
+    // INPUTS
+    // ======================
+
     const proveedor =
+
     document.getElementById(
       'proveedorInput'
     ).value.trim();
 
 
 
+
+
     const material =
+
     document.getElementById(
       'materialInput'
     ).value.trim();
 
 
 
+
+
     const tipoRecepcion =
+
     document.getElementById(
       'tipoRecepcionInput'
     ).value;
 
 
 
+
+
     const cantidad =
+
     Number(
+
       document.getElementById(
         'cantidadInput'
       ).value
+
     );
+
+
 
 
 
     const revisadas =
+
     Number(
+
       document.getElementById(
         'revisadasInput'
       ).value
+
     );
+
+
 
 
 
     const novedades =
+
     Number(
+
       document.getElementById(
         'novedadesInput'
       ).value
+
     );
+
+
 
 
 
     const faltantes =
+
     Number(
+
       document.getElementById(
         'faltantesInput'
       ).value
+
     );
 
 
 
+
+
     const observacion =
+
     document.getElementById(
       'observacionInput'
     ).value.trim();
 
 
 
+
+
     const estado =
+
     document.getElementById(
       'estadoRecepcionInput'
     ).value;
 
 
 
+
+
     const pdfFile =
+
     document.getElementById(
       'pdfInput'
     ).files[0];
@@ -194,7 +373,7 @@ async function guardarRecepcion(){
 
 
     // ======================
-    // PDF
+    // PDF URL
     // ======================
 
     let pdfUrl = '';
@@ -287,7 +466,7 @@ async function guardarRecepcion(){
 
 
     // ======================
-    // INSERTAR
+    // INSERTAR RECEPCION
     // ======================
 
     const response =
@@ -337,7 +516,9 @@ async function guardarRecepcion(){
         pdfUrl,
 
         usuario_recepcion:
-        usuarioLogueado.usuario ||
+
+        window.usuarioLogueado
+        .usuario ||
 
         'Usuario',
 
@@ -352,6 +533,10 @@ async function guardarRecepcion(){
 
 
 
+
+    // ======================
+    // ERROR
+    // ======================
 
     if(response.error){
 
@@ -375,9 +560,14 @@ async function guardarRecepcion(){
     // HISTORIAL
     // ======================
 
-    if(typeof guardarHistorial === 'function'){
+    if(
 
-      await guardarHistorial(
+      typeof window.guardarHistorial ===
+      'function'
+
+    ){
+
+      await window.guardarHistorial(
 
         'CREAR',
 
@@ -423,15 +613,31 @@ ${estado}`
 
 
 
-    renderRecepciones();
+    // ======================
+    // RECARGAR
+    // ======================
 
-    actualizarKPIsRecepcion();
+    await renderRecepciones();
+
+    await actualizarKPIsRecepcion();
+
+
+
+
+
+    // ======================
+    // LIMPIAR
+    // ======================
 
     limpiarFormulario();
 
 
 
 
+
+    // ======================
+    // OK
+    // ======================
 
     alert(
       'Recepción guardada correctamente'
@@ -456,7 +662,7 @@ ${estado}`
 
 
 // ======================
-// RENDER
+// RENDER RECEPCIONES
 // ======================
 
 async function renderRecepciones(){
@@ -464,9 +670,12 @@ async function renderRecepciones(){
   try{
 
     const body =
+
     document.getElementById(
       'recepcionesBody'
     );
+
+
 
 
 
@@ -510,20 +719,28 @@ async function renderRecepciones(){
 
 
 
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      return;
+
+    }
+
+
+
+
+
     const recepciones =
-    response.data;
+    response.data || [];
 
 
 
 
 
-    if(
-
-      !recepciones ||
-
-      recepciones.length === 0
-
-    ){
+    if(recepciones.length === 0){
 
       body.innerHTML =
 
@@ -547,7 +764,7 @@ async function renderRecepciones(){
 
 
 
-    recepciones.forEach(item => {
+    recepciones.forEach(function(item){
 
       let estadoClass = '';
 
@@ -610,57 +827,29 @@ async function renderRecepciones(){
             ${item.proveedor || '-'}
           </td>
 
-
-
-
-
           <td>
             ${item.material || '-'}
           </td>
-
-
-
-
 
           <td>
             ${item.tipo_recepcion || '-'}
           </td>
 
-
-
-
-
           <td>
             ${item.cantidad || 0}
           </td>
-
-
-
-
 
           <td>
             ${item.revisadas || 0}
           </td>
 
-
-
-
-
           <td>
             ${item.porcentaje_revisado || 0}%
           </td>
 
-
-
-
-
           <td>
             ${item.novedades || 0}
           </td>
-
-
-
-
 
           <td>
 
@@ -674,10 +863,6 @@ async function renderRecepciones(){
 
           </td>
 
-
-
-
-
           <td>
 
             ${new Date(
@@ -685,10 +870,6 @@ async function renderRecepciones(){
             ).toLocaleString('es-CO')}
 
           </td>
-
-
-
-
 
           <td>
 
@@ -719,10 +900,6 @@ async function renderRecepciones(){
 
           </td>
 
-
-
-
-
           <td>
 
             <button
@@ -735,10 +912,6 @@ async function renderRecepciones(){
             </button>
 
           </td>
-
-
-
-
 
           <td>
 
@@ -753,17 +926,9 @@ async function renderRecepciones(){
 
           </td>
 
-
-
-
-
           <td>
 
             <div class="acciones-tabla">
-
-
-
-
 
               ${
 
@@ -793,10 +958,6 @@ async function renderRecepciones(){
 
               }
 
-
-
-
-
               ${
 
                 window.tienePermiso(
@@ -824,10 +985,6 @@ async function renderRecepciones(){
                 ''
 
               }
-
-
-
-
 
             </div>
 
@@ -970,6 +1127,8 @@ window.validarRecepcion = async function(id){
 
 
 
+
+
     if(comentario === null){
 
       return;
@@ -1021,7 +1180,8 @@ Gestionado`
 
       usuario_validacion:
 
-      usuarioLogueado.usuario ||
+      window.usuarioLogueado
+      .usuario ||
 
       'Validador'
 
@@ -1057,9 +1217,14 @@ Gestionado`
 
 
 
-    if(typeof guardarHistorial === 'function'){
+    if(
 
-      await guardarHistorial(
+      typeof window.guardarHistorial ===
+      'function'
+
+    ){
+
+      await window.guardarHistorial(
 
         'EDITAR',
 
@@ -1092,7 +1257,7 @@ ${nuevoEstado}`
 
 
 
-    renderRecepciones();
+    await renderRecepciones();
 
 
 
@@ -1117,7 +1282,7 @@ ${nuevoEstado}`
 
 
 // ======================
-// ELIMINAR
+// ELIMINAR RECEPCION
 // ======================
 
 window.eliminarRecepcion = async function(id){
@@ -1148,6 +1313,8 @@ window.eliminarRecepcion = async function(id){
     const confirmar = confirm(
       '¿Eliminar recepción?'
     );
+
+
 
 
 
@@ -1228,9 +1395,14 @@ window.eliminarRecepcion = async function(id){
 
 
 
-    if(typeof guardarHistorial === 'function'){
+    if(
 
-      await guardarHistorial(
+      typeof window.guardarHistorial ===
+      'function'
+
+    ){
+
+      await window.guardarHistorial(
 
         'ELIMINAR',
 
@@ -1247,9 +1419,9 @@ window.eliminarRecepcion = async function(id){
 
 
 
-    renderRecepciones();
+    await renderRecepciones();
 
-    actualizarKPIsRecepcion();
+    await actualizarKPIsRecepcion();
 
 
 
@@ -1274,7 +1446,7 @@ window.eliminarRecepcion = async function(id){
 
 
 // ======================
-// KPI RECEPCION
+// KPIS RECEPCION
 // ======================
 
 async function actualizarKPIsRecepcion(){
@@ -1312,11 +1484,51 @@ async function actualizarKPIsRecepcion(){
 
 
 
+    const kpiRecepciones =
+
     document.getElementById(
       'kpiRecepciones'
-    ).innerText =
+    );
 
-    recepciones.length;
+
+
+
+
+    const kpiRevisado =
+
+    document.getElementById(
+      'kpiRevisado'
+    );
+
+
+
+
+
+    const kpiNovedades =
+
+    document.getElementById(
+      'kpiNovedades'
+    );
+
+
+
+
+
+    const kpiFaltantes =
+
+    document.getElementById(
+      'kpiFaltantes'
+    );
+
+
+
+
+
+    if(kpiRecepciones){
+
+      kpiRecepciones.innerText =
+      recepciones.length;
+    }
 
 
 
@@ -1324,23 +1536,17 @@ async function actualizarKPIsRecepcion(){
 
     if(recepciones.length === 0){
 
-      document.getElementById(
-        'kpiRevisado'
-      ).innerText = '0%';
+      if(kpiRevisado){
+        kpiRevisado.innerText = '0%';
+      }
 
+      if(kpiNovedades){
+        kpiNovedades.innerText = '0';
+      }
 
-
-      document.getElementById(
-        'kpiNovedades'
-      ).innerText = '0';
-
-
-
-      document.getElementById(
-        'kpiFaltantes'
-      ).innerText = '0';
-
-
+      if(kpiFaltantes){
+        kpiFaltantes.innerText = '0';
+      }
 
       return;
 
@@ -1357,38 +1563,44 @@ async function actualizarKPIsRecepcion(){
 
 
 
-    document.getElementById(
-      'kpiRevisado'
-    ).innerText =
+    if(kpiRevisado){
 
-    Number(
+      kpiRevisado.innerText =
+
+      Number(
+
+        ultimaRecepcion
+        .porcentaje_revisado || 0
+
+      ).toFixed(1) + '%';
+
+    }
+
+
+
+
+
+    if(kpiNovedades){
+
+      kpiNovedades.innerText =
 
       ultimaRecepcion
-      .porcentaje_revisado || 0
+      .novedades || 0;
 
-    ).toFixed(1) + '%';
-
-
-
-
-
-    document.getElementById(
-      'kpiNovedades'
-    ).innerText =
-
-    ultimaRecepcion
-    .novedades || 0;
+    }
 
 
 
 
 
-    document.getElementById(
-      'kpiFaltantes'
-    ).innerText =
+    if(kpiFaltantes){
 
-    ultimaRecepcion
-    .faltantes || 0;
+      kpiFaltantes.innerText =
+
+      ultimaRecepcion
+      .faltantes || 0;
+
+    }
 
   }
 
@@ -1405,79 +1617,7 @@ async function actualizarKPIsRecepcion(){
 
 
 // ======================
-// NOTIFICACIONES
-// ======================
-
-function crearNotificacion(mensaje){
-
-  const notificaciones = JSON.parse(
-
-    localStorage.getItem(
-      'notificaciones'
-    )
-
-  ) || [];
-
-
-
-
-
-  const nueva = {
-
-    id: Date.now(),
-
-    mensaje,
-
-    leida:false,
-
-    fecha:
-    new Date()
-    .toLocaleString()
-
-  };
-
-
-
-
-
-  notificaciones.unshift(
-    nueva
-  );
-
-
-
-
-
-  localStorage.setItem(
-
-    'notificaciones',
-
-    JSON.stringify(
-      notificaciones
-    )
-
-  );
-
-
-
-
-
-  window.dispatchEvent(
-
-    new Event(
-      'nuevaNotificacion'
-    )
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// LIMPIAR
+// LIMPIAR FORMULARIO
 // ======================
 
 function limpiarFormulario(){
@@ -1541,7 +1681,7 @@ function limpiarFormulario(){
 
 
 // ======================
-// APLICAR PERMISOS UI
+// APLICAR PERMISOS
 // ======================
 
 function aplicarPermisosRecepcion(){
