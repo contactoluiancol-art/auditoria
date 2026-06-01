@@ -11,6 +11,43 @@ window.historialCargado = true;
 
 
 // ======================
+// VALIDAR PERMISOS
+// ======================
+
+function tienePermiso(
+
+  modulo,
+  accion
+
+){
+
+  if(
+
+    !window.permisosUsuario ||
+
+    !window.permisosUsuario[modulo]
+
+  ){
+
+    return false;
+
+  }
+
+
+
+  return Boolean(
+
+    window.permisosUsuario[modulo][accion]
+
+  );
+
+}
+
+
+
+
+
+// ======================
 // RENDER HISTORIAL
 // ======================
 
@@ -234,6 +271,44 @@ async function renderHistorialSistema(){
 
 
       // ======================
+      // BOTON ELIMINAR
+      // ======================
+
+      let botonEliminar = '';
+
+
+
+
+
+      if(
+
+        tienePermiso(
+          'historial',
+          'eliminar'
+        )
+
+      ){
+
+        botonEliminar = `
+
+          <button
+            class="btn-eliminar"
+            onclick="eliminarHistorial(${item.id})"
+          >
+
+            Eliminar
+
+          </button>
+
+        `;
+
+      }
+
+
+
+
+
+      // ======================
       // TABLA
       // ======================
 
@@ -305,14 +380,7 @@ async function renderHistorialSistema(){
 
           <td>
 
-            <button
-              class="btn-eliminar"
-              onclick="eliminarHistorial(${item.id})"
-            >
-
-              Eliminar
-
-            </button>
+            ${botonEliminar}
 
           </td>
 
@@ -377,6 +445,31 @@ async function renderHistorialSistema(){
 window.eliminarHistorial = async function(id){
 
   try{
+
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !tienePermiso(
+        'historial',
+        'eliminar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para eliminar historial'
+      );
+
+      return;
+
+    }
+
+
+
+
 
     const confirmar = confirm(
       '¿Eliminar registro del historial?'
@@ -465,6 +558,31 @@ window.eliminarHistorial = async function(id){
 window.eliminarTodoHistorial = async function(){
 
   try{
+
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
+    if(
+
+      !tienePermiso(
+        'historial',
+        'eliminar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos para eliminar historial'
+      );
+
+      return;
+
+    }
+
+
+
+
 
     const confirmar = confirm(
 
@@ -721,8 +839,48 @@ if(buscarHistorial){
 
 
 // ======================
+// OCULTAR BOTON
+// ======================
+
+function aplicarPermisosHistorial(){
+
+  const btnEliminarTodo =
+
+  document.getElementById(
+    'btnEliminarTodoHistorial'
+  );
+
+
+
+
+
+  if(
+
+    btnEliminarTodo &&
+
+    !tienePermiso(
+      'historial',
+      'eliminar'
+    )
+
+  ){
+
+    btnEliminarTodo.style.display =
+    'none';
+
+  }
+
+}
+
+
+
+
+
+// ======================
 // INICIO
 // ======================
+
+aplicarPermisosHistorial();
 
 renderHistorialSistema();
 
