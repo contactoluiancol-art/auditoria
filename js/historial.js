@@ -21,6 +21,30 @@ function tienePermiso(
 
 ){
 
+  // ======================
+  // ADMIN
+  // ======================
+
+  if(
+
+    window.usuarioLogueado &&
+
+    window.usuarioLogueado.rol === 'admin'
+
+  ){
+
+    return true;
+
+  }
+
+
+
+
+
+  // ======================
+  // VALIDAR
+  // ======================
+
   if(
 
     !window.permisosUsuario ||
@@ -150,31 +174,69 @@ async function renderHistorialSistema(){
 
 
 
-      // ======================
-      // LIMPIAR KPIS
-      // ======================
-
+      const kpiHistorial =
       document.getElementById(
         'kpiHistorial'
-      ).innerText = '0';
+      );
 
 
 
+      const kpiInventario =
       document.getElementById(
         'kpiInventario'
-      ).innerText = '0';
+      );
 
 
 
+      const kpiAuditorias =
       document.getElementById(
         'kpiAuditorias'
-      ).innerText = '0';
+      );
 
 
 
+      const kpiRecepcion =
       document.getElementById(
         'kpiRecepcion'
-      ).innerText = '0';
+      );
+
+
+
+
+
+      if(kpiHistorial){
+
+        kpiHistorial.innerText =
+        '0';
+
+      }
+
+
+
+      if(kpiInventario){
+
+        kpiInventario.innerText =
+        '0';
+
+      }
+
+
+
+      if(kpiAuditorias){
+
+        kpiAuditorias.innerText =
+        '0';
+
+      }
+
+
+
+      if(kpiRecepcion){
+
+        kpiRecepcion.innerText =
+        '0';
+
+      }
 
 
 
@@ -190,11 +252,18 @@ async function renderHistorialSistema(){
     // KPIS
     // ======================
 
+    const kpiHistorial =
     document.getElementById(
       'kpiHistorial'
-    ).innerText =
+    );
 
-    data.length;
+
+
+    if(kpiHistorial){
+
+      kpiHistorial.innerText =
+      data.length;
+    }
 
 
 
@@ -316,8 +385,6 @@ async function renderHistorialSistema(){
 
         <tr>
 
-          <!-- USUARIO -->
-
           <td>
 
             ${item.usuario || '-'}
@@ -327,8 +394,6 @@ async function renderHistorialSistema(){
 
 
 
-
-          <!-- MODULO -->
 
           <td>
 
@@ -340,8 +405,6 @@ async function renderHistorialSistema(){
 
 
 
-          <!-- ACCION -->
-
           <td>
 
             ${item.accion || '-'}
@@ -351,8 +414,6 @@ async function renderHistorialSistema(){
 
 
 
-
-          <!-- DETALLE -->
 
           <td class="hallazgo-box">
 
@@ -364,8 +425,6 @@ async function renderHistorialSistema(){
 
 
 
-          <!-- FECHA -->
-
           <td>
 
             ${fechaTexto}
@@ -375,8 +434,6 @@ async function renderHistorialSistema(){
 
 
 
-
-          <!-- ACCIONES -->
 
           <td>
 
@@ -398,31 +455,50 @@ async function renderHistorialSistema(){
     // ACTUALIZAR KPIS
     // ======================
 
+    const kpiInventario =
     document.getElementById(
       'kpiInventario'
-    ).innerText =
-
-    inventario;
+    );
 
 
 
-
-
+    const kpiAuditorias =
     document.getElementById(
       'kpiAuditorias'
-    ).innerText =
-
-    auditorias;
+    );
 
 
 
-
-
+    const kpiRecepcion =
     document.getElementById(
       'kpiRecepcion'
-    ).innerText =
+    );
 
-    recepcion;
+
+
+
+
+    if(kpiInventario){
+
+      kpiInventario.innerText =
+      inventario;
+    }
+
+
+
+    if(kpiAuditorias){
+
+      kpiAuditorias.innerText =
+      auditorias;
+    }
+
+
+
+    if(kpiRecepcion){
+
+      kpiRecepcion.innerText =
+      recepcion;
+    }
 
   }
 
@@ -445,10 +521,6 @@ async function renderHistorialSistema(){
 window.eliminarHistorial = async function(id){
 
   try{
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
 
     if(
 
@@ -559,10 +631,6 @@ window.eliminarTodoHistorial = async function(){
 
   try{
 
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
-
     if(
 
       !tienePermiso(
@@ -604,10 +672,6 @@ window.eliminarTodoHistorial = async function(){
 
 
 
-    // ======================
-    // CONSULTAR IDS
-    // ======================
-
     const consulta =
 
     await window.supabaseClient
@@ -645,10 +709,6 @@ window.eliminarTodoHistorial = async function(){
 
 
 
-    // ======================
-    // VALIDAR
-    // ======================
-
     if(registros.length === 0){
 
       alert(
@@ -663,10 +723,6 @@ window.eliminarTodoHistorial = async function(){
 
 
 
-    // ======================
-    // IDS
-    // ======================
-
     const ids =
 
     registros.map(item => item.id);
@@ -674,10 +730,6 @@ window.eliminarTodoHistorial = async function(){
 
 
 
-
-    // ======================
-    // ELIMINAR
-    // ======================
 
     const eliminar =
 
@@ -717,39 +769,69 @@ window.eliminarTodoHistorial = async function(){
 
 
 
-    // ======================
-    // LIMPIAR KPIS
-    // ======================
-
+    const kpiHistorial =
     document.getElementById(
       'kpiHistorial'
-    ).innerText = '0';
+    );
 
 
 
+    const kpiInventario =
     document.getElementById(
       'kpiInventario'
-    ).innerText = '0';
+    );
 
 
 
+    const kpiAuditorias =
     document.getElementById(
       'kpiAuditorias'
-    ).innerText = '0';
+    );
 
 
 
+    const kpiRecepcion =
     document.getElementById(
       'kpiRecepcion'
-    ).innerText = '0';
+    );
 
 
 
 
 
-    // ======================
-    // ACTUALIZAR TABLA
-    // ======================
+    if(kpiHistorial){
+
+      kpiHistorial.innerText =
+      '0';
+    }
+
+
+
+    if(kpiInventario){
+
+      kpiInventario.innerText =
+      '0';
+    }
+
+
+
+    if(kpiAuditorias){
+
+      kpiAuditorias.innerText =
+      '0';
+    }
+
+
+
+    if(kpiRecepcion){
+
+      kpiRecepcion.innerText =
+      '0';
+    }
+
+
+
+
 
     renderHistorialSistema();
 
