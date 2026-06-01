@@ -1470,3 +1470,403 @@ BOTON VER PREMIUM
   scale(.98);
 
 }
+
+
+/* =========================
+PERMISOS PREMIUM
+========================= */
+
+.permisos-container{
+
+  margin-top:30px;
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(280px,1fr));
+
+  gap:20px;
+
+}
+
+
+
+
+
+.permisos-title{
+
+  grid-column:1/-1;
+
+  font-size:22px;
+
+  font-weight:700;
+
+  color:#0f172a;
+
+  margin-bottom:4px;
+
+}
+
+
+
+
+
+.permiso-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #ffffff,
+    #f8fafc
+  );
+
+  border:
+  1px solid #dbeafe;
+
+  border-radius:22px;
+
+  padding:22px;
+
+  box-shadow:
+  0 8px 24px rgba(15,23,42,.06);
+
+  transition:.25s;
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+
+
+
+
+.permiso-card::before{
+
+  content:'';
+
+  position:absolute;
+
+  top:0;
+  left:0;
+
+  width:100%;
+  height:5px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #2563eb,
+    #60a5fa
+  );
+
+}
+
+
+
+
+
+.permiso-card:hover{
+
+  transform:
+  translateY(-4px);
+
+  box-shadow:
+  0 14px 30px rgba(37,99,235,.12);
+
+}
+
+
+
+
+
+.permiso-card h4{
+
+  font-size:18px;
+
+  margin-bottom:18px;
+
+  color:#0f172a;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+
+
+
+/* =========================
+LINEA PERMISO
+========================= */
+
+.permiso-item{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  margin-bottom:14px;
+
+  padding:10px 12px;
+
+  border-radius:14px;
+
+  background:#f8fafc;
+
+  border:
+  1px solid #e2e8f0;
+
+}
+
+
+
+
+
+.permiso-item span{
+
+  font-size:13px;
+
+  font-weight:600;
+
+  color:#334155;
+
+}
+
+
+
+
+
+/* =========================
+SWITCH PREMIUM
+========================= */
+
+.switch{
+
+  position:relative;
+
+  display:inline-block;
+
+  width:52px;
+
+  height:28px;
+
+}
+
+
+
+
+
+.switch input{
+
+  opacity:0;
+
+  width:0;
+  height:0;
+
+}
+
+
+
+
+
+.slider{
+
+  position:absolute;
+
+  cursor:pointer;
+
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+
+  background:#cbd5e1;
+
+  transition:.25s;
+
+  border-radius:50px;
+
+}
+
+
+
+
+
+.slider:before{
+
+  position:absolute;
+
+  content:"";
+
+  height:20px;
+  width:20px;
+
+  left:4px;
+  bottom:4px;
+
+  background:white;
+
+  transition:.25s;
+
+  border-radius:50%;
+
+  box-shadow:
+  0 2px 6px rgba(0,0,0,.2);
+
+}
+
+
+
+
+
+.switch input:checked + .slider{
+
+  background:
+  linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+}
+
+
+
+
+
+.switch input:checked + .slider:before{
+
+  transform:
+  translateX(24px);
+
+}
+
+
+
+
+
+/* =========================
+HEADER MODULE
+========================= */
+
+.module-header{
+
+  margin-bottom:22px;
+
+}
+
+
+
+
+
+.module-header h2{
+
+  font-size:30px;
+
+  font-weight:700;
+
+  color:#0f172a;
+
+  margin-bottom:6px;
+
+}
+
+
+
+
+
+.module-header p{
+
+  color:#64748b;
+
+  font-size:14px;
+
+}
+
+
+
+
+
+/* =========================
+TABLE HEADER
+========================= */
+
+.table-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:12px;
+
+  margin-bottom:18px;
+
+  flex-wrap:wrap;
+
+}
+
+
+
+
+
+.search-input{
+
+  width:260px;
+
+  max-width:100%;
+
+  padding:12px 14px;
+
+  border:
+  1px solid #cbd5e1;
+
+  border-radius:14px;
+
+  font-size:13px;
+
+  transition:.25s;
+
+}
+
+
+
+
+
+.search-input:focus{
+
+  outline:none;
+
+  border-color:#2563eb;
+
+  box-shadow:
+  0 0 0 4px rgba(37,99,235,.10);
+
+}
+
+
+
+
+
+/* =========================
+RESPONSIVE PERMISOS
+========================= */
+
+@media(max-width:768px){
+
+  .permisos-container{
+
+    grid-template-columns:1fr;
+
+  }
+
+}
