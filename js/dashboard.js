@@ -24,7 +24,7 @@ const supabaseUrl =
 
 
 const supabaseKey =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+'TU_SUPABASE_KEY';
 
 
 
@@ -89,6 +89,16 @@ const dashboardOriginal =
 document.getElementById(
   'mainContent'
 ).innerHTML;
+
+
+
+
+
+// ======================
+// PERMISOS GLOBALES
+// ======================
+
+window.permisosUsuario = {};
 
 
 
@@ -213,6 +223,63 @@ function mostrarCard(id){
 
 
 // ======================
+// VALIDAR PERMISOS
+// ======================
+
+function tienePermiso(
+
+  modulo,
+  accion
+
+){
+
+  // ======================
+  // ADMIN VE TODO
+  // ======================
+
+  if(usuarioLogueado.rol === 'admin'){
+
+    return true;
+
+  }
+
+
+
+
+
+  // ======================
+  // VALIDAR
+  // ======================
+
+  if(
+
+    !window.permisosUsuario ||
+
+    !window.permisosUsuario[modulo]
+
+  ){
+
+    return false;
+
+  }
+
+
+
+
+
+  return Boolean(
+
+    window.permisosUsuario[modulo][accion]
+
+  );
+
+}
+
+
+
+
+
+// ======================
 // APLICAR PERMISOS
 // ======================
 
@@ -310,18 +377,38 @@ async function aplicarPermisos(){
 
 
     // ======================
+    // LIMPIAR
+    // ======================
+
+    window.permisosUsuario = {};
+
+
+
+
+
+    // ======================
     // MAPA
     // ======================
 
-    const mapa = {};
-
-
-
-
-
     permisos.forEach(item => {
 
-      mapa[item.modulo] = item;
+      window.permisosUsuario[
+        item.modulo
+      ] = {
+
+        ver:
+        item.ver,
+
+        crear:
+        item.crear,
+
+        editar:
+        item.editar,
+
+        eliminar:
+        item.eliminar
+
+      };
 
     });
 
@@ -335,9 +422,10 @@ async function aplicarPermisos(){
 
     if(
 
-      mapa.inventario &&
-
-      mapa.inventario.ver
+      tienePermiso(
+        'inventario',
+        'ver'
+      )
 
     ){
 
@@ -377,9 +465,10 @@ async function aplicarPermisos(){
 
     if(
 
-      mapa.recepcion &&
-
-      mapa.recepcion.ver
+      tienePermiso(
+        'recepcion',
+        'ver'
+      )
 
     ){
 
@@ -419,9 +508,10 @@ async function aplicarPermisos(){
 
     if(
 
-      mapa.auditorias &&
-
-      mapa.auditorias.ver
+      tienePermiso(
+        'auditorias',
+        'ver'
+      )
 
     ){
 
@@ -461,9 +551,10 @@ async function aplicarPermisos(){
 
     if(
 
-      mapa.usuarios &&
-
-      mapa.usuarios.ver
+      tienePermiso(
+        'usuarios',
+        'ver'
+      )
 
     ){
 
@@ -503,9 +594,10 @@ async function aplicarPermisos(){
 
     if(
 
-      mapa.historial &&
-
-      mapa.historial.ver
+      tienePermiso(
+        'historial',
+        'ver'
+      )
 
     ){
 
@@ -627,6 +719,33 @@ async function guardarHistorial(
 // ======================
 
 async function mostrarModulo(modulo){
+
+  // ======================
+  // VALIDAR ACCESO
+  // ======================
+
+  if(
+
+    modulo !== 'dashboard' &&
+
+    !tienePermiso(
+      modulo,
+      'ver'
+    )
+
+  ){
+
+    alert(
+      'No tiene permisos para acceder'
+    );
+
+    return;
+
+  }
+
+
+
+
 
   const contenido =
 
