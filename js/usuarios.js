@@ -1,3 +1,4 @@
+
 // ======================
 // EVITAR DUPLICAR
 // ======================
@@ -48,24 +49,21 @@ async function guardarUsuario(){
 
   try{
 
-
-
-
-
     // ======================
     // VALIDAR PERMISO
     // ======================
 
     if(
 
-      !window.permisosUsuario.usuarios ||
-
-      !window.permisosUsuario.usuarios.crear
+      !window.tienePermiso(
+        'usuarios',
+        'crear'
+      )
 
     ){
 
       alert(
-        'No tiene permisos para crear usuarios'
+        'No tiene permisos'
       );
 
       return;
@@ -189,7 +187,7 @@ async function guardarUsuario(){
 
 
     // ======================
-    // INSERTAR USUARIO
+    // INSERTAR
     // ======================
 
     const response =
@@ -222,10 +220,6 @@ async function guardarUsuario(){
 
 
 
-    // ======================
-    // ERROR
-    // ======================
-
     if(response.error){
 
       console.log(
@@ -245,7 +239,7 @@ async function guardarUsuario(){
 
 
     // ======================
-    // GUARDAR PERMISOS
+    // PERMISOS
     // ======================
 
     const permisos = [
@@ -459,10 +453,6 @@ async function guardarUsuario(){
 
 
 
-    // ======================
-    // ACTUALIZAR
-    // ======================
-
     renderUsuarios();
 
     limpiarFormulario();
@@ -493,7 +483,7 @@ async function guardarUsuario(){
 // RENDER
 // ======================
 
-async function renderUsuarios(){
+window.renderUsuarios = async function(){
 
   try{
 
@@ -554,10 +544,6 @@ async function renderUsuarios(){
 
 
 
-    // ======================
-    // SIN DATOS
-    // ======================
-
     if(!data || data.length === 0){
 
       body.innerHTML =
@@ -581,10 +567,6 @@ async function renderUsuarios(){
 
 
 
-
-    // ======================
-    // RECORRER
-    // ======================
 
     data.forEach(function(item){
 
@@ -612,137 +594,137 @@ async function renderUsuarios(){
 
 
 
-        // USUARIO
+      '<td>' +
 
-        '<td>' +
+      (item.usuario || '-') +
 
-          (item.usuario || '-') +
+      '</td>' +
 
-        '</td>' +
 
 
 
 
+      '<td>' +
 
-        // ROL
+      (item.rol || '-') +
 
-        '<td>' +
+      '</td>' +
 
-          (item.rol || '-') +
 
-        '</td>' +
 
 
 
+      '<td>' +
 
+      '<span class="' +
 
-        // ESTADO
+      estadoClase +
 
-        '<td>' +
+      '">' +
 
-          '<span class="' +
+      (item.estado || 'Activo') +
 
-            estadoClase +
+      '</span>' +
 
-          '">' +
+      '</td>' +
 
-            (item.estado || 'Activo') +
 
-          '</span>' +
 
-        '</td>' +
 
 
+      '<td>' +
 
+      '<div class="acciones-tabla">' +
 
 
-        // ACCIONES
 
-        '<td>' +
 
-          '<div class="acciones-tabla">' +
 
+      (
 
+        window.tienePermiso(
+          'usuarios',
+          'editar'
+        )
 
+        ?
 
+        '<button ' +
 
-            (
+        'class="btn-editar" ' +
 
-              window.permisosUsuario.usuarios &&
+        'onclick="editarUsuario(' +
 
-              window.permisosUsuario.usuarios.editar
+        item.id +
 
-            )
+        ')"' +
 
-            ?
+        '>' +
 
-            '<button ' +
+        'Editar' +
 
-              'class="btn-editar" ' +
+        '</button>'
 
-              'onclick="editarUsuario(' +
+        :
 
-              item.id +
+        ''
 
-              ')"' +
+      )
 
-            '>' +
 
-              'Editar' +
 
-            '</button>'
 
-            :
 
-            ''
+      +
 
 
 
 
 
-            +
+      (
 
+        window.tienePermiso(
+          'usuarios',
+          'eliminar'
+        )
 
+        ?
 
+        '<button ' +
 
+        'class="btn-eliminar" ' +
 
-            (
+        'onclick="eliminarUsuario(' +
 
-              window.permisosUsuario.usuarios &&
+        item.id +
 
-              window.permisosUsuario.usuarios.eliminar
+        ')"' +
 
-            )
+        '>' +
 
-            ?
+        'Eliminar' +
 
-            '<button ' +
+        '</button>'
 
-              'class="btn-eliminar" ' +
+        :
 
-              'onclick="eliminarUsuario(' +
+        ''
 
-              item.id +
+      )
 
-              ')"' +
 
-            '>' +
 
-              'Eliminar' +
 
-            '</button>'
 
-            :
+      +
 
-            ''
 
 
 
 
+      '</div>' +
 
-          + '</div>' +
-
-        '</td>' +
+      '</td>' +
 
 
 
@@ -760,38 +742,31 @@ async function renderUsuarios(){
 
   }
 
-}
+};
 
 
 
 
 
 // ======================
-// EDITAR USUARIO
+// EDITAR
 // ======================
 
 window.editarUsuario = async function(id){
 
   try{
 
-
-
-
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
-
     if(
 
-      !window.permisosUsuario.usuarios ||
-
-      !window.permisosUsuario.usuarios.editar
+      !window.tienePermiso(
+        'usuarios',
+        'editar'
+      )
 
     ){
 
       alert(
-        'No tiene permisos para editar usuarios'
+        'No tiene permisos'
       );
 
       return;
@@ -991,24 +966,17 @@ window.eliminarUsuario = async function(id){
 
   try{
 
-
-
-
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
-
     if(
 
-      !window.permisosUsuario.usuarios ||
-
-      !window.permisosUsuario.usuarios.eliminar
+      !window.tienePermiso(
+        'usuarios',
+        'eliminar'
+      )
 
     ){
 
       alert(
-        'No tiene permisos para eliminar usuarios'
+        'No tiene permisos'
       );
 
       return;
@@ -1103,10 +1071,6 @@ window.eliminarUsuario = async function(id){
 
 
 
-
-    // ======================
-    // ELIMINAR PERMISOS
-    // ======================
 
     await window.supabaseClient
 
@@ -1247,10 +1211,6 @@ function limpiarFormulario(){
 
 
 
-  // ======================
-  // LIMPIAR CHECKBOXES
-  // ======================
-
   document.querySelectorAll(
 
     '.permisos-container input[type="checkbox"]'
@@ -1276,3 +1236,4 @@ function limpiarFormulario(){
 renderUsuarios();
 
 }
+```
