@@ -1,3 +1,4 @@
+
 // ======================
 // EVITAR DUPLICAR
 // ======================
@@ -33,67 +34,6 @@ if(btnGuardarAuditoria){
 
 
 // ======================
-// VALIDAR PERMISOS
-// ======================
-
-function tienePermiso(
-
-  modulo,
-  accion
-
-){
-
-  // ======================
-  // ADMIN
-  // ======================
-
-  if(
-
-    window.usuarioLogueado &&
-
-    window.usuarioLogueado.rol === 'admin'
-
-  ){
-
-    return true;
-
-  }
-
-
-
-
-
-  // ======================
-  // VALIDAR
-  // ======================
-
-  if(
-
-    !window.permisosUsuario ||
-
-    !window.permisosUsuario[modulo]
-
-  ){
-
-    return false;
-
-  }
-
-
-
-  return Boolean(
-
-    window.permisosUsuario[modulo][accion]
-
-  );
-
-}
-
-
-
-
-
-// ======================
 // GUARDAR AUDITORIA
 // ======================
 
@@ -101,9 +41,13 @@ async function guardarAuditoria(){
 
   try{
 
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'auditorias',
         'crear'
       )
@@ -111,7 +55,7 @@ async function guardarAuditoria(){
     ){
 
       alert(
-        'No tiene permisos para crear auditorías'
+        'No tiene permisos'
       );
 
       return;
@@ -272,10 +216,10 @@ async function guardarAuditoria(){
 
 
 // ======================
-// RENDER AUDITORIAS
+// RENDER
 // ======================
 
-async function renderAuditorias(){
+window.renderAuditorias = async function(){
 
   try{
 
@@ -341,7 +285,7 @@ async function renderAuditorias(){
 
       '<td colspan="6">' +
 
-      'No hay auditorías registradas' +
+      'No hay auditorías' +
 
       '</td>' +
 
@@ -482,7 +426,7 @@ async function renderAuditorias(){
 
       (
 
-        tienePermiso(
+        window.tienePermiso(
           'auditorias',
           'ver'
         )
@@ -517,7 +461,7 @@ async function renderAuditorias(){
 
       (
 
-        tienePermiso(
+        window.tienePermiso(
           'auditorias',
           'editar'
         )
@@ -552,7 +496,7 @@ async function renderAuditorias(){
 
       (
 
-        tienePermiso(
+        window.tienePermiso(
           'auditorias',
           'eliminar'
         )
@@ -605,14 +549,14 @@ async function renderAuditorias(){
 
   }
 
-}
+};
 
 
 
 
 
 // ======================
-// PDF EJECUTIVO PREMIUM
+// PDF
 // ======================
 
 window.generarPDF = async function(id){
@@ -621,7 +565,7 @@ window.generarPDF = async function(id){
 
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'auditorias',
         'ver'
       )
@@ -629,7 +573,7 @@ window.generarPDF = async function(id){
     ){
 
       alert(
-        'No tiene permisos para generar PDF'
+        'No tiene permisos'
       );
 
       return;
@@ -689,538 +633,69 @@ window.generarPDF = async function(id){
 
 
 
-    var doc = new jsPDF(
+    var doc = new jsPDF();
 
-      'p',
-      'mm',
-      'a4'
 
-    );
 
 
 
-
-
-    var azulOscuro = [15,23,42];
-
-    var azul = [37,99,235];
-
-    var gris = [100,116,139];
-
-    var grisClaro = [226,232,240];
-
-    var fondo = [248,250,252];
-
-
-
-
-
-    doc.setFillColor(
-
-      fondo[0],
-      fondo[1],
-      fondo[2]
-
-    );
-
-
-
-    doc.rect(
-      0,
-      0,
-      210,
-      297,
-      'F'
-    );
-
-
-
-
-
-    doc.setFillColor(
-
-      azulOscuro[0],
-      azulOscuro[1],
-      azulOscuro[2]
-
-    );
-
-
-
-    doc.rect(
-      0,
-      0,
-      210,
-      48,
-      'F'
-    );
-
-
-
-
-
-    doc.setFillColor(
-
-      azul[0],
-      azul[1],
-      azul[2]
-
-    );
-
-
-
-    doc.circle(
-      195,
-      8,
-      34,
-      'F'
-    );
-
-
-
-
-
-    try{
-
-      var logo =
-
-      document.querySelector(
-        '.logo img'
-      );
-
-
-
-      if(logo){
-
-        doc.addImage(
-
-          logo,
-
-          'PNG',
-
-          15,
-
-          8,
-
-          28,
-
-          28
-
-        );
-
-      }
-
-    }
-
-    catch(error){
-
-      console.log(
-        'No se pudo cargar el logo'
-      );
-
-    }
-
-
-
-
-
-    doc.setTextColor(
-      255,
-      255,
-      255
-    );
-
-
-
-    doc.setFont(
-      'helvetica',
-      'bold'
-    );
-
-
-
-    doc.setFontSize(25);
-
-
+    doc.setFontSize(18);
 
     doc.text(
-
-      'REPORTE EJECUTIVO',
-
-      52,
-
+      'Reporte Auditoría',
+      20,
       20
-
     );
 
 
 
+    doc.setFontSize(12);
+
+    doc.text(
+      'Proceso: ' + data.proceso,
+      20,
+      40
+    );
 
 
-    doc.setFontSize(13);
+
+    doc.text(
+      'Responsable: ' + data.responsable,
+      20,
+      50
+    );
 
 
 
-    doc.setFont(
-      'helvetica',
-      'normal'
+    doc.text(
+      'Estado: ' + data.estado,
+      20,
+      60
     );
 
 
 
     doc.text(
 
-      'Sistema Corporativo de Auditoría',
-
-      52,
-
-      30
-
-    );
-
-
-
-
-
-    doc.setTextColor(
-
-      gris[0],
-      gris[1],
-      gris[2]
-
-    );
-
-
-
-    doc.setFontSize(10);
-
-
-
-    doc.text(
-
-      'Fecha generación: ' +
-
-      new Date()
-      .toLocaleString(
-        'es-CO'
-      ),
-
-      15,
-
-      58
-
-    );
-
-
-
-
-
-    doc.setFillColor(
-      255,
-      255,
-      255
-    );
-
-
-
-    doc.roundedRect(
-
-      15,
-
-      66,
-
-      180,
-
-      65,
-
-      6,
-
-      6,
-
-      'F'
-
-    );
-
-
-
-
-
-    doc.setDrawColor(
-
-      grisClaro[0],
-      grisClaro[1],
-      grisClaro[2]
-
-    );
-
-
-
-    doc.roundedRect(
-
-      15,
-
-      66,
-
-      180,
-
-      65,
-
-      6,
-
-      6
-
-    );
-
-
-
-
-
-    doc.setTextColor(
-
-      azulOscuro[0],
-      azulOscuro[1],
-      azulOscuro[2]
-
-    );
-
-
-
-    doc.setFont(
-      'helvetica',
-      'bold'
-    );
-
-
-
-    doc.setFontSize(16);
-
-
-
-    doc.text(
-
-      'Información General',
-
-      22,
-
-      82
-
-    );
-
-
-
-
-
-    doc.setDrawColor(
-
-      azul[0],
-      azul[1],
-      azul[2]
-
-    );
-
-
-
-    doc.line(
-      22,
-      86,
-      82,
-      86
-    );
-
-
-
-
-
-    doc.setFontSize(11);
-
-
-
-    doc.setFont(
-      'helvetica',
-      'normal'
-    );
-
-
-
-    doc.setTextColor(
-
-      gris[0],
-      gris[1],
-      gris[2]
-
-    );
-
-
-
-    doc.text(
-      'Proceso:',
-      22,
-      102
-    );
-
-
-
-    doc.text(
-      'Responsable:',
-      22,
-      114
-    );
-
-
-
-    doc.text(
-      'Estado:',
-      120,
-      102
-    );
-
-
-
-    doc.text(
-      'Fecha:',
-      120,
-      114
-    );
-
-
-
-
-
-    doc.setTextColor(
-
-      azulOscuro[0],
-      azulOscuro[1],
-      azulOscuro[2]
-
-    );
-
-
-
-    doc.setFont(
-      'helvetica',
-      'bold'
-    );
-
-
-
-    doc.text(
-      String(data.proceso),
-      55,
-      102
-    );
-
-
-
-    doc.text(
-      String(data.responsable),
-      55,
-      114
-    );
-
-
-
-    doc.text(
-      String(data.estado),
-      145,
-      102
-    );
-
-
-
-    doc.text(
+      'Fecha: ' +
 
       new Date(
         data.created_at
-      ).toLocaleString(
-        'es-CO'
-      ),
+      ).toLocaleString('es-CO'),
 
-      145,
+      20,
 
-      114
+      70
 
     );
 
 
 
+    var texto =
 
+    doc.splitTextToSize(
 
-    doc.setFillColor(
-      255,
-      255,
-      255
-    );
-
-
-
-    doc.roundedRect(
-
-      15,
-
-      145,
-
-      180,
-
-      88,
-
-      6,
-
-      6,
-
-      'F'
-
-    );
-
-
-
-
-
-    doc.setDrawColor(
-
-      grisClaro[0],
-      grisClaro[1],
-      grisClaro[2]
-
-    );
-
-
-
-    doc.roundedRect(
-
-      15,
-
-      145,
-
-      180,
-
-      88,
-
-      6,
-
-      6
-
-    );
-
-
-
-
-
-    doc.setFont(
-      'helvetica',
-      'bold'
-    );
-
-
-
-    doc.setFontSize(16);
-
-
-
-    doc.text(
-
-      'Hallazgo Detectado',
-
-      22,
+      data.hallazgo,
 
       160
 
@@ -1228,280 +703,19 @@ window.generarPDF = async function(id){
 
 
 
-
-
-    doc.setDrawColor(
-
-      azul[0],
-      azul[1],
-      azul[2]
-
-    );
-
-
-
-    doc.line(
-      22,
-      164,
-      92,
-      164
-    );
-
-
-
-
-
-    doc.setFont(
-      'helvetica',
-      'normal'
-    );
-
-
-
-    doc.setFontSize(11);
-
-
-
-    doc.setTextColor(
-
-      gris[0],
-      gris[1],
-      gris[2]
-
-    );
-
-
-
-    var textoHallazgo =
-
-    doc.splitTextToSize(
-
-      String(data.hallazgo),
-
-      160
-
-    );
-
-
-
-
-
     doc.text(
-
-      textoHallazgo,
-
-      22,
-
-      178
-
-    );
-
-
-
-
-
-    doc.setFont(
-      'helvetica',
-      'bold'
-    );
-
-
-
-    doc.setFontSize(15);
-
-
-
-    doc.setTextColor(
-
-      azulOscuro[0],
-      azulOscuro[1],
-      azulOscuro[2]
-
+      'Hallazgo:',
+      20,
+      90
     );
 
 
 
     doc.text(
-
-      'Observaciones',
-
-      22,
-
-      245
-
+      texto,
+      20,
+      100
     );
-
-
-
-
-
-    doc.line(
-      22,
-      249,
-      72,
-      249
-    );
-
-
-
-
-
-    doc.setFont(
-      'helvetica',
-      'normal'
-    );
-
-
-
-    doc.setFontSize(10);
-
-
-
-    var observacion =
-
-    'Se recomienda realizar seguimiento y control sobre el hallazgo identificado para garantizar la mejora continua del proceso auditado.';
-
-
-
-
-
-    var textoObservacion =
-
-    doc.splitTextToSize(
-
-      observacion,
-
-      165
-
-    );
-
-
-
-
-
-    doc.text(
-
-      textoObservacion,
-
-      22,
-
-      260
-
-    );
-
-
-
-
-
-    doc.setDrawColor(
-      180,
-      180,
-      180
-    );
-
-
-
-    doc.line(
-      25,
-      278,
-      80,
-      278
-    );
-
-
-
-    doc.setFontSize(10);
-
-
-
-    doc.text(
-      'Firma Auditor',
-      38,
-      284
-    );
-
-
-
-
-
-    doc.line(
-      125,
-      278,
-      180,
-      278
-    );
-
-
-
-    doc.text(
-      'Firma Responsable',
-      132,
-      284
-    );
-
-
-
-
-
-    doc.setFillColor(
-
-      azulOscuro[0],
-      azulOscuro[1],
-      azulOscuro[2]
-
-    );
-
-
-
-    doc.rect(
-      0,
-      288,
-      210,
-      9,
-      'F'
-    );
-
-
-
-
-
-    doc.setTextColor(
-      255,
-      255,
-      255
-    );
-
-
-
-    doc.setFontSize(8);
-
-
-
-    doc.text(
-
-      'Electroingeniería - Sistema Corporativo de Auditoría',
-
-      15,
-
-      294
-
-    );
-
-
-
-
-
-    doc.text(
-
-      'Reporte Ejecutivo',
-
-      165,
-
-      294
-
-    );
-
-
 
 
 
@@ -1521,10 +735,6 @@ window.generarPDF = async function(id){
 
     console.log(error);
 
-    alert(
-      'Error generando PDF'
-    );
-
   }
 
 };
@@ -1543,7 +753,7 @@ window.eliminarAuditoria = async function(id){
 
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'auditorias',
         'eliminar'
       )
@@ -1551,7 +761,7 @@ window.eliminarAuditoria = async function(id){
     ){
 
       alert(
-        'No tiene permisos para eliminar auditorías'
+        'No tiene permisos'
       );
 
       return;
@@ -1678,7 +888,7 @@ window.editarEstado = async function(id){
 
     if(
 
-      !tienePermiso(
+      !window.tienePermiso(
         'auditorias',
         'editar'
       )
@@ -1686,7 +896,7 @@ window.editarEstado = async function(id){
     ){
 
       alert(
-        'No tiene permisos para editar auditorías'
+        'No tiene permisos'
       );
 
       return;
@@ -1744,7 +954,7 @@ window.editarEstado = async function(id){
 
         'AUDITORIAS',
 
-        'Se actualizó estado de auditoría ID ' +
+        'Se editó auditoría ID ' +
         id
 
       );
@@ -1814,14 +1024,14 @@ function limpiarFormulario(){
 
 
 // ======================
-// APLICAR PERMISOS UI
+// PERMISOS UI
 // ======================
 
 function aplicarPermisosAuditorias(){
 
   if(
 
-    !tienePermiso(
+    !window.tienePermiso(
       'auditorias',
       'crear'
     )
@@ -1852,3 +1062,4 @@ aplicarPermisosAuditorias();
 renderAuditorias();
 
 }
+```
