@@ -1,14 +1,11 @@
+```javascript
 // ======================
-// VALIDAR LIBRERIA
+// VALIDAR LIBRERIA SUPABASE
 // ======================
 
 if(!window.supabase){
 
   alert(
-    'Error cargando Supabase'
-  );
-
-  throw new Error(
     'Supabase no cargó correctamente'
   );
 
@@ -19,24 +16,26 @@ if(!window.supabase){
 
 
 // ======================
-// CONEXION SUPABASE
+// CONEXION GLOBAL SUPABASE
 // ======================
 
 const supabaseUrl =
-
 'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
 
 
 const supabaseKey =
-
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
-
+'TU_SUPABASE_KEY';
 
 
 
 
-const supabaseClient =
+
+// ======================
+// CLIENTE GLOBAL
+// ======================
+
+window.supabaseClient =
 
 window.supabase.createClient(
 
@@ -50,13 +49,17 @@ window.supabase.createClient(
 
 
 // ======================
-// FORM LOGIN
+// USUARIO LOGUEADO
 // ======================
 
-const form =
+window.usuarioLogueado =
 
-document.getElementById(
-  'loginForm'
+JSON.parse(
+
+  localStorage.getItem(
+    'usuarioLogueado'
+  )
+
 );
 
 
@@ -64,18 +67,13 @@ document.getElementById(
 
 
 // ======================
-// EVENTO LOGIN
+// VALIDAR SESION
 // ======================
 
-if(form){
+if(!window.usuarioLogueado){
 
-  form.addEventListener(
-
-    'submit',
-
-    login
-
-  );
+  window.location.href =
+  'index.html';
 
 }
 
@@ -84,45 +82,73 @@ if(form){
 
 
 // ======================
-// LOGIN
+// VARIABLES GLOBALES
 // ======================
 
-async function login(e){
+const dashboardOriginal =
+
+document.getElementById(
+  'mainContent'
+).innerHTML;
+
+
+
+
+
+// ======================
+// PERMISOS GLOBALES
+// ======================
+
+window.permisosUsuario = {};
+
+
+
+
+
+// ======================
+// MOSTRAR USUARIO
+// ======================
+
+document.getElementById(
+  'usuarioNombre'
+).innerText =
+
+window.usuarioLogueado.usuario +
+
+' | ' +
+
+window.usuarioLogueado.rol;
+
+
+
+
+
+// ======================
+// FUNCION GLOBAL PERMISOS
+// ======================
+
+window.tienePermiso = function(
+
+  modulo,
+  accion
+
+){
 
   // ======================
-  // EVITAR RECARGA
+  // ADMIN
   // ======================
 
-  e.preventDefault();
+  if(
 
+    window.usuarioLogueado &&
 
+    window.usuarioLogueado.rol === 'admin'
 
+  ){
 
+    return true;
 
-  // ======================
-  // INPUTS
-  // ======================
-
-  const usuario =
-
-  document.getElementById(
-    'usuario'
-  )
-  .value
-  .trim()
-  .toLowerCase();
-
-
-
-
-
-  const password =
-
-  document.getElementById(
-    'password'
-  )
-  .value
-  .trim();
+  }
 
 
 
@@ -134,17 +160,13 @@ async function login(e){
 
   if(
 
-    !usuario ||
+    !window.permisosUsuario ||
 
-    !password
+    !window.permisosUsuario[modulo]
 
   ){
 
-    alert(
-      'Complete todos los campos'
-    );
-
-    return;
+    return false;
 
   }
 
@@ -152,171 +174,529 @@ async function login(e){
 
 
 
-  // ======================
-  // CONSULTAR USUARIO
-  // ======================
+  return Boolean(
 
-  const response =
+    window.permisosUsuario[modulo][accion]
 
-  await supabaseClient
+  );
 
-  .from('usuarios')
-
-  .select('*')
-
-  .eq(
-
-    'usuario',
-
-    usuario
-
-  )
-
-  .eq(
-
-    'password',
-
-    password
-
-  )
-
-  .limit(1);
+};
 
 
 
 
 
-  const data =
-  response.data;
+// ======================
+// OCULTAR MODULO
+// ======================
+
+function ocultarModulo(id){
+
+  const elemento =
+
+  document.getElementById(id);
 
 
 
-  const error =
-  response.error;
+  if(elemento){
+
+    elemento.style.display =
+    'none';
+
+  }
+
+}
 
 
 
 
 
-  // ======================
-  // ERROR SUPABASE
-  // ======================
+// ======================
+// OCULTAR CARD
+// ======================
 
-  if(error){
+function ocultarCard(id){
+
+  const card =
+
+  document.getElementById(id);
+
+
+
+  if(card){
+
+    card.style.display =
+    'none';
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// MOSTRAR MODULO
+// ======================
+
+function mostrarElemento(id){
+
+  const elemento =
+
+  document.getElementById(id);
+
+
+
+  if(elemento){
+
+    elemento.style.display =
+    '';
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// MOSTRAR CARD
+// ======================
+
+function mostrarCard(id){
+
+  const card =
+
+  document.getElementById(id);
+
+
+
+  if(card){
+
+    card.style.display =
+    '';
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// APLICAR PERMISOS
+// ======================
+
+async function aplicarPermisos(){
+
+  try{
+
+    // ======================
+    // ADMIN
+    // ======================
+
+    if(
+
+      window.usuarioLogueado.rol === 'admin'
+
+    ){
+
+      mostrarElemento(
+        'inventarioMenu'
+      );
+
+      mostrarElemento(
+        'recepcionMenu'
+      );
+
+      mostrarElemento(
+        'auditoriasMenu'
+      );
+
+      mostrarElemento(
+        'usuariosMenu'
+      );
+
+      mostrarElemento(
+        'historialMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardInventario'
+      );
+
+      mostrarCard(
+        'cardRecepcion'
+      );
+
+      mostrarCard(
+        'cardAuditorias'
+      );
+
+      mostrarCard(
+        'cardUsuarios'
+      );
+
+      mostrarCard(
+        'cardHistorial'
+      );
+
+
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // CONSULTAR PERMISOS
+    // ======================
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('permisos')
+
+    .select('*')
+
+    .eq(
+
+      'usuario',
+
+      window.usuarioLogueado.usuario
+
+    );
+
+
+
+
+
+    const permisos =
+    response.data || [];
+
+
+
+
+
+    // ======================
+    // LIMPIAR
+    // ======================
+
+    window.permisosUsuario = {};
+
+
+
+
+
+    // ======================
+    // MAPA
+    // ======================
+
+    permisos.forEach(item => {
+
+      window.permisosUsuario[
+        item.modulo
+      ] = {
+
+        ver:
+        item.ver,
+
+        crear:
+        item.crear,
+
+        editar:
+        item.editar,
+
+        eliminar:
+        item.eliminar
+
+      };
+
+    });
+
+
+
+
+
+    // ======================
+    // INVENTARIO
+    // ======================
+
+    if(
+
+      window.tienePermiso(
+        'inventario',
+        'ver'
+      )
+
+    ){
+
+      mostrarElemento(
+        'inventarioMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardInventario'
+      );
+
+    }
+
+    else{
+
+      ocultarModulo(
+        'inventarioMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardInventario'
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // RECEPCION
+    // ======================
+
+    if(
+
+      window.tienePermiso(
+        'recepcion',
+        'ver'
+      )
+
+    ){
+
+      mostrarElemento(
+        'recepcionMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardRecepcion'
+      );
+
+    }
+
+    else{
+
+      ocultarModulo(
+        'recepcionMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardRecepcion'
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // AUDITORIAS
+    // ======================
+
+    if(
+
+      window.tienePermiso(
+        'auditorias',
+        'ver'
+      )
+
+    ){
+
+      mostrarElemento(
+        'auditoriasMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardAuditorias'
+      );
+
+    }
+
+    else{
+
+      ocultarModulo(
+        'auditoriasMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardAuditorias'
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // USUARIOS
+    // ======================
+
+    if(
+
+      window.tienePermiso(
+        'usuarios',
+        'ver'
+      )
+
+    ){
+
+      mostrarElemento(
+        'usuariosMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardUsuarios'
+      );
+
+    }
+
+    else{
+
+      ocultarModulo(
+        'usuariosMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardUsuarios'
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(
+
+      window.tienePermiso(
+        'historial',
+        'ver'
+      )
+
+    ){
+
+      mostrarElemento(
+        'historialMenu'
+      );
+
+
+
+      mostrarCard(
+        'cardHistorial'
+      );
+
+    }
+
+    else{
+
+      ocultarModulo(
+        'historialMenu'
+      );
+
+
+
+      ocultarCard(
+        'cardHistorial'
+      );
+
+    }
+
+  }
+
+  catch(error){
 
     console.log(error);
 
-    alert(
-      'Error conectando con Supabase'
-    );
-
-    return;
-
   }
-
-
-
-
-
-  // ======================
-  // VALIDAR USUARIO
-  // ======================
-
-  if(
-
-    !data ||
-
-    data.length === 0
-
-  ){
-
-    alert(
-      'Usuario o contraseña incorrectos'
-    );
-
-    return;
-
-  }
-
-
-
-
-
-  // ======================
-  // USUARIO
-  // ======================
-
-  const usuarioData =
-  data[0];
-
-
-
-
-
-  // ======================
-  // VALIDAR ESTADO
-  // ======================
-
-  if(
-
-    usuarioData.estado ===
-    'Inactivo'
-
-  ){
-
-    alert(
-      'Usuario inactivo'
-    );
-
-    return;
-
-  }
-
-
-
-
-
-  // ======================
-  // GUARDAR SESION
-  // ======================
-
-  localStorage.setItem(
-
-    'usuarioLogueado',
-
-    JSON.stringify(
-      usuarioData
-    )
-
-  );
-
-
-
-
-
-  // ======================
-  // LOGIN EXITOSO
-  // ======================
-
-  alert(
-
-`Bienvenido ${usuarioData.usuario}
-
-Rol:
-${usuarioData.rol}`
-
-  );
-
-
-
-
-
-  // ======================
-  // REDIRECCIONAR
-  // ======================
-
-  window.location.href =
-
-  'dashboard.html';
 
 }
+
+
+
+
+
+// ======================
+// GUARDAR HISTORIAL
+// ======================
+
+window.guardarHistorial = async function(
+
+  accion,
+  modulo,
+  descripcion
+
+){
+
+  try{
+
+    await window.supabaseClient
+
+    .from('historial')
+
+    .insert([
+
+      {
+
+        usuario:
+        window.usuarioLogueado.usuario,
+
+        accion:
+        accion,
+
+        modulo:
+        modulo,
+
+        descripcion:
+        descripcion
+
+      }
+
+    ]);
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+```
