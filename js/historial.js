@@ -15,7 +15,7 @@ window.historialCargado = true;
 // RENDER HISTORIAL
 // ======================
 
-window.renderHistorialSistema = async function(){
+async function renderHistorialSistema(){
 
   try{
 
@@ -176,6 +176,10 @@ window.renderHistorialSistema = async function(){
 
     data.forEach(item => {
 
+      // ======================
+      // KPIS
+      // ======================
+
       if(item.modulo === 'INVENTARIO'){
 
         inventario++;
@@ -197,6 +201,10 @@ window.renderHistorialSistema = async function(){
 
 
 
+
+      // ======================
+      // FECHA
+      // ======================
 
       let fechaTexto = '-';
 
@@ -221,6 +229,10 @@ window.renderHistorialSistema = async function(){
 
 
 
+
+      // ======================
+      // BOTON ELIMINAR
+      // ======================
 
       let botonEliminar = '';
 
@@ -256,14 +268,16 @@ window.renderHistorialSistema = async function(){
 
 
 
+      // ======================
+      // TABLA
+      // ======================
+
       body.innerHTML += `
 
         <tr>
 
           <td>
-
             ${item.usuario || '-'}
-
           </td>
 
 
@@ -271,9 +285,7 @@ window.renderHistorialSistema = async function(){
 
 
           <td>
-
             ${item.modulo || '-'}
-
           </td>
 
 
@@ -281,9 +293,7 @@ window.renderHistorialSistema = async function(){
 
 
           <td>
-
             ${item.accion || '-'}
-
           </td>
 
 
@@ -291,9 +301,7 @@ window.renderHistorialSistema = async function(){
 
 
           <td class="hallazgo-box">
-
             ${item.descripcion || '-'}
-
           </td>
 
 
@@ -301,9 +309,7 @@ window.renderHistorialSistema = async function(){
 
 
           <td>
-
             ${fechaTexto}
-
           </td>
 
 
@@ -311,9 +317,7 @@ window.renderHistorialSistema = async function(){
 
 
           <td>
-
             ${botonEliminar}
-
           </td>
 
         </tr>
@@ -364,7 +368,7 @@ window.renderHistorialSistema = async function(){
 
   }
 
-};
+}
 
 
 
@@ -377,6 +381,10 @@ window.renderHistorialSistema = async function(){
 window.eliminarHistorial = async function(id){
 
   try{
+
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
 
     if(
 
@@ -487,6 +495,10 @@ window.eliminarTodoHistorial = async function(){
 
   try{
 
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
+
     if(
 
       !window.tienePermiso(
@@ -528,6 +540,10 @@ window.eliminarTodoHistorial = async function(){
 
 
 
+    // ======================
+    // CONSULTAR IDS
+    // ======================
+
     const consulta =
 
     await window.supabaseClient
@@ -565,6 +581,10 @@ window.eliminarTodoHistorial = async function(){
 
 
 
+    // ======================
+    // VALIDAR
+    // ======================
+
     if(registros.length === 0){
 
       alert(
@@ -579,6 +599,10 @@ window.eliminarTodoHistorial = async function(){
 
 
 
+    // ======================
+    // IDS
+    // ======================
+
     const ids =
 
     registros.map(item => item.id);
@@ -586,6 +610,10 @@ window.eliminarTodoHistorial = async function(){
 
 
 
+
+    // ======================
+    // ELIMINAR
+    // ======================
 
     const eliminar =
 
