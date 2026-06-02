@@ -1,19 +1,15 @@
-
-// ======================
+```js
+// ========================================
 // EVITAR DUPLICAR SCRIPT
-// ======================
+// ========================================
 
 if(typeof window.inventarioCargado === 'undefined'){
 
 window.inventarioCargado = true;
 
-
-
-
-
-// ======================
+// ========================================
 // VARIABLES GLOBALES
-// ======================
+// ========================================
 
 window.inventario =
 
@@ -25,196 +21,435 @@ JSON.parse(
 
 ) || [];
 
-
-
 window.productoActual = null;
 
+// ========================================
+// ELEMENTOS HTML
+// ========================================
 
-
-
-
-// ======================
-// ELEMENTOS
-// ======================
-
-var excelFile =
+const excelFile =
 document.getElementById(
   'excelFile'
 );
 
-var reiniciarInventarioBtn =
+const reiniciarInventarioBtn =
 document.getElementById(
   'reiniciarInventario'
 );
 
-var buscarBtn =
+const buscarBtn =
 document.getElementById(
   'buscarBtn'
 );
 
-var guardarConteoBtn =
+const guardarConteoBtn =
 document.getElementById(
   'guardarConteo'
 );
 
-var exportarExcelBtn =
+const exportarExcelBtn =
 document.getElementById(
   'exportarExcel'
 );
 
-var buscadorInventario =
+const buscadorInventario =
 document.getElementById(
   'buscadorInventario'
 );
 
-
-
-
-
-// ======================
+// ========================================
 // EVENTOS
-// ======================
+// ========================================
 
 if(excelFile){
 
-  excelFile.onchange =
-  leerExcel;
+  excelFile.addEventListener(
+
+    'change',
+
+    leerExcel
+
+  );
 
 }
-
-
 
 if(reiniciarInventarioBtn){
 
-  reiniciarInventarioBtn.onclick =
-  reiniciarInventario;
+  reiniciarInventarioBtn.addEventListener(
+
+    'click',
+
+    reiniciarInventario
+
+  );
 
 }
-
-
 
 if(buscarBtn){
 
-  buscarBtn.onclick =
-  buscarProducto;
+  buscarBtn.addEventListener(
+
+    'click',
+
+    buscarProducto
+
+  );
 
 }
-
-
 
 if(guardarConteoBtn){
 
-  guardarConteoBtn.onclick =
-  registrarConteo;
+  guardarConteoBtn.addEventListener(
+
+    'click',
+
+    registrarConteo
+
+  );
 
 }
-
-
 
 if(exportarExcelBtn){
 
-  exportarExcelBtn.onclick =
-  exportarExcel;
+  exportarExcelBtn.addEventListener(
+
+    'click',
+
+    exportarExcel
+
+  );
 
 }
-
-
 
 if(buscadorInventario){
 
-  buscadorInventario.oninput =
-  filtrarInventario;
+  buscadorInventario.addEventListener(
+
+    'input',
+
+    filtrarInventario
+
+  );
 
 }
 
-
-
-
-
-// ======================
+// ========================================
 // LEER EXCEL
-// ======================
+// ========================================
 
 function leerExcel(e){
 
-  if(
+  try{
 
-    !window.tienePermiso(
-      'inventario',
-      'crear'
-    )
+    // ========================================
+    // VALIDAR PERMISOS
+    // ========================================
 
-  ){
+    if(
 
-    alert(
-      'No tiene permisos'
-    );
+      !window.tienePermiso(
+        'inventario',
+        'crear'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos'
+      );
+
+      return;
+
+    }
+
+    // ========================================
+    // ARCHIVO
+    // ========================================
+
+    const file =
+    e.target.files[0];
+
+    if(!file){
+
+      return;
+
+    }
+
+    // ========================================
+    // LEER ARCHIVO
+    // ========================================
+
+    const reader =
+    new FileReader();
+
+    reader.onload = function(event){
+
+      try{
+
+        const data =
+
+        new Uint8Array(
+          event.target.result
+        );
+
+        const workbook =
+
+        XLSX.read(
+
+          data,
+
+          {
+            type:'array'
+          }
+
+        );
+
+        const hoja =
+
+        workbook.Sheets[
+          workbook.SheetNames[0]
+        ];
+
+        // ========================================
+        // INVENTARIO
+        // ========================================
+
+        window.inventario =
+
+        XLSX.utils.sheet_to_json(
+          hoja
+        );
+
+        // ========================================
+        // GUARDAR
+        // ========================================
+
+        localStorage.setItem(
+
+          'inventario',
+
+          JSON.stringify(
+            window.inventario
+          )
+
+        );
+
+        // ========================================
+        // ACTUALIZAR
+        // ========================================
+
+        renderInventario();
+
+        actualizarKPIs();
+
+        alert(
+          'Excel cargado correctamente'
+        );
+
+      }
+
+      catch(error){
+
+        console.log(error);
+
+        alert(
+          'Error leyendo Excel'
+        );
+
+      }
+
+    };
+
+    reader.readAsArrayBuffer(file);
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+// ========================================
+// RENDER INVENTARIO
+// ========================================
+
+window.renderInventario = function(datos){
+
+  const inventarioData =
+  datos || window.inventario;
+
+  const body =
+  document.getElementById(
+    'inventarioBody'
+  );
+
+  if(!body){
 
     return;
 
   }
 
+  body.innerHTML = '';
 
+  // ========================================
+  // SIN DATOS
+  // ========================================
 
-  var file =
-  e.target.files[0];
+  if(inventarioData.length === 0){
 
+    body.innerHTML = `
 
+      <tr>
 
-  if(!file){
+        <td colspan="5">
+
+          No hay inventario cargado
+
+        </td>
+
+      </tr>
+
+    `;
 
     return;
 
   }
 
+  // ========================================
+  // HTML
+  // ========================================
 
+  let html = '';
 
-  var reader =
-  new FileReader();
+  inventarioData.forEach(function(item){
 
+    html += `
 
+      <tr>
 
-  reader.onload = function(event){
+        <td>
+          ${item.codigo || '-'}
+        </td>
 
-    var data =
+        <td>
+          ${item.producto || '-'}
+        </td>
 
-    new Uint8Array(
-      event.target.result
+        <td>
+          ${item.ubicacion || '-'}
+        </td>
+
+        <td>
+          ${item.stock || 0}
+        </td>
+
+        <td>
+
+          ${
+
+            window.tienePermiso(
+              'inventario',
+              'eliminar'
+            )
+
+            ?
+
+            `
+
+            <button
+              class="btn-eliminar"
+              onclick="eliminarProducto('${item.codigo}')"
+            >
+
+              Eliminar
+
+            </button>
+
+            `
+
+            :
+
+            '-'
+
+          }
+
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+  body.innerHTML = html;
+
+};
+
+// ========================================
+// ELIMINAR PRODUCTO
+// ========================================
+
+window.eliminarProducto = function(codigo){
+
+  try{
+
+    // ========================================
+    // VALIDAR PERMISOS
+    // ========================================
+
+    if(
+
+      !window.tienePermiso(
+        'inventario',
+        'eliminar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos'
+      );
+
+      return;
+
+    }
+
+    // ========================================
+    // CONFIRMAR
+    // ========================================
+
+    const confirmar = confirm(
+      '¿Eliminar producto?'
     );
 
+    if(!confirmar){
 
+      return;
 
-    var workbook =
+    }
 
-    XLSX.read(
+    // ========================================
+    // FILTRAR
+    // ========================================
 
-      data,
+    window.inventario =
 
-      {
+    window.inventario.filter(
 
-        type:'array'
+      function(item){
+
+        return item.codigo != codigo;
 
       }
 
     );
 
-
-
-    var hoja =
-
-    workbook.Sheets[
-      workbook.SheetNames[0]
-    ];
-
-
-
-    window.inventario =
-
-    XLSX.utils.sheet_to_json(
-      hoja
-    );
-
-
+    // ========================================
+    // GUARDAR
+    // ========================================
 
     localStorage.setItem(
 
@@ -226,500 +461,308 @@ function leerExcel(e){
 
     );
 
-
+    // ========================================
+    // ACTUALIZAR
+    // ========================================
 
     renderInventario();
 
     actualizarKPIs();
 
-
-
     alert(
-      'Excel cargado correctamente'
+      'Producto eliminado'
     );
 
-  };
-
-
-
-  reader.readAsArrayBuffer(file);
-
-}
-
-
-
-
-
-// ======================
-// RENDER INVENTARIO
-// ======================
-
-window.renderInventario = function(datos){
-
-  if(!datos){
-
-    datos = window.inventario;
-
   }
 
+  catch(error){
 
-
-  var body =
-  document.getElementById(
-    'inventarioBody'
-  );
-
-
-
-  if(!body){
-
-    return;
+    console.log(error);
 
   }
-
-
-
-  body.innerHTML = '';
-
-
-
-  if(datos.length === 0){
-
-    body.innerHTML =
-
-    '<tr>' +
-
-      '<td colspan="5">' +
-
-      'No hay inventario cargado' +
-
-      '</td>' +
-
-    '</tr>';
-
-
-
-    return;
-
-  }
-
-
-
-  datos.forEach(function(item){
-
-    body.innerHTML +=
-
-    '<tr>' +
-
-      '<td>' +
-      (item.codigo || '-') +
-      '</td>' +
-
-
-
-      '<td>' +
-      (item.producto || '-') +
-      '</td>' +
-
-
-
-      '<td>' +
-      (item.ubicacion || '-') +
-      '</td>' +
-
-
-
-      '<td>' +
-      (item.stock || 0) +
-      '</td>' +
-
-
-
-      '<td>' +
-
-
-
-
-
-      (
-
-        window.tienePermiso(
-          'inventario',
-          'eliminar'
-        )
-
-        ?
-
-        '<button ' +
-
-          'class="btn-eliminar" ' +
-
-          'onclick="eliminarProducto(' +
-
-          "'" + item.codigo + "'" +
-
-          ')"' +
-
-        '>' +
-
-          'Eliminar' +
-
-        '</button>'
-
-        :
-
-        '-'
-
-      )
-
-
-
-
-
-      + '</td>' +
-
-
-
-    '</tr>';
-
-  });
 
 };
 
-
-
-
-
-// ======================
-// ELIMINAR PRODUCTO
-// ======================
-
-window.eliminarProducto = function(codigo){
-
-  if(
-
-    !window.tienePermiso(
-      'inventario',
-      'eliminar'
-    )
-
-  ){
-
-    alert(
-      'No tiene permisos'
-    );
-
-    return;
-
-  }
-
-
-
-  var confirmar = confirm(
-    '¿Eliminar producto?'
-  );
-
-
-
-  if(!confirmar){
-
-    return;
-
-  }
-
-
-
-  window.inventario =
-
-  window.inventario.filter(
-
-    function(item){
-
-      return item.codigo != codigo;
-
-    }
-
-  );
-
-
-
-  localStorage.setItem(
-
-    'inventario',
-
-    JSON.stringify(
-      window.inventario
-    )
-
-  );
-
-
-
-  renderInventario();
-
-  actualizarKPIs();
-
-};
-
-
-
-
-
-// ======================
+// ========================================
 // BUSCAR PRODUCTO
-// ======================
+// ========================================
 
 function buscarProducto(){
 
-  if(
+  try{
 
-    !window.tienePermiso(
-      'inventario',
-      'ver'
-    )
+    // ========================================
+    // VALIDAR PERMISO
+    // ========================================
 
-  ){
+    if(
 
-    alert(
-      'No tiene permisos'
-    );
+      !window.tienePermiso(
+        'inventario',
+        'ver'
+      )
 
-    return;
+    ){
 
-  }
+      alert(
+        'No tiene permisos'
+      );
 
-
-
-  var codigo =
-  document.getElementById(
-    'codigoInput'
-  ).value.trim();
-
-
-
-  window.productoActual =
-
-  window.inventario.find(
-
-    function(p){
-
-      return String(
-        p.codigo
-      ) === codigo;
+      return;
 
     }
 
-  );
+    const codigo =
 
+    document.getElementById(
+      'codigoInput'
+    ).value.trim();
 
+    // ========================================
+    // BUSCAR
+    // ========================================
 
-  if(!window.productoActual){
+    window.productoActual =
 
-    alert(
-      'Producto no encontrado'
+    window.inventario.find(
+
+      function(item){
+
+        return String(
+          item.codigo
+        ) === codigo;
+
+      }
+
     );
 
-    return;
+    // ========================================
+    // NO EXISTE
+    // ========================================
+
+    if(!window.productoActual){
+
+      alert(
+        'Producto no encontrado'
+      );
+
+      return;
+
+    }
+
+    // ========================================
+    // MOSTRAR
+    // ========================================
+
+    actualizarTexto(
+      'codigoProducto',
+      window.productoActual.codigo
+    );
+
+    actualizarTexto(
+      'nombreProducto',
+      window.productoActual.producto
+    );
+
+    actualizarTexto(
+      'ubicacionProducto',
+      window.productoActual.ubicacion
+    );
+
+    actualizarTexto(
+      'stockProducto',
+      window.productoActual.stock
+    );
 
   }
 
+  catch(error){
 
+    console.log(error);
 
-  actualizarTexto(
-    'codigoProducto',
-    window.productoActual.codigo
-  );
-
-
-
-  actualizarTexto(
-    'nombreProducto',
-    window.productoActual.producto
-  );
-
-
-
-  actualizarTexto(
-    'ubicacionProducto',
-    window.productoActual.ubicacion
-  );
-
-
-
-  actualizarTexto(
-    'stockProducto',
-    window.productoActual.stock
-  );
+  }
 
 }
 
-
-
-
-
-// ======================
+// ========================================
 // REGISTRAR CONTEO
-// ======================
+// ========================================
 
 function registrarConteo(){
 
-  if(
+  try{
 
-    !window.tienePermiso(
-      'inventario',
-      'editar'
-    )
+    // ========================================
+    // VALIDAR PERMISO
+    // ========================================
 
-  ){
+    if(
 
-    alert(
-      'No tiene permisos'
-    );
+      !window.tienePermiso(
+        'inventario',
+        'editar'
+      )
 
-    return;
+    ){
 
-  }
+      alert(
+        'No tiene permisos'
+      );
 
-
-
-  if(!window.productoActual){
-
-    alert(
-      'Busque un producto'
-    );
-
-    return;
-
-  }
-
-
-
-  var fisico = Number(
-
-    document.getElementById(
-      'conteoFisico'
-    ).value
-
-  );
-
-
-
-  var sistema = Number(
-    window.productoActual.stock
-  );
-
-
-
-  var diferencia =
-  fisico - sistema;
-
-
-
-  actualizarTexto(
-    'resultadoTexto',
-    diferencia
-  );
-
-
-
-  var historial =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'historial'
-    )
-
-  ) || [];
-
-
-
-  var index = historial.findIndex(
-
-    function(item){
-
-      return item.codigo ==
-      window.productoActual.codigo;
+      return;
 
     }
 
-  );
+    // ========================================
+    // VALIDAR PRODUCTO
+    // ========================================
 
+    if(!window.productoActual){
 
+      alert(
+        'Busque un producto'
+      );
 
-  var nuevoRegistro = {
+      return;
 
-    codigo:
-    window.productoActual.codigo,
+    }
 
-    producto:
-    window.productoActual.producto,
+    // ========================================
+    // VALORES
+    // ========================================
 
-    sistema:
-    sistema,
+    const fisico = Number(
 
-    fisico:
-    fisico,
+      document.getElementById(
+        'conteoFisico'
+      ).value
 
-    diferencia:
-    diferencia
+    );
 
-  };
+    const sistema = Number(
+      window.productoActual.stock
+    );
 
+    const diferencia =
+    fisico - sistema;
 
+    // ========================================
+    // RESULTADO
+    // ========================================
 
-  if(index !== -1){
+    actualizarTexto(
+      'resultadoTexto',
+      diferencia
+    );
 
-    historial[index] =
-    nuevoRegistro;
+    // ========================================
+    // HISTORIAL
+    // ========================================
 
-  }
+    let historial =
 
-  else{
+    JSON.parse(
 
-    historial.push(
-      nuevoRegistro
+      localStorage.getItem(
+        'historial'
+      )
+
+    ) || [];
+
+    const index =
+
+    historial.findIndex(
+
+      function(item){
+
+        return item.codigo ==
+        window.productoActual.codigo;
+
+      }
+
+    );
+
+    const nuevoRegistro = {
+
+      codigo:
+      window.productoActual.codigo,
+
+      producto:
+      window.productoActual.producto,
+
+      sistema:
+      sistema,
+
+      fisico:
+      fisico,
+
+      diferencia:
+      diferencia
+
+    };
+
+    // ========================================
+    // ACTUALIZAR O CREAR
+    // ========================================
+
+    if(index !== -1){
+
+      historial[index] =
+      nuevoRegistro;
+
+    }
+
+    else{
+
+      historial.push(
+        nuevoRegistro
+      );
+
+    }
+
+    // ========================================
+    // GUARDAR
+    // ========================================
+
+    localStorage.setItem(
+
+      'historial',
+
+      JSON.stringify(
+        historial
+      )
+
+    );
+
+    // ========================================
+    // ACTUALIZAR
+    // ========================================
+
+    renderHistorial();
+
+    actualizarKPIs();
+
+    alert(
+      'Conteo guardado'
     );
 
   }
 
+  catch(error){
 
+    console.log(error);
 
-  localStorage.setItem(
-
-    'historial',
-
-    JSON.stringify(
-      historial
-    )
-
-  );
-
-
-
-  renderHistorial();
-
-  actualizarKPIs();
-
-
-
-  alert(
-    'Conteo guardado'
-  );
+  }
 
 }
 
-
-
-
-
-// ======================
+// ========================================
 // RENDER HISTORIAL
-// ======================
+// ========================================
 
 window.renderHistorial = function(filtro){
 
-  var historial =
+  let historial =
 
   JSON.parse(
 
@@ -729,7 +772,9 @@ window.renderHistorial = function(filtro){
 
   ) || [];
 
-
+  // ========================================
+  // FILTROS
+  // ========================================
 
   if(filtro === 'exactos'){
 
@@ -745,8 +790,6 @@ window.renderHistorial = function(filtro){
 
   }
 
-
-
   if(filtro === 'faltantes'){
 
     historial = historial.filter(
@@ -760,8 +803,6 @@ window.renderHistorial = function(filtro){
     );
 
   }
-
-
 
   if(filtro === 'sobrantes'){
 
@@ -777,14 +818,10 @@ window.renderHistorial = function(filtro){
 
   }
 
-
-
-  var body =
+  const body =
   document.getElementById(
     'historialBody'
   );
-
-
 
   if(!body){
 
@@ -792,155 +829,178 @@ window.renderHistorial = function(filtro){
 
   }
 
-
-
   body.innerHTML = '';
 
+  // ========================================
+  // SIN DATOS
+  // ========================================
 
+  if(historial.length === 0){
 
-  historial.forEach(function(item){
+    body.innerHTML = `
 
-    body.innerHTML +=
+      <tr>
 
-    '<tr>' +
+        <td colspan="6">
 
-      '<td>' + item.codigo + '</td>' +
+          No hay conteos registrados
 
-      '<td>' + item.producto + '</td>' +
+        </td>
 
-      '<td>' + item.sistema + '</td>' +
+      </tr>
 
-      '<td>' + item.fisico + '</td>' +
-
-      '<td>' + item.diferencia + '</td>' +
-
-      '<td>' +
-
-
-
-
-
-      (
-
-        window.tienePermiso(
-          'inventario',
-          'eliminar'
-        )
-
-        ?
-
-        '<button ' +
-
-        'class="btn-eliminar" ' +
-
-        'onclick="eliminarRegistro(' +
-
-        "'" + item.codigo + "'" +
-
-        ')"' +
-
-        '>' +
-
-        'Eliminar' +
-
-        '</button>'
-
-        :
-
-        '-'
-
-      )
-
-
-
-
-
-      + '</td>' +
-
-    '</tr>';
-
-  });
-
-};
-
-
-
-
-
-// ======================
-// ELIMINAR REGISTRO
-// ======================
-
-window.eliminarRegistro = function(codigo){
-
-  if(
-
-    !window.tienePermiso(
-      'inventario',
-      'eliminar'
-    )
-
-  ){
-
-    alert(
-      'No tiene permisos'
-    );
+    `;
 
     return;
 
   }
 
+  // ========================================
+  // HTML
+  // ========================================
 
+  let html = '';
 
-  var historial =
+  historial.forEach(function(item){
 
-  JSON.parse(
+    html += `
 
-    localStorage.getItem(
-      'historial'
-    )
+      <tr>
 
-  ) || [];
+        <td>
+          ${item.codigo}
+        </td>
 
+        <td>
+          ${item.producto}
+        </td>
 
+        <td>
+          ${item.sistema}
+        </td>
 
-  historial = historial.filter(
+        <td>
+          ${item.fisico}
+        </td>
 
-    function(item){
+        <td>
+          ${item.diferencia}
+        </td>
 
-      return item.codigo != codigo;
+        <td>
 
-    }
+          ${
 
-  );
+            window.tienePermiso(
+              'inventario',
+              'eliminar'
+            )
 
+            ?
 
+            `
 
-  localStorage.setItem(
+            <button
+              class="btn-eliminar"
+              onclick="eliminarRegistro('${item.codigo}')"
+            >
 
-    'historial',
+              Eliminar
 
-    JSON.stringify(
-      historial
-    )
+            </button>
 
-  );
+            `
 
+            :
 
+            '-'
 
-  renderHistorial();
+          }
 
-  actualizarKPIs();
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+  body.innerHTML = html;
 
 };
 
+// ========================================
+// ELIMINAR REGISTRO
+// ========================================
 
+window.eliminarRegistro = function(codigo){
 
+  try{
 
+    if(
 
-// ======================
+      !window.tienePermiso(
+        'inventario',
+        'eliminar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos'
+      );
+
+      return;
+
+    }
+
+    let historial =
+
+    JSON.parse(
+
+      localStorage.getItem(
+        'historial'
+      )
+
+    ) || [];
+
+    historial = historial.filter(
+
+      function(item){
+
+        return item.codigo != codigo;
+
+      }
+
+    );
+
+    localStorage.setItem(
+
+      'historial',
+
+      JSON.stringify(
+        historial
+      )
+
+    );
+
+    renderHistorial();
+
+    actualizarKPIs();
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+// ========================================
 // FILTRAR HISTORIAL
-// ======================
+// ========================================
 
 window.filtrarHistorial = function(tipo){
 
@@ -948,404 +1008,346 @@ window.filtrarHistorial = function(tipo){
 
 };
 
-
-
-
-
-// ======================
+// ========================================
 // KPIS
-// ======================
+// ========================================
 
 window.actualizarKPIs = function(){
 
-  var historial =
+  try{
 
-  JSON.parse(
+    const historial =
 
-    localStorage.getItem(
-      'historial'
-    )
+    JSON.parse(
 
-  ) || [];
+      localStorage.getItem(
+        'historial'
+      )
 
+    ) || [];
 
+    const totalConteos =
+    historial.length;
 
-  var totalConteos =
-  historial.length;
+    let exactos = 0;
+    let faltantes = 0;
+    let sobrantes = 0;
+    let sumaExactitud = 0;
 
+    historial.forEach(function(item){
 
+      const sistema =
+      Number(item.sistema);
 
-  var exactos = 0;
+      const fisico =
+      Number(item.fisico);
 
-  var faltantes = 0;
+      if(fisico === sistema){
 
-  var sobrantes = 0;
+        exactos++;
 
-  var sumaExactitud = 0;
+      }
 
+      if(fisico < sistema){
 
+        faltantes++;
 
+      }
 
+      if(fisico > sistema){
 
-  historial.forEach(function(item){
+        sobrantes++;
 
-    var sistema =
-    Number(item.sistema);
+      }
 
+      const mayor = Math.max(
+        sistema,
+        fisico
+      );
 
+      const menor = Math.min(
+        sistema,
+        fisico
+      );
 
-    var fisico =
-    Number(item.fisico);
+      let exactitudItem = 0;
 
+      if(mayor > 0){
 
+        exactitudItem =
 
+        (menor / mayor) * 100;
 
+      }
 
-    if(fisico === sistema){
+      sumaExactitud +=
+      exactitudItem;
 
-      exactos++;
+    });
 
-    }
+    let exactitudGeneral = 0;
 
+    if(totalConteos > 0){
 
+      exactitudGeneral =
 
-    if(fisico < sistema){
-
-      faltantes++;
-
-    }
-
-
-
-    if(fisico > sistema){
-
-      sobrantes++;
-
-    }
-
-
-
-    var mayor = Math.max(
-      sistema,
-      fisico
-    );
-
-
-
-    var menor = Math.min(
-      sistema,
-      fisico
-    );
-
-
-
-    var exactitudItem = 0;
-
-
-
-    if(mayor > 0){
-
-      exactitudItem =
-
-      (menor / mayor) * 100;
+      (
+        sumaExactitud /
+        totalConteos
+      ).toFixed(1);
 
     }
 
-
-
-    sumaExactitud +=
-    exactitudItem;
-
-  });
-
-
-
-
-
-  var exactitudGeneral = 0;
-
-
-
-  if(totalConteos > 0){
-
-    exactitudGeneral =
-
-    (
-      sumaExactitud /
+    actualizarTexto(
+      'kpiTotal',
       totalConteos
-    ).toFixed(1);
+    );
+
+    actualizarTexto(
+      'kpiExactos',
+      exactos
+    );
+
+    actualizarTexto(
+      'kpiFaltantes',
+      faltantes
+    );
+
+    actualizarTexto(
+      'kpiSobrantes',
+      sobrantes
+    );
+
+    actualizarTexto(
+      'kpiExactitud',
+      exactitudGeneral + '%'
+    );
 
   }
 
+  catch(error){
 
+    console.log(error);
 
-
-
-  actualizarTexto(
-    'kpiTotal',
-    totalConteos
-  );
-
-
-
-  actualizarTexto(
-    'kpiExactos',
-    exactos
-  );
-
-
-
-  actualizarTexto(
-    'kpiFaltantes',
-    faltantes
-  );
-
-
-
-  actualizarTexto(
-    'kpiSobrantes',
-    sobrantes
-  );
-
-
-
-  actualizarTexto(
-    'kpiExactitud',
-    exactitudGeneral + '%'
-  );
+  }
 
 };
 
-
-
-
-
-// ======================
+// ========================================
 // FILTRAR INVENTARIO
-// ======================
+// ========================================
 
 function filtrarInventario(){
 
-  var texto =
-  buscadorInventario.value
-  .toLowerCase();
+  try{
 
+    const texto =
 
+    buscadorInventario.value
+    .toLowerCase();
 
-  var filtrados =
+    const filtrados =
 
-  window.inventario.filter(
+    window.inventario.filter(
 
-    function(item){
+      function(item){
 
-      return(
+        return(
 
-        String(
-          item.codigo || ''
-        )
+          String(
+            item.codigo || ''
+          )
 
-        .toLowerCase()
+          .toLowerCase()
 
-        .includes(texto)
+          .includes(texto)
 
+          ||
 
+          String(
+            item.producto || ''
+          )
 
-        ||
+          .toLowerCase()
 
+          .includes(texto)
 
+        );
 
-        String(
-          item.producto || ''
-        )
+      }
 
-        .toLowerCase()
+    );
 
-        .includes(texto)
+    renderInventario(
+      filtrados
+    );
 
-      );
+  }
 
-    }
+  catch(error){
 
-  );
+    console.log(error);
 
-
-
-  renderInventario(
-    filtrados
-  );
+  }
 
 }
 
-
-
-
-
-// ======================
+// ========================================
 // EXPORTAR EXCEL
-// ======================
+// ========================================
 
 function exportarExcel(){
 
-  if(
+  try{
 
-    !window.tienePermiso(
-      'inventario',
-      'ver'
-    )
+    if(
 
-  ){
+      !window.tienePermiso(
+        'inventario',
+        'ver'
+      )
 
-    alert(
-      'No tiene permisos'
+    ){
+
+      alert(
+        'No tiene permisos'
+      );
+
+      return;
+
+    }
+
+    const historial =
+
+    JSON.parse(
+
+      localStorage.getItem(
+        'historial'
+      )
+
+    ) || [];
+
+    if(historial.length === 0){
+
+      alert(
+        'No hay datos'
+      );
+
+      return;
+
+    }
+
+    const worksheet =
+
+    XLSX.utils.json_to_sheet(
+      historial
     );
 
-    return;
+    const workbook =
+
+    XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+
+      workbook,
+
+      worksheet,
+
+      'Conteos'
+
+    );
+
+    XLSX.writeFile(
+
+      workbook,
+
+      'inventario.xlsx'
+
+    );
 
   }
 
+  catch(error){
 
-
-  var historial =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'historial'
-    )
-
-  ) || [];
-
-
-
-  if(historial.length === 0){
-
-    alert(
-      'No hay datos'
-    );
-
-    return;
+    console.log(error);
 
   }
-
-
-
-  var worksheet =
-
-  XLSX.utils.json_to_sheet(
-    historial
-  );
-
-
-
-  var workbook =
-
-  XLSX.utils.book_new();
-
-
-
-  XLSX.utils.book_append_sheet(
-
-    workbook,
-
-    worksheet,
-
-    'Conteos'
-
-  );
-
-
-
-  XLSX.writeFile(
-
-    workbook,
-
-    'inventario.xlsx'
-
-  );
 
 }
 
-
-
-
-
-// ======================
-// REINICIAR
-// ======================
+// ========================================
+// REINICIAR INVENTARIO
+// ========================================
 
 function reiniciarInventario(){
 
-  if(
+  try{
 
-    !window.tienePermiso(
-      'inventario',
-      'eliminar'
-    )
+    if(
 
-  ){
+      !window.tienePermiso(
+        'inventario',
+        'eliminar'
+      )
 
-    alert(
-      'No tiene permisos'
+    ){
+
+      alert(
+        'No tiene permisos'
+      );
+
+      return;
+
+    }
+
+    const confirmar = confirm(
+      '¿Eliminar inventario e historial?'
     );
 
-    return;
+    if(!confirmar){
+
+      return;
+
+    }
+
+    localStorage.removeItem(
+      'inventario'
+    );
+
+    localStorage.removeItem(
+      'historial'
+    );
+
+    window.inventario = [];
+
+    renderInventario();
+
+    renderHistorial();
+
+    actualizarKPIs();
+
+    actualizarTexto(
+      'resultadoTexto',
+      '-'
+    );
+
+    alert(
+      'Inventario reiniciado'
+    );
 
   }
 
+  catch(error){
 
-
-  var confirmar = confirm(
-    '¿Eliminar inventario e historial?'
-  );
-
-
-
-  if(!confirmar){
-
-    return;
+    console.log(error);
 
   }
-
-
-
-  localStorage.removeItem(
-    'inventario'
-  );
-
-
-
-  localStorage.removeItem(
-    'historial'
-  );
-
-
-
-  window.inventario = [];
-
-
-
-  renderInventario();
-
-  renderHistorial();
-
-  actualizarKPIs();
-
-
-
-  actualizarTexto(
-    'resultadoTexto',
-    '-'
-  );
 
 }
 
-
-
-
-
-// ======================
+// ========================================
 // HELPERS
-// ======================
+// ========================================
 
 function actualizarTexto(
 
@@ -1354,10 +1356,8 @@ function actualizarTexto(
 
 ){
 
-  var elemento =
+  const elemento =
   document.getElementById(id);
-
-
 
   if(elemento){
 
@@ -1368,15 +1368,15 @@ function actualizarTexto(
 
 }
 
-
-
-
-
-// ======================
-// OCULTAR BOTONES
-// ======================
+// ========================================
+// PERMISOS UI
+// ========================================
 
 function aplicarPermisosInventario(){
+
+  // ========================================
+  // CREAR
+  // ========================================
 
   if(
 
@@ -1396,7 +1396,9 @@ function aplicarPermisosInventario(){
 
   }
 
-
+  // ========================================
+  // EDITAR
+  // ========================================
 
   if(
 
@@ -1416,7 +1418,9 @@ function aplicarPermisosInventario(){
 
   }
 
-
+  // ========================================
+  // ELIMINAR
+  // ========================================
 
   if(
 
@@ -1438,13 +1442,9 @@ function aplicarPermisosInventario(){
 
 }
 
-
-
-
-
-// ======================
+// ========================================
 // INICIO
-// ======================
+// ========================================
 
 aplicarPermisosInventario();
 
@@ -1455,4 +1455,4 @@ renderHistorial();
 actualizarKPIs();
 
 }
-
+```
