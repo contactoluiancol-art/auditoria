@@ -19,33 +19,27 @@ if(!window.supabase){
 
 
 // ======================
-// CONEXION GLOBAL SUPABASE
-// ======================
-
-const supabaseUrl =
-'https://hurxdjoiafkjoyrmyhbd.supabase.co';
-
-
-
-const supabaseKey =
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
-
-
-
-
-
-// ======================
 // CLIENTE GLOBAL
 // ======================
 
-window.supabaseClient =
+if(!window.supabaseClient){
 
-window.supabase.createClient(
+  const supabaseUrl =
+  'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
-  supabaseUrl,
-  supabaseKey
+  const supabaseKey =
+  'TU_ANON_KEY_AQUI';
 
-);
+  window.supabaseClient =
+
+  window.supabase.createClient(
+
+    supabaseUrl,
+    supabaseKey
+
+  );
+
+}
 
 
 
@@ -105,7 +99,9 @@ document.getElementById(
 const dashboardOriginal =
 
 mainContent
+
 ? mainContent.innerHTML
+
 : '';
 
 
@@ -113,10 +109,12 @@ mainContent
 
 
 // ======================
-// PERMISOS GLOBALES
+// PERMISOS
 // ======================
 
-window.permisosUsuario = {};
+window.permisosUsuario =
+
+window.permisosUsuario || {};
 
 
 
@@ -131,10 +129,6 @@ const usuarioNombre =
 document.getElementById(
   'usuarioNombre'
 );
-
-
-
-
 
 if(usuarioNombre){
 
@@ -153,7 +147,7 @@ if(usuarioNombre){
 
 
 // ======================
-// FUNCION GLOBAL PERMISOS
+// VALIDAR PERMISOS
 // ======================
 
 window.tienePermiso = function(
@@ -170,7 +164,6 @@ window.tienePermiso = function(
   if(
 
     window.usuarioLogueado &&
-
     window.usuarioLogueado.rol === 'admin'
 
   ){
@@ -225,10 +218,6 @@ function mostrarElemento(id){
 
   document.getElementById(id);
 
-
-
-
-
   if(elemento){
 
     elemento.style.display = '';
@@ -250,10 +239,6 @@ function ocultarElemento(id){
   const elemento =
 
   document.getElementById(id);
-
-
-
-
 
   if(elemento){
 
@@ -277,10 +262,6 @@ function mostrarCard(id){
 
   document.getElementById(id);
 
-
-
-
-
   if(card){
 
     card.style.display = '';
@@ -302,10 +283,6 @@ function ocultarCard(id){
   const card =
 
   document.getElementById(id);
-
-
-
-
 
   if(card){
 
@@ -359,6 +336,8 @@ async function aplicarPermisos(){
 
 
 
+
+
       mostrarCard(
         'cardInventario'
       );
@@ -378,8 +357,6 @@ async function aplicarPermisos(){
       mostrarCard(
         'cardHistorial'
       );
-
-
 
       return;
 
@@ -753,6 +730,8 @@ function renderNotificaciones(){
 
 
 
+
+
   const notificaciones =
 
   JSON.parse(
@@ -765,7 +744,11 @@ function renderNotificaciones(){
 
 
 
+
+
   lista.innerHTML = '';
+
+
 
 
 
@@ -779,11 +762,9 @@ function renderNotificaciones(){
 
     '<p class="sin-notificaciones">' +
 
-      'No hay notificaciones' +
+    'No hay notificaciones' +
 
     '</p>';
-
-
 
     return;
 
@@ -791,19 +772,21 @@ function renderNotificaciones(){
 
 
 
+
+
   // ======================
   // RECORRER
   // ======================
 
-  notificaciones.reverse().forEach(function(item){
+  notificaciones.forEach(function(item){
 
     lista.innerHTML +=
 
     '<div class="notificacion-item">' +
 
-      '<p>' + item.mensaje + '</p>' +
+    '<p>' + item.mensaje + '</p>' +
 
-      '<span>' + item.fecha + '</span>' +
+    '<span>' + item.fecha + '</span>' +
 
     '</div>';
 
@@ -816,7 +799,7 @@ function renderNotificaciones(){
 
 
 // ======================
-// EVENTO NUEVA NOTIFICACION
+// EVENTO NOTIFICACIONES
 // ======================
 
 window.addEventListener(
@@ -857,6 +840,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // DASHBOARD
   // ======================
@@ -865,6 +850,8 @@ function mostrarModulo(modulo){
 
     contenido.innerHTML =
     dashboardOriginal;
+
+
 
 
 
@@ -878,9 +865,13 @@ function mostrarModulo(modulo){
 
 
 
+
+
     return;
 
   }
+
+
 
 
 
@@ -906,6 +897,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // RECEPCION
   // ======================
@@ -925,6 +918,8 @@ function mostrarModulo(modulo){
     );
 
   }
+
+
 
 
 
@@ -950,6 +945,8 @@ function mostrarModulo(modulo){
 
 
 
+
+
   // ======================
   // USUARIOS
   // ======================
@@ -969,6 +966,8 @@ function mostrarModulo(modulo){
     );
 
   }
+
+
 
 
 
@@ -1023,6 +1022,8 @@ function cargarModulo(
 
     contenido.innerHTML =
     html;
+
+
 
 
 
@@ -1135,10 +1136,6 @@ document.getElementById(
   'cerrarSesionBtn'
 );
 
-
-
-
-
 if(cerrarSesionBtn){
 
   cerrarSesionBtn.addEventListener(
@@ -1156,34 +1153,36 @@ if(cerrarSesionBtn){
 
 
 // ======================
-// MENU DASHBOARD
+// EVENTOS MENUS
 // ======================
 
-const dashboardMenu =
+function activarMenu(id,modulo){
 
-document.getElementById(
-  'dashboardMenu'
-);
+  const elemento =
 
-
+  document.getElementById(id);
 
 
 
-if(dashboardMenu){
 
-  dashboardMenu.addEventListener(
 
-    'click',
+  if(elemento){
 
-    function(){
+    elemento.addEventListener(
 
-      mostrarModulo(
-        'dashboard'
-      );
+      'click',
 
-    }
+      function(){
 
-  );
+        mostrarModulo(
+          modulo
+        );
+
+      }
+
+    );
+
+  }
 
 }
 
@@ -1192,187 +1191,45 @@ if(dashboardMenu){
 
 
 // ======================
-// MENU INVENTARIO
+// MENUS
 // ======================
 
-const inventarioMenu =
+activarMenu(
+  'dashboardMenu',
+  'dashboard'
+);
 
-document.getElementById(
-  'inventarioMenu'
+activarMenu(
+  'inventarioMenu',
+  'inventario'
+);
+
+activarMenu(
+  'recepcionMenu',
+  'recepcion'
+);
+
+activarMenu(
+  'auditoriasMenu',
+  'auditorias'
+);
+
+activarMenu(
+  'usuariosMenu',
+  'usuarios'
+);
+
+activarMenu(
+  'historialMenu',
+  'historial'
 );
 
 
 
 
 
-if(inventarioMenu){
-
-  inventarioMenu.addEventListener(
-
-    'click',
-
-    function(){
-
-      mostrarModulo(
-        'inventario'
-      );
-
-    }
-
-  );
-
-}
-
-
-
-
-
 // ======================
-// MENU RECEPCION
-// ======================
-
-const recepcionMenu =
-
-document.getElementById(
-  'recepcionMenu'
-);
-
-
-
-
-
-if(recepcionMenu){
-
-  recepcionMenu.addEventListener(
-
-    'click',
-
-    function(){
-
-      mostrarModulo(
-        'recepcion'
-      );
-
-    }
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// MENU AUDITORIAS
-// ======================
-
-const auditoriasMenu =
-
-document.getElementById(
-  'auditoriasMenu'
-);
-
-
-
-
-
-if(auditoriasMenu){
-
-  auditoriasMenu.addEventListener(
-
-    'click',
-
-    function(){
-
-      mostrarModulo(
-        'auditorias'
-      );
-
-    }
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// MENU USUARIOS
-// ======================
-
-const usuariosMenu =
-
-document.getElementById(
-  'usuariosMenu'
-);
-
-
-
-
-
-if(usuariosMenu){
-
-  usuariosMenu.addEventListener(
-
-    'click',
-
-    function(){
-
-      mostrarModulo(
-        'usuarios'
-      );
-
-    }
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// MENU HISTORIAL
-// ======================
-
-const historialMenu =
-
-document.getElementById(
-  'historialMenu'
-);
-
-
-
-
-
-if(historialMenu){
-
-  historialMenu.addEventListener(
-
-    'click',
-
-    function(){
-
-      mostrarModulo(
-        'historial'
-      );
-
-    }
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// EVENTOS CARDS DASHBOARD
+// CARDS DASHBOARD
 // ======================
 
 document.addEventListener(
@@ -1389,6 +1246,8 @@ document.addEventListener(
 
 
 
+
+
     if(!card){
 
       return;
@@ -1397,9 +1256,7 @@ document.addEventListener(
 
 
 
-    // ======================
-    // INVENTARIO
-    // ======================
+
 
     if(card.id === 'cardInventario'){
 
@@ -1409,12 +1266,6 @@ document.addEventListener(
 
     }
 
-
-
-    // ======================
-    // RECEPCION
-    // ======================
-
     else if(card.id === 'cardRecepcion'){
 
       mostrarModulo(
@@ -1422,12 +1273,6 @@ document.addEventListener(
       );
 
     }
-
-
-
-    // ======================
-    // AUDITORIAS
-    // ======================
 
     else if(card.id === 'cardAuditorias'){
 
@@ -1437,12 +1282,6 @@ document.addEventListener(
 
     }
 
-
-
-    // ======================
-    // USUARIOS
-    // ======================
-
     else if(card.id === 'cardUsuarios'){
 
       mostrarModulo(
@@ -1450,12 +1289,6 @@ document.addEventListener(
       );
 
     }
-
-
-
-    // ======================
-    // HISTORIAL
-    // ======================
 
     else if(card.id === 'cardHistorial'){
 
