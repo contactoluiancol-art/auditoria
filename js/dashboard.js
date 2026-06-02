@@ -1,3 +1,4 @@
+
 // ======================
 // VALIDAR LIBRERIA SUPABASE
 // ======================
@@ -28,7 +29,7 @@ if(!window.supabaseClient){
   'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
   const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+  'TU_API_KEY_AQUI';
 
   window.supabaseClient =
 
@@ -157,10 +158,6 @@ window.tienePermiso = function(
 
 ){
 
-  // ======================
-  // ADMIN
-  // ======================
-
   if(
 
     window.usuarioLogueado &&
@@ -171,14 +168,6 @@ window.tienePermiso = function(
     return true;
 
   }
-
-
-
-
-
-  // ======================
-  // VALIDAR
-  // ======================
 
   if(
 
@@ -191,10 +180,6 @@ window.tienePermiso = function(
     return false;
 
   }
-
-
-
-
 
   return Boolean(
 
@@ -304,10 +289,6 @@ async function aplicarPermisos(){
 
   try{
 
-    // ======================
-    // ADMIN
-    // ======================
-
     if(
 
       window.usuarioLogueado.rol === 'admin'
@@ -334,10 +315,6 @@ async function aplicarPermisos(){
         'historialMenu'
       );
 
-
-
-
-
       mostrarCard(
         'cardInventario'
       );
@@ -362,14 +339,6 @@ async function aplicarPermisos(){
 
     }
 
-
-
-
-
-    // ======================
-    // CONSULTAR PERMISOS
-    // ======================
-
     const response =
 
     await window.supabaseClient
@@ -386,10 +355,6 @@ async function aplicarPermisos(){
 
     );
 
-
-
-
-
     if(response.error){
 
       console.log(
@@ -400,30 +365,10 @@ async function aplicarPermisos(){
 
     }
 
-
-
-
-
     const permisos =
     response.data || [];
 
-
-
-
-
-    // ======================
-    // LIMPIAR
-    // ======================
-
     window.permisosUsuario = {};
-
-
-
-
-
-    // ======================
-    // MAPA
-    // ======================
 
     permisos.forEach(function(item){
 
@@ -447,206 +392,77 @@ async function aplicarPermisos(){
 
     });
 
-
-
-
-
-    // ======================
-    // INVENTARIO
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'inventario',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'inventarioMenu'
-      );
-
-      mostrarCard(
-        'cardInventario'
-      );
-
-    }
-
-    else{
-
-      ocultarElemento(
-        'inventarioMenu'
-      );
-
-      ocultarCard(
-        'cardInventario'
-      );
-
-    }
-
-
-
-
-
-    // ======================
-    // RECEPCION
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'recepcion',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'recepcionMenu'
-      );
-
-      mostrarCard(
-        'cardRecepcion'
-      );
-
-    }
-
-    else{
-
-      ocultarElemento(
-        'recepcionMenu'
-      );
-
-      ocultarCard(
-        'cardRecepcion'
-      );
-
-    }
-
-
-
-
-
-    // ======================
-    // AUDITORIAS
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'auditorias',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'auditoriasMenu'
-      );
-
-      mostrarCard(
-        'cardAuditorias'
-      );
-
-    }
-
-    else{
-
-      ocultarElemento(
-        'auditoriasMenu'
-      );
-
-      ocultarCard(
-        'cardAuditorias'
-      );
-
-    }
-
-
-
-
-
-    // ======================
-    // USUARIOS
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'usuarios',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'usuariosMenu'
-      );
-
-      mostrarCard(
-        'cardUsuarios'
-      );
-
-    }
-
-    else{
-
-      ocultarElemento(
-        'usuariosMenu'
-      );
-
-      ocultarCard(
-        'cardUsuarios'
-      );
-
-    }
-
-
-
-
-
-    // ======================
-    // HISTORIAL
-    // ======================
-
-    if(
-
-      window.tienePermiso(
-        'historial',
-        'ver'
-      )
-
-    ){
-
-      mostrarElemento(
-        'historialMenu'
-      );
-
-      mostrarCard(
-        'cardHistorial'
-      );
-
-    }
-
-    else{
-
-      ocultarElemento(
-        'historialMenu'
-      );
-
-      ocultarCard(
-        'cardHistorial'
-      );
-
-    }
+    validarModulo(
+      'inventario'
+    );
+
+    validarModulo(
+      'recepcion'
+    );
+
+    validarModulo(
+      'auditorias'
+    );
+
+    validarModulo(
+      'usuarios'
+    );
+
+    validarModulo(
+      'historial'
+    );
 
   }
 
   catch(error){
 
     console.log(error);
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// VALIDAR MODULO
+// ======================
+
+function validarModulo(modulo){
+
+  const menu =
+  modulo + 'Menu';
+
+  const card =
+  'card' +
+
+  modulo.charAt(0)
+  .toUpperCase() +
+
+  modulo.slice(1);
+
+  if(
+
+    window.tienePermiso(
+      modulo,
+      'ver'
+    )
+
+  ){
+
+    mostrarElemento(menu);
+
+    mostrarCard(card);
+
+  }
+
+  else{
+
+    ocultarElemento(menu);
+
+    ocultarCard(card);
 
   }
 
@@ -712,7 +528,7 @@ window.guardarHistorial = async function(
 // RENDER NOTIFICACIONES
 // ======================
 
-function renderNotificaciones(){
+window.renderNotificaciones = function(){
 
   const lista =
 
@@ -720,17 +536,11 @@ function renderNotificaciones(){
     'listaNotificaciones'
   );
 
-
-
   if(!lista){
 
     return;
 
   }
-
-
-
-
 
   const notificaciones =
 
@@ -742,19 +552,21 @@ function renderNotificaciones(){
 
   ) || [];
 
+  const contador =
 
+  document.getElementById(
+    'contadorNotificaciones'
+  );
 
+  if(contador){
 
+    contador.innerText =
+
+    notificaciones.length;
+
+  }
 
   lista.innerHTML = '';
-
-
-
-
-
-  // ======================
-  // SIN NOTIFICACIONES
-  // ======================
 
   if(notificaciones.length === 0){
 
@@ -762,7 +574,7 @@ function renderNotificaciones(){
 
     '<p class="sin-notificaciones">' +
 
-    'No hay notificaciones' +
+      'No hay notificaciones' +
 
     '</p>';
 
@@ -770,27 +582,88 @@ function renderNotificaciones(){
 
   }
 
-
-
-
-
-  // ======================
-  // RECORRER
-  // ======================
-
   notificaciones.forEach(function(item){
 
     lista.innerHTML +=
 
     '<div class="notificacion-item">' +
 
-    '<p>' + item.mensaje + '</p>' +
+      '<p>' +
 
-    '<span>' + item.fecha + '</span>' +
+        item.mensaje +
+
+      '</p>' +
+
+      '<span>' +
+
+        item.fecha +
+
+      '</span>' +
 
     '</div>';
 
   });
+
+};
+
+
+
+
+
+// ======================
+// LIMPIAR NOTIFICACIONES
+// ======================
+
+window.limpiarNotificaciones = function(){
+
+  localStorage.removeItem(
+    'notificaciones'
+  );
+
+  window.renderNotificaciones();
+
+};
+
+
+
+
+
+// ======================
+// ABRIR / CERRAR PANEL
+// ======================
+
+const campanaBtn =
+
+document.getElementById(
+  'campanaBtn'
+);
+
+const panelNotificaciones =
+
+document.getElementById(
+  'panelNotificaciones'
+);
+
+if(
+
+  campanaBtn &&
+  panelNotificaciones
+
+){
+
+  campanaBtn.addEventListener(
+
+    'click',
+
+    function(){
+
+      panelNotificaciones.classList.toggle(
+        'activo'
+      );
+
+    }
+
+  );
 
 }
 
@@ -808,7 +681,7 @@ window.addEventListener(
 
   function(){
 
-    renderNotificaciones();
+    window.renderNotificaciones();
 
   }
 
@@ -830,166 +703,40 @@ function mostrarModulo(modulo){
     'mainContent'
   );
 
-
-
   if(!contenido){
 
     return;
 
   }
 
-
-
-
-
-  // ======================
-  // DASHBOARD
-  // ======================
-
   if(modulo === 'dashboard'){
 
     contenido.innerHTML =
     dashboardOriginal;
 
-
-
-
-
     setTimeout(function(){
 
       aplicarPermisos();
 
-      renderNotificaciones();
+      window.renderNotificaciones();
 
     },100);
-
-
-
-
 
     return;
 
   }
 
+  cargarModulo(
 
+    contenido,
 
+    'modules/' + modulo + '.html',
 
+    modulo + 'Script',
 
-  // ======================
-  // INVENTARIO
-  // ======================
+    'js/' + modulo + '.js?v=30'
 
-  if(modulo === 'inventario'){
-
-    cargarModulo(
-
-      contenido,
-
-      'modules/inventario.html',
-
-      'inventarioScript',
-
-      'js/inventario.js?v=30'
-
-    );
-
-  }
-
-
-
-
-
-  // ======================
-  // RECEPCION
-  // ======================
-
-  else if(modulo === 'recepcion'){
-
-    cargarModulo(
-
-      contenido,
-
-      'modules/recepcion.html',
-
-      'recepcionScript',
-
-      'js/recepcion.js?v=30'
-
-    );
-
-  }
-
-
-
-
-
-  // ======================
-  // AUDITORIAS
-  // ======================
-
-  else if(modulo === 'auditorias'){
-
-    cargarModulo(
-
-      contenido,
-
-      'modules/auditorias.html',
-
-      'auditoriasScript',
-
-      'js/auditorias.js?v=30'
-
-    );
-
-  }
-
-
-
-
-
-  // ======================
-  // USUARIOS
-  // ======================
-
-  else if(modulo === 'usuarios'){
-
-    cargarModulo(
-
-      contenido,
-
-      'modules/usuarios.html',
-
-      'usuariosScript',
-
-      'js/usuarios.js?v=30'
-
-    );
-
-  }
-
-
-
-
-
-  // ======================
-  // HISTORIAL
-  // ======================
-
-  else if(modulo === 'historial'){
-
-    cargarModulo(
-
-      contenido,
-
-      'modules/historial.html',
-
-      'historialScript',
-
-      'js/historial.js?v=30'
-
-    );
-
-  }
+  );
 
 }
 
@@ -1022,10 +769,6 @@ function cargarModulo(
 
     contenido.innerHTML =
     html;
-
-
-
-
 
     cargarScript(
 
@@ -1063,19 +806,11 @@ function cargarScript(
 
   document.getElementById(id);
 
-
-
-
-
   if(anterior){
 
     anterior.remove();
 
   }
-
-
-
-
 
   const script =
 
@@ -1083,17 +818,9 @@ function cargarScript(
     'script'
   );
 
-
-
-
-
   script.src = src;
 
   script.id = id;
-
-
-
-
 
   document.body.appendChild(
     script
@@ -1114,8 +841,6 @@ function cerrarSesion(){
   localStorage.removeItem(
     'usuarioLogueado'
   );
-
-
 
   window.location.href =
   'index.html';
@@ -1153,7 +878,7 @@ if(cerrarSesionBtn){
 
 
 // ======================
-// EVENTOS MENUS
+// ACTIVAR MENU
 // ======================
 
 function activarMenu(id,modulo){
@@ -1161,10 +886,6 @@ function activarMenu(id,modulo){
   const elemento =
 
   document.getElementById(id);
-
-
-
-
 
   if(elemento){
 
@@ -1244,19 +965,11 @@ document.addEventListener(
       '.dashboard-card'
     );
 
-
-
-
-
     if(!card){
 
       return;
 
     }
-
-
-
-
 
     if(card.id === 'cardInventario'){
 
@@ -1312,4 +1025,5 @@ document.addEventListener(
 
 aplicarPermisos();
 
-renderNotificaciones();
+window.renderNotificaciones();
+
