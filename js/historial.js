@@ -1,46 +1,112 @@
 
-// ======================
-// EVITAR DUPLICAR
-// ======================
+// ========================================
+// EVITAR DUPLICAR MODULO
+// ========================================
 
 if(typeof window.historialCargado === 'undefined'){
 
 window.historialCargado = true;
 
+// ========================================
+// ELEMENTOS HTML
+// ========================================
 
+const historialBody =
+document.getElementById(
+  'historialBody'
+);
 
+const buscarHistorial =
+document.getElementById(
+  'buscarHistorial'
+);
 
+const kpiHistorial =
+document.getElementById(
+  'kpiHistorial'
+);
 
-// ======================
+const kpiInventario =
+document.getElementById(
+  'kpiInventario'
+);
+
+const kpiAuditorias =
+document.getElementById(
+  'kpiAuditorias'
+);
+
+const kpiRecepcion =
+document.getElementById(
+  'kpiRecepcion'
+);
+
+// ========================================
+// ACTUALIZAR KPIS
+// ========================================
+
+function actualizarKPIS(
+
+  total,
+  inventario,
+  auditorias,
+  recepcion
+
+){
+
+  if(kpiHistorial){
+
+    kpiHistorial.innerText =
+    total;
+
+  }
+
+  if(kpiInventario){
+
+    kpiInventario.innerText =
+    inventario;
+
+  }
+
+  if(kpiAuditorias){
+
+    kpiAuditorias.innerText =
+    auditorias;
+
+  }
+
+  if(kpiRecepcion){
+
+    kpiRecepcion.innerText =
+    recepcion;
+
+  }
+
+}
+
+// ========================================
 // RENDER HISTORIAL
-// ======================
+// ========================================
 
 async function renderHistorialSistema(){
 
   try{
 
-    const body =
-    document.getElementById(
-      'historialBody'
-    );
+    // ========================================
+    // VALIDAR TABLA
+    // ========================================
 
-
-
-    if(!body){
+    if(!historialBody){
 
       return;
 
     }
 
+    historialBody.innerHTML = '';
 
-
-
-
-    body.innerHTML = '';
-
-
-
-
+    // ========================================
+    // CONSULTAR HISTORIAL
+    // ========================================
 
     const response =
 
@@ -55,48 +121,35 @@ async function renderHistorialSistema(){
       'id',
 
       {
-
         ascending:false
-
       }
 
     );
 
+    // ========================================
+    // ERROR
+    // ========================================
 
+    if(response.error){
 
-
-
-    const data =
-    response.data;
-
-
-
-    const error =
-    response.error;
-
-
-
-
-
-    if(error){
-
-      console.log(error);
+      console.log(
+        response.error
+      );
 
       return;
 
     }
 
+    const data =
+    response.data || [];
 
-
-
-
-    // ======================
+    // ========================================
     // SIN DATOS
-    // ======================
+    // ========================================
 
-    if(!data || data.length === 0){
+    if(data.length === 0){
 
-      body.innerHTML = `
+      historialBody.innerHTML = `
 
         <tr>
 
@@ -110,75 +163,40 @@ async function renderHistorialSistema(){
 
       `;
 
-
-
-
-
-      document.getElementById(
-        'kpiHistorial'
-      ).innerText = '0';
-
-
-
-      document.getElementById(
-        'kpiInventario'
-      ).innerText = '0';
-
-
-
-      document.getElementById(
-        'kpiAuditorias'
-      ).innerText = '0';
-
-
-
-      document.getElementById(
-        'kpiRecepcion'
-      ).innerText = '0';
-
-
+      actualizarKPIS(
+        0,
+        0,
+        0,
+        0
+      );
 
       return;
 
     }
 
-
-
-
-
-    // ======================
-    // KPIS
-    // ======================
-
-    document.getElementById(
-      'kpiHistorial'
-    ).innerText =
-
-    data.length;
-
-
-
-
+    // ========================================
+    // CONTADORES
+    // ========================================
 
     let inventario = 0;
-
     let auditorias = 0;
-
     let recepcion = 0;
 
+    // ========================================
+    // HTML TABLA
+    // ========================================
 
+    let html = '';
 
+    // ========================================
+    // RECORRER HISTORIAL
+    // ========================================
 
+    data.forEach(function(item){
 
-    // ======================
-    // RECORRER
-    // ======================
-
-    data.forEach(item => {
-
-      // ======================
+      // ========================================
       // KPIS
-      // ======================
+      // ========================================
 
       if(item.modulo === 'INVENTARIO'){
 
@@ -198,19 +216,11 @@ async function renderHistorialSistema(){
 
       }
 
-
-
-
-
-      // ======================
+      // ========================================
       // FECHA
-      // ======================
+      // ========================================
 
       let fechaTexto = '-';
-
-
-
-
 
       if(item.created_at){
 
@@ -219,26 +229,16 @@ async function renderHistorialSistema(){
         new Date(
           item.created_at
         ).toLocaleString(
-
           'es-CO'
-
         );
 
       }
 
-
-
-
-
-      // ======================
+      // ========================================
       // BOTON ELIMINAR
-      // ======================
+      // ========================================
 
       let botonEliminar = '';
-
-
-
-
 
       if(
 
@@ -264,15 +264,11 @@ async function renderHistorialSistema(){
 
       }
 
+      // ========================================
+      // FILA TABLA
+      // ========================================
 
-
-
-
-      // ======================
-      // TABLA
-      // ======================
-
-      body.innerHTML += `
+      html += `
 
         <tr>
 
@@ -280,41 +276,21 @@ async function renderHistorialSistema(){
             ${item.usuario || '-'}
           </td>
 
-
-
-
-
           <td>
             ${item.modulo || '-'}
           </td>
-
-
-
-
 
           <td>
             ${item.accion || '-'}
           </td>
 
-
-
-
-
           <td class="hallazgo-box">
             ${item.descripcion || '-'}
           </td>
 
-
-
-
-
           <td>
             ${fechaTexto}
           </td>
-
-
-
-
 
           <td>
             ${botonEliminar}
@@ -326,39 +302,25 @@ async function renderHistorialSistema(){
 
     });
 
+    // ========================================
+    // RENDER TABLA
+    // ========================================
 
+    historialBody.innerHTML =
+    html;
 
-
-
-    // ======================
+    // ========================================
     // ACTUALIZAR KPIS
-    // ======================
+    // ========================================
 
-    document.getElementById(
-      'kpiInventario'
-    ).innerText =
+    actualizarKPIS(
 
-    inventario;
+      data.length,
+      inventario,
+      auditorias,
+      recepcion
 
-
-
-
-
-    document.getElementById(
-      'kpiAuditorias'
-    ).innerText =
-
-    auditorias;
-
-
-
-
-
-    document.getElementById(
-      'kpiRecepcion'
-    ).innerText =
-
-    recepcion;
+    );
 
   }
 
@@ -370,21 +332,17 @@ async function renderHistorialSistema(){
 
 }
 
-
-
-
-
-// ======================
-// ELIMINAR HISTORIAL
-// ======================
+// ========================================
+// ELIMINAR REGISTRO
+// ========================================
 
 window.eliminarHistorial = async function(id){
 
   try{
 
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
+    // ========================================
+    // VALIDAR PERMISOS
+    // ========================================
 
     if(
 
@@ -403,17 +361,13 @@ window.eliminarHistorial = async function(id){
 
     }
 
-
-
-
+    // ========================================
+    // CONFIRMAR
+    // ========================================
 
     const confirmar = confirm(
       '¿Eliminar registro del historial?'
     );
-
-
-
-
 
     if(!confirmar){
 
@@ -421,9 +375,9 @@ window.eliminarHistorial = async function(id){
 
     }
 
-
-
-
+    // ========================================
+    // ELIMINAR
+    // ========================================
 
     const response =
 
@@ -441,9 +395,9 @@ window.eliminarHistorial = async function(id){
 
     );
 
-
-
-
+    // ========================================
+    // ERROR
+    // ========================================
 
     if(response.error){
 
@@ -459,15 +413,11 @@ window.eliminarHistorial = async function(id){
 
     }
 
+    // ========================================
+    // RECARGAR
+    // ========================================
 
-
-
-
-    renderHistorialSistema();
-
-
-
-
+    await renderHistorialSistema();
 
     alert(
       'Registro eliminado'
@@ -483,21 +433,17 @@ window.eliminarHistorial = async function(id){
 
 };
 
-
-
-
-
-// ======================
+// ========================================
 // ELIMINAR TODO
-// ======================
+// ========================================
 
 window.eliminarTodoHistorial = async function(){
 
   try{
 
-    // ======================
+    // ========================================
     // VALIDAR PERMISO
-    // ======================
+    // ========================================
 
     if(
 
@@ -516,9 +462,9 @@ window.eliminarTodoHistorial = async function(){
 
     }
 
-
-
-
+    // ========================================
+    // CONFIRMAR
+    // ========================================
 
     const confirmar = confirm(
 
@@ -526,94 +472,15 @@ window.eliminarTodoHistorial = async function(){
 
     );
 
-
-
-
-
     if(!confirmar){
 
       return;
 
     }
 
-
-
-
-
-    // ======================
-    // CONSULTAR IDS
-    // ======================
-
-    const consulta =
-
-    await window.supabaseClient
-
-    .from('historial')
-
-    .select('id');
-
-
-
-
-
-    if(consulta.error){
-
-      console.log(
-        consulta.error
-      );
-
-      alert(
-        'Error consultando historial'
-      );
-
-      return;
-
-    }
-
-
-
-
-
-    const registros =
-    consulta.data || [];
-
-
-
-
-
-    // ======================
-    // VALIDAR
-    // ======================
-
-    if(registros.length === 0){
-
-      alert(
-        'No hay historial'
-      );
-
-      return;
-
-    }
-
-
-
-
-
-    // ======================
-    // IDS
-    // ======================
-
-    const ids =
-
-    registros.map(item => item.id);
-
-
-
-
-
-    // ======================
-    // ELIMINAR
-    // ======================
+    // ========================================
+    // ELIMINAR TODO
+    // ========================================
 
     const eliminar =
 
@@ -623,17 +490,11 @@ window.eliminarTodoHistorial = async function(){
 
     .delete()
 
-    .in(
+    .neq('id',0);
 
-      'id',
-
-      ids
-
-    );
-
-
-
-
+    // ========================================
+    // ERROR
+    // ========================================
 
     if(eliminar.error){
 
@@ -649,41 +510,11 @@ window.eliminarTodoHistorial = async function(){
 
     }
 
+    // ========================================
+    // RECARGAR
+    // ========================================
 
-
-
-
-    document.getElementById(
-      'kpiHistorial'
-    ).innerText = '0';
-
-
-
-    document.getElementById(
-      'kpiInventario'
-    ).innerText = '0';
-
-
-
-    document.getElementById(
-      'kpiAuditorias'
-    ).innerText = '0';
-
-
-
-    document.getElementById(
-      'kpiRecepcion'
-    ).innerText = '0';
-
-
-
-
-
-    renderHistorialSistema();
-
-
-
-
+    await renderHistorialSistema();
 
     alert(
       'Historial eliminado correctamente'
@@ -699,22 +530,9 @@ window.eliminarTodoHistorial = async function(){
 
 };
 
-
-
-
-
-// ======================
+// ========================================
 // BUSCADOR
-// ======================
-
-const buscarHistorial =
-document.getElementById(
-  'buscarHistorial'
-);
-
-
-
-
+// ========================================
 
 if(buscarHistorial){
 
@@ -725,20 +543,17 @@ if(buscarHistorial){
     function(){
 
       const filtro =
-      this.value.toLowerCase();
 
-
+      this.value
+      .toLowerCase();
 
       const filas =
+
       document.querySelectorAll(
         '#historialBody tr'
       );
 
-
-
-
-
-      filas.forEach(fila => {
+      filas.forEach(function(fila){
 
         fila.style.display =
 
@@ -762,13 +577,9 @@ if(buscarHistorial){
 
 }
 
-
-
-
-
-// ======================
-// OCULTAR BOTON
-// ======================
+// ========================================
+// PERMISOS UI
+// ========================================
 
 function aplicarPermisosHistorial(){
 
@@ -777,10 +588,6 @@ function aplicarPermisosHistorial(){
   document.getElementById(
     'btnEliminarTodoHistorial'
   );
-
-
-
-
 
   if(
 
@@ -800,13 +607,9 @@ function aplicarPermisosHistorial(){
 
 }
 
-
-
-
-
-// ======================
+// ========================================
 // INICIO
-// ======================
+// ========================================
 
 aplicarPermisosHistorial();
 
