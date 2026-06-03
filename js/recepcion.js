@@ -119,10 +119,6 @@ window.crearNotificacion = function(mensaje){
 
 
 
-    // ======================
-    // CONTADOR
-    // ======================
-
     const contador =
 
     document.getElementById(
@@ -144,10 +140,6 @@ window.crearNotificacion = function(mensaje){
 
 
 
-    // ======================
-    // REFRESH PANEL
-    // ======================
-
     if(
 
       typeof window.renderNotificaciones ===
@@ -162,10 +154,6 @@ window.crearNotificacion = function(mensaje){
 
 
 
-
-    // ======================
-    // EVENTO GLOBAL
-    // ======================
 
     window.dispatchEvent(
 
@@ -206,10 +194,6 @@ async function guardarRecepcion(){
 
   try{
 
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
-
     if(
 
       !window.tienePermiso(
@@ -230,10 +214,6 @@ async function guardarRecepcion(){
 
 
 
-
-    // ======================
-    // INPUTS
-    // ======================
 
     const proveedor =
 
@@ -351,10 +331,6 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // VALIDAR
-    // ======================
-
     if(
 
       !proveedor ||
@@ -376,10 +352,6 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // PORCENTAJE
-    // ======================
-
     const porcentajeRevisado =
 
     (
@@ -391,19 +363,11 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // PDF URL
-    // ======================
-
     let pdfUrl = '';
 
 
 
 
-
-    // ======================
-    // SUBIR PDF
-    // ======================
 
     if(pdfFile){
 
@@ -484,10 +448,6 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // INSERTAR
-    // ======================
-
     const response =
 
     await window.supabaseClient
@@ -528,6 +488,9 @@ async function guardarRecepcion(){
         comentario_validacion:
         '',
 
+        seguimiento:
+        '',
+
         estado:
         estado,
 
@@ -553,10 +516,6 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // ERROR
-    // ======================
-
     if(response.error){
 
       console.log(
@@ -574,10 +533,6 @@ async function guardarRecepcion(){
 
 
 
-
-    // ======================
-    // HISTORIAL
-    // ======================
 
     if(
 
@@ -603,13 +558,9 @@ async function guardarRecepcion(){
 
 
 
-    // ======================
-    // NOTIFICACION
-    // ======================
-
     window.crearNotificacion(
 
-`Nueva recepción registrada
+`📦 Nueva recepción registrada
 
 Proveedor:
 ${proveedor}
@@ -632,10 +583,6 @@ ${estado}`
 
 
 
-    // ======================
-    // REFRESH
-    // ======================
-
     await window.renderRecepciones();
 
     await window.actualizarKPIsRecepcion();
@@ -644,19 +591,11 @@ ${estado}`
 
 
 
-    // ======================
-    // LIMPIAR
-    // ======================
-
     limpiarFormulario();
 
 
 
 
-
-    // ======================
-    // OK
-    // ======================
 
     alert(
       'Recepción guardada correctamente'
@@ -802,14 +741,14 @@ window.renderRecepciones = async function(){
 
       }
 
-      else if(item.estado === 'En validación'){
+      else if(item.estado === 'En Gestión Compras'){
 
         estadoClass =
         'estado-revision';
 
       }
 
-      else if(item.estado === 'Novedad'){
+      else if(item.estado === 'Novedad Reportada'){
 
         estadoClass =
         'estado-novedad';
@@ -923,10 +862,10 @@ window.renderRecepciones = async function(){
 
             <button
               class="btn-ver"
-              onclick="window.verComentario(\`${item.comentario_validacion || ''}\`)"
+              onclick="window.verComentario('',${item.id})"
             >
 
-              Ver
+              Seguimiento
 
             </button>
 
@@ -952,7 +891,7 @@ window.renderRecepciones = async function(){
                   onclick="validarRecepcion(${item.id})"
                 >
 
-                  Validar
+                  Gestionar
 
                 </button>
 
@@ -1024,7 +963,7 @@ window.renderRecepciones = async function(){
 
 
 // ======================
-// VALIDAR RECEPCION
+// GESTIONAR RECEPCION
 // ======================
 
 window.validarRecepcion = async function(id){
@@ -1052,15 +991,37 @@ window.validarRecepcion = async function(id){
 
 
 
-    const comentario = prompt(
-      'Ingrese comentario'
-    );
+    const consulta =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .select('*')
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    )
+
+    .single();
 
 
 
 
 
-    if(comentario === null){
+    if(consulta.error){
+
+      console.log(
+        consulta.error
+      );
+
+      alert(
+        'Error obteniendo recepción'
+      );
 
       return;
 
@@ -1070,14 +1031,28 @@ window.validarRecepcion = async function(id){
 
 
 
+    const recepcion =
+    consulta.data;
+
+
+
+
+
     const nuevoEstado = prompt(
 
-`Nuevo estado:
+`Seleccione estado:
 
 Pendiente
-En validación
-Novedad
-Gestionado`
+
+Novedad Reportada
+
+En Gestión Compras
+
+Esperando Proveedor
+
+Solucionado
+
+Cerrado`
 
     );
 
@@ -1095,6 +1070,63 @@ Gestionado`
 
 
 
+    const comentario = prompt(
+
+      'Ingrese seguimiento'
+
+    );
+
+
+
+
+
+    if(comentario === null){
+
+      return;
+
+    }
+
+
+
+
+
+    const fecha =
+
+    new Date()
+    .toLocaleString('es-CO');
+
+
+
+
+
+    let seguimientoActual =
+
+    recepcion.seguimiento || '';
+
+
+
+
+
+    seguimientoActual +=
+
+`\n
+━━━━━━━━━━━━━━━━━━
+
+[${fecha}]
+
+COMPRAS
+
+Estado:
+${nuevoEstado}
+
+Seguimiento:
+${comentario}
+`;
+
+
+
+
+
     const update =
 
     await window.supabaseClient
@@ -1106,6 +1138,9 @@ Gestionado`
       comentario_validacion:
       comentario,
 
+      seguimiento:
+      seguimientoActual,
+
       estado:
       nuevoEstado,
 
@@ -1113,7 +1148,7 @@ Gestionado`
 
       window.usuarioLogueado.usuario ||
 
-      'Validador'
+      'Compras'
 
     })
 
@@ -1147,13 +1182,17 @@ Gestionado`
 
     window.crearNotificacion(
 
-`Recepción validada
+`📦 Seguimiento actualizado
 
-Comentario:
-${comentario}
+Material:
+${recepcion.material}
 
 Estado:
-${nuevoEstado}`
+${nuevoEstado}
+
+Compras informó:
+
+${comentario}`
 
     );
 
@@ -1170,7 +1209,99 @@ ${nuevoEstado}`
 
 
     alert(
-      'Recepción validada'
+      'Seguimiento actualizado'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+
+
+
+
+// ======================
+// VER SEGUIMIENTO
+// ======================
+
+window.verComentario = async function(comentario,id){
+
+  try{
+
+    const consulta =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .select('seguimiento')
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    )
+
+    .single();
+
+
+
+
+
+    if(consulta.error){
+
+      console.log(
+        consulta.error
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    const seguimiento =
+
+    consulta.data.seguimiento || '';
+
+
+
+
+
+    if(
+
+      seguimiento.trim() === ''
+
+    ){
+
+      alert(
+        'Sin seguimiento'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    alert(
+
+`SEGUIMIENTO COMPLETO
+
+${seguimiento}`
+
     );
 
   }
@@ -1476,10 +1607,6 @@ window.actualizarKPIsRecepcion = async function(){
 
 window.iniciarRefreshRecepcion = function(){
 
-  // ======================
-  // EVITAR DUPLICADOS
-  // ======================
-
   if(window.refreshRecepcion){
 
     clearInterval(
@@ -1491,10 +1618,6 @@ window.iniciarRefreshRecepcion = function(){
 
 
 
-
-  // ======================
-  // REFRESH
-  // ======================
 
   window.refreshRecepcion =
 
@@ -1601,46 +1724,6 @@ window.verObservacion = function(observacion){
 `OBSERVACIÓN RECEPCIÓN
 
 ${observacion}`
-
-  );
-
-};
-
-
-
-
-
-// ======================
-// VER COMENTARIO
-// ======================
-
-window.verComentario = function(comentario){
-
-  if(
-
-    !comentario ||
-
-    comentario.trim() === ''
-
-  ){
-
-    alert(
-      'Sin comentarios'
-    );
-
-    return;
-
-  }
-
-
-
-
-
-  alert(
-
-`COMENTARIO VALIDACIÓN
-
-${comentario}`
 
   );
 
