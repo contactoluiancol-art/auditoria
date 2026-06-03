@@ -2270,39 +2270,26 @@ SWITCH PREMIUM
 }
 
 /* =========================================
-TIMELINE SEGUIMIENTO PREMIUM
+TIMELINE PREMIUM V3
 ========================================= */
 
-.timeline-item{
+.timeline-box{
 
-  background:#f8fafc;
+  margin-top:20px;
 
-  border:1px solid #e2e8f0;
+  border-radius:22px;
 
-  border-left:4px solid #2563eb;
+  padding:18px;
 
-  border-radius:14px;
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,255,255,.05),
+    rgba(255,255,255,.02)
+  );
 
-  padding:12px;
-
-  margin-bottom:10px;
-
-  min-height:auto;
-
-  box-shadow:
-  0 4px 12px rgba(0,0,0,.06);
-
-  transition:.25s;
-
-}
-
-.timeline-item:hover{
-
-  transform:
-  translateY(-2px);
-
-  box-shadow:
-  0 10px 22px rgba(37,99,235,.12);
+  border:
+  1px solid rgba(255,255,255,.08);
 
 }
 
@@ -2310,35 +2297,21 @@ TIMELINE SEGUIMIENTO PREMIUM
 
 
 
-.timeline-comentario{
+.timeline-box h3{
 
-  color:#334155;
+  color:#ffffff;
 
-  font-size:13px;
-
-  line-height:1.8;
-
-}
-
-
-
-
-
-.timeline-comentario strong{
-
-  color:#0f172a;
+  font-size:16px;
 
   font-weight:700;
 
+  margin-bottom:18px;
+
 }
 
 
 
 
-
-/* =========================================
-SCROLL TIMELINE
-========================================= */
 
 #timelineSeguimiento{
 
@@ -2378,13 +2351,125 @@ SCROLL TIMELINE
 
 #timelineSeguimiento::-webkit-scrollbar-track{
 
-  background:#e2e8f0;
+  background:rgba(255,255,255,.08);
 
 }
 
 
 
 
+
+.timeline-item{
+
+  position:relative;
+
+  margin-bottom:12px;
+
+  padding:14px 16px;
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,255,255,.08),
+    rgba(255,255,255,.04)
+  );
+
+  border:
+  1px solid rgba(255,255,255,.08);
+
+  border-left:4px solid #3b82f6;
+
+  border-radius:16px;
+
+  transition:.25s;
+
+}
+
+
+
+
+
+.timeline-item:hover{
+
+  transform:
+  translateY(-2px);
+
+  box-shadow:
+  0 10px 22px rgba(37,99,235,.15);
+
+}
+
+
+
+
+
+.timeline-item::before{
+
+  display:none;
+
+}
+
+
+
+
+
+.timeline-fecha{
+
+  color:#93c5fd;
+
+  font-size:12px;
+
+  font-weight:600;
+
+  margin-bottom:10px;
+
+}
+
+
+
+
+
+.timeline-comentario{
+
+  color:#e2e8f0;
+
+  font-size:13px;
+
+  line-height:1.7;
+
+  white-space:pre-wrap;
+
+}
+
+
+
+
+
+.timeline-comentario strong{
+
+  color:#ffffff;
+
+  font-weight:700;
+
+}
+
+
+
+
+
+.sin-notificaciones{
+
+  color:#94a3b8;
+
+  text-align:center;
+
+  padding:30px;
+
+  font-size:14px;
+
+  font-weight:500;
+
+}
 
 /* =========================================
 ESTADOS VISUALES
@@ -2429,7 +2514,7 @@ FIX FOOTER MODAL
 
 .modal-gestion-footer{
 
-  display:flex !important;
+  display:flex;
 
   justify-content:flex-end;
 
@@ -2437,14 +2522,12 @@ FIX FOOTER MODAL
 
   gap:12px;
 
-  padding:20px;
-  
-  border-top:1px solid #e2e8f0;
+  padding:20px 24px;
 
-  position:sticky;
+  border-top:
+  1px solid rgba(255,255,255,.08);
 
-  bottom:0;
-
-  z-index:20;
+  background:
+  #111827;
 
 }
