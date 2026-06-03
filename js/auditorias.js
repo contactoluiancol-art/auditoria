@@ -468,7 +468,7 @@ window.renderAuditorias = async function(){
 
         item.id +
 
-        ')">PDF</button>'
+        ')">📋</button>'
 
         :
 
@@ -499,7 +499,7 @@ window.renderAuditorias = async function(){
 
         item.id +
 
-        ')">Editar</button>'
+        ')">✏️</button>'
 
         :
 
@@ -530,7 +530,7 @@ window.renderAuditorias = async function(){
 
         item.id +
 
-        ')">Eliminar</button>'
+        ')">🗑️</button>'
 
         :
 
