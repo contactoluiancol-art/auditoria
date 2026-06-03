@@ -1,8 +1,6 @@
 <div class="module-container">
 
-  <!-- =========================================
-  HEADER
-  ========================================== -->
+  <!-- HEADER -->
 
   <div class="module-header">
 
@@ -13,7 +11,7 @@
       </h2>
 
       <p>
-        Control y seguimiento de recepción logística
+        Control de recepción de mercancía
       </p>
 
     </div>
@@ -24,9 +22,7 @@
 
 
 
-  <!-- =========================================
-  KPIS
-  ========================================== -->
+  <!-- KPIS -->
 
   <div class="kpi-grid">
 
@@ -96,129 +92,21 @@
 
 
 
-  <!-- =========================================
-  FLUJO GESTION
-  ========================================== -->
+  <!-- FORMULARIO -->
 
   <div class="module-card">
 
-    <div class="recepcion-flow">
-
-      <div class="flow-item active">
-
-        <div class="flow-icon">
-          📥
-        </div>
-
-        <span>
-          Recepción
-        </span>
-
-      </div>
-
-
-
-
-
-      <div class="flow-line"></div>
-
-
-
-
-
-      <div class="flow-item">
-
-        <div class="flow-icon">
-          ⚠️
-        </div>
-
-        <span>
-          Novedad
-        </span>
-
-      </div>
-
-
-
-
-
-      <div class="flow-line"></div>
-
-
-
-
-
-      <div class="flow-item compras-flow">
-
-        <div class="flow-icon">
-          🛒
-        </div>
-
-        <span>
-          Compras Gestiona
-        </span>
-
-      </div>
-
-
-
-
-
-      <div class="flow-line"></div>
-
-
-
-
-
-      <div class="flow-item">
-
-        <div class="flow-icon">
-          ✅
-        </div>
-
-        <span>
-          Gestionado
-        </span>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-
-
-
-  <!-- =========================================
-  FORMULARIO
-  ========================================== -->
-
-  <div class="module-card">
-
-    <div class="table-header">
-
-      <div>
-
-        <h3>
-          Nueva Recepción
-        </h3>
-
-        <p class="sub-module-text">
-
-          Registro y validación de mercancía recibida
-
-        </p>
-
-      </div>
-
-    </div>
+    <h3>
+      Nueva Recepción
+    </h3>
 
 
 
 
 
     <div class="form-grid">
+
+      <!-- PROVEEDOR -->
 
       <div class="input-group">
 
@@ -229,7 +117,7 @@
         <input
           type="text"
           id="proveedorInput"
-          placeholder="Ingrese proveedor"
+          placeholder="Proveedor"
         >
 
       </div>
@@ -237,6 +125,8 @@
 
 
 
+
+      <!-- MATERIAL -->
 
       <div class="input-group">
 
@@ -247,7 +137,7 @@
         <input
           type="text"
           id="materialInput"
-          placeholder="Ingrese material"
+          placeholder="Material"
         >
 
       </div>
@@ -255,6 +145,8 @@
 
 
 
+
+      <!-- TIPO -->
 
       <div class="input-group">
 
@@ -292,6 +184,8 @@
 
 
 
+      <!-- CANTIDAD -->
+
       <div class="input-group">
 
         <label>
@@ -301,7 +195,7 @@
         <input
           type="number"
           id="cantidadInput"
-          placeholder="0"
+          placeholder="Cantidad"
         >
 
       </div>
@@ -309,6 +203,8 @@
 
 
 
+
+      <!-- REVISADAS -->
 
       <div class="input-group">
 
@@ -319,7 +215,7 @@
         <input
           type="number"
           id="revisadasInput"
-          placeholder="0"
+          placeholder="Revisadas"
         >
 
       </div>
@@ -327,6 +223,8 @@
 
 
 
+
+      <!-- NOVEDADES -->
 
       <div class="input-group">
 
@@ -337,7 +235,7 @@
         <input
           type="number"
           id="novedadesInput"
-          placeholder="0"
+          placeholder="Novedades"
         >
 
       </div>
@@ -345,6 +243,8 @@
 
 
 
+
+      <!-- FALTANTES -->
 
       <div class="input-group">
 
@@ -355,7 +255,7 @@
         <input
           type="number"
           id="faltantesInput"
-          placeholder="0"
+          placeholder="Faltantes"
         >
 
       </div>
@@ -363,6 +263,8 @@
 
 
 
+
+      <!-- ESTADO -->
 
       <div class="input-group">
 
@@ -373,19 +275,19 @@
         <select id="estadoRecepcionInput">
 
           <option value="Pendiente">
-            🟡 Pendiente
+            Pendiente
           </option>
 
-          <option value="En gestión compras">
-            🛒 En gestión compras
+          <option value="En Gestión Compras">
+            En Gestión Compras
           </option>
 
-          <option value="Gestionado">
-            ✅ Gestionado
+          <option value="Esperando Proveedor">
+            Esperando Proveedor
           </option>
 
-          <option value="Cerrado">
-            🔒 Cerrado
+          <option value="Solucionado">
+            Solucionado
           </option>
 
         </select>
@@ -398,9 +300,7 @@
 
 
 
-    <!-- =========================================
-    OBSERVACION
-    ========================================== -->
+    <!-- OBSERVACION -->
 
     <div class="input-group textarea-group">
 
@@ -410,7 +310,7 @@
 
       <textarea
         id="observacionInput"
-        placeholder="Ingrese observaciones o novedades encontradas"
+        placeholder="Ingrese observaciones"
       ></textarea>
 
     </div>
@@ -419,9 +319,7 @@
 
 
 
-    <!-- =========================================
-    PDF
-    ========================================== -->
+    <!-- PDF -->
 
     <div class="input-group">
 
@@ -441,9 +339,7 @@
 
 
 
-    <!-- =========================================
-    BOTONES
-    ========================================== -->
+    <!-- BOTON -->
 
     <div class="button-group">
 
@@ -452,7 +348,7 @@
         class="btn-primary"
       >
 
-        📥 Guardar Recepción
+        Guardar Recepción
 
       </button>
 
@@ -464,27 +360,15 @@
 
 
 
-  <!-- =========================================
-  TABLA
-  ========================================== -->
+  <!-- TABLA -->
 
   <div class="module-card">
 
     <div class="table-header">
 
-      <div>
-
-        <h3>
-          Recepciones Registradas
-        </h3>
-
-        <p class="sub-module-text">
-
-          Seguimiento y gestión de novedades
-
-        </p>
-
-      </div>
+      <h3>
+        Recepciones Registradas
+      </h3>
 
     </div>
 
@@ -506,9 +390,7 @@
 
             <th>Tipo</th>
 
-            <th>Cantidad</th>
-
-            <th>Revisadas</th>
+            <th>Cant</th>
 
             <th>%</th>
 
@@ -516,15 +398,7 @@
 
             <th>Estado</th>
 
-            <th>Seguimiento</th>
-
             <th>Fecha</th>
-
-            <th>PDF</th>
-
-            <th>Observación</th>
-
-            <th>Gestión Compras</th>
 
             <th>Acciones</th>
 
@@ -550,20 +424,20 @@
 
 
 
-  <!-- =========================================
-  MODAL GESTION PREMIUM
-  ========================================== -->
+  <!-- =====================================
+  MODAL GESTION COMPRAS
+  ====================================== -->
 
   <div
-    class="modal-overlay"
+    class="modal-gestion"
     id="modalGestion"
   >
 
-    <div class="modal-premium">
+    <div class="modal-gestion-content">
 
       <!-- HEADER -->
 
-      <div class="modal-header">
+      <div class="modal-gestion-header">
 
         <div>
 
@@ -582,7 +456,7 @@
 
 
         <button
-          class="modal-close"
+          class="cerrar-modal-btn"
           onclick="cerrarModalGestion()"
         >
 
@@ -598,7 +472,7 @@
 
       <!-- BODY -->
 
-      <div class="modal-body">
+      <div class="modal-gestion-body">
 
         <!-- ESTADO -->
 
@@ -614,24 +488,16 @@
               🟡 Pendiente
             </option>
 
-            <option value="Novedad Reportada">
-              🔴 Novedad Reportada
-            </option>
-
             <option value="En Gestión Compras">
-              🛒 En Gestión Compras
+              🔵 En Gestión Compras
             </option>
 
             <option value="Esperando Proveedor">
-              🔵 Esperando Proveedor
+              🟠 Esperando Proveedor
             </option>
 
             <option value="Solucionado">
               🟢 Solucionado
-            </option>
-
-            <option value="Cerrado">
-              🔒 Cerrado
             </option>
 
           </select>
@@ -669,6 +535,10 @@
             📋 Historial Seguimiento
           </h3>
 
+
+
+
+
           <div id="timelineSeguimiento">
 
           </div>
@@ -683,7 +553,7 @@
 
       <!-- FOOTER -->
 
-      <div class="modal-footer">
+      <div class="modal-gestion-footer">
 
         <button
           class="btn-danger"
