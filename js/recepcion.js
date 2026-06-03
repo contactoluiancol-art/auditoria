@@ -11,7 +11,7 @@ window.recepcionCargado = true;
 
 
 // ======================
-// INTERVALO GLOBAL
+// VARIABLES GLOBALES
 // ======================
 
 window.refreshRecepcion = null;
@@ -23,7 +23,7 @@ window.recepcionGestionando = null;
 
 
 // ======================
-// BOTON
+// BOTON GUARDAR
 // ======================
 
 const guardarRecepcionBtn =
@@ -371,6 +371,10 @@ async function guardarRecepcion(){
 
 
 
+    // ======================
+    // SUBIR PDF
+    // ======================
+
     if(pdfFile){
 
       const nombreArchivo =
@@ -449,6 +453,10 @@ async function guardarRecepcion(){
 
 
 
+
+    // ======================
+    // INSERTAR
+    // ======================
 
     const response =
 
@@ -535,6 +543,10 @@ async function guardarRecepcion(){
 
 
 
+
+    // ======================
+    // NOTIFICACION
+    // ======================
 
     window.crearNotificacion(
 
@@ -739,10 +751,6 @@ window.renderRecepciones = async function(){
         </td>
 
         <td>
-          ${item.revisadas || 0}
-        </td>
-
-        <td>
           ${item.porcentaje_revisado || 0}%
         </td>
 
@@ -770,82 +778,61 @@ window.renderRecepciones = async function(){
 
         <td>
 
-          ${
+          <div class="acciones-tabla-mini">
 
-            item.pdf_url
+            ${
 
-            ?
+              item.pdf_url
 
-            `
+              ?
+
+              `
+
+              <button
+                class="btn-mini btn-pdf-mini"
+                title="Ver PDF"
+                onclick="window.open('${item.pdf_url}')"
+              >
+
+                📄
+
+              </button>
+
+              `
+
+              :
+
+              ''
+
+            }
 
             <button
-              class="btn-ver"
-              onclick="window.open('${item.pdf_url}')"
+              class="btn-mini btn-observacion-mini"
+              title="Ver Observación"
+              onclick="window.verObservacion(\`${item.observacion || ''}\`)"
             >
 
-              Ver
+              👁️
 
             </button>
 
-            `
-
-            :
-
-            '-'
-
-          }
-
-        </td>
-
-        <td>
-
-          <button
-            class="btn-ver"
-            onclick="window.verObservacion(\`${item.observacion || ''}\`)"
-          >
-
-            Ver
-
-          </button>
-
-        </td>
-
-        <td>
-
-          <button
-            class="btn-ver"
-            onclick="window.validarRecepcion(${item.id})"
-          >
-
-            Seguimiento
-
-          </button>
-
-        </td>
-
-        <td>
-
-          <div class="acciones-tabla">
-
             <button
-              class="btn-editar"
+              class="btn-mini btn-seguimiento-mini"
+              title="Seguimiento"
               onclick="window.validarRecepcion(${item.id})"
             >
 
-              Gestionar
+              📋
 
             </button>
 
-
-
-
-
             <button
-              class="btn-eliminar"
+              class="btn-mini btn-eliminar-mini"
+              title="Eliminar"
               onclick="eliminarRecepcion(${item.id})"
             >
 
-              Eliminar
+              🗑️
 
             </button>
 
