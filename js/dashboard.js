@@ -1164,7 +1164,275 @@ window.iniciarAutoRefresh = function(){
 };
 
 
+// ======================
+// CAMPANA NOTIFICACIONES
+// ======================
 
+const campanaBtn =
+
+document.getElementById(
+  'campanaBtn'
+);
+
+
+
+
+
+const panelNotificaciones =
+
+document.getElementById(
+  'panelNotificaciones'
+);
+
+
+
+
+
+const contadorNotificaciones =
+
+document.getElementById(
+  'contadorNotificaciones'
+);
+
+
+
+
+
+// ======================
+// ABRIR / CERRAR PANEL
+// ======================
+
+if(campanaBtn){
+
+  campanaBtn.addEventListener(
+
+    'click',
+
+    function(e){
+
+      e.stopPropagation();
+
+
+
+
+
+      if(panelNotificaciones){
+
+        panelNotificaciones.classList.toggle(
+          'active'
+        );
+
+      }
+
+    }
+
+  );
+
+}
+
+
+
+
+
+// ======================
+// CERRAR AL HACER CLICK AFUERA
+// ======================
+
+document.addEventListener(
+
+  'click',
+
+  function(e){
+
+    if(
+
+      panelNotificaciones &&
+
+      !panelNotificaciones.contains(
+        e.target
+      )
+
+    ){
+
+      panelNotificaciones.classList.remove(
+        'active'
+      );
+
+    }
+
+  }
+
+);
+
+
+
+
+
+// ======================
+// RENDER NOTIFICACIONES
+// ======================
+
+window.renderNotificaciones = function(){
+
+  const lista =
+
+  document.getElementById(
+    'listaNotificaciones'
+  );
+
+
+
+
+
+  if(!lista){
+
+    return;
+
+  }
+
+
+
+
+
+  let notificaciones =
+
+  JSON.parse(
+
+    localStorage.getItem(
+      'notificaciones'
+    )
+
+  ) || [];
+
+
+
+
+
+  lista.innerHTML = '';
+
+
+
+
+
+  // ======================
+  // CONTADOR
+  // ======================
+
+  if(contadorNotificaciones){
+
+    contadorNotificaciones.innerText =
+
+    notificaciones.length;
+
+  }
+
+
+
+
+
+  // ======================
+  // SIN DATOS
+  // ======================
+
+  if(notificaciones.length === 0){
+
+    lista.innerHTML =
+
+    '<p class="sin-notificaciones">' +
+
+    'No hay notificaciones' +
+
+    '</p>';
+
+
+
+    return;
+
+  }
+
+
+
+
+
+  // ======================
+  // RECORRER
+  // ======================
+
+  notificaciones.forEach(function(item){
+
+    lista.innerHTML +=
+
+    '<div class="notificacion-item">' +
+
+      '<p>' +
+
+      item.mensaje +
+
+      '</p>' +
+
+      '<span>' +
+
+      item.fecha +
+
+      '</span>' +
+
+    '</div>';
+
+  });
+
+};
+
+
+
+
+
+// ======================
+// LIMPIAR NOTIFICACIONES
+// ======================
+
+window.limpiarNotificaciones = function(){
+
+  localStorage.removeItem(
+    'notificaciones'
+  );
+
+
+
+
+
+  window.renderNotificaciones();
+
+};
+
+
+
+
+
+// ======================
+// EVENTO NUEVA NOTIFICACION
+// ======================
+
+window.addEventListener(
+
+  'nuevaNotificacion',
+
+  function(){
+
+    window.renderNotificaciones();
+
+  }
+
+);
+
+
+
+
+
+// ======================
+// INICIO
+// ======================
+
+window.renderNotificaciones();
 
 
 // ======================
