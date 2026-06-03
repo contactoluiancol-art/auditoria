@@ -1015,7 +1015,163 @@ document.addEventListener(
 
 );
 
+// ======================
+// AUTO REFRESH GLOBAL
+// ======================
 
+window.iniciarAutoRefresh = function(){
+
+  // ======================
+  // LIMPIAR ANTERIOR
+  // ======================
+
+  if(window.autoRefreshSistema){
+
+    clearInterval(
+      window.autoRefreshSistema
+    );
+
+  }
+
+  // ======================
+  // NUEVO INTERVALO
+  // ======================
+
+  window.autoRefreshSistema =
+
+  setInterval(async function(){
+
+    try{
+
+      // ======================
+      // NOTIFICACIONES
+      // ======================
+
+      if(
+
+        typeof window.renderNotificaciones ===
+        'function'
+
+      ){
+
+        window.renderNotificaciones();
+
+      }
+
+      // ======================
+      // AUDITORIAS
+      // ======================
+
+      if(
+
+        typeof window.renderAuditorias ===
+        'function'
+
+      ){
+
+        await window.renderAuditorias();
+
+      }
+
+      // ======================
+      // RECEPCION
+      // ======================
+
+      if(
+
+        typeof window.renderRecepciones ===
+        'function'
+
+      ){
+
+        await window.renderRecepciones();
+
+      }
+
+      // ======================
+      // KPIS RECEPCION
+      // ======================
+
+      if(
+
+        typeof window.actualizarKPIsRecepcion ===
+        'function'
+
+      ){
+
+        await window.actualizarKPIsRecepcion();
+
+      }
+
+      // ======================
+      // HISTORIAL
+      // ======================
+
+      if(
+
+        typeof window.renderHistorialSistema ===
+        'function'
+
+      ){
+
+        await window.renderHistorialSistema();
+
+      }
+
+      // ======================
+      // INVENTARIO
+      // ======================
+
+      if(
+
+        typeof window.renderInventario ===
+        'function'
+
+      ){
+
+        window.renderInventario();
+
+      }
+
+      // ======================
+      // KPIS INVENTARIO
+      // ======================
+
+      if(
+
+        typeof window.actualizarKPIs ===
+        'function'
+
+      ){
+
+        window.actualizarKPIs();
+
+      }
+
+    }
+
+    catch(error){
+
+      console.log(
+        'Error auto refresh:',
+        error
+      );
+
+    }
+
+  },5000);
+
+};
+
+
+
+
+
+// ======================
+// INICIAR REFRESH
+// ======================
+
+window.iniciarAutoRefresh();
 
 
 
