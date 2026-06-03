@@ -1,6 +1,5 @@
-
 // ======================
-// VALIDAR LIBRERIA SUPABASE
+// VALIDAR SUPABASE
 // ======================
 
 if(!window.supabase){
@@ -20,7 +19,7 @@ if(!window.supabase){
 
 
 // ======================
-// CLIENTE GLOBAL
+// CREAR CLIENTE
 // ======================
 
 if(!window.supabaseClient){
@@ -29,7 +28,7 @@ if(!window.supabaseClient){
   'https://hurxdjoiafkjoyrmyhbd.supabase.co';
 
   const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
+  'TU_KEY_SUPABASE';
 
   window.supabaseClient =
 
@@ -47,7 +46,7 @@ if(!window.supabaseClient){
 
 
 // ======================
-// USUARIO LOGUEADO
+// USUARIO
 // ======================
 
 window.usuarioLogueado =
@@ -80,7 +79,7 @@ if(!window.usuarioLogueado){
 
 
 // ======================
-// MAIN CONTENT
+// VARIABLES
 // ======================
 
 const mainContent =
@@ -93,25 +92,15 @@ document.getElementById(
 
 
 
-// ======================
-// DASHBOARD ORIGINAL
-// ======================
-
 const dashboardOriginal =
 
 mainContent
-
 ? mainContent.innerHTML
-
 : '';
 
 
 
 
-
-// ======================
-// PERMISOS
-// ======================
 
 window.permisosUsuario =
 
@@ -130,6 +119,10 @@ const usuarioNombre =
 document.getElementById(
   'usuarioNombre'
 );
+
+
+
+
 
 if(usuarioNombre){
 
@@ -194,7 +187,7 @@ window.tienePermiso = function(
 
 
 // ======================
-// MOSTRAR ELEMENTO
+// MOSTRAR / OCULTAR
 // ======================
 
 function mostrarElemento(id){
@@ -215,10 +208,6 @@ function mostrarElemento(id){
 
 
 
-// ======================
-// OCULTAR ELEMENTO
-// ======================
-
 function ocultarElemento(id){
 
   const elemento =
@@ -237,10 +226,6 @@ function ocultarElemento(id){
 
 
 
-// ======================
-// MOSTRAR CARD
-// ======================
-
 function mostrarCard(id){
 
   const card =
@@ -258,10 +243,6 @@ function mostrarCard(id){
 
 
 
-
-// ======================
-// OCULTAR CARD
-// ======================
 
 function ocultarCard(id){
 
@@ -282,158 +263,17 @@ function ocultarCard(id){
 
 
 // ======================
-// APLICAR PERMISOS
-// ======================
-
-async function aplicarPermisos(){
-
-  try{
-
-    if(
-
-      window.usuarioLogueado.rol === 'admin'
-
-    ){
-
-      mostrarElemento(
-        'inventarioMenu'
-      );
-
-      mostrarElemento(
-        'recepcionMenu'
-      );
-
-      mostrarElemento(
-        'auditoriasMenu'
-      );
-
-      mostrarElemento(
-        'usuariosMenu'
-      );
-
-      mostrarElemento(
-        'historialMenu'
-      );
-
-      mostrarCard(
-        'cardInventario'
-      );
-
-      mostrarCard(
-        'cardRecepcion'
-      );
-
-      mostrarCard(
-        'cardAuditorias'
-      );
-
-      mostrarCard(
-        'cardUsuarios'
-      );
-
-      mostrarCard(
-        'cardHistorial'
-      );
-
-      return;
-
-    }
-
-    const response =
-
-    await window.supabaseClient
-
-    .from('permisos')
-
-    .select('*')
-
-    .eq(
-
-      'usuario',
-
-      window.usuarioLogueado.usuario
-
-    );
-
-    if(response.error){
-
-      console.log(
-        response.error
-      );
-
-      return;
-
-    }
-
-    const permisos =
-    response.data || [];
-
-    window.permisosUsuario = {};
-
-    permisos.forEach(function(item){
-
-      window.permisosUsuario[
-        item.modulo
-      ] = {
-
-        ver:
-        item.ver,
-
-        crear:
-        item.crear,
-
-        editar:
-        item.editar,
-
-        eliminar:
-        item.eliminar
-
-      };
-
-    });
-
-    validarModulo(
-      'inventario'
-    );
-
-    validarModulo(
-      'recepcion'
-    );
-
-    validarModulo(
-      'auditorias'
-    );
-
-    validarModulo(
-      'usuarios'
-    );
-
-    validarModulo(
-      'historial'
-    );
-
-  }
-
-  catch(error){
-
-    console.log(error);
-
-  }
-
-}
-
-
-
-
-
-// ======================
-// VALIDAR MODULO
+// VALIDAR MODULOS
 // ======================
 
 function validarModulo(modulo){
 
   const menu =
   modulo + 'Menu';
+
+
+
+
 
   const card =
   'card' +
@@ -442,6 +282,10 @@ function validarModulo(modulo){
   .toUpperCase() +
 
   modulo.slice(1);
+
+
+
+
 
   if(
 
@@ -473,7 +317,155 @@ function validarModulo(modulo){
 
 
 // ======================
-// GUARDAR HISTORIAL
+// APLICAR PERMISOS
+// ======================
+
+async function aplicarPermisos(){
+
+  try{
+
+    // ======================
+    // ADMIN
+    // ======================
+
+    if(
+
+      window.usuarioLogueado.rol ===
+      'admin'
+
+    ){
+
+      [
+
+        'inventario',
+        'recepcion',
+        'auditorias',
+        'usuarios',
+        'historial'
+
+      ].forEach(validarModulo);
+
+
+
+
+
+      return;
+
+    }
+
+
+
+
+
+
+
+    // ======================
+    // CONSULTAR
+    // ======================
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('permisos')
+
+    .select('*')
+
+    .eq(
+
+      'usuario',
+
+      window.usuarioLogueado.usuario
+
+    );
+
+
+
+
+
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      return;
+
+    }
+
+
+
+
+
+
+
+    const permisos =
+    response.data || [];
+
+
+
+
+
+    window.permisosUsuario = {};
+
+
+
+
+
+    permisos.forEach(function(item){
+
+      window.permisosUsuario[
+        item.modulo
+      ] = {
+
+        ver:
+        item.ver,
+
+        crear:
+        item.crear,
+
+        editar:
+        item.editar,
+
+        eliminar:
+        item.eliminar
+
+      };
+
+    });
+
+
+
+
+
+
+
+    [
+
+      'inventario',
+      'recepcion',
+      'auditorias',
+      'usuarios',
+      'historial'
+
+    ].forEach(validarModulo);
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// HISTORIAL
 // ======================
 
 window.guardarHistorial = async function(
@@ -525,7 +517,7 @@ window.guardarHistorial = async function(
 
 
 // ======================
-// RENDER NOTIFICACIONES
+// NOTIFICACIONES
 // ======================
 
 window.renderNotificaciones = function(){
@@ -536,11 +528,31 @@ window.renderNotificaciones = function(){
     'listaNotificaciones'
   );
 
+
+
+
+
+  const contador =
+
+  document.getElementById(
+    'contadorNotificaciones'
+  );
+
+
+
+
+
   if(!lista){
 
     return;
 
   }
+
+
+
+
+
+
 
   const notificaciones =
 
@@ -552,11 +564,19 @@ window.renderNotificaciones = function(){
 
   ) || [];
 
-  const contador =
 
-  document.getElementById(
-    'contadorNotificaciones'
-  );
+
+
+
+
+
+  lista.innerHTML = '';
+
+
+
+
+
+
 
   if(contador){
 
@@ -566,773 +586,11 @@ window.renderNotificaciones = function(){
 
   }
 
-  lista.innerHTML = '';
 
-  if(notificaciones.length === 0){
 
-    lista.innerHTML =
 
-    '<p class="sin-notificaciones">' +
 
-      'No hay notificaciones' +
 
-    '</p>';
-
-    return;
-
-  }
-
-  notificaciones.forEach(function(item){
-
-    lista.innerHTML +=
-
-    '<div class="notificacion-item">' +
-
-      '<p>' +
-
-        item.mensaje +
-
-      '</p>' +
-
-      '<span>' +
-
-        item.fecha +
-
-      '</span>' +
-
-    '</div>';
-
-  });
-
-};
-
-
-
-
-
-// ======================
-// LIMPIAR NOTIFICACIONES
-// ======================
-
-window.limpiarNotificaciones = function(){
-
-  localStorage.removeItem(
-    'notificaciones'
-  );
-
-  window.renderNotificaciones();
-
-};
-
-
-
-
-
-// ======================
-// ABRIR / CERRAR PANEL
-// ======================
-
-const campanaBtn =
-
-document.getElementById(
-  'campanaBtn'
-);
-
-const panelNotificaciones =
-
-document.getElementById(
-  'panelNotificaciones'
-);
-
-if(
-
-  campanaBtn &&
-  panelNotificaciones
-
-){
-
-  campanaBtn.addEventListener(
-
-    'click',
-
-    function(){
-
-      panelNotificaciones.classList.toggle(
-        'activo'
-      );
-
-    }
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// EVENTO NOTIFICACIONES
-// ======================
-
-window.addEventListener(
-
-  'nuevaNotificacion',
-
-  function(){
-
-    window.renderNotificaciones();
-
-  }
-
-);
-
-
-
-
-
-// ======================
-// MOSTRAR MODULO
-// ======================
-
-function mostrarModulo(modulo){
-
-  const contenido =
-
-  document.getElementById(
-    'mainContent'
-  );
-
-  if(!contenido){
-
-    return;
-
-  }
-
-  if(modulo === 'dashboard'){
-
-    contenido.innerHTML =
-    dashboardOriginal;
-
-    setTimeout(function(){
-
-      aplicarPermisos();
-
-      window.renderNotificaciones();
-
-    },100);
-
-    return;
-
-  }
-
-  cargarModulo(
-
-    contenido,
-
-    'modules/' + modulo + '.html',
-
-    modulo + 'Script',
-
-    'js/' + modulo + '.js?v=30'
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// CARGAR MODULO
-// ======================
-
-function cargarModulo(
-
-  contenido,
-  htmlPath,
-  scriptId,
-  scriptSrc
-
-){
-
-  fetch(htmlPath)
-
-  .then(function(res){
-
-    return res.text();
-
-  })
-
-  .then(function(html){
-
-    contenido.innerHTML =
-    html;
-
-    cargarScript(
-
-      scriptId,
-      scriptSrc
-
-    );
-
-  })
-
-  .catch(function(error){
-
-    console.log(error);
-
-  });
-
-}
-
-
-
-
-
-// ======================
-// CARGAR SCRIPT
-// ======================
-
-function cargarScript(
-
-  id,
-  src
-
-){
-
-  const anterior =
-
-  document.getElementById(id);
-
-  if(anterior){
-
-    anterior.remove();
-
-  }
-
-  const script =
-
-  document.createElement(
-    'script'
-  );
-
-  script.src = src;
-
-  script.id = id;
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
-
-
-
-// ======================
-// CERRAR SESION
-// ======================
-
-function cerrarSesion(){
-
-  localStorage.removeItem(
-    'usuarioLogueado'
-  );
-
-  window.location.href =
-  'index.html';
-
-}
-
-
-
-
-
-// ======================
-// BOTON CERRAR SESION
-// ======================
-
-const cerrarSesionBtn =
-
-document.getElementById(
-  'cerrarSesionBtn'
-);
-
-if(cerrarSesionBtn){
-
-  cerrarSesionBtn.addEventListener(
-
-    'click',
-
-    cerrarSesion
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// ACTIVAR MENU
-// ======================
-
-function activarMenu(id,modulo){
-
-  const elemento =
-
-  document.getElementById(id);
-
-  if(elemento){
-
-    elemento.addEventListener(
-
-      'click',
-
-      function(){
-
-        mostrarModulo(
-          modulo
-        );
-
-      }
-
-    );
-
-  }
-
-}
-
-
-
-
-
-// ======================
-// MENUS
-// ======================
-
-activarMenu(
-  'dashboardMenu',
-  'dashboard'
-);
-
-activarMenu(
-  'inventarioMenu',
-  'inventario'
-);
-
-activarMenu(
-  'recepcionMenu',
-  'recepcion'
-);
-
-activarMenu(
-  'auditoriasMenu',
-  'auditorias'
-);
-
-activarMenu(
-  'usuariosMenu',
-  'usuarios'
-);
-
-activarMenu(
-  'historialMenu',
-  'historial'
-);
-
-
-
-
-
-// ======================
-// CARDS DASHBOARD
-// ======================
-
-document.addEventListener(
-
-  'click',
-
-  function(e){
-
-    const card =
-
-    e.target.closest(
-      '.dashboard-card'
-    );
-
-    if(!card){
-
-      return;
-
-    }
-
-    if(card.id === 'cardInventario'){
-
-      mostrarModulo(
-        'inventario'
-      );
-
-    }
-
-    else if(card.id === 'cardRecepcion'){
-
-      mostrarModulo(
-        'recepcion'
-      );
-
-    }
-
-    else if(card.id === 'cardAuditorias'){
-
-      mostrarModulo(
-        'auditorias'
-      );
-
-    }
-
-    else if(card.id === 'cardUsuarios'){
-
-      mostrarModulo(
-        'usuarios'
-      );
-
-    }
-
-    else if(card.id === 'cardHistorial'){
-
-      mostrarModulo(
-        'historial'
-      );
-
-    }
-
-  }
-
-);
-
-// ======================
-// AUTO REFRESH GLOBAL
-// ======================
-
-window.iniciarAutoRefresh = function(){
-
-  // ======================
-  // LIMPIAR ANTERIOR
-  // ======================
-
-  if(window.autoRefreshSistema){
-
-    clearInterval(
-      window.autoRefreshSistema
-    );
-
-  }
-
-  // ======================
-  // NUEVO INTERVALO
-  // ======================
-
-  window.autoRefreshSistema =
-
-  setInterval(async function(){
-
-    try{
-
-      // ======================
-      // NOTIFICACIONES
-      // ======================
-
-      if(
-
-        typeof window.renderNotificaciones ===
-        'function'
-
-      ){
-
-        window.renderNotificaciones();
-
-      }
-
-      // ======================
-      // AUDITORIAS
-      // ======================
-
-      if(
-
-        typeof window.renderAuditorias ===
-        'function'
-
-      ){
-
-        await window.renderAuditorias();
-
-      }
-
-      // ======================
-      // RECEPCION
-      // ======================
-
-      if(
-
-        typeof window.renderRecepciones ===
-        'function'
-
-      ){
-
-        await window.renderRecepciones();
-
-      }
-
-      // ======================
-      // KPIS RECEPCION
-      // ======================
-
-      if(
-
-        typeof window.actualizarKPIsRecepcion ===
-        'function'
-
-      ){
-
-        await window.actualizarKPIsRecepcion();
-
-      }
-
-      // ======================
-      // HISTORIAL
-      // ======================
-
-      if(
-
-        typeof window.renderHistorialSistema ===
-        'function'
-
-      ){
-
-        await window.renderHistorialSistema();
-
-      }
-
-      // ======================
-      // INVENTARIO
-      // ======================
-
-      if(
-
-        typeof window.renderInventario ===
-        'function'
-
-      ){
-
-        window.renderInventario();
-
-      }
-
-      // ======================
-      // KPIS INVENTARIO
-      // ======================
-
-      if(
-
-        typeof window.actualizarKPIs ===
-        'function'
-
-      ){
-
-        window.actualizarKPIs();
-
-      }
-
-    }
-
-    catch(error){
-
-      console.log(
-        'Error auto refresh:',
-        error
-      );
-
-    }
-
-  },5000);
-
-};
-
-
-// ======================
-// CAMPANA NOTIFICACIONES
-// ======================
-
-const campanaBtn =
-
-document.getElementById(
-  'campanaBtn'
-);
-
-
-
-
-
-const panelNotificaciones =
-
-document.getElementById(
-  'panelNotificaciones'
-);
-
-
-
-
-
-const contadorNotificaciones =
-
-document.getElementById(
-  'contadorNotificaciones'
-);
-
-
-
-
-
-// ======================
-// ABRIR / CERRAR PANEL
-// ======================
-
-if(campanaBtn){
-
-  campanaBtn.addEventListener(
-
-    'click',
-
-    function(e){
-
-      e.stopPropagation();
-
-
-
-
-
-      if(panelNotificaciones){
-
-        panelNotificaciones.classList.toggle(
-          'active'
-        );
-
-      }
-
-    }
-
-  );
-
-}
-
-
-
-
-
-// ======================
-// CERRAR AL HACER CLICK AFUERA
-// ======================
-
-document.addEventListener(
-
-  'click',
-
-  function(e){
-
-    if(
-
-      panelNotificaciones &&
-
-      !panelNotificaciones.contains(
-        e.target
-      )
-
-    ){
-
-      panelNotificaciones.classList.remove(
-        'active'
-      );
-
-    }
-
-  }
-
-);
-
-
-
-
-
-// ======================
-// RENDER NOTIFICACIONES
-// ======================
-
-window.renderNotificaciones = function(){
-
-  const lista =
-
-  document.getElementById(
-    'listaNotificaciones'
-  );
-
-
-
-
-
-  if(!lista){
-
-    return;
-
-  }
-
-
-
-
-
-  let notificaciones =
-
-  JSON.parse(
-
-    localStorage.getItem(
-      'notificaciones'
-    )
-
-  ) || [];
-
-
-
-
-
-  lista.innerHTML = '';
-
-
-
-
-
-  // ======================
-  // CONTADOR
-  // ======================
-
-  if(contadorNotificaciones){
-
-    contadorNotificaciones.innerText =
-
-    notificaciones.length;
-
-  }
-
-
-
-
-
-  // ======================
-  // SIN DATOS
-  // ======================
 
   if(notificaciones.length === 0){
 
@@ -1354,9 +612,7 @@ window.renderNotificaciones = function(){
 
 
 
-  // ======================
-  // RECORRER
-  // ======================
+
 
   notificaciones.forEach(function(item){
 
@@ -1409,7 +665,93 @@ window.limpiarNotificaciones = function(){
 
 
 // ======================
-// EVENTO NUEVA NOTIFICACION
+// CAMPANA
+// ======================
+
+const campanaBtn =
+
+document.getElementById(
+  'campanaBtn'
+);
+
+
+
+
+
+const panelNotificaciones =
+
+document.getElementById(
+  'panelNotificaciones'
+);
+
+
+
+
+
+if(campanaBtn){
+
+  campanaBtn.onclick = function(e){
+
+    e.stopPropagation();
+
+
+
+
+
+    if(panelNotificaciones){
+
+      panelNotificaciones.classList.toggle(
+        'active'
+      );
+
+    }
+
+  };
+
+}
+
+
+
+
+
+// ======================
+// CERRAR AFUERA
+// ======================
+
+document.addEventListener(
+
+  'click',
+
+  function(e){
+
+    if(
+
+      panelNotificaciones &&
+
+      !panelNotificaciones.contains(
+        e.target
+      ) &&
+
+      e.target !== campanaBtn
+
+    ){
+
+      panelNotificaciones.classList.remove(
+        'active'
+      );
+
+    }
+
+  }
+
+);
+
+
+
+
+
+// ======================
+// EVENTO NOTIFICACIONES
 // ======================
 
 window.addEventListener(
@@ -1429,17 +771,589 @@ window.addEventListener(
 
 
 // ======================
-// INICIO
+// MOSTRAR MODULO
 // ======================
 
-window.renderNotificaciones();
+function mostrarModulo(modulo){
+
+  const contenido =
+
+  document.getElementById(
+    'mainContent'
+  );
+
+
+
+
+
+  if(!contenido){
+
+    return;
+
+  }
+
+
+
+
+
+
+
+  if(modulo === 'dashboard'){
+
+    contenido.innerHTML =
+    dashboardOriginal;
+
+
+
+
+
+    setTimeout(function(){
+
+      aplicarPermisos();
+
+      window.renderNotificaciones();
+
+    },100);
+
+
+
+
+
+    return;
+
+  }
+
+
+
+
+
+
+
+  cargarModulo(
+
+    contenido,
+
+    'modules/' + modulo + '.html',
+
+    modulo + 'Script',
+
+    'js/' + modulo + '.js?v=' + Date.now()
+
+  );
+
+}
+
+
+
 
 
 // ======================
-// INICIAR REFRESH
+// CARGAR MODULO
 // ======================
 
-window.iniciarAutoRefresh();
+function cargarModulo(
+
+  contenido,
+  htmlPath,
+  scriptId,
+  scriptSrc
+
+){
+
+  fetch(htmlPath)
+
+  .then(function(res){
+
+    return res.text();
+
+  })
+
+  .then(function(html){
+
+    contenido.innerHTML =
+    html;
+
+
+
+
+
+    cargarScript(
+
+      scriptId,
+      scriptSrc
+
+    );
+
+  })
+
+  .catch(function(error){
+
+    console.log(error);
+
+  });
+
+}
+
+
+
+
+
+// ======================
+// CARGAR SCRIPT
+// ======================
+
+function cargarScript(
+
+  id,
+  src
+
+){
+
+  const anterior =
+
+  document.getElementById(id);
+
+
+
+
+
+  if(anterior){
+
+    anterior.remove();
+
+  }
+
+
+
+
+
+
+
+  const script =
+
+  document.createElement(
+    'script'
+  );
+
+
+
+
+
+  script.src = src;
+
+  script.id = id;
+
+
+
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+
+
+
+// ======================
+// AUTO REFRESH
+// ======================
+
+window.iniciarAutoRefresh = function(){
+
+  if(window.autoRefreshSistema){
+
+    clearInterval(
+      window.autoRefreshSistema
+    );
+
+  }
+
+
+
+
+
+
+
+  window.autoRefreshSistema =
+
+  setInterval(async function(){
+
+    try{
+
+      if(
+
+        typeof window.renderNotificaciones ===
+        'function'
+
+      ){
+
+        window.renderNotificaciones();
+
+      }
+
+
+
+
+
+
+
+      if(
+
+        typeof window.renderRecepciones ===
+        'function'
+
+      ){
+
+        await window.renderRecepciones();
+
+      }
+
+
+
+
+
+
+
+      if(
+
+        typeof window.actualizarKPIsRecepcion ===
+        'function'
+
+      ){
+
+        await window.actualizarKPIsRecepcion();
+
+      }
+
+
+
+
+
+
+
+      if(
+
+        typeof window.renderAuditorias ===
+        'function'
+
+      ){
+
+        await window.renderAuditorias();
+
+      }
+
+
+
+
+
+
+
+      if(
+
+        typeof window.renderHistorialSistema ===
+        'function'
+
+      ){
+
+        await window.renderHistorialSistema();
+
+      }
+
+
+
+
+
+
+
+      if(
+
+        typeof window.renderInventario ===
+        'function'
+
+      ){
+
+        window.renderInventario();
+
+      }
+
+
+
+
+
+
+
+      if(
+
+        typeof window.actualizarKPIs ===
+        'function'
+
+      ){
+
+        window.actualizarKPIs();
+
+      }
+
+    }
+
+    catch(error){
+
+      console.log(
+        'Error auto refresh:',
+        error
+      );
+
+    }
+
+  },5000);
+
+};
+
+
+
+
+
+// ======================
+// CERRAR SESION
+// ======================
+
+function cerrarSesion(){
+
+  localStorage.removeItem(
+    'usuarioLogueado'
+  );
+
+
+
+
+
+  window.location.href =
+  'index.html';
+
+}
+
+
+
+
+
+// ======================
+// BOTON CERRAR
+// ======================
+
+const cerrarSesionBtn =
+
+document.getElementById(
+  'cerrarSesionBtn'
+);
+
+
+
+
+
+if(cerrarSesionBtn){
+
+  cerrarSesionBtn.onclick =
+  cerrarSesion;
+
+}
+
+
+
+
+
+// ======================
+// ACTIVAR MENU
+// ======================
+
+function activarMenu(id,modulo){
+
+  const elemento =
+
+  document.getElementById(id);
+
+
+
+
+
+  if(elemento){
+
+    elemento.onclick = function(){
+
+      mostrarModulo(
+        modulo
+      );
+
+    };
+
+  }
+
+}
+
+
+
+
+
+// ======================
+// MENUS
+// ======================
+
+activarMenu(
+  'dashboardMenu',
+  'dashboard'
+);
+
+
+
+
+
+activarMenu(
+  'inventarioMenu',
+  'inventario'
+);
+
+
+
+
+
+activarMenu(
+  'recepcionMenu',
+  'recepcion'
+);
+
+
+
+
+
+activarMenu(
+  'auditoriasMenu',
+  'auditorias'
+);
+
+
+
+
+
+activarMenu(
+  'usuariosMenu',
+  'usuarios'
+);
+
+
+
+
+
+activarMenu(
+  'historialMenu',
+  'historial'
+);
+
+
+
+
+
+// ======================
+// CARDS
+// ======================
+
+document.addEventListener(
+
+  'click',
+
+  function(e){
+
+    const card =
+
+    e.target.closest(
+      '.dashboard-card'
+    );
+
+
+
+
+
+    if(!card){
+
+      return;
+
+    }
+
+
+
+
+
+
+
+    if(card.id === 'cardInventario'){
+
+      mostrarModulo(
+        'inventario'
+      );
+
+    }
+
+
+
+
+
+
+
+    else if(card.id === 'cardRecepcion'){
+
+      mostrarModulo(
+        'recepcion'
+      );
+
+    }
+
+
+
+
+
+
+
+    else if(card.id === 'cardAuditorias'){
+
+      mostrarModulo(
+        'auditorias'
+      );
+
+    }
+
+
+
+
+
+
+
+    else if(card.id === 'cardUsuarios'){
+
+      mostrarModulo(
+        'usuarios'
+      );
+
+    }
+
+
+
+
+
+
+
+    else if(card.id === 'cardHistorial'){
+
+      mostrarModulo(
+        'historial'
+      );
+
+    }
+
+  }
+
+);
+
+
 
 
 
@@ -1451,3 +1365,4 @@ aplicarPermisos();
 
 window.renderNotificaciones();
 
+window.iniciarAutoRefresh();
