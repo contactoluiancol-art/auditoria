@@ -1782,3 +1782,168 @@ RESPONSIVE
   }
 
 }
+
+/* =====================================
+INFORMACION PRODUCTO PREMIUM
+===================================== */
+
+.producto-layout{
+
+  display:grid;
+
+  grid-template-columns:
+  1.8fr 220px;
+
+  gap:18px;
+
+  align-items:stretch;
+
+}
+
+
+
+
+
+.producto-info{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,minmax(220px,1fr));
+
+  gap:14px;
+
+}
+
+
+
+
+
+.info-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #f8fafc,
+    #eef2ff
+  );
+
+  border:
+  1px solid #dbeafe;
+
+  border-radius:18px;
+
+  padding:18px;
+
+  min-height:95px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+}
+
+
+
+
+
+.info-card span{
+
+  font-size:12px;
+
+  color:#64748b;
+
+  margin-bottom:6px;
+
+}
+
+
+
+
+
+.info-card strong{
+
+  font-size:18px;
+
+  color:#0f172a;
+
+  word-break:break-word;
+
+}
+
+
+
+
+
+.diferencia-card{
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #2563eb
+  );
+
+  border-radius:20px;
+
+  color:white;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:20px;
+
+}
+
+
+
+
+
+.diferencia-card span{
+
+  font-size:13px;
+
+  opacity:.85;
+
+  margin-bottom:8px;
+
+}
+
+
+
+
+
+.diferencia-card h2{
+
+  font-size:42px;
+
+  font-weight:700;
+
+}
+
+
+
+
+
+@media(max-width:900px){
+
+  .producto-layout{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .producto-info{
+
+    grid-template-columns:1fr;
+
+  }
+
+}
