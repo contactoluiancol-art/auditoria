@@ -840,14 +840,21 @@ usuarioActual === 'auditor';
               👁️
 
             </button>
-
-            <button
-              class="btn-mini btn-seguimiento-mini"
-              title="Seguimiento"
-              onclick="window.validarRecepcion(${item.id})"
-            >
-
-              📋
+${
+  item.pdf_url
+  ?
+  `
+  <button
+    class="btn-mini btn-pdf-mini"
+    title="Ver PDF"
+    onclick="window.open('${item.pdf_url}','_blank')"
+  >
+    📄
+  </button>
+  `
+  :
+  ''
+}
 
             </button>
 
