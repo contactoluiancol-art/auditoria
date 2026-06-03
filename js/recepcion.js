@@ -6,6 +6,20 @@ if(typeof window.recepcionCargado === 'undefined'){
 
 window.recepcionCargado = true;
 
+
+
+
+
+// ======================
+// INTERVALO GLOBAL
+// ======================
+
+window.refreshRecepcion = null;
+
+
+
+
+
 // ======================
 // BOTON
 // ======================
@@ -13,8 +27,12 @@ window.recepcionCargado = true;
 const guardarRecepcionBtn =
 
 document.getElementById(
-'guardarRecepcion'
+  'guardarRecepcion'
 );
+
+
+
+
 
 // ======================
 // EVENTO BOTON
@@ -22,17 +40,19 @@ document.getElementById(
 
 if(guardarRecepcionBtn){
 
-guardarRecepcionBtn.addEventListener(
+  guardarRecepcionBtn.addEventListener(
 
+    'click',
 
-'click',
+    guardarRecepcion
 
-guardarRecepcion
-
-
-);
+  );
 
 }
+
+
+
+
 
 // ======================
 // CREAR NOTIFICACION
@@ -40,141 +60,143 @@ guardarRecepcion
 
 window.crearNotificacion = function(mensaje){
 
-try{
+  try{
 
-let notificaciones =
+    let notificaciones =
 
-JSON.parse(
+    JSON.parse(
 
-  localStorage.getItem(
-    'notificaciones'
-  )
+      localStorage.getItem(
+        'notificaciones'
+      )
 
-) || [];
-
-
-
-
-
-const nuevaNotificacion = {
-
-  id:
-  Date.now(),
-
-  mensaje:
-  mensaje,
-
-  leida:
-  false,
-
-  fecha:
-  new Date()
-  .toLocaleString('es-CO')
-
-};
+    ) || [];
 
 
 
 
 
-notificaciones.unshift(
-  nuevaNotificacion
-);
+    const nuevaNotificacion = {
+
+      id:
+      Date.now(),
+
+      mensaje:
+      mensaje,
+
+      leida:
+      false,
+
+      fecha:
+      new Date()
+      .toLocaleString('es-CO')
+
+    };
 
 
 
 
 
-localStorage.setItem(
-
-  'notificaciones',
-
-  JSON.stringify(
-    notificaciones
-  )
-
-);
-
-
-
-
-
-// ======================
-// ACTUALIZAR CONTADOR
-// ======================
-
-const contador =
-
-document.getElementById(
-  'contadorNotificaciones'
-);
-
-
-
-
-
-if(contador){
-
-  contador.innerText =
-  notificaciones.length;
-
-}
-
-
-
-
-
-// ======================
-// ACTUALIZAR PANEL
-// ======================
-
-if(
-
-  typeof window.renderNotificaciones ===
-  'function'
-
-){
-
-  window.renderNotificaciones();
-
-}
-
-
-
-
-
-// ======================
-// EVENTO GLOBAL
-// ======================
-
-window.dispatchEvent(
-
-  new CustomEvent(
-
-    'nuevaNotificacion',
-
-    {
-
-      detail:
+    notificaciones.unshift(
       nuevaNotificacion
+    );
+
+
+
+
+
+    localStorage.setItem(
+
+      'notificaciones',
+
+      JSON.stringify(
+        notificaciones
+      )
+
+    );
+
+
+
+
+
+    // ======================
+    // CONTADOR
+    // ======================
+
+    const contador =
+
+    document.getElementById(
+      'contadorNotificaciones'
+    );
+
+
+
+
+
+    if(contador){
+
+      contador.innerText =
+      notificaciones.length;
 
     }
 
-  )
-
-);
 
 
-}
-
-catch(error){
-
-console.log(error);
 
 
-}
+    // ======================
+    // REFRESH PANEL
+    // ======================
+
+    if(
+
+      typeof window.renderNotificaciones ===
+      'function'
+
+    ){
+
+      window.renderNotificaciones();
+
+    }
+
+
+
+
+
+    // ======================
+    // EVENTO GLOBAL
+    // ======================
+
+    window.dispatchEvent(
+
+      new CustomEvent(
+
+        'nuevaNotificacion',
+
+        {
+
+          detail:
+          nuevaNotificacion
+
+        }
+
+      )
+
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
 
 };
+
+
+
+
 
 // ======================
 // GUARDAR RECEPCION
@@ -182,411 +204,410 @@ console.log(error);
 
 async function guardarRecepcion(){
 
-try{
+  try{
 
+    // ======================
+    // VALIDAR PERMISO
+    // ======================
 
-// ======================
-// VALIDAR PERMISO
-// ======================
+    if(
 
-if(
+      !window.tienePermiso(
+        'recepcion',
+        'crear'
+      )
 
-  !window.tienePermiso(
-    'recepcion',
-    'crear'
-  )
+    ){
 
-){
+      alert(
+        'No tiene permisos'
+      );
 
-  alert(
-    'No tiene permisos'
-  );
+      return;
 
-  return;
+    }
 
-}
 
 
 
 
+    // ======================
+    // INPUTS
+    // ======================
 
-// ======================
-// INPUTS
-// ======================
+    const proveedor =
 
-const proveedor =
+    document.getElementById(
+      'proveedorInput'
+    ).value.trim();
 
-document.getElementById(
-  'proveedorInput'
-).value.trim();
 
 
 
 
+    const material =
 
-const material =
+    document.getElementById(
+      'materialInput'
+    ).value.trim();
 
-document.getElementById(
-  'materialInput'
-).value.trim();
 
 
 
 
+    const tipoRecepcion =
 
-const tipoRecepcion =
+    document.getElementById(
+      'tipoRecepcionInput'
+    ).value;
 
-document.getElementById(
-  'tipoRecepcionInput'
-).value;
 
 
 
 
+    const cantidad =
 
-const cantidad =
+    Number(
 
-Number(
+      document.getElementById(
+        'cantidadInput'
+      ).value
 
-  document.getElementById(
-    'cantidadInput'
-  ).value
-
-);
-
-
-
-
-
-const revisadas =
-
-Number(
-
-  document.getElementById(
-    'revisadasInput'
-  ).value
-
-);
-
-
-
-
-
-const novedades =
-
-Number(
-
-  document.getElementById(
-    'novedadesInput'
-  ).value
-
-);
-
-
-
-
-
-const faltantes =
-
-Number(
-
-  document.getElementById(
-    'faltantesInput'
-  ).value
-
-);
-
-
-
-
-
-const observacion =
-
-document.getElementById(
-  'observacionInput'
-).value.trim();
-
-
-
-
-
-const estado =
-
-document.getElementById(
-  'estadoRecepcionInput'
-).value;
-
-
-
-
-
-const pdfFile =
-
-document.getElementById(
-  'pdfInput'
-).files[0];
-
-
-
-
-
-// ======================
-// VALIDAR
-// ======================
-
-if(
-
-  !proveedor ||
-  !material ||
-  !cantidad ||
-  !revisadas
-
-){
-
-  alert(
-    'Complete todos los campos'
-  );
-
-  return;
-
-}
-
-
-
-
-
-// ======================
-// PORCENTAJE
-// ======================
-
-const porcentajeRevisado =
-
-(
-  revisadas /
-  cantidad
-) * 100;
-
-
-
-
-
-// ======================
-// PDF URL
-// ======================
-
-let pdfUrl = '';
-
-
-
-
-
-// ======================
-// SUBIR PDF
-// ======================
-
-if(pdfFile){
-
-  const nombreArchivo =
-
-  Date.now() +
-  '_' +
-  pdfFile.name;
-
-
-
-
-
-  const subida =
-
-  await window.supabaseClient
-
-  .storage
-
-  .from(
-    'recepciones-pdf'
-  )
-
-  .upload(
-
-    nombreArchivo,
-
-    pdfFile
-
-  );
-
-
-
-
-
-  if(subida.error){
-
-    console.log(
-      subida.error
     );
 
-    alert(
-      'Error subiendo PDF'
+
+
+
+
+    const revisadas =
+
+    Number(
+
+      document.getElementById(
+        'revisadasInput'
+      ).value
+
     );
 
-    return;
 
-  }
 
 
 
+    const novedades =
 
+    Number(
 
-  const urlData =
+      document.getElementById(
+        'novedadesInput'
+      ).value
 
-  window.supabaseClient
+    );
 
-  .storage
 
-  .from(
-    'recepciones-pdf'
-  )
 
-  .getPublicUrl(
-    nombreArchivo
-  );
 
 
+    const faltantes =
 
+    Number(
 
+      document.getElementById(
+        'faltantesInput'
+      ).value
 
-  pdfUrl =
-  urlData.data.publicUrl;
+    );
 
-}
 
 
 
 
+    const observacion =
 
-// ======================
-// INSERTAR RECEPCION
-// ======================
+    document.getElementById(
+      'observacionInput'
+    ).value.trim();
 
-const response =
 
-await window.supabaseClient
 
-.from('recepciones')
 
-.insert([
 
-  {
+    const estado =
 
-    proveedor:
-    proveedor,
+    document.getElementById(
+      'estadoRecepcionInput'
+    ).value;
 
-    material:
-    material,
 
-    tipo_recepcion:
-    tipoRecepcion,
 
-    cantidad:
-    cantidad,
 
-    revisadas:
-    revisadas,
 
-    novedades:
-    novedades,
+    const pdfFile =
 
-    faltantes:
-    faltantes,
+    document.getElementById(
+      'pdfInput'
+    ).files[0];
 
-    porcentaje_revisado:
-    porcentajeRevisado.toFixed(1),
 
-    observacion:
-    observacion,
 
-    comentario_validacion:
-    '',
 
-    estado:
-    estado,
 
-    pdf_url:
-    pdfUrl,
+    // ======================
+    // VALIDAR
+    // ======================
 
-    usuario_recepcion:
+    if(
 
-    window.usuarioLogueado
-    .usuario ||
+      !proveedor ||
+      !material ||
+      !cantidad ||
+      !revisadas
 
-    'Usuario',
+    ){
 
-    created_at:
-    new Date()
-    .toISOString()
+      alert(
+        'Complete todos los campos'
+      );
 
-  }
+      return;
 
-]);
+    }
 
 
 
 
 
-// ======================
-// ERROR
-// ======================
+    // ======================
+    // PORCENTAJE
+    // ======================
 
-if(response.error){
+    const porcentajeRevisado =
 
-  console.log(
-    response.error
-  );
+    (
+      revisadas /
+      cantidad
+    ) * 100;
 
-  alert(
-    'Error guardando recepción'
-  );
 
-  return;
 
-}
 
 
+    // ======================
+    // PDF URL
+    // ======================
 
+    let pdfUrl = '';
 
 
-// ======================
-// HISTORIAL
-// ======================
 
-if(
 
-  typeof window.guardarHistorial ===
-  'function'
 
-){
+    // ======================
+    // SUBIR PDF
+    // ======================
 
-  await window.guardarHistorial(
+    if(pdfFile){
 
-    'CREAR',
+      const nombreArchivo =
 
-    'RECEPCION',
+      Date.now() +
+      '_' +
+      pdfFile.name;
 
-    'Se registró recepción de ' +
-    material
 
-  );
 
-}
 
 
+      const subida =
 
+      await window.supabaseClient
 
+      .storage
 
-// ======================
-// NOTIFICACION
-// ======================
+      .from(
+        'recepciones-pdf'
+      )
 
-window.crearNotificacion(
+      .upload(
+
+        nombreArchivo,
+
+        pdfFile
+
+      );
+
+
+
+
+
+      if(subida.error){
+
+        console.log(
+          subida.error
+        );
+
+        alert(
+          'Error subiendo PDF'
+        );
+
+        return;
+
+      }
+
+
+
+
+
+      const urlData =
+
+      window.supabaseClient
+
+      .storage
+
+      .from(
+        'recepciones-pdf'
+      )
+
+      .getPublicUrl(
+        nombreArchivo
+      );
+
+
+
+
+
+      pdfUrl =
+      urlData.data.publicUrl;
+
+    }
+
+
+
+
+
+    // ======================
+    // INSERTAR
+    // ======================
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .insert([
+
+      {
+
+        proveedor:
+        proveedor,
+
+        material:
+        material,
+
+        tipo_recepcion:
+        tipoRecepcion,
+
+        cantidad:
+        cantidad,
+
+        revisadas:
+        revisadas,
+
+        novedades:
+        novedades,
+
+        faltantes:
+        faltantes,
+
+        porcentaje_revisado:
+        porcentajeRevisado.toFixed(1),
+
+        observacion:
+        observacion,
+
+        comentario_validacion:
+        '',
+
+        estado:
+        estado,
+
+        pdf_url:
+        pdfUrl,
+
+        usuario_recepcion:
+
+        window.usuarioLogueado
+        .usuario ||
+
+        'Usuario',
+
+        created_at:
+        new Date()
+        .toISOString()
+
+      }
+
+    ]);
+
+
+
+
+
+    // ======================
+    // ERROR
+    // ======================
+
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      alert(
+        'Error guardando recepción'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    // ======================
+    // HISTORIAL
+    // ======================
+
+    if(
+
+      typeof window.guardarHistorial ===
+      'function'
+
+    ){
+
+      await window.guardarHistorial(
+
+        'CREAR',
+
+        'RECEPCION',
+
+        'Se registró recepción de ' +
+        material
+
+      );
+
+    }
+
+
+
+
+
+    // ======================
+    // NOTIFICACION
+    // ======================
+
+    window.crearNotificacion(
 
 `Nueva recepción registrada
 
@@ -605,57 +626,59 @@ ${cantidad}
 Estado:
 ${estado}`
 
-);
+    );
 
 
 
 
 
-// ======================
-// REFRESH
-// ======================
+    // ======================
+    // REFRESH
+    // ======================
 
-await window.renderRecepciones();
+    await window.renderRecepciones();
 
-await window.actualizarKPIsRecepcion();
-
-
-
-
-
-// ======================
-// LIMPIAR
-// ======================
-
-limpiarFormulario();
+    await window.actualizarKPIsRecepcion();
 
 
 
 
 
-// ======================
-// OK
-// ======================
+    // ======================
+    // LIMPIAR
+    // ======================
 
-alert(
-  'Recepción guardada correctamente'
-);
+    limpiarFormulario();
 
 
-}
-
-catch(error){
 
 
-console.log(error);
 
-alert(
-  'Error general'
-);
+    // ======================
+    // OK
+    // ======================
 
-}
+    alert(
+      'Recepción guardada correctamente'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    alert(
+      'Error general'
+    );
+
+  }
 
 }
+
+
+
+
 
 // ======================
 // RENDER RECEPCIONES
@@ -663,340 +686,617 @@ alert(
 
 window.renderRecepciones = async function(){
 
-try{
+  try{
 
+    const body =
 
-const body =
+    document.getElementById(
+      'recepcionesBody'
+    );
 
-document.getElementById(
-  'recepcionesBody'
-);
 
 
 
 
+    if(!body){
 
-if(!body){
+      return;
 
-  return;
+    }
 
-}
 
 
 
 
+    const response =
 
-body.innerHTML = '';
+    await window.supabaseClient
 
+    .from('recepciones')
 
+    .select('*')
 
+    .order(
 
+      'id',
 
-const response =
+      {
 
-await window.supabaseClient
+        ascending:false
 
-.from('recepciones')
+      }
 
-.select('*')
+    );
 
-.order(
 
-  'id',
 
-  {
 
-    ascending:false
 
-  }
+    if(response.error){
 
-);
+      console.log(
+        response.error
+      );
 
+      return;
 
+    }
 
 
 
-if(response.error){
 
-  console.log(
-    response.error
-  );
 
-  return;
+    const recepciones =
+    response.data || [];
 
-}
 
 
 
 
+    body.innerHTML = '';
 
-const recepciones =
-response.data || [];
 
 
 
 
+    if(recepciones.length === 0){
 
-if(recepciones.length === 0){
+      body.innerHTML =
 
-  body.innerHTML =
+      '<tr>' +
 
-  '<tr>' +
+      '<td colspan="13">' +
 
-  '<td colspan="13">' +
+      'No hay recepciones registradas' +
 
-  'No hay recepciones registradas' +
+      '</td>' +
 
-  '</td>' +
+      '</tr>';
 
-  '</tr>';
+      return;
 
+    }
 
 
-  return;
 
-}
 
 
+    let html = '';
 
 
 
-let html = '';
 
 
+    recepciones.forEach(function(item){
 
+      let estadoClass = '';
 
 
-recepciones.forEach(function(item){
 
-  let estadoClass = '';
 
 
+      if(item.estado === 'Pendiente'){
 
+        estadoClass =
+        'estado-pendiente';
 
+      }
 
-  if(item.estado === 'Pendiente'){
+      else if(item.estado === 'En validación'){
 
-    estadoClass =
-    'estado-pendiente';
+        estadoClass =
+        'estado-revision';
 
-  }
+      }
 
-  else if(item.estado === 'En validación'){
+      else if(item.estado === 'Novedad'){
 
-    estadoClass =
-    'estado-revision';
+        estadoClass =
+        'estado-novedad';
 
-  }
+      }
 
-  else if(item.estado === 'Novedad'){
+      else{
 
-    estadoClass =
-    'estado-novedad';
+        estadoClass =
+        'estado-revisado';
 
-  }
+      }
 
-  else{
 
-    estadoClass =
-    'estado-revisado';
 
-  }
 
-  html += `
 
-    <tr>
+      html += `
 
-      <td>
-        ${item.proveedor || '-'}
-      </td>
+        <tr>
 
-      <td>
-        ${item.material || '-'}
-      </td>
+          <td>
+            ${item.proveedor || '-'}
+          </td>
 
-      <td>
-        ${item.tipo_recepcion || '-'}
-      </td>
+          <td>
+            ${item.material || '-'}
+          </td>
 
-      <td>
-        ${item.cantidad || 0}
-      </td>
+          <td>
+            ${item.tipo_recepcion || '-'}
+          </td>
 
-      <td>
-        ${item.revisadas || 0}
-      </td>
+          <td>
+            ${item.cantidad || 0}
+          </td>
 
-      <td>
-        ${item.porcentaje_revisado || 0}%
-      </td>
+          <td>
+            ${item.revisadas || 0}
+          </td>
 
-      <td>
-        ${item.novedades || 0}
-      </td>
+          <td>
+            ${item.porcentaje_revisado || 0}%
+          </td>
 
-      <td>
+          <td>
+            ${item.novedades || 0}
+          </td>
 
-        <span class="${estadoClass}">
+          <td>
 
-          ${item.estado}
+            <span class="${estadoClass}">
 
-        </span>
+              ${item.estado}
 
-      </td>
+            </span>
 
-      <td>
+          </td>
 
-        ${new Date(
-          item.created_at
-        ).toLocaleString('es-CO')}
+          <td>
 
-      </td>
+            ${new Date(
+              item.created_at
+            ).toLocaleString('es-CO')}
 
-      <td>
+          </td>
 
-        ${
+          <td>
 
-          item.pdf_url
+            ${
 
-          ?
+              item.pdf_url
 
-          `
+              ?
 
-          <button
-            class="btn-ver"
-            onclick="window.open('${item.pdf_url}')"
-          >
+              `
 
-            Ver PDF
+              <button
+                class="btn-ver"
+                onclick="window.open('${item.pdf_url}')"
+              >
 
-          </button>
+                Ver PDF
 
-          `
+              </button>
 
-          :
+              `
 
-          '-'
+              :
 
-        }
+              '-'
 
-      </td>
+            }
 
-      <td>
+          </td>
 
-        <button
-          class="btn-ver"
-          onclick='verObservacion(${JSON.stringify(item.observacion || "")})'
-        >
-
-          Ver
-
-        </button>
-
-      </td>
-
-      <td>
-
-        <button
-          class="btn-ver"
-          onclick='verComentario(${JSON.stringify(item.comentario_validacion || "")})'
-        >
-
-          Ver
-
-        </button>
-
-      </td>
-
-      <td>
-
-        <div class="acciones-tabla">
-
-          ${
-
-            window.tienePermiso(
-              'recepcion',
-              'editar'
-            )
-
-            ?
-
-            `
+          <td>
 
             <button
-              class="btn-editar"
-              onclick="validarRecepcion(${item.id})"
+              class="btn-ver"
+              onclick="window.verObservacion(\`${item.observacion || ''}\`)"
             >
 
-              Validar
+              Ver
 
             </button>
 
-            `
+          </td>
 
-            :
-
-            ''
-
-          }
-
-          ${
-
-            window.tienePermiso(
-              'recepcion',
-              'eliminar'
-            )
-
-            ?
-
-            `
+          <td>
 
             <button
-              class="btn-eliminar"
-              onclick="eliminarRecepcion(${item.id})"
+              class="btn-ver"
+              onclick="window.verComentario(\`${item.comentario_validacion || ''}\`)"
             >
 
-              Eliminar
+              Ver
 
             </button>
 
-            `
+          </td>
 
-            :
+          <td>
 
-            ''
+            <div class="acciones-tabla">
 
-          }
+              ${
 
-        </div>
+                window.tienePermiso(
+                  'recepcion',
+                  'editar'
+                )
 
-      </td>
+                ?
 
-    </tr>
+                `
 
-  `;
+                <button
+                  class="btn-editar"
+                  onclick="validarRecepcion(${item.id})"
+                >
 
-});
+                  Validar
+
+                </button>
+
+                `
+
+                :
+
+                ''
+
+              }
+
+              ${
+
+                window.tienePermiso(
+                  'recepcion',
+                  'eliminar'
+                )
+
+                ?
+
+                `
+
+                <button
+                  class="btn-eliminar"
+                  onclick="eliminarRecepcion(${item.id})"
+                >
+
+                  Eliminar
+
+                </button>
+
+                `
+
+                :
+
+                ''
+
+              }
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    });
 
 
 
 
 
-body.innerHTML =
-html;
+    body.innerHTML =
+    html;
 
+  }
 
-}
+  catch(error){
 
-catch(error){
+    console.log(error);
 
-
-console.log(error);
-
-
-}
+  }
 
 };
+
+
+
+
+
+// ======================
+// VALIDAR RECEPCION
+// ======================
+
+window.validarRecepcion = async function(id){
+
+  try{
+
+    if(
+
+      !window.tienePermiso(
+        'recepcion',
+        'editar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    const comentario = prompt(
+      'Ingrese comentario'
+    );
+
+
+
+
+
+    if(comentario === null){
+
+      return;
+
+    }
+
+
+
+
+
+    const nuevoEstado = prompt(
+
+`Nuevo estado:
+
+Pendiente
+En validación
+Novedad
+Gestionado`
+
+    );
+
+
+
+
+
+    if(!nuevoEstado){
+
+      return;
+
+    }
+
+
+
+
+
+    const update =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .update({
+
+      comentario_validacion:
+      comentario,
+
+      estado:
+      nuevoEstado,
+
+      usuario_validacion:
+
+      window.usuarioLogueado.usuario ||
+
+      'Validador'
+
+    })
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    );
+
+
+
+
+
+    if(update.error){
+
+      console.log(update.error);
+
+      alert(
+        'Error actualizando'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    window.crearNotificacion(
+
+`Recepción validada
+
+Comentario:
+${comentario}
+
+Estado:
+${nuevoEstado}`
+
+    );
+
+
+
+
+
+    await window.renderRecepciones();
+
+    await window.actualizarKPIsRecepcion();
+
+
+
+
+
+    alert(
+      'Recepción validada'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+
+
+
+
+// ======================
+// ELIMINAR RECEPCION
+// ======================
+
+window.eliminarRecepcion = async function(id){
+
+  try{
+
+    if(
+
+      !window.tienePermiso(
+        'recepcion',
+        'eliminar'
+      )
+
+    ){
+
+      alert(
+        'No tiene permisos'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    const confirmar = confirm(
+      '¿Eliminar recepción?'
+    );
+
+
+
+
+
+    if(!confirmar){
+
+      return;
+
+    }
+
+
+
+
+
+    const eliminar =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .delete()
+
+    .eq(
+
+      'id',
+
+      Number(id)
+
+    );
+
+
+
+
+
+    if(eliminar.error){
+
+      console.log(
+        eliminar.error
+      );
+
+      alert(
+        'Error eliminando'
+      );
+
+      return;
+
+    }
+
+
+
+
+
+    await window.renderRecepciones();
+
+    await window.actualizarKPIsRecepcion();
+
+
+
+
+
+    alert(
+      'Recepción eliminada'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+
+
+
 
 // ======================
 // ACTUALIZAR KPIS
@@ -1004,171 +1304,171 @@ console.log(error);
 
 window.actualizarKPIsRecepcion = async function(){
 
-try{
+  try{
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('recepciones')
+
+    .select('*')
+
+    .order(
+
+      'id',
+
+      {
+
+        ascending:false
+
+      }
+
+    );
 
 
-const response =
 
-await window.supabaseClient
 
-.from('recepciones')
 
-.select('*')
+    const recepciones =
+    response.data || [];
 
-.order(
 
-  'id',
 
-  {
 
-    ascending:false
+
+    const kpiRecepciones =
+
+    document.getElementById(
+      'kpiRecepciones'
+    );
+
+
+
+
+
+    const kpiRevisado =
+
+    document.getElementById(
+      'kpiRevisado'
+    );
+
+
+
+
+
+    const kpiNovedades =
+
+    document.getElementById(
+      'kpiNovedades'
+    );
+
+
+
+
+
+    const kpiFaltantes =
+
+    document.getElementById(
+      'kpiFaltantes'
+    );
+
+
+
+
+
+    if(kpiRecepciones){
+
+      kpiRecepciones.innerText =
+      recepciones.length;
+
+    }
+
+
+
+
+
+    if(recepciones.length === 0){
+
+      if(kpiRevisado){
+        kpiRevisado.innerText = '0%';
+      }
+
+      if(kpiNovedades){
+        kpiNovedades.innerText = '0';
+      }
+
+      if(kpiFaltantes){
+        kpiFaltantes.innerText = '0';
+      }
+
+      return;
+
+    }
+
+
+
+
+
+    const ultimaRecepcion =
+    recepciones[0];
+
+
+
+
+
+    if(kpiRevisado){
+
+      kpiRevisado.innerText =
+
+      Number(
+
+        ultimaRecepcion
+        .porcentaje_revisado || 0
+
+      ).toFixed(1) + '%';
+
+    }
+
+
+
+
+
+    if(kpiNovedades){
+
+      kpiNovedades.innerText =
+
+      ultimaRecepcion
+      .novedades || 0;
+
+    }
+
+
+
+
+
+    if(kpiFaltantes){
+
+      kpiFaltantes.innerText =
+
+      ultimaRecepcion
+      .faltantes || 0;
+
+    }
 
   }
 
-);
+  catch(error){
 
+    console.log(error);
 
-
-
-
-const recepciones =
-response.data || [];
-
-
-
-
-
-const kpiRecepciones =
-
-document.getElementById(
-  'kpiRecepciones'
-);
-
-
-
-
-
-const kpiRevisado =
-
-document.getElementById(
-  'kpiRevisado'
-);
-
-
-
-
-
-const kpiNovedades =
-
-document.getElementById(
-  'kpiNovedades'
-);
-
-
-
-
-
-const kpiFaltantes =
-
-document.getElementById(
-  'kpiFaltantes'
-);
-
-
-
-
-
-if(kpiRecepciones){
-
-  kpiRecepciones.innerText =
-  recepciones.length;
-
-}
-
-
-
-
-
-if(recepciones.length === 0){
-
-  if(kpiRevisado){
-    kpiRevisado.innerText = '0%';
   }
-
-  if(kpiNovedades){
-    kpiNovedades.innerText = '0';
-  }
-
-  if(kpiFaltantes){
-    kpiFaltantes.innerText = '0';
-  }
-
-  return;
-
-}
-
-
-
-
-
-const ultimaRecepcion =
-recepciones[0];
-
-
-
-
-
-if(kpiRevisado){
-
-  kpiRevisado.innerText =
-
-  Number(
-
-    ultimaRecepcion
-    .porcentaje_revisado || 0
-
-  ).toFixed(1) + '%';
-
-}
-
-
-
-
-
-if(kpiNovedades){
-
-  kpiNovedades.innerText =
-
-  ultimaRecepcion
-  .novedades || 0;
-
-}
-
-
-
-
-
-if(kpiFaltantes){
-
-  kpiFaltantes.innerText =
-
-  ultimaRecepcion
-  .faltantes || 0;
-
-}
-
-
-}
-
-catch(error){
-
-
-console.log(error);
-
-
-}
 
 };
+
+
+
+
 
 // ======================
 // AUTO REFRESH
@@ -1176,39 +1476,51 @@ console.log(error);
 
 window.iniciarRefreshRecepcion = function(){
 
-if(window.refreshRecepcion){
+  // ======================
+  // EVITAR DUPLICADOS
+  // ======================
+
+  if(window.refreshRecepcion){
+
+    clearInterval(
+      window.refreshRecepcion
+    );
+
+  }
 
 
-clearInterval(
-  window.refreshRecepcion
-);
 
 
-}
 
-window.refreshRecepcion =
+  // ======================
+  // REFRESH
+  // ======================
 
-setInterval(async function(){
+  window.refreshRecepcion =
 
+  setInterval(async function(){
 
-try{
+    try{
 
-  await window.renderRecepciones();
+      await window.renderRecepciones();
 
-  await window.actualizarKPIsRecepcion();
+      await window.actualizarKPIsRecepcion();
 
-}
+    }
 
-catch(error){
+    catch(error){
 
-  console.log(error);
+      console.log(error);
 
-}
+    }
 
-
-},5000);
+  },5000);
 
 };
+
+
+
+
 
 // ======================
 // LIMPIAR FORMULARIO
@@ -1216,43 +1528,47 @@ catch(error){
 
 function limpiarFormulario(){
 
-document.getElementById(
-'proveedorInput'
-).value = '';
+  document.getElementById(
+    'proveedorInput'
+  ).value = '';
 
-document.getElementById(
-'materialInput'
-).value = '';
+  document.getElementById(
+    'materialInput'
+  ).value = '';
 
-document.getElementById(
-'cantidadInput'
-).value = '';
+  document.getElementById(
+    'cantidadInput'
+  ).value = '';
 
-document.getElementById(
-'revisadasInput'
-).value = '';
+  document.getElementById(
+    'revisadasInput'
+  ).value = '';
 
-document.getElementById(
-'novedadesInput'
-).value = '';
+  document.getElementById(
+    'novedadesInput'
+  ).value = '';
 
-document.getElementById(
-'faltantesInput'
-).value = '';
+  document.getElementById(
+    'faltantesInput'
+  ).value = '';
 
-document.getElementById(
-'observacionInput'
-).value = '';
+  document.getElementById(
+    'observacionInput'
+  ).value = '';
 
-document.getElementById(
-'estadoRecepcionInput'
-).value = 'Pendiente';
+  document.getElementById(
+    'estadoRecepcionInput'
+  ).value = 'Pendiente';
 
-document.getElementById(
-'pdfInput'
-).value = '';
+  document.getElementById(
+    'pdfInput'
+  ).value = '';
 
 }
+
+
+
+
 
 // ======================
 // VER OBSERVACION
@@ -1260,35 +1576,39 @@ document.getElementById(
 
 window.verObservacion = function(observacion){
 
-if(
+  if(
+
+    !observacion ||
+
+    observacion.trim() === ''
+
+  ){
+
+    alert(
+      'Sin observaciones'
+    );
+
+    return;
+
+  }
 
 
-!observacion ||
-
-observacion.trim() === ''
 
 
-){
 
-
-alert(
-  'Sin observaciones'
-);
-
-return;
-
-
-}
-
-alert(
+  alert(
 
 `OBSERVACIÓN RECEPCIÓN
 
 ${observacion}`
 
-);
+  );
 
 };
+
+
+
+
 
 // ======================
 // VER COMENTARIO
@@ -1296,35 +1616,39 @@ ${observacion}`
 
 window.verComentario = function(comentario){
 
-if(
+  if(
+
+    !comentario ||
+
+    comentario.trim() === ''
+
+  ){
+
+    alert(
+      'Sin comentarios'
+    );
+
+    return;
+
+  }
 
 
-!comentario ||
-
-comentario.trim() === ''
 
 
-){
 
-
-alert(
-  'Sin comentarios'
-);
-
-return;
-
-
-}
-
-alert(
+  alert(
 
 `COMENTARIO VALIDACIÓN
 
 ${comentario}`
 
-);
+  );
 
 };
+
+
+
+
 
 // ======================
 // APLICAR PERMISOS
@@ -1332,29 +1656,29 @@ ${comentario}`
 
 function aplicarPermisosRecepcion(){
 
-if(
+  if(
 
+    !window.tienePermiso(
+      'recepcion',
+      'crear'
+    )
 
-!window.tienePermiso(
-  'recepcion',
-  'crear'
-)
+  ){
 
+    if(guardarRecepcionBtn){
 
-){
+      guardarRecepcionBtn.style.display =
+      'none';
 
+    }
 
-if(guardarRecepcionBtn){
-
-  guardarRecepcionBtn.style.display =
-  'none';
-
-}
-
+  }
 
 }
 
-}
+
+
+
 
 // ======================
 // INICIO
