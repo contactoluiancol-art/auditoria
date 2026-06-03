@@ -464,11 +464,9 @@ window.renderAuditorias = async function(){
 
         ?
 
-        '<button class="btn-pdf" onclick="generarPDF(' +
-
-        item.id +
-
-        ')">📋</button>'
+     '<button class="btn-accion" onclick="generarPDF(' +
+item.id +
+')">📋</button>'
 
         :
 
@@ -495,11 +493,9 @@ window.renderAuditorias = async function(){
 
         ?
 
-        '<button class="btn-editar" onclick="editarEstado(' +
-
-        item.id +
-
-        ')">✏️</button>'
+       '<button class="btn-accion" onclick="editarEstado(' +
+item.id +
+')">✏️</button>'
 
         :
 
@@ -526,11 +522,9 @@ window.renderAuditorias = async function(){
 
         ?
 
-        '<button class="btn-eliminar" onclick="eliminarAuditoria(' +
-
-        item.id +
-
-        ')">🗑️</button>'
+     '<button class="btn-accion" onclick="eliminarAuditoria(' +
+item.id +
+')">🗑️</button>'
 
         :
 
