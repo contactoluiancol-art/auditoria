@@ -1,6 +1,8 @@
 <div class="module-container">
 
-  <!-- HEADER -->
+  <!-- =========================================
+  HEADER
+  ========================================== -->
 
   <div class="module-header">
 
@@ -11,7 +13,7 @@
       </h2>
 
       <p>
-        Control de recepción de mercancía
+        Control y seguimiento de recepción logística
       </p>
 
     </div>
@@ -22,7 +24,9 @@
 
 
 
-  <!-- KPIS -->
+  <!-- =========================================
+  KPIS
+  ========================================== -->
 
   <div class="kpi-grid">
 
@@ -92,13 +96,123 @@
 
 
 
-  <!-- FORM -->
+  <!-- =========================================
+  FLUJO GESTION
+  ========================================== -->
 
   <div class="module-card">
 
-    <h3>
-      Nueva Recepción
-    </h3>
+    <div class="recepcion-flow">
+
+      <div class="flow-item active">
+
+        <div class="flow-icon">
+          📥
+        </div>
+
+        <span>
+          Recepción
+        </span>
+
+      </div>
+
+
+
+
+
+      <div class="flow-line"></div>
+
+
+
+
+
+      <div class="flow-item">
+
+        <div class="flow-icon">
+          ⚠️
+        </div>
+
+        <span>
+          Novedad
+        </span>
+
+      </div>
+
+
+
+
+
+      <div class="flow-line"></div>
+
+
+
+
+
+      <div class="flow-item compras-flow">
+
+        <div class="flow-icon">
+          🛒
+        </div>
+
+        <span>
+          Compras Gestiona
+        </span>
+
+      </div>
+
+
+
+
+
+      <div class="flow-line"></div>
+
+
+
+
+
+      <div class="flow-item">
+
+        <div class="flow-icon">
+          ✅
+        </div>
+
+        <span>
+          Gestionado
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- =========================================
+  FORMULARIO
+  ========================================== -->
+
+  <div class="module-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h3>
+          Nueva Recepción
+        </h3>
+
+        <p class="sub-module-text">
+
+          Registro y validación de mercancía recibida
+
+        </p>
+
+      </div>
+
+    </div>
 
 
 
@@ -115,7 +229,7 @@
         <input
           type="text"
           id="proveedorInput"
-          placeholder="Proveedor"
+          placeholder="Ingrese proveedor"
         >
 
       </div>
@@ -133,7 +247,7 @@
         <input
           type="text"
           id="materialInput"
-          placeholder="Material"
+          placeholder="Ingrese material"
         >
 
       </div>
@@ -187,7 +301,7 @@
         <input
           type="number"
           id="cantidadInput"
-          placeholder="Cantidad"
+          placeholder="0"
         >
 
       </div>
@@ -205,7 +319,7 @@
         <input
           type="number"
           id="revisadasInput"
-          placeholder="Revisadas"
+          placeholder="0"
         >
 
       </div>
@@ -223,7 +337,7 @@
         <input
           type="number"
           id="novedadesInput"
-          placeholder="Novedades"
+          placeholder="0"
         >
 
       </div>
@@ -241,7 +355,7 @@
         <input
           type="number"
           id="faltantesInput"
-          placeholder="Faltantes"
+          placeholder="0"
         >
 
       </div>
@@ -259,19 +373,19 @@
         <select id="estadoRecepcionInput">
 
           <option value="Pendiente">
-            Pendiente
+            🟡 Pendiente
           </option>
 
-          <option value="En validación">
-            En validación
-          </option>
-
-          <option value="Novedad">
-            Novedad
+          <option value="En gestión compras">
+            🛒 En gestión compras
           </option>
 
           <option value="Gestionado">
-            Gestionado
+            ✅ Gestionado
+          </option>
+
+          <option value="Cerrado">
+            🔒 Cerrado
           </option>
 
         </select>
@@ -284,7 +398,9 @@
 
 
 
-    <!-- OBSERVACION -->
+    <!-- =========================================
+    OBSERVACION
+    ========================================== -->
 
     <div class="input-group textarea-group">
 
@@ -294,7 +410,7 @@
 
       <textarea
         id="observacionInput"
-        placeholder="Ingrese observaciones"
+        placeholder="Ingrese observaciones o novedades encontradas"
       ></textarea>
 
     </div>
@@ -303,7 +419,9 @@
 
 
 
-    <!-- PDF -->
+    <!-- =========================================
+    PDF
+    ========================================== -->
 
     <div class="input-group">
 
@@ -323,7 +441,9 @@
 
 
 
-    <!-- BOTON -->
+    <!-- =========================================
+    BOTONES
+    ========================================== -->
 
     <div class="button-group">
 
@@ -332,7 +452,7 @@
         class="btn-primary"
       >
 
-        Guardar Recepción
+        📥 Guardar Recepción
 
       </button>
 
@@ -344,15 +464,27 @@
 
 
 
-  <!-- TABLA -->
+  <!-- =========================================
+  TABLA
+  ========================================== -->
 
   <div class="module-card">
 
     <div class="table-header">
 
-      <h3>
-        Recepciones Registradas
-      </h3>
+      <div>
+
+        <h3>
+          Recepciones Registradas
+        </h3>
+
+        <p class="sub-module-text">
+
+          Seguimiento y gestión de novedades
+
+        </p>
+
+      </div>
 
     </div>
 
@@ -384,13 +516,15 @@
 
             <th>Estado</th>
 
+            <th>Seguimiento</th>
+
             <th>Fecha</th>
 
             <th>PDF</th>
 
             <th>Observación</th>
 
-            <th>Comentario</th>
+            <th>Gestión Compras</th>
 
             <th>Acciones</th>
 
