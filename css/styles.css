@@ -2246,3 +2246,23 @@ SWITCH PREMIUM
   0 8px 18px rgba(0,0,0,.08);
 
 }
+
+.btn-bloqueado{
+
+  opacity:.45;
+
+  cursor:not-allowed !important;
+
+  filter:grayscale(100%);
+
+}
+
+
+
+
+
+.btn-bloqueado:hover{
+
+  transform:none !important;
+
+}
