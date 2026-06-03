@@ -24,11 +24,11 @@ if(guardarRecepcionBtn){
 
 guardarRecepcionBtn.addEventListener(
 
-```
+
 'click',
 
 guardarRecepcion
-```
+
 
 );
 
@@ -42,7 +42,6 @@ window.crearNotificacion = function(mensaje){
 
 try{
 
-```
 let notificaciones =
 
 JSON.parse(
@@ -164,15 +163,14 @@ window.dispatchEvent(
   )
 
 );
-```
+
 
 }
 
 catch(error){
 
-```
 console.log(error);
-```
+
 
 }
 
@@ -186,7 +184,7 @@ async function guardarRecepcion(){
 
 try{
 
-```
+
 // ======================
 // VALIDAR PERMISO
 // ======================
@@ -589,7 +587,6 @@ if(
 // ======================
 
 window.crearNotificacion(
-```
 
 `Nueva recepción registrada
 
@@ -608,7 +605,6 @@ ${cantidad}
 Estado:
 ${estado}`
 
-```
 );
 
 
@@ -644,19 +640,18 @@ limpiarFormulario();
 alert(
   'Recepción guardada correctamente'
 );
-```
+
 
 }
 
 catch(error){
 
-```
+
 console.log(error);
 
 alert(
   'Error general'
 );
-```
 
 }
 
@@ -670,7 +665,7 @@ window.renderRecepciones = async function(){
 
 try{
 
-```
+
 const body =
 
 document.getElementById(
@@ -807,10 +802,6 @@ recepciones.forEach(function(item){
     'estado-revisado';
 
   }
-
-
-
-
 
   html += `
 
@@ -993,15 +984,15 @@ recepciones.forEach(function(item){
 
 body.innerHTML =
 html;
-```
+
 
 }
 
 catch(error){
 
-```
+
 console.log(error);
-```
+
 
 }
 
@@ -1015,7 +1006,7 @@ window.actualizarKPIsRecepcion = async function(){
 
 try{
 
-```
+
 const response =
 
 await window.supabaseClient
@@ -1165,15 +1156,15 @@ if(kpiFaltantes){
   .faltantes || 0;
 
 }
-```
+
 
 }
 
 catch(error){
 
-```
+
 console.log(error);
-```
+
 
 }
 
@@ -1187,11 +1178,11 @@ window.iniciarRefreshRecepcion = function(){
 
 if(window.refreshRecepcion){
 
-```
+
 clearInterval(
   window.refreshRecepcion
 );
-```
+
 
 }
 
@@ -1199,7 +1190,7 @@ window.refreshRecepcion =
 
 setInterval(async function(){
 
-```
+
 try{
 
   await window.renderRecepciones();
@@ -1213,7 +1204,7 @@ catch(error){
   console.log(error);
 
 }
-```
+
 
 },5000);
 
@@ -1271,21 +1262,21 @@ window.verObservacion = function(observacion){
 
 if(
 
-```
+
 !observacion ||
 
 observacion.trim() === ''
-```
+
 
 ){
 
-```
+
 alert(
   'Sin observaciones'
 );
 
 return;
-```
+
 
 }
 
@@ -1307,21 +1298,21 @@ window.verComentario = function(comentario){
 
 if(
 
-```
+
 !comentario ||
 
 comentario.trim() === ''
-```
+
 
 ){
 
-```
+
 alert(
   'Sin comentarios'
 );
 
 return;
-```
+
 
 }
 
@@ -1343,23 +1334,23 @@ function aplicarPermisosRecepcion(){
 
 if(
 
-```
+
 !window.tienePermiso(
   'recepcion',
   'crear'
 )
-```
+
 
 ){
 
-```
+
 if(guardarRecepcionBtn){
 
   guardarRecepcionBtn.style.display =
   'none';
 
 }
-```
+
 
 }
 
