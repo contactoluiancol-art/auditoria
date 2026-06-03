@@ -16,6 +16,8 @@ window.recepcionCargado = true;
 
 window.refreshRecepcion = null;
 
+window.recepcionGestionando = null;
+
 
 
 
@@ -534,30 +536,6 @@ async function guardarRecepcion(){
 
 
 
-    if(
-
-      typeof window.guardarHistorial ===
-      'function'
-
-    ){
-
-      await window.guardarHistorial(
-
-        'CREAR',
-
-        'RECEPCION',
-
-        'Se registró recepción de ' +
-        material
-
-      );
-
-    }
-
-
-
-
-
     window.crearNotificacion(
 
 `📦 Nueva recepción registrada
@@ -606,10 +584,6 @@ ${estado}`
   catch(error){
 
     console.log(error);
-
-    alert(
-      'Error general'
-    );
 
   }
 
@@ -698,28 +672,6 @@ window.renderRecepciones = async function(){
 
 
 
-    if(recepciones.length === 0){
-
-      body.innerHTML =
-
-      '<tr>' +
-
-      '<td colspan="13">' +
-
-      'No hay recepciones registradas' +
-
-      '</td>' +
-
-      '</tr>';
-
-      return;
-
-    }
-
-
-
-
-
     let html = '';
 
 
@@ -748,17 +700,17 @@ window.renderRecepciones = async function(){
 
       }
 
-      else if(item.estado === 'Novedad Reportada'){
+      else if(item.estado === 'Esperando Proveedor'){
 
         estadoClass =
-        'estado-novedad';
+        'estado-revision';
 
       }
 
       else{
 
         estadoClass =
-        'estado-revisado';
+        'estado-cerrado';
 
       }
 
@@ -768,174 +720,140 @@ window.renderRecepciones = async function(){
 
       html += `
 
-        <tr>
+      <tr>
 
-          <td>
-            ${item.proveedor || '-'}
-          </td>
+        <td>
+          ${item.proveedor || '-'}
+        </td>
 
-          <td>
-            ${item.material || '-'}
-          </td>
+        <td>
+          ${item.material || '-'}
+        </td>
 
-          <td>
-            ${item.tipo_recepcion || '-'}
-          </td>
+        <td>
+          ${item.tipo_recepcion || '-'}
+        </td>
 
-          <td>
-            ${item.cantidad || 0}
-          </td>
+        <td>
+          ${item.cantidad || 0}
+        </td>
 
-          <td>
-            ${item.revisadas || 0}
-          </td>
+        <td>
+          ${item.revisadas || 0}
+        </td>
 
-          <td>
-            ${item.porcentaje_revisado || 0}%
-          </td>
+        <td>
+          ${item.porcentaje_revisado || 0}%
+        </td>
 
-          <td>
-            ${item.novedades || 0}
-          </td>
+        <td>
+          ${item.novedades || 0}
+        </td>
 
-          <td>
+        <td>
 
-            <span class="${estadoClass}">
+          <span class="${estadoClass}">
 
-              ${item.estado}
+            ${item.estado}
 
-            </span>
+          </span>
 
-          </td>
+        </td>
 
-          <td>
+        <td>
 
-            ${new Date(
-              item.created_at
-            ).toLocaleString('es-CO')}
+          ${new Date(
+            item.created_at
+          ).toLocaleString('es-CO')}
 
-          </td>
+        </td>
 
-          <td>
+        <td>
 
-            ${
+          ${
 
-              item.pdf_url
+            item.pdf_url
 
-              ?
+            ?
 
-              `
-
-              <button
-                class="btn-ver"
-                onclick="window.open('${item.pdf_url}')"
-              >
-
-                Ver PDF
-
-              </button>
-
-              `
-
-              :
-
-              '-'
-
-            }
-
-          </td>
-
-          <td>
+            `
 
             <button
               class="btn-ver"
-              onclick="window.verObservacion(\`${item.observacion || ''}\`)"
+              onclick="window.open('${item.pdf_url}')"
             >
 
               Ver
 
             </button>
 
-          </td>
+            `
 
-          <td>
+            :
+
+            '-'
+
+          }
+
+        </td>
+
+        <td>
+
+          <button
+            class="btn-ver"
+            onclick="window.verObservacion(\`${item.observacion || ''}\`)"
+          >
+
+            Ver
+
+          </button>
+
+        </td>
+
+        <td>
+
+          <button
+            class="btn-ver"
+            onclick="window.validarRecepcion(${item.id})"
+          >
+
+            Seguimiento
+
+          </button>
+
+        </td>
+
+        <td>
+
+          <div class="acciones-tabla">
 
             <button
-              class="btn-ver"
-              onclick="window.verComentario('',${item.id})"
+              class="btn-editar"
+              onclick="window.validarRecepcion(${item.id})"
             >
 
-              Seguimiento
+              Gestionar
 
             </button>
 
-          </td>
 
-          <td>
 
-            <div class="acciones-tabla">
 
-              ${
 
-                window.tienePermiso(
-                  'recepcion',
-                  'editar'
-                )
+            <button
+              class="btn-eliminar"
+              onclick="eliminarRecepcion(${item.id})"
+            >
 
-                ?
+              Eliminar
 
-                `
+            </button>
 
-                <button
-                  class="btn-editar"
-                  onclick="validarRecepcion(${item.id})"
-                >
+          </div>
 
-                  Gestionar
+        </td>
 
-                </button>
-
-                `
-
-                :
-
-                ''
-
-              }
-
-              ${
-
-                window.tienePermiso(
-                  'recepcion',
-                  'eliminar'
-                )
-
-                ?
-
-                `
-
-                <button
-                  class="btn-eliminar"
-                  onclick="eliminarRecepcion(${item.id})"
-                >
-
-                  Eliminar
-
-                </button>
-
-                `
-
-                :
-
-                ''
-
-              }
-
-            </div>
-
-          </td>
-
-        </tr>
+      </tr>
 
       `;
 
@@ -963,29 +881,61 @@ window.renderRecepciones = async function(){
 
 
 // ======================
-// GESTIONAR RECEPCION
+// MODAL GESTION
 // ======================
 
 window.validarRecepcion = async function(id){
 
   try{
 
-    if(
+    window.recepcionGestionando =
+    Number(id);
 
-      !window.tienePermiso(
-        'recepcion',
-        'editar'
-      )
 
-    ){
 
-      alert(
-        'No tiene permisos'
-      );
 
-      return;
 
-    }
+    const modal =
+
+    document.getElementById(
+      'modalGestion'
+    );
+
+
+
+
+
+    const timeline =
+
+    document.getElementById(
+      'timelineSeguimiento'
+    );
+
+
+
+
+
+    const comentarioInput =
+
+    document.getElementById(
+      'gestionComentarioInput'
+    );
+
+
+
+
+
+    const estadoInput =
+
+    document.getElementById(
+      'gestionEstadoInput'
+    );
+
+
+
+
+
+    comentarioInput.value = '';
 
 
 
@@ -1019,10 +969,6 @@ window.validarRecepcion = async function(id){
         consulta.error
       );
 
-      alert(
-        'Error obteniendo recepción'
-      );
-
       return;
 
     }
@@ -1038,31 +984,84 @@ window.validarRecepcion = async function(id){
 
 
 
-    const nuevoEstado = prompt(
-
-`Seleccione estado:
-
-Pendiente
-
-Novedad Reportada
-
-En Gestión Compras
-
-Esperando Proveedor
-
-Solucionado
-
-Cerrado`
-
-    );
+    estadoInput.value =
+    recepcion.estado || 'Pendiente';
 
 
 
 
 
-    if(!nuevoEstado){
+    timeline.innerHTML = '';
 
-      return;
+
+
+
+
+    if(
+
+      !recepcion.seguimiento ||
+
+      recepcion.seguimiento.trim() === ''
+
+    ){
+
+      timeline.innerHTML =
+
+      `
+
+      <div class="sin-notificaciones">
+
+        Sin seguimiento registrado
+
+      </div>
+
+      `;
+
+    }
+
+    else{
+
+      const bloques =
+
+      recepcion.seguimiento
+
+      .split('━━━━━━━━━━━━━━━━━━')
+
+      .reverse();
+
+
+
+
+
+      bloques.forEach(function(item){
+
+        if(item.trim() === ''){
+
+          return;
+
+        }
+
+
+
+
+
+        timeline.innerHTML +=
+
+        `
+
+        <div class="timeline-item">
+
+          <div class="timeline-fecha">
+
+            ${item}
+
+          </div>
+
+        </div>
+
+        `;
+
+      });
 
     }
 
@@ -1070,44 +1069,159 @@ Cerrado`
 
 
 
-    const comentario = prompt(
-
-      'Ingrese seguimiento'
-
+    modal.classList.add(
+      'active'
     );
 
+  }
 
+  catch(error){
 
+    console.log(error);
 
+  }
 
-    if(comentario === null){
-
-      return;
-
-    }
-
-
-
-
-
-    const fecha =
-
-    new Date()
-    .toLocaleString('es-CO');
+};
 
 
 
 
 
-    let seguimientoActual =
+// ======================
+// CERRAR MODAL
+// ======================
 
-    recepcion.seguimiento || '';
+window.cerrarModalGestion = function(){
+
+  const modal =
+
+  document.getElementById(
+    'modalGestion'
+  );
 
 
 
 
 
-    seguimientoActual +=
+  if(modal){
+
+    modal.classList.remove(
+      'active'
+    );
+
+  }
+
+};
+
+
+
+
+
+// ======================
+// GUARDAR GESTION
+// ======================
+
+const guardarGestionBtn =
+
+document.getElementById(
+  'guardarGestionBtn'
+);
+
+
+
+
+
+if(guardarGestionBtn){
+
+  guardarGestionBtn.onclick =
+
+  async function(){
+
+    try{
+
+      const comentario =
+
+      document.getElementById(
+        'gestionComentarioInput'
+      ).value.trim();
+
+
+
+
+
+      const estado =
+
+      document.getElementById(
+        'gestionEstadoInput'
+      ).value;
+
+
+
+
+
+      if(comentario === ''){
+
+        alert(
+          'Ingrese comentario'
+        );
+
+        return;
+
+      }
+
+
+
+
+
+      const consulta =
+
+      await window.supabaseClient
+
+      .from('recepciones')
+
+      .select('*')
+
+      .eq(
+
+        'id',
+
+        Number(
+          window.recepcionGestionando
+        )
+
+      )
+
+      .single();
+
+
+
+
+
+      const recepcion =
+      consulta.data;
+
+
+
+
+
+      const fecha =
+
+      new Date()
+      .toLocaleString('es-CO');
+
+
+
+
+
+      let seguimiento =
+
+      recepcion.seguimiento || '';
+
+
+
+
+
+      seguimiento +=
 
 `\n
 ━━━━━━━━━━━━━━━━━━
@@ -1117,7 +1231,7 @@ Cerrado`
 COMPRAS
 
 Estado:
-${nuevoEstado}
+${estado}
 
 Seguimiento:
 ${comentario}
@@ -1127,192 +1241,88 @@ ${comentario}
 
 
 
-    const update =
+      const update =
 
-    await window.supabaseClient
+      await window.supabaseClient
 
-    .from('recepciones')
+      .from('recepciones')
 
-    .update({
+      .update({
 
-      comentario_validacion:
-      comentario,
+        estado:
+        estado,
 
-      seguimiento:
-      seguimientoActual,
+        comentario_validacion:
+        comentario,
 
-      estado:
-      nuevoEstado,
+        seguimiento:
+        seguimiento
 
-      usuario_validacion:
+      })
 
-      window.usuarioLogueado.usuario ||
+      .eq(
 
-      'Compras'
+        'id',
 
-    })
+        Number(
+          window.recepcionGestionando
+        )
 
-    .eq(
-
-      'id',
-
-      Number(id)
-
-    );
-
-
-
-
-
-    if(update.error){
-
-      console.log(update.error);
-
-      alert(
-        'Error actualizando'
       );
 
-      return;
-
-    }
 
 
 
 
+      if(update.error){
 
-    window.crearNotificacion(
+        console.log(update.error);
 
-`📦 Seguimiento actualizado
+        return;
 
-Material:
-${recepcion.material}
+      }
+
+
+
+
+
+      window.crearNotificacion(
+
+`🛒 Compras actualizó seguimiento
 
 Estado:
-${nuevoEstado}
+${estado}
 
-Compras informó:
-
+Comentario:
 ${comentario}`
 
-    );
-
-
-
-
-
-    await window.renderRecepciones();
-
-    await window.actualizarKPIsRecepcion();
-
-
-
-
-
-    alert(
-      'Seguimiento actualizado'
-    );
-
-  }
-
-  catch(error){
-
-    console.log(error);
-
-  }
-
-};
-
-
-
-
-
-// ======================
-// VER SEGUIMIENTO
-// ======================
-
-window.verComentario = async function(comentario,id){
-
-  try{
-
-    const consulta =
-
-    await window.supabaseClient
-
-    .from('recepciones')
-
-    .select('seguimiento')
-
-    .eq(
-
-      'id',
-
-      Number(id)
-
-    )
-
-    .single();
-
-
-
-
-
-    if(consulta.error){
-
-      console.log(
-        consulta.error
       );
 
-      return;
+
+
+
+
+      await window.renderRecepciones();
+
+      await window.actualizarKPIsRecepcion();
+
+
+
+
+
+      window.cerrarModalGestion();
 
     }
 
+    catch(error){
 
-
-
-
-    const seguimiento =
-
-    consulta.data.seguimiento || '';
-
-
-
-
-
-    if(
-
-      seguimiento.trim() === ''
-
-    ){
-
-      alert(
-        'Sin seguimiento'
-      );
-
-      return;
+      console.log(error);
 
     }
 
+  };
 
-
-
-
-    alert(
-
-`SEGUIMIENTO COMPLETO
-
-${seguimiento}`
-
-    );
-
-  }
-
-  catch(error){
-
-    console.log(error);
-
-  }
-
-};
+}
 
 
 
@@ -1325,27 +1335,6 @@ ${seguimiento}`
 window.eliminarRecepcion = async function(id){
 
   try{
-
-    if(
-
-      !window.tienePermiso(
-        'recepcion',
-        'eliminar'
-      )
-
-    ){
-
-      alert(
-        'No tiene permisos'
-      );
-
-      return;
-
-    }
-
-
-
-
 
     const confirmar = confirm(
       '¿Eliminar recepción?'
@@ -1365,8 +1354,6 @@ window.eliminarRecepcion = async function(id){
 
 
 
-    const eliminar =
-
     await window.supabaseClient
 
     .from('recepciones')
@@ -1385,35 +1372,9 @@ window.eliminarRecepcion = async function(id){
 
 
 
-    if(eliminar.error){
-
-      console.log(
-        eliminar.error
-      );
-
-      alert(
-        'Error eliminando'
-      );
-
-      return;
-
-    }
-
-
-
-
-
     await window.renderRecepciones();
 
     await window.actualizarKPIsRecepcion();
-
-
-
-
-
-    alert(
-      'Recepción eliminada'
-    );
 
   }
 
@@ -1443,19 +1404,7 @@ window.actualizarKPIsRecepcion = async function(){
 
     .from('recepciones')
 
-    .select('*')
-
-    .order(
-
-      'id',
-
-      {
-
-        ascending:false
-
-      }
-
-    );
+    .select('*');
 
 
 
@@ -1519,71 +1468,46 @@ window.actualizarKPIsRecepcion = async function(){
 
 
 
-    if(recepciones.length === 0){
+    if(recepciones.length > 0){
+
+      const ultima =
+      recepciones[0];
+
+
+
+
 
       if(kpiRevisado){
-        kpiRevisado.innerText = '0%';
+
+        kpiRevisado.innerText =
+
+        ultima.porcentaje_revisado + '%';
+
       }
+
+
+
+
 
       if(kpiNovedades){
-        kpiNovedades.innerText = '0';
+
+        kpiNovedades.innerText =
+
+        ultima.novedades || 0;
+
       }
+
+
+
+
 
       if(kpiFaltantes){
-        kpiFaltantes.innerText = '0';
+
+        kpiFaltantes.innerText =
+
+        ultima.faltantes || 0;
+
       }
-
-      return;
-
-    }
-
-
-
-
-
-    const ultimaRecepcion =
-    recepciones[0];
-
-
-
-
-
-    if(kpiRevisado){
-
-      kpiRevisado.innerText =
-
-      Number(
-
-        ultimaRecepcion
-        .porcentaje_revisado || 0
-
-      ).toFixed(1) + '%';
-
-    }
-
-
-
-
-
-    if(kpiNovedades){
-
-      kpiNovedades.innerText =
-
-      ultimaRecepcion
-      .novedades || 0;
-
-    }
-
-
-
-
-
-    if(kpiFaltantes){
-
-      kpiFaltantes.innerText =
-
-      ultimaRecepcion
-      .faltantes || 0;
 
     }
 
@@ -1623,19 +1547,9 @@ window.iniciarRefreshRecepcion = function(){
 
   setInterval(async function(){
 
-    try{
+    await window.renderRecepciones();
 
-      await window.renderRecepciones();
-
-      await window.actualizarKPIsRecepcion();
-
-    }
-
-    catch(error){
-
-      console.log(error);
-
-    }
+    await window.actualizarKPIsRecepcion();
 
   },5000);
 
@@ -1680,10 +1594,6 @@ function limpiarFormulario(){
   ).value = '';
 
   document.getElementById(
-    'estadoRecepcionInput'
-  ).value = 'Pendiente';
-
-  document.getElementById(
     'pdfInput'
   ).value = '';
 
@@ -1699,29 +1609,9 @@ function limpiarFormulario(){
 
 window.verObservacion = function(observacion){
 
-  if(
-
-    !observacion ||
-
-    observacion.trim() === ''
-
-  ){
-
-    alert(
-      'Sin observaciones'
-    );
-
-    return;
-
-  }
-
-
-
-
-
   alert(
 
-`OBSERVACIÓN RECEPCIÓN
+`OBSERVACIÓN
 
 ${observacion}`
 
@@ -1734,40 +1624,8 @@ ${observacion}`
 
 
 // ======================
-// APLICAR PERMISOS
-// ======================
-
-function aplicarPermisosRecepcion(){
-
-  if(
-
-    !window.tienePermiso(
-      'recepcion',
-      'crear'
-    )
-
-  ){
-
-    if(guardarRecepcionBtn){
-
-      guardarRecepcionBtn.style.display =
-      'none';
-
-    }
-
-  }
-
-}
-
-
-
-
-
-// ======================
 // INICIO
 // ======================
-
-aplicarPermisosRecepcion();
 
 window.renderRecepciones();
 
