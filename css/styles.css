@@ -2417,3 +2417,58 @@ ESTADOS VISUALES
   color:#15803d;
 
 }
+
+
+/* =========================================
+FIX FOOTER MODAL
+========================================= */
+
+.modal-gestion-content{
+
+  display:flex !important;
+
+  flex-direction:column !important;
+
+  max-height:90vh !important;
+
+}
+
+
+
+
+
+.modal-gestion-body{
+
+  flex:1;
+
+  overflow-y:auto;
+
+}
+
+
+
+
+
+.modal-gestion-footer{
+
+  display:flex !important;
+
+  justify-content:flex-end;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:20px;
+
+  background:#ffffff;
+
+  border-top:1px solid #e2e8f0;
+
+  position:sticky;
+
+  bottom:0;
+
+  z-index:20;
+
+}
