@@ -1534,21 +1534,16 @@ MODAL GESTION COMPRAS PREMIUM
 
 }
 
-
-
-
-
 .modal-gestion-body select,
 .modal-gestion-body textarea{
 
   width:100%;
 
-  border:none;
+  border:1px solid rgba(255,255,255,.08);
 
   border-radius:16px;
 
-  background:
-  rgba(255,255,255,.06);
+  background:#0f172a;
 
   color:white;
 
@@ -1557,6 +1552,30 @@ MODAL GESTION COMPRAS PREMIUM
   font-size:14px;
 
 }
+
+
+
+
+
+.modal-gestion-body select option{
+
+  background:#0f172a;
+
+  color:white;
+
+}
+
+.modal-gestion-body select:focus{
+
+  outline:none;
+
+  border-color:#3b82f6;
+
+  box-shadow:
+  0 0 0 4px rgba(59,130,246,.15);
+
+}
+
 
 
 
