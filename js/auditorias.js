@@ -1,5 +1,39 @@
 // ======================
-// EVITAR DUPLICAR SCRIPT
+// LIMPIAR INTERVALOS
+// ======================
+
+if(window.refreshAuditoriasInterval){
+
+  clearInterval(
+    window.refreshAuditoriasInterval
+  );
+
+}
+
+
+
+
+
+// ======================
+// RESET FUNCIONES
+// ======================
+
+delete window.renderAuditorias;
+
+delete window.generarPDF;
+
+delete window.eliminarAuditoria;
+
+delete window.editarEstado;
+
+delete window.iniciarRefreshAuditorias;
+
+
+
+
+
+// ======================
+// EVITAR DUPLICAR
 // ======================
 
 if(typeof window.auditoriasCargado === 'undefined'){
@@ -11,7 +45,7 @@ window.auditoriasCargado = true;
 
 
 // ======================
-// BOTON GUARDAR
+// BOTON
 // ======================
 
 var btnGuardarAuditoria =
@@ -30,6 +64,12 @@ document.getElementById(
 
 if(btnGuardarAuditoria){
 
+  btnGuardarAuditoria.onclick = null;
+
+
+
+
+
   btnGuardarAuditoria.onclick =
   guardarAuditoria;
 
@@ -40,16 +80,12 @@ if(btnGuardarAuditoria){
 
 
 // ======================
-// GUARDAR AUDITORIA
+// GUARDAR
 // ======================
 
 async function guardarAuditoria(){
 
   try{
-
-    // ======================
-    // VALIDAR PERMISO
-    // ======================
 
     if(
 
@@ -71,10 +107,6 @@ async function guardarAuditoria(){
 
 
 
-
-    // ======================
-    // CAMPOS
-    // ======================
 
     var proceso =
 
@@ -116,10 +148,6 @@ async function guardarAuditoria(){
 
 
 
-    // ======================
-    // VALIDAR
-    // ======================
-
     if(
 
       !proceso ||
@@ -139,10 +167,6 @@ async function guardarAuditoria(){
 
 
 
-
-    // ======================
-    // INSERTAR
-    // ======================
 
     var response =
 
@@ -178,10 +202,6 @@ async function guardarAuditoria(){
 
 
 
-    // ======================
-    // ERROR
-    // ======================
-
     if(response.error){
 
       console.log(
@@ -199,10 +219,6 @@ async function guardarAuditoria(){
 
 
 
-
-    // ======================
-    // HISTORIAL
-    // ======================
 
     if(typeof guardarHistorial === 'function'){
 
@@ -223,11 +239,11 @@ async function guardarAuditoria(){
 
 
 
-    // ======================
-    // ACTUALIZAR
-    // ======================
-
     await window.renderAuditorias();
+
+
+
+
 
     limpiarFormulario();
 
@@ -245,10 +261,6 @@ async function guardarAuditoria(){
 
     console.log(error);
 
-    alert(
-      'Error guardando auditoría'
-    );
-
   }
 
 }
@@ -258,7 +270,7 @@ async function guardarAuditoria(){
 
 
 // ======================
-// RENDER AUDITORIAS
+// RENDER
 // ======================
 
 window.renderAuditorias = async function(){
@@ -285,16 +297,6 @@ window.renderAuditorias = async function(){
 
 
 
-    body.innerHTML = '';
-
-
-
-
-
-    // ======================
-    // CONSULTAR
-    // ======================
-
     var response =
 
     await window.supabaseClient
@@ -319,10 +321,6 @@ window.renderAuditorias = async function(){
 
 
 
-    // ======================
-    // ERROR
-    // ======================
-
     if(response.error){
 
       console.log(
@@ -344,9 +342,11 @@ window.renderAuditorias = async function(){
 
 
 
-    // ======================
-    // SIN DATOS
-    // ======================
+    body.innerHTML = '';
+
+
+
+
 
     if(data.length === 0){
 
@@ -356,7 +356,7 @@ window.renderAuditorias = async function(){
 
       '<td colspan="6">' +
 
-      'No hay auditorías registradas' +
+      'No hay auditorías' +
 
       '</td>' +
 
@@ -372,10 +372,6 @@ window.renderAuditorias = async function(){
 
 
 
-    // ======================
-    // RECORRER
-    // ======================
-
     data.forEach(function(item){
 
       var estadoClass = '';
@@ -383,10 +379,6 @@ window.renderAuditorias = async function(){
 
 
 
-
-      // ======================
-      // ESTADO
-      // ======================
 
       if(item.estado === 'Pendiente'){
 
@@ -413,27 +405,11 @@ window.renderAuditorias = async function(){
 
 
 
-      // ======================
-      // FILA
-      // ======================
-
       body.innerHTML +=
 
       '<tr>' +
 
-
-
-      '<td>' +
-
-      '<div class="texto-tabla">' +
-
-      item.proceso +
-
-      '</div>' +
-
-      '</td>' +
-
-
+      '<td>' + item.proceso + '</td>' +
 
       '<td>' +
 
@@ -445,15 +421,7 @@ window.renderAuditorias = async function(){
 
       '</td>' +
 
-
-
-      '<td>' +
-
-      item.responsable +
-
-      '</td>' +
-
-
+      '<td>' + item.responsable + '</td>' +
 
       '<td>' +
 
@@ -469,23 +437,15 @@ window.renderAuditorias = async function(){
 
       '</td>' +
 
-
-
       '<td>' +
 
       new Date(
 
         item.created_at
 
-      ).toLocaleString(
-
-        'es-CO'
-
-      ) +
+      ).toLocaleString('es-CO') +
 
       '</td>' +
-
-
 
       '<td>' +
 
@@ -508,11 +468,7 @@ window.renderAuditorias = async function(){
 
         item.id +
 
-        ')">' +
-
-        'PDF' +
-
-        '</button>'
+        ')">PDF</button>'
 
         :
 
@@ -543,11 +499,7 @@ window.renderAuditorias = async function(){
 
         item.id +
 
-        ')">' +
-
-        'Editar' +
-
-        '</button>'
+        ')">Editar</button>'
 
         :
 
@@ -578,11 +530,7 @@ window.renderAuditorias = async function(){
 
         item.id +
 
-        ')">' +
-
-        'Eliminar' +
-
-        '</button>'
+        ')">Eliminar</button>'
 
         :
 
@@ -604,8 +552,6 @@ window.renderAuditorias = async function(){
 
       '</td>' +
 
-
-
       '</tr>';
 
     });
@@ -625,33 +571,12 @@ window.renderAuditorias = async function(){
 
 
 // ======================
-// GENERAR PDF
+// PDF
 // ======================
 
 window.generarPDF = async function(id){
 
   try{
-
-    if(
-
-      !window.tienePermiso(
-        'auditorias',
-        'ver'
-      )
-
-    ){
-
-      alert(
-        'No tiene permisos'
-      );
-
-      return;
-
-    }
-
-
-
-
 
     var response =
 
@@ -675,20 +600,6 @@ window.generarPDF = async function(id){
 
 
 
-    if(response.error){
-
-      console.log(
-        response.error
-      );
-
-      return;
-
-    }
-
-
-
-
-
     var data =
     response.data;
 
@@ -697,10 +608,6 @@ window.generarPDF = async function(id){
 
 
     if(!data){
-
-      alert(
-        'Auditoría no encontrada'
-      );
 
       return;
 
@@ -712,13 +619,15 @@ window.generarPDF = async function(id){
 
     const { jsPDF } = window.jspdf;
 
+
+
+
+
     var doc = new jsPDF();
 
 
 
 
-
-    doc.setFontSize(18);
 
     doc.text(
       'Reporte Auditoría',
@@ -730,13 +639,15 @@ window.generarPDF = async function(id){
 
 
 
-    doc.setFontSize(12);
-
     doc.text(
       'Proceso: ' + data.proceso,
       20,
       40
     );
+
+
+
+
 
     doc.text(
       'Responsable: ' + data.responsable,
@@ -744,57 +655,14 @@ window.generarPDF = async function(id){
       50
     );
 
+
+
+
+
     doc.text(
       'Estado: ' + data.estado,
       20,
       60
-    );
-
-
-
-
-
-    doc.text(
-
-      'Fecha: ' +
-
-      new Date(
-        data.created_at
-      ).toLocaleString('es-CO'),
-
-      20,
-      70
-
-    );
-
-
-
-
-
-    var texto =
-
-    doc.splitTextToSize(
-
-      data.hallazgo,
-
-      160
-
-    );
-
-
-
-
-
-    doc.text(
-      'Hallazgo:',
-      20,
-      90
-    );
-
-    doc.text(
-      texto,
-      20,
-      100
     );
 
 
@@ -826,33 +694,12 @@ window.generarPDF = async function(id){
 
 
 // ======================
-// ELIMINAR AUDITORIA
+// ELIMINAR
 // ======================
 
 window.eliminarAuditoria = async function(id){
 
   try{
-
-    if(
-
-      !window.tienePermiso(
-        'auditorias',
-        'eliminar'
-      )
-
-    ){
-
-      alert(
-        'No tiene permisos'
-      );
-
-      return;
-
-    }
-
-
-
-
 
     var confirmar = confirm(
       '¿Eliminar auditoría?'
@@ -869,37 +716,6 @@ window.eliminarAuditoria = async function(id){
 
 
 
-
-    var consulta =
-
-    await window.supabaseClient
-
-    .from('auditorias')
-
-    .select('*')
-
-    .eq(
-
-      'id',
-
-      Number(id)
-
-    )
-
-    .single();
-
-
-
-
-
-    var auditoria =
-    consulta.data;
-
-
-
-
-
-    var eliminar =
 
     await window.supabaseClient
 
@@ -919,52 +735,7 @@ window.eliminarAuditoria = async function(id){
 
 
 
-    if(eliminar.error){
-
-      console.log(
-        eliminar.error
-      );
-
-      alert(
-        'Error eliminando'
-      );
-
-      return;
-
-    }
-
-
-
-
-
-    if(typeof guardarHistorial === 'function'){
-
-      await guardarHistorial(
-
-        'ELIMINAR',
-
-        'AUDITORIAS',
-
-        'Se eliminó auditoría ' +
-        auditoria.proceso
-
-      );
-
-    }
-
-
-
-
-
     await window.renderAuditorias();
-
-
-
-
-
-    alert(
-      'Auditoría eliminada'
-    );
 
   }
 
@@ -981,36 +752,15 @@ window.eliminarAuditoria = async function(id){
 
 
 // ======================
-// EDITAR ESTADO
+// EDITAR
 // ======================
 
 window.editarEstado = async function(id){
 
   try{
 
-    if(
-
-      !window.tienePermiso(
-        'auditorias',
-        'editar'
-      )
-
-    ){
-
-      alert(
-        'No tiene permisos'
-      );
-
-      return;
-
-    }
-
-
-
-
-
     var nuevoEstado = prompt(
-      'Nuevo estado:'
+      'Nuevo estado'
     );
 
 
@@ -1024,8 +774,6 @@ window.editarEstado = async function(id){
 
 
 
-
-    var update =
 
     await window.supabaseClient
 
@@ -1050,52 +798,7 @@ window.editarEstado = async function(id){
 
 
 
-    if(update.error){
-
-      console.log(
-        update.error
-      );
-
-      alert(
-        'Error actualizando'
-      );
-
-      return;
-
-    }
-
-
-
-
-
-    if(typeof guardarHistorial === 'function'){
-
-      await guardarHistorial(
-
-        'EDITAR',
-
-        'AUDITORIAS',
-
-        'Se editó auditoría ID ' +
-        id
-
-      );
-
-    }
-
-
-
-
-
     await window.renderAuditorias();
-
-
-
-
-
-    alert(
-      'Estado actualizado'
-    );
 
   }
 
@@ -1112,26 +815,12 @@ window.editarEstado = async function(id){
 
 
 // ======================
-// REFRESH AUTOMATICO
+// REFRESH
 // ======================
 
 window.iniciarRefreshAuditorias = function(){
 
-  if(window.refreshAuditoriasActivo){
-
-    return;
-
-  }
-
-
-
-
-
-  window.refreshAuditoriasActivo = true;
-
-
-
-
+  window.refreshAuditoriasInterval =
 
   setInterval(function(){
 
@@ -1160,7 +849,7 @@ window.iniciarRefreshAuditorias = function(){
 
 
 // ======================
-// LIMPIAR FORMULARIO
+// LIMPIAR
 // ======================
 
 function limpiarFormulario(){
@@ -1194,7 +883,7 @@ function limpiarFormulario(){
 
 
 // ======================
-// APLICAR PERMISOS
+// PERMISOS
 // ======================
 
 function aplicarPermisosAuditorias(){
