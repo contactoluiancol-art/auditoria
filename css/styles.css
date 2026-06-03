@@ -1870,3 +1870,25 @@ RESPONSIVE PERMISOS
   }
 
 }
+
+
+
+/* ======================
+NOTIFICACIONES
+====================== */
+
+.notifications-dropdown{
+
+  display:none;
+
+}
+
+
+
+
+
+.notifications-dropdown.active{
+
+  display:block;
+
+}
