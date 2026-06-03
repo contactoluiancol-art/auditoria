@@ -1063,24 +1063,27 @@ window.validarRecepcion = async function(id){
         }
 
 
+timeline.innerHTML +=
 
+`
 
+<div class="timeline-item">
 
-        timeline.innerHTML +=
+  <div class="timeline-comentario">
 
-        `
+    ${item
+      .replace(/\n/g,'<br>')
+      .replace('📅','<strong>📅</strong>')
+      .replace('👤','<strong>👤</strong>')
+      .replace('🏷️','<strong>🏷️</strong>')
+      .replace('📝','<strong>📝</strong>')
+    }
 
-        <div class="timeline-item">
+  </div>
 
-          <div class="timeline-fecha">
+</div>
 
-            ${item}
-
-          </div>
-
-        </div>
-
-        `;
+`;
 
       });
 
