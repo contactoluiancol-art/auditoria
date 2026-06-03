@@ -19,6 +19,18 @@ if(!window.supabase){
 
 
 // ======================
+// EVITAR DUPLICAR
+// ======================
+
+if(typeof window.dashboardCargado === 'undefined'){
+
+window.dashboardCargado = true;
+
+
+
+
+
+// ======================
 // CREAR CLIENTE
 // ======================
 
@@ -324,10 +336,6 @@ async function aplicarPermisos(){
 
   try{
 
-    // ======================
-    // ADMIN
-    // ======================
-
     if(
 
       window.usuarioLogueado.rol ===
@@ -345,10 +353,6 @@ async function aplicarPermisos(){
 
       ].forEach(validarModulo);
 
-
-
-
-
       return;
 
     }
@@ -356,12 +360,6 @@ async function aplicarPermisos(){
 
 
 
-
-
-
-    // ======================
-    // CONSULTAR
-    // ======================
 
     const response =
 
@@ -392,8 +390,6 @@ async function aplicarPermisos(){
       return;
 
     }
-
-
 
 
 
@@ -438,8 +434,6 @@ async function aplicarPermisos(){
 
 
 
-
-
     [
 
       'inventario',
@@ -465,7 +459,7 @@ async function aplicarPermisos(){
 
 
 // ======================
-// HISTORIAL
+// GUARDAR HISTORIAL
 // ======================
 
 window.guardarHistorial = async function(
@@ -517,7 +511,7 @@ window.guardarHistorial = async function(
 
 
 // ======================
-// NOTIFICACIONES
+// RENDER NOTIFICACIONES
 // ======================
 
 window.renderNotificaciones = function(){
@@ -552,8 +546,6 @@ window.renderNotificaciones = function(){
 
 
 
-
-
   const notificaciones =
 
   JSON.parse(
@@ -568,11 +560,23 @@ window.renderNotificaciones = function(){
 
 
 
-
-
   lista.innerHTML = '';
 
 
+
+
+
+  // ======================
+  // CONTADOR
+  // ======================
+
+  const noLeidas =
+
+  notificaciones.filter(function(item){
+
+    return item.leida !== true;
+
+  });
 
 
 
@@ -581,8 +585,7 @@ window.renderNotificaciones = function(){
   if(contador){
 
     contador.innerText =
-
-    notificaciones.length;
+    noLeidas.length;
 
   }
 
@@ -590,7 +593,9 @@ window.renderNotificaciones = function(){
 
 
 
-
+  // ======================
+  // VACIO
+  // ======================
 
   if(notificaciones.length === 0){
 
@@ -602,8 +607,6 @@ window.renderNotificaciones = function(){
 
     '</p>';
 
-
-
     return;
 
   }
@@ -612,7 +615,9 @@ window.renderNotificaciones = function(){
 
 
 
-
+  // ======================
+  // MOSTRAR
+  // ======================
 
   notificaciones.forEach(function(item){
 
@@ -651,10 +656,6 @@ window.limpiarNotificaciones = function(){
   localStorage.removeItem(
     'notificaciones'
   );
-
-
-
-
 
   window.renderNotificaciones();
 
@@ -698,6 +699,10 @@ if(campanaBtn){
 
 
 
+    // ======================
+    // ABRIR / CERRAR PANEL
+    // ======================
+
     if(panelNotificaciones){
 
       panelNotificaciones.classList.toggle(
@@ -705,6 +710,58 @@ if(campanaBtn){
       );
 
     }
+
+
+
+
+
+    // ======================
+    // MARCAR LEIDAS
+    // ======================
+
+    let notificaciones =
+
+    JSON.parse(
+
+      localStorage.getItem(
+        'notificaciones'
+      )
+
+    ) || [];
+
+
+
+
+
+    notificaciones =
+
+    notificaciones.map(function(item){
+
+      item.leida = true;
+
+      return item;
+
+    });
+
+
+
+
+
+    localStorage.setItem(
+
+      'notificaciones',
+
+      JSON.stringify(
+        notificaciones
+      )
+
+    );
+
+
+
+
+
+    window.renderNotificaciones();
 
   };
 
@@ -796,8 +853,6 @@ function mostrarModulo(modulo){
 
 
 
-
-
   if(modulo === 'dashboard'){
 
     contenido.innerHTML =
@@ -822,8 +877,6 @@ function mostrarModulo(modulo){
     return;
 
   }
-
-
 
 
 
@@ -927,8 +980,6 @@ function cargarScript(
 
 
 
-
-
   const script =
 
   document.createElement(
@@ -975,8 +1026,6 @@ window.iniciarAutoRefresh = function(){
 
 
 
-
-
   window.autoRefreshSistema =
 
   setInterval(async function(){
@@ -998,8 +1047,6 @@ window.iniciarAutoRefresh = function(){
 
 
 
-
-
       if(
 
         typeof window.renderRecepciones ===
@@ -1010,8 +1057,6 @@ window.iniciarAutoRefresh = function(){
         await window.renderRecepciones();
 
       }
-
-
 
 
 
@@ -1032,8 +1077,6 @@ window.iniciarAutoRefresh = function(){
 
 
 
-
-
       if(
 
         typeof window.renderAuditorias ===
@@ -1044,8 +1087,6 @@ window.iniciarAutoRefresh = function(){
         await window.renderAuditorias();
 
       }
-
-
 
 
 
@@ -1066,8 +1107,6 @@ window.iniciarAutoRefresh = function(){
 
 
 
-
-
       if(
 
         typeof window.renderInventario ===
@@ -1078,8 +1117,6 @@ window.iniciarAutoRefresh = function(){
         window.renderInventario();
 
       }
-
-
 
 
 
@@ -1124,10 +1161,6 @@ function cerrarSesion(){
   localStorage.removeItem(
     'usuarioLogueado'
   );
-
-
-
-
 
   window.location.href =
   'index.html';
@@ -1204,45 +1237,25 @@ activarMenu(
   'dashboard'
 );
 
-
-
-
-
 activarMenu(
   'inventarioMenu',
   'inventario'
 );
-
-
-
-
 
 activarMenu(
   'recepcionMenu',
   'recepcion'
 );
 
-
-
-
-
 activarMenu(
   'auditoriasMenu',
   'auditorias'
 );
 
-
-
-
-
 activarMenu(
   'usuariosMenu',
   'usuarios'
 );
-
-
-
-
 
 activarMenu(
   'historialMenu',
@@ -1283,8 +1296,6 @@ document.addEventListener(
 
 
 
-
-
     if(card.id === 'cardInventario'){
 
       mostrarModulo(
@@ -1292,12 +1303,6 @@ document.addEventListener(
       );
 
     }
-
-
-
-
-
-
 
     else if(card.id === 'cardRecepcion'){
 
@@ -1307,12 +1312,6 @@ document.addEventListener(
 
     }
 
-
-
-
-
-
-
     else if(card.id === 'cardAuditorias'){
 
       mostrarModulo(
@@ -1321,12 +1320,6 @@ document.addEventListener(
 
     }
 
-
-
-
-
-
-
     else if(card.id === 'cardUsuarios'){
 
       mostrarModulo(
@@ -1334,12 +1327,6 @@ document.addEventListener(
       );
 
     }
-
-
-
-
-
-
 
     else if(card.id === 'cardHistorial'){
 
@@ -1366,3 +1353,5 @@ aplicarPermisos();
 window.renderNotificaciones();
 
 window.iniciarAutoRefresh();
+
+}
