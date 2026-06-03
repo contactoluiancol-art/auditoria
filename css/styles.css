@@ -2207,3 +2207,42 @@ SWITCH PREMIUM
   }
 
 }
+
+.btn-accion{
+
+  width:42px;
+
+  height:42px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#f8fafc;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+  transition:.25s;
+
+  border:
+  1px solid #e2e8f0;
+
+}
+
+
+
+
+
+.btn-accion:hover{
+
+  transform:
+  translateY(-2px);
+
+  background:white;
+
+  box-shadow:
+  0 8px 18px rgba(0,0,0,.08);
+
+}
