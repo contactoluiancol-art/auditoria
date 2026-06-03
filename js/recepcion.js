@@ -1239,24 +1239,25 @@ if(guardarGestionBtn){
       recepcion.seguimiento || '';
 
 
-
-
-
-      seguimiento +=
+seguimiento +=
 
 `\n
 ━━━━━━━━━━━━━━━━━━
 
-[${fecha}]
+📅 ${fecha}
 
-COMPRAS
+👤 Usuario:
+${window.usuarioLogueado.usuario}
 
-Estado:
+🏷️ Estado:
 ${estado}
 
-Seguimiento:
+📝 Comentario:
 ${comentario}
 `;
+
+
+ 
 
 
 
