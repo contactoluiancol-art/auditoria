@@ -546,4 +546,171 @@
 
   </div>
 
+
+
+
+
+  <!-- =========================================
+  MODAL GESTION PREMIUM
+  ========================================== -->
+
+  <div
+    class="modal-overlay"
+    id="modalGestion"
+  >
+
+    <div class="modal-premium">
+
+      <!-- HEADER -->
+
+      <div class="modal-header">
+
+        <div>
+
+          <h2>
+            🛒 Gestión Compras
+          </h2>
+
+          <p>
+            Seguimiento y gestión de novedades
+          </p>
+
+        </div>
+
+
+
+
+
+        <button
+          class="modal-close"
+          onclick="cerrarModalGestion()"
+        >
+
+          ✕
+
+        </button>
+
+      </div>
+
+
+
+
+
+      <!-- BODY -->
+
+      <div class="modal-body">
+
+        <!-- ESTADO -->
+
+        <div class="input-group">
+
+          <label>
+            Estado Gestión
+          </label>
+
+          <select id="gestionEstadoInput">
+
+            <option value="Pendiente">
+              🟡 Pendiente
+            </option>
+
+            <option value="Novedad Reportada">
+              🔴 Novedad Reportada
+            </option>
+
+            <option value="En Gestión Compras">
+              🛒 En Gestión Compras
+            </option>
+
+            <option value="Esperando Proveedor">
+              🔵 Esperando Proveedor
+            </option>
+
+            <option value="Solucionado">
+              🟢 Solucionado
+            </option>
+
+            <option value="Cerrado">
+              🔒 Cerrado
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+
+
+        <!-- COMENTARIO -->
+
+        <div class="input-group">
+
+          <label>
+            Comentario Gestión
+          </label>
+
+          <textarea
+            id="gestionComentarioInput"
+            placeholder="Ingrese seguimiento de compras..."
+          ></textarea>
+
+        </div>
+
+
+
+
+
+        <!-- TIMELINE -->
+
+        <div class="timeline-box">
+
+          <h3>
+            📋 Historial Seguimiento
+          </h3>
+
+          <div id="timelineSeguimiento">
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+
+
+      <!-- FOOTER -->
+
+      <div class="modal-footer">
+
+        <button
+          class="btn-danger"
+          onclick="cerrarModalGestion()"
+        >
+
+          Cancelar
+
+        </button>
+
+
+
+
+
+        <button
+          class="btn-primary"
+          id="guardarGestionBtn"
+        >
+
+          Guardar Gestión
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
