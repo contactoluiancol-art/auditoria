@@ -1892,3 +1892,570 @@ NOTIFICACIONES
   display:block;
 
 }
+
+
+/* =========================
+NOTIFICACIONES MODERNAS
+========================= */
+
+.notifications-container{
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+
+
+
+
+/* =========================
+BOTON CAMPANA
+========================= */
+
+.notification-btn{
+
+  position: relative;
+
+  width: 52px;
+
+  height: 52px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #1e293b,
+    #334155
+  );
+
+  color: #ffffff;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,0.25);
+
+}
+
+
+
+
+
+.notification-btn:hover{
+
+  transform: translateY(-3px);
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  box-shadow:
+  0 12px 25px rgba(37,99,235,0.35);
+
+}
+
+
+
+
+
+.notification-btn:active{
+
+  transform: scale(0.95);
+
+}
+
+
+
+
+
+/* =========================
+CONTADOR
+========================= */
+
+.notification-count{
+
+  position: absolute;
+
+  top: -6px;
+
+  right: -6px;
+
+  min-width: 24px;
+
+  height: 24px;
+
+  padding: 0 6px;
+
+  border-radius: 50px;
+
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 2px solid #ffffff;
+
+  box-shadow:
+  0 5px 12px rgba(239,68,68,0.4);
+
+  animation: pulseNoti 1.8s infinite;
+
+}
+
+
+
+
+
+@keyframes pulseNoti{
+
+  0%{
+
+    transform: scale(1);
+
+  }
+
+  50%{
+
+    transform: scale(1.12);
+
+  }
+
+  100%{
+
+    transform: scale(1);
+
+  }
+
+}
+
+
+
+
+
+/* =========================
+PANEL
+========================= */
+
+.notifications-dropdown{
+
+  position: absolute;
+
+  top: 68px;
+
+  right: 0;
+
+  width: 380px;
+
+  max-height: 500px;
+
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  background: rgba(15,23,42,0.97);
+
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+  0 20px 45px rgba(0,0,0,0.35);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform: translateY(-10px);
+
+  transition: all 0.3s ease;
+
+  z-index: 9999;
+
+}
+
+
+
+
+
+.notifications-dropdown.active{
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transform: translateY(0);
+
+}
+
+
+
+
+
+/* =========================
+HEADER
+========================= */
+
+.notifications-header{
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1e40af
+  );
+
+}
+
+
+
+
+
+.notifications-header h3{
+
+  margin: 0;
+
+  color: white;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+}
+
+
+
+
+
+/* =========================
+BOTON LIMPIAR
+========================= */
+
+.btn-limpiar-noti{
+
+  border: none;
+
+  padding: 8px 14px;
+
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.15);
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+}
+
+
+
+
+
+.btn-limpiar-noti:hover{
+
+  background: rgba(255,255,255,0.25);
+
+  transform: scale(1.05);
+
+}
+
+
+
+
+
+/* =========================
+LISTA
+========================= */
+
+.notifications-list{
+
+  max-height: 420px;
+
+  overflow-y: auto;
+
+  padding: 12px;
+
+}
+
+
+
+
+
+/* =========================
+SCROLL
+========================= */
+
+.notifications-list::-webkit-scrollbar{
+
+  width: 8px;
+
+}
+
+
+
+
+
+.notifications-list::-webkit-scrollbar-track{
+
+  background: transparent;
+
+}
+
+
+
+
+
+.notifications-list::-webkit-scrollbar-thumb{
+
+  background: #3b82f6;
+
+  border-radius: 50px;
+
+}
+
+
+
+
+
+/* =========================
+ITEM
+========================= */
+
+.notificacion-item{
+
+  position: relative;
+
+  padding: 16px;
+
+  margin-bottom: 12px;
+
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.05);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  transition: all 0.3s ease;
+
+  animation: aparecerNoti 0.25s ease;
+
+}
+
+
+
+
+
+.notificacion-item:hover{
+
+  transform: translateY(-2px);
+
+  background: rgba(37,99,235,0.12);
+
+  border-color: rgba(59,130,246,0.35);
+
+}
+
+
+
+
+
+@keyframes aparecerNoti{
+
+  from{
+
+    opacity: 0;
+
+    transform: translateY(-10px);
+
+  }
+
+  to{
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+
+
+
+
+/* =========================
+TEXTO
+========================= */
+
+.notificacion-item p{
+
+  margin: 0 0 10px 0;
+
+  color: #f8fafc;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  white-space: pre-line;
+
+}
+
+
+
+
+
+/* =========================
+FECHA
+========================= */
+
+.notificacion-item span{
+
+  display: block;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+}
+
+
+
+
+
+/* =========================
+SIN NOTIFICACIONES
+========================= */
+
+.sin-notificaciones{
+
+  text-align: center;
+
+  padding: 40px 20px;
+
+  color: #cbd5e1;
+
+  font-size: 15px;
+
+}
+
+
+
+
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+  .notifications-dropdown{
+
+    width: 95vw;
+
+    right: -15px;
+
+  }
+
+}
+
+
+
+
+
+/* =========================
+EFECTO GLOW
+========================= */
+
+.notifications-dropdown::before{
+
+  content: '';
+
+  position: absolute;
+
+  top: -80px;
+
+  right: -80px;
+
+  width: 180px;
+
+  height: 180px;
+
+  background: rgba(59,130,246,0.18);
+
+  border-radius: 50%;
+
+  filter: blur(60px);
+
+  pointer-events: none;
+
+}
+
+
+
+
+
+.notifications-dropdown::after{
+
+  content: '';
+
+  position: absolute;
+
+  bottom: -80px;
+
+  left: -80px;
+
+  width: 180px;
+
+  height: 180px;
+
+  background: rgba(14,165,233,0.12);
+
+  border-radius: 50%;
+
+  filter: blur(60px);
+
+  pointer-events: none;
+
+}
