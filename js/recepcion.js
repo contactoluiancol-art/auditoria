@@ -687,7 +687,23 @@ window.renderRecepciones = async function(){
     let html = '';
 
 
+const usuarioActual =
 
+window.usuarioLogueado?.usuario?.toLowerCase() || '';
+
+const puedeGestionar =
+
+usuarioActual === 'admin' ||
+
+usuarioActual === 'auditor' ||
+
+usuarioActual === 'compras';
+
+const puedeEliminar =
+
+usuarioActual === 'admin' ||
+
+usuarioActual === 'auditor';
 
 
     recepciones.forEach(function(item){
@@ -788,15 +804,24 @@ window.renderRecepciones = async function(){
 
               `
 
-              <button
-                class="btn-mini btn-pdf-mini"
-                title="Ver PDF"
-                onclick="window.open('${item.pdf_url}')"
-              >
+            <button
+  class="btn-mini btn-seguimiento-mini
+  ${!puedeGestionar ? 'btn-bloqueado' : ''}"
+  title="${
+    puedeGestionar
+    ? 'Seguimiento'
+    : 'Solo Compras, Auditor y Admin'
+  }"
+  ${
+    puedeGestionar
+    ? `onclick="window.validarRecepcion(${item.id})"`
+    : ''
+  }
+>
 
-                📄
+  📋
 
-              </button>
+</button>
 
               `
 
@@ -826,15 +851,24 @@ window.renderRecepciones = async function(){
 
             </button>
 
-            <button
-              class="btn-mini btn-eliminar-mini"
-              title="Eliminar"
-              onclick="eliminarRecepcion(${item.id})"
-            >
+           <button
+  class="btn-mini btn-eliminar-mini
+  ${!puedeEliminar ? 'btn-bloqueado' : ''}"
+  title="${
+    puedeEliminar
+    ? 'Eliminar'
+    : 'Solo Admin y Auditor'
+  }"
+  ${
+    puedeEliminar
+    ? `onclick="eliminarRecepcion(${item.id})"`
+    : ''
+  }
+>
 
-              🗑️
+  🗑️
 
-            </button>
+</button>
 
           </div>
 
