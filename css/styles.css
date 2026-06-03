@@ -3483,3 +3483,508 @@ RESPONSIVE TABLE
   }
 
 }
+
+/* =========================================
+MODAL GESTION PREMIUM
+========================================= */
+
+.modal-gestion{
+
+  position:fixed;
+
+  top:0;
+  left:0;
+
+  width:100%;
+  height:100%;
+
+  background:
+  rgba(15,23,42,.72);
+
+  backdrop-filter:
+  blur(6px);
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+
+  z-index:99999;
+
+}
+
+
+
+
+
+.modal-gestion.active{
+
+  display:flex;
+
+}
+
+
+
+
+
+/* =========================================
+CONTENIDO
+========================================= */
+
+.modal-gestion-content{
+
+  width:100%;
+
+  max-width:820px;
+
+  max-height:92vh;
+
+  overflow:hidden;
+
+  border-radius:28px;
+
+  background:white;
+
+  box-shadow:
+  0 30px 60px rgba(0,0,0,.35);
+
+  animation:
+  modalEntrada .25s ease;
+
+}
+
+
+
+
+
+@keyframes modalEntrada{
+
+  from{
+
+    opacity:0;
+
+    transform:
+    translateY(20px)
+    scale(.97);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+    translateY(0)
+    scale(1);
+
+  }
+
+}
+
+
+
+
+
+/* =========================================
+HEADER
+========================================= */
+
+.modal-gestion-header{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:24px 28px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #1e3a8a,
+    #2563eb
+  );
+
+  color:white;
+
+}
+
+
+
+
+
+.modal-gestion-header h2{
+
+  font-size:30px;
+
+  margin-bottom:6px;
+
+}
+
+
+
+
+
+.modal-gestion-header p{
+
+  opacity:.9;
+
+  font-size:14px;
+
+}
+
+
+
+
+
+/* =========================================
+BOTON CERRAR
+========================================= */
+
+.cerrar-modal-btn{
+
+  width:50px;
+  height:50px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:
+  rgba(255,255,255,.14);
+
+  color:white;
+
+  font-size:20px;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+}
+
+
+
+
+
+.cerrar-modal-btn:hover{
+
+  transform:
+  rotate(90deg);
+
+  background:
+  rgba(255,255,255,.22);
+
+}
+
+
+
+
+
+/* =========================================
+BODY
+========================================= */
+
+.modal-gestion-body{
+
+  padding:26px;
+
+  overflow-y:auto;
+
+  max-height:65vh;
+
+}
+
+
+
+
+
+.modal-gestion-body .input-group{
+
+  margin-bottom:18px;
+
+}
+
+
+
+
+
+.modal-gestion-body label{
+
+  display:block;
+
+  margin-bottom:8px;
+
+  font-size:14px;
+
+  font-weight:700;
+
+  color:#0f172a;
+
+}
+
+
+
+
+
+.modal-gestion-body select,
+.modal-gestion-body textarea{
+
+  width:100%;
+
+  border:
+  1px solid #cbd5e1;
+
+  border-radius:16px;
+
+  padding:14px 16px;
+
+  font-size:14px;
+
+  transition:.25s;
+
+}
+
+
+
+
+
+.modal-gestion-body textarea{
+
+  min-height:120px;
+
+  resize:none;
+
+}
+
+
+
+
+
+.modal-gestion-body select:focus,
+.modal-gestion-body textarea:focus{
+
+  outline:none;
+
+  border-color:#2563eb;
+
+  box-shadow:
+  0 0 0 4px rgba(37,99,235,.10);
+
+}
+
+
+
+
+
+/* =========================================
+TIMELINE
+========================================= */
+
+.timeline-box{
+
+  margin-top:24px;
+
+  padding:22px;
+
+  border-radius:22px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #f8fafc,
+    #eef2ff
+  );
+
+  border:
+  1px solid #dbeafe;
+
+}
+
+
+
+
+
+.timeline-box h3{
+
+  font-size:22px;
+
+  margin-bottom:24px;
+
+  color:#0f172a;
+
+}
+
+
+
+
+
+.timeline-item{
+
+  position:relative;
+
+  padding-left:28px;
+
+  margin-bottom:22px;
+
+}
+
+
+
+
+
+.timeline-item:last-child{
+
+  margin-bottom:0;
+
+}
+
+
+
+
+
+.timeline-item::before{
+
+  content:'';
+
+  position:absolute;
+
+  left:0;
+  top:5px;
+
+  width:14px;
+  height:14px;
+
+  border-radius:50%;
+
+  background:
+  linear-gradient(
+    135deg,
+    #2563eb,
+    #60a5fa
+  );
+
+  box-shadow:
+  0 0 0 6px rgba(37,99,235,.12);
+
+}
+
+
+
+
+
+.timeline-item::after{
+
+  content:'';
+
+  position:absolute;
+
+  left:6px;
+  top:24px;
+
+  width:2px;
+  height:calc(100% + 10px);
+
+  background:#bfdbfe;
+
+}
+
+
+
+
+
+.timeline-item:last-child::after{
+
+  display:none;
+
+}
+
+
+
+
+
+.timeline-fecha{
+
+  background:white;
+
+  border-radius:16px;
+
+  padding:16px;
+
+  line-height:1.8;
+
+  font-size:14px;
+
+  color:#334155;
+
+  border:
+  1px solid #dbeafe;
+
+}
+
+
+
+
+
+/* =========================================
+FOOTER
+========================================= */
+
+.modal-gestion-footer{
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  gap:12px;
+
+  padding:22px 26px;
+
+  border-top:
+  1px solid #e2e8f0;
+
+  background:#f8fafc;
+
+}
+
+
+
+
+
+/* =========================================
+RESPONSIVE
+========================================= */
+
+@media(max-width:768px){
+
+  .modal-gestion-content{
+
+    max-width:100%;
+
+    border-radius:22px;
+
+  }
+
+  .modal-gestion-header{
+
+    padding:20px;
+
+  }
+
+  .modal-gestion-header h2{
+
+    font-size:24px;
+
+  }
+
+  .modal-gestion-body{
+
+    padding:20px;
+
+  }
+
+}
