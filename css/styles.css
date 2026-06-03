@@ -4,10 +4,6 @@ IMPORT FUENTE
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-
-
-
-
 /* =========================
 RESET
 ========================= */
@@ -39,10 +35,6 @@ body{
 
 }
 
-
-
-
-
 /* =========================
 LAYOUT
 ========================= */
@@ -56,10 +48,6 @@ LAYOUT
   min-height:100vh;
 
 }
-
-
-
-
 
 /* =========================
 SIDEBAR
@@ -93,10 +81,6 @@ SIDEBAR
 
 }
 
-
-
-
-
 .logo{
 
   text-align:center;
@@ -105,10 +89,6 @@ SIDEBAR
 
 }
 
-
-
-
-
 .logo img{
 
   width:90px;
@@ -116,10 +96,6 @@ SIDEBAR
   margin-bottom:14px;
 
 }
-
-
-
-
 
 .logo h2{
 
@@ -133,10 +109,6 @@ SIDEBAR
 
 }
 
-
-
-
-
 .logo p{
 
   color:#cbd5e1;
@@ -145,19 +117,11 @@ SIDEBAR
 
 }
 
-
-
-
-
 .sidebar ul{
 
   list-style:none;
 
 }
-
-
-
-
 
 .sidebar li{
 
@@ -185,10 +149,6 @@ SIDEBAR
 
 }
 
-
-
-
-
 .sidebar li:hover{
 
   background:
@@ -198,10 +158,6 @@ SIDEBAR
   translateX(3px);
 
 }
-
-
-
-
 
 .sidebar .active{
 
@@ -213,11 +169,6 @@ SIDEBAR
   );
 
 }
-
-
-
-
-
 .logout-btn{
 
   width:100%;
@@ -249,20 +200,12 @@ SIDEBAR
 
 }
 
-
-
-
-
 .logout-btn:hover{
 
   transform:
   translateY(-2px);
 
 }
-
-
-
-
 
 /* =========================
 MAIN
@@ -277,10 +220,6 @@ MAIN
   min-height:100vh;
 
 }
-
-
-
-
 
 /* =========================
 TOPBAR
@@ -314,10 +253,6 @@ TOPBAR
 
 }
 
-
-
-
-
 .topbar h1{
 
   font-size:26px;
@@ -325,10 +260,6 @@ TOPBAR
   font-weight:700;
 
 }
-
-
-
-
 
 .topbar-right{
 
@@ -339,10 +270,6 @@ TOPBAR
   gap:14px;
 
 }
-
-
-
-
 
 .user-info{
 
@@ -361,10 +288,6 @@ TOPBAR
 
 }
 
-
-
-
-
 /* =========================
 CONTENT
 ========================= */
@@ -374,10 +297,6 @@ CONTENT
   padding:24px;
 
 }
-
-
-
-
 
 /* =========================
 WELCOME
@@ -402,10 +321,6 @@ WELCOME
 
 }
 
-
-
-
-
 .welcome-left{
 
   display:flex;
@@ -415,10 +330,6 @@ WELCOME
   gap:20px;
 
 }
-
-
-
-
 
 .welcome-icon{
 
@@ -440,10 +351,6 @@ WELCOME
 
 }
 
-
-
-
-
 .welcome-banner h1{
 
   font-size:32px;
@@ -451,11 +358,6 @@ WELCOME
   margin-bottom:6px;
 
 }
-
-
-
-
-
 .welcome-banner p{
 
   font-size:14px;
@@ -463,11 +365,6 @@ WELCOME
   line-height:1.7;
 
 }
-
-
-
-
-
 /* =========================
 CARDS
 ========================= */
@@ -492,10 +389,6 @@ CARDS
 
 }
 
-
-
-
-
 .dashboard-grid{
 
   display:grid;
@@ -507,10 +400,6 @@ CARDS
 
 }
 
-
-
-
-
 .dashboard-card{
 
   transition:.25s;
@@ -519,20 +408,12 @@ CARDS
 
 }
 
-
-
-
-
 .dashboard-card:hover{
 
   transform:
   translateY(-4px);
 
 }
-
-
-
-
 
 .card-icon{
 
@@ -559,11 +440,6 @@ CARDS
   margin-bottom:14px;
 
 }
-
-
-
-
-
 .dashboard-card h3{
 
   font-size:20px;
@@ -571,10 +447,6 @@ CARDS
   margin-bottom:8px;
 
 }
-
-
-
-
 
 .dashboard-card p{
 
@@ -585,10 +457,6 @@ CARDS
   font-size:13px;
 
 }
-
-
-
-
 
 /* =========================
 KPI
@@ -605,10 +473,6 @@ KPI
 
 }
 
-
-
-
-
 .kpi-card span{
 
   font-size:12px;
@@ -616,11 +480,6 @@ KPI
   color:#64748b;
 
 }
-
-
-
-
-
 .kpi-card h3{
 
   font-size:24px;
@@ -628,11 +487,6 @@ KPI
   margin-top:6px;
 
 }
-
-
-
-
-
 /* =========================
 FORMS
 ========================= */
@@ -648,10 +502,6 @@ FORMS
 
 }
 
-
-
-
-
 .input-group{
 
   display:flex;
@@ -659,10 +509,6 @@ FORMS
   flex-direction:column;
 
 }
-
-
-
-
 
 .input-group label{
 
@@ -673,10 +519,6 @@ FORMS
   font-weight:600;
 
 }
-
-
-
-
 
 .input-group input,
 .input-group select,
@@ -697,10 +539,6 @@ FORMS
 
 }
 
-
-
-
-
 .input-group input:focus,
 .input-group select:focus,
 .input-group textarea:focus{
@@ -713,10 +551,6 @@ FORMS
   0 0 0 4px rgba(37,99,235,.10);
 
 }
-
-
-
-
 
 /* =========================
 BUTTONS
@@ -733,11 +567,6 @@ BUTTONS
   margin-top:18px;
 
 }
-
-
-
-
-
 .btn-primary,
 .btn-success,
 .btn-danger,
@@ -775,10 +604,6 @@ BUTTONS
 
 }
 
-
-
-
-
 .btn-primary,
 .btn-ver{
 
@@ -793,10 +618,6 @@ BUTTONS
 
 }
 
-
-
-
-
 .btn-success{
 
   background:
@@ -809,10 +630,6 @@ BUTTONS
   color:white;
 
 }
-
-
-
-
 
 .btn-danger,
 .btn-eliminar{
@@ -828,10 +645,6 @@ BUTTONS
 
 }
 
-
-
-
-
 .btn-editar{
 
   background:
@@ -844,10 +657,6 @@ BUTTONS
   color:#111827;
 
 }
-
-
-
-
 
 .btn-pdf{
 
@@ -862,11 +671,6 @@ BUTTONS
 
 }
 
-
-
-
-
-.btn-primary:hover,
 .btn-success:hover,
 .btn-danger:hover,
 .btn-editar:hover,
@@ -879,10 +683,6 @@ BUTTONS
 
 }
 
-
-
-
-
 /* =========================
 TABLAS
 ========================= */
@@ -893,10 +693,6 @@ TABLAS
 
 }
 
-
-
-
-
 table{
 
   width:100%;
@@ -904,10 +700,6 @@ table{
   border-collapse:collapse;
 
 }
-
-
-
-
 
 thead{
 
@@ -922,10 +714,6 @@ thead{
 
 }
 
-
-
-
-
 th{
 
   padding:14px 10px;
@@ -937,10 +725,6 @@ th{
   white-space:nowrap;
 
 }
-
-
-
-
 
 td{
 
@@ -956,10 +740,6 @@ td{
 
 }
 
-
-
-
-
 tbody tr{
 
   border-bottom:
@@ -967,20 +747,12 @@ tbody tr{
 
 }
 
-
-
-
-
 tbody tr:hover{
 
   background:
   rgba(37,99,235,.04);
 
 }
-
-
-
-
 
 .acciones-tabla{
 
@@ -995,10 +767,6 @@ tbody tr:hover{
   flex-wrap:wrap;
 
 }
-
-
-
-
 
 /* =========================
 ESTADOS
@@ -1027,10 +795,6 @@ ESTADOS
 
 }
 
-
-
-
-
 .estado-pendiente{
 
   background:#fee2e2;
@@ -1038,10 +802,6 @@ ESTADOS
   color:#dc2626;
 
 }
-
-
-
-
 
 .estado-revision{
 
@@ -1051,10 +811,6 @@ ESTADOS
 
 }
 
-
-
-
-
 .estado-cerrado{
 
   background:#dcfce7;
@@ -1063,10 +819,6 @@ ESTADOS
 
 }
 
-
-
-
-
 .estado-dañado{
 
   background:#fee2e2;
@@ -1074,10 +826,6 @@ ESTADOS
   color:#dc2626;
 
 }
-
-
-
-
 
 .estado-faltante{
 
@@ -1088,9 +836,6 @@ ESTADOS
 }
 
 
-
-
-
 .estado-sobrante{
 
   background:#dbeafe;
@@ -1098,9 +843,6 @@ ESTADOS
   color:#2563eb;
 
 }
-
-
-
 
 
 /* =========================
@@ -1116,10 +858,6 @@ NOTIFICACIONES PREMIUM
   align-items: center;
 
 }
-
-
-
-
 
 .notification-btn{
 
@@ -1153,9 +891,6 @@ NOTIFICACIONES PREMIUM
 }
 
 
-
-
-
 .notification-btn:hover{
 
   transform: translateY(-3px);
@@ -1167,10 +902,6 @@ NOTIFICACIONES PREMIUM
   );
 
 }
-
-
-
-
 
 .notification-count{
 
@@ -1210,10 +941,6 @@ NOTIFICACIONES PREMIUM
 
 }
 
-
-
-
-
 .notifications-dropdown{
 
   position: absolute;
@@ -1251,10 +978,6 @@ NOTIFICACIONES PREMIUM
 
 }
 
-
-
-
-
 .notifications-dropdown.active{
 
   opacity: 1;
@@ -1264,10 +987,6 @@ NOTIFICACIONES PREMIUM
   transform: translateY(0);
 
 }
-
-
-
-
 
 .notifications-header{
 
@@ -1284,17 +1003,11 @@ NOTIFICACIONES PREMIUM
 }
 
 
-
-
-
 .notifications-header h3{
 
   color:white;
 
 }
-
-
-
 
 
 .btn-limpiar-noti{
@@ -1314,9 +1027,6 @@ NOTIFICACIONES PREMIUM
 }
 
 
-
-
-
 .notifications-list{
 
   max-height:420px;
@@ -1326,9 +1036,6 @@ NOTIFICACIONES PREMIUM
   padding:12px;
 
 }
-
-
-
 
 
 .notificacion-item{
@@ -1346,9 +1053,6 @@ NOTIFICACIONES PREMIUM
 }
 
 
-
-
-
 .notificacion-item p{
 
   color:#f8fafc;
@@ -1362,9 +1066,6 @@ NOTIFICACIONES PREMIUM
 }
 
 
-
-
-
 .notificacion-item span{
 
   color:#94a3b8;
@@ -1372,9 +1073,6 @@ NOTIFICACIONES PREMIUM
   font-size:12px;
 
 }
-
-
-
 
 
 /* =========================================
@@ -1409,17 +1107,11 @@ MODAL GESTION COMPRAS PREMIUM
 }
 
 
-
-
-
 .modal-gestion.active{
 
   display:flex;
 
 }
-
-
-
 
 
 .modal-gestion-content{
@@ -1445,10 +1137,6 @@ MODAL GESTION COMPRAS PREMIUM
   0 30px 80px rgba(0,0,0,.45);
 
 }
-
-
-
-
 
 .modal-gestion-header{
 
