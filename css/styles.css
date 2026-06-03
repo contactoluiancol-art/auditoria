@@ -1513,6 +1513,7 @@ MODAL GESTION COMPRAS PREMIUM
 .modal-gestion-body{
 
   padding:24px;
+  background:#f1f5f9;
 
 }
 
@@ -1594,20 +1595,17 @@ MODAL GESTION COMPRAS PREMIUM
 
 
 
-
 .timeline-box{
 
-  margin-top:18px;
+  margin-top:20px;
 
-  border-radius:18px;
+  border-radius:20px;
 
-  padding:16px;
+  padding:18px;
 
-  background:
-  rgba(255,255,255,.04);
+  background:#f8fafc;
 
-  border:
-  1px solid rgba(255,255,255,.06);
+  border:1px solid #e2e8f0;
 
 }
 
@@ -2309,85 +2307,53 @@ TIMELINE PREMIUM V3
 
 }
 
-
-
-
-
 #timelineSeguimiento{
 
-  max-height:220px;
+  max-height:180px;
 
   overflow-y:auto;
 
-  padding-right:6px;
+  padding-right:4px;
 
 }
-
-
-
-
 
 #timelineSeguimiento::-webkit-scrollbar{
 
-  width:8px;
+  width:6px;
 
 }
-
-
-
-
 
 #timelineSeguimiento::-webkit-scrollbar-thumb{
 
-  background:#2563eb;
+  background:#94a3b8;
 
-  border-radius:50px;
+  border-radius:20px;
 
 }
-
-
-
-
 
 #timelineSeguimiento::-webkit-scrollbar-track{
 
-  background:rgba(255,255,255,.08);
+  background:transparent;
 
 }
-
-
-
-
 
 .timeline-item{
 
-  position:relative;
+  background:#ffffff;
 
-  margin-bottom:12px;
+  border:1px solid #e2e8f0;
 
-  padding:14px 16px;
+  border-left:4px solid #2563eb;
 
-  background:
-  linear-gradient(
-    135deg,
-    rgba(255,255,255,.08),
-    rgba(255,255,255,.04)
-  );
+  border-radius:14px;
 
-  border:
-  1px solid rgba(255,255,255,.08);
+  padding:10px 14px;
 
-  border-left:4px solid #3b82f6;
+  margin-bottom:8px;
 
-  border-radius:16px;
-
-  transition:.25s;
+  transition:.2s;
 
 }
-
-
-
-
 
 .timeline-item:hover{
 
@@ -2425,22 +2391,17 @@ TIMELINE PREMIUM V3
 
 }
 
-
-
-
-
 .timeline-comentario{
 
-  color:#e2e8f0;
+  color:#334155;
 
   font-size:13px;
 
-  line-height:1.7;
+  line-height:1.5;
 
   white-space:pre-wrap;
 
 }
-
 
 
 
