@@ -389,83 +389,71 @@
         </button>
 
       </div>
+    
+<!-- FORMULARIO -->
 
-      <!-- BODY -->
+<div class="gestion-formulario">
 
-      <div class="modal-gestion-body">
+  <div class="input-group">
 
-        <div class="gestion-layout">
+    <label>
+      Estado Gestión
+    </label>
 
-  <div class="gestion-formulario">
+    <select id="gestionEstadoInput">
+
+      <option value="Pendiente">
+        🟡 Pendiente
+      </option>
+
+      <option value="En Gestión Compras">
+        🛒 En Gestión Compras
+      </option>
+
+      <option value="Contactando Proveedor">
+        📞 Contactando Proveedor
+      </option>
+
+      <option value="Esperando Respuesta">
+        📦 Esperando Respuesta
+      </option>
+
+      <option value="Solucionado">
+        🟢 Solucionado
+      </option>
+
+      <option value="Cerrado">
+        🔒 Cerrado
+      </option>
+
+    </select>
 
   </div>
 
-  <div class="gestion-historial">
+  <div class="input-group">
+
+    <label>
+      Comentario Gestión
+    </label>
+
+    <textarea
+      id="gestionComentarioInput"
+      placeholder="Ingrese seguimiento de compras..."
+    ></textarea>
 
   </div>
 
 </div>
 
-        <!-- ESTADO -->
+<!-- HISTORIAL -->
 
-        <div class="input-group">
-
-          <label>
-            Estado Gestión
-          </label>
-
-          <select id="gestionEstadoInput">
-
-          <option value="Pendiente">
-  🟡 Pendiente
-</option>
-
-<option value="En Gestión Compras">
-  🛒 En Gestión Compras
-</option>
-
-<option value="Contactando Proveedor">
-  📞 Contactando Proveedor
-</option>
-
-<option value="Esperando Respuesta">
-  📦 Esperando Respuesta
-</option>
-
-<option value="Solucionado">
-  🟢 Solucionado
-</option>
-
-<option value="Cerrado">
-  🔒 Cerrado
-</option>
-
-          </select>
-
-        </div>
-
-        <!-- COMENTARIO -->
-
-        <div class="input-group">
-
-          <label>
-            Comentario Gestión
-          </label>
-
-          <textarea
-            id="gestionComentarioInput"
-            placeholder="Ingrese seguimiento de compras..."
-          ></textarea>
-
-        </div>
-
-        <!-- TIMELINE -->
-
-        <div class="timeline-box">
+<div class="gestion-historial">
 
   <div class="timeline-header">
 
-    <h3>📋 Historial de Gestión</h3>
+    <h3>
+      📋 Historial de Gestión
+    </h3>
 
     <span class="timeline-subtitle">
       Trazabilidad completa de la novedad
@@ -495,6 +483,12 @@
   </div>
 
 </div>
+```
+
+  </div>
+
+</div>
+
 
       </div>
 
