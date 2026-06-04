@@ -1087,7 +1087,11 @@ timeline.innerHTML += `
 
 <div class="timeline-item">
 
-  ${htmlBonito}
+  <div class="timeline-comentario">
+
+    ${item.replace(/\n/g,'<br>')}
+
+  </div>
 
 </div>
 
