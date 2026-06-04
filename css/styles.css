@@ -1664,6 +1664,142 @@ grid-template-columns:1fr;
 
 }
 
+/* =====================================
+MODAL GESTION ERP
+===================================== */
 
+.modal-gestion{
+
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(15,23,42,.75);
+
+  backdrop-filter:blur(8px);
+
+  display:none;
+
+  justify-content:center;
+
+  align-items:center;
+
+  z-index:99999;
+
+  padding:20px;
+
+}
+
+.modal-gestion.active{
+
+  display:flex;
+
+}
+
+.modal-gestion-content{
+
+  width:95%;
+
+  max-width:1200px;
+
+  max-height:90vh;
+
+  overflow:hidden;
+
+  background:white;
+
+  border-radius:24px;
+
+  box-shadow:
+  0 30px 80px rgba(0,0,0,.35);
+
+  display:flex;
+
+  flex-direction:column;
+
+}
+
+.modal-gestion-header{
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #1e3a8a
+  );
+
+  color:white;
+
+  padding:24px 30px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+}
+
+.modal-gestion-header h2{
+
+  font-size:32px;
+
+  margin-bottom:4px;
+
+}
+
+.modal-gestion-header p{
+
+  color:#cbd5e1;
+
+}
+
+.cerrar-modal-btn{
+
+  width:52px;
+
+  height:52px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,.12);
+
+  color:white;
+
+  font-size:28px;
+
+  cursor:pointer;
+
+}
+
+.modal-gestion-body{
+
+  flex:1;
+
+  overflow-y:auto;
+
+  padding:28px;
+
+  background:#f8fafc;
+
+}
+
+.modal-gestion-footer{
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  gap:12px;
+
+  padding:20px 28px;
+
+  background:white;
+
+  border-top:1px solid #e2e8f0;
+
+}
 
 
