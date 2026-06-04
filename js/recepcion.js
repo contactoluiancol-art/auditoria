@@ -694,9 +694,8 @@ window.usuarioLogueado?.usuario?.toLowerCase() || '';
 const puedeGestionar =
 
 usuarioActual === 'admin' ||
-
 usuarioActual === 'auditor' ||
-
+usuarioActual === 'lider' ||
 usuarioActual === 'compras';
 
 const puedeEliminar =
