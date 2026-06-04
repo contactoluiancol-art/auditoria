@@ -965,9 +965,10 @@ window.validarRecepcion = async function(id){
 
     comentarioInput.value = '';
 
-
-
-
+console.log(
+'ID RECEPCION:',
+window.recepcionGestionando
+);
 
     const consulta =
 
@@ -1207,7 +1208,15 @@ if(guardarGestionBtn){
       }
 
 
+if(!window.recepcionGestionando){
 
+  alert(
+    'No se encontró la recepción.'
+  );
+
+  return;
+
+}
 
 
       const consulta =
@@ -1218,15 +1227,10 @@ if(guardarGestionBtn){
 
       .select('*')
 
-      .eq(
-
-        'id',
-
-        Number(
-          window.recepcionGestionando
-        )
-
-      )
+     .eq(
+'id',
+window.recepcionGestionando
+)
 
       .single();
 
