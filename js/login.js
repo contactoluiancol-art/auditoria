@@ -399,25 +399,22 @@ window.mostrarBienvenida = function(usuario, rol){
     'bienvenidaRol'
   ).innerText = rol;
 
-  document
-  .getElementById(
+  const modal =
+  document.getElementById(
     'modalBienvenida'
-  )
-  .classList.add(
-    'active'
   );
+
+  modal.style.display =
+  'flex';
 
 };
 
 window.cerrarModalBienvenida = function(){
 
-  document
-  .getElementById(
+  document.getElementById(
     'modalBienvenida'
-  )
-  .classList.remove(
-    'active'
-  );
+  ).style.display =
+  'none';
 
   window.location.href =
   'dashboard.html';
