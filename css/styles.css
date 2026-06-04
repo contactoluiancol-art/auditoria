@@ -1614,6 +1614,55 @@ BOTONES ACCIONES
 
 }
 
+.gestion-layout{
+
+display:grid;
+
+grid-template-columns:380px 1fr;
+
+gap:24px;
+
+align-items:start;
+
+}
+
+.gestion-formulario{
+
+background:white;
+
+border:1px solid #e2e8f0;
+
+border-radius:20px;
+
+padding:22px;
+
+}
+
+.gestion-historial{
+
+background:white;
+
+border:1px solid #e2e8f0;
+
+border-radius:20px;
+
+padding:22px;
+
+min-height:350px;
+
+}
+
+@media(max-width:900px){
+
+.gestion-layout{
+
+
+grid-template-columns:1fr;
+
+
+}
+
+}
 
 
 
