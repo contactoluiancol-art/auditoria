@@ -1083,21 +1083,6 @@ timeline.innerHTML += `
 
 `;
 
-timeline.innerHTML += `
-
-<div class="timeline-item">
-
-  <div class="timeline-comentario">
-
-    ${item.replace(/\n/g,'<br>')}
-
-  </div>
-
-</div>
-
-`;
-
-
       });
 
     }
