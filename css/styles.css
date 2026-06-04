@@ -1802,4 +1802,40 @@ MODAL GESTION ERP
 
 }
 
+-------------------------------
+
+.timeline-item{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-left:4px solid #2563eb;
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.timeline-item .fecha{
+  font-size:.9rem;
+  color:#64748b;
+  margin-bottom:10px;
+}
+
+.timeline-item .usuario{
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.timeline-item .estado{
+  display:inline-block;
+  background:#eff6ff;
+  color:#1d4ed8;
+  padding:4px 10px;
+  border-radius:20px;
+  margin-bottom:10px;
+}
+
+.timeline-item .comentario{
+  color:#334155;
+  line-height:1.5;
+}
 
