@@ -362,6 +362,30 @@ async function login(e){
 
     );
 
+
+
+    // ======================
+    // REDIRECCIONAR
+    // ======================
+
+    window.location.href =
+
+    'dashboard.html';
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    alert(
+      'Error general en login'
+    );
+
+  }
+
+}
+
 // ======================
 // MODAL BIENVENIDA
 // ======================
@@ -402,25 +426,3 @@ window.cerrarModalBienvenida = function(){
 
 
 
-
-    // ======================
-    // REDIRECCIONAR
-    // ======================
-
-    window.location.href =
-
-    'dashboard.html';
-
-  }
-
-  catch(error){
-
-    console.log(error);
-
-    alert(
-      'Error general en login'
-    );
-
-  }
-
-}
