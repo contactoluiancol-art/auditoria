@@ -1074,312 +1074,6 @@ NOTIFICACIONES PREMIUM
 
 }
 
-
-/* =========================================
-MODAL GESTION COMPRAS PREMIUM
-========================================= */
-
-.modal-gestion{
-
-  position:fixed;
-
-  top:0;
-  left:0;
-
-  width:100%;
-  height:100vh;
-
-  background:
-  rgba(15,23,42,.78);
-
-  backdrop-filter:blur(7px);
-
-  display:none;
-
-  align-items:center;
-
-  justify-content:center;
-
-  padding:20px;
-
-  z-index:99999;
-
-}
-
-
-.modal-gestion.active{
-
-  display:flex;
-
-}
-
-
-.modal-gestion-content{
-
-  width:90%;
-
-  max-width:900px;
-
-  max-height:85vh;
-
-  overflow:hidden;
-
-}
-
-  border:
-  1px solid rgba(255,255,255,.06);
-
-  border-radius:28px;
-
-  overflow:hidden;
-
-  box-shadow:
-  0 30px 80px rgba(0,0,0,.45);
-
-}
-
-.modal-gestion-header{
-
-  padding:18px 24px;
-
-}
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  color:white;
-
-}
-
-.modal-gestion-header h2{
-
-  font-size:28px;
-
-}
-
-.cerrar-modal-btn{
-
-  width:46px;
-  height:46px;
-
-  border:none;
-
-  border-radius:16px;
-
-  background:
-  rgba(255,255,255,.15);
-
-  color:white;
-
-  font-size:20px;
-
-  cursor:pointer;
-
-}
-.modal-gestion-body{
-
-  background:
-  linear-gradient(
-    180deg,
-    #f8fafc,
-    #eef2ff
-  );
-
-  padding:30px;
-
-}
-
-.modal-gestion-body label{
-
-  color:#060606;
-
-  font-size:13px;
-
-  font-weight:700;
-
-  margin-bottom:8px;
-
-  display:block;
-
-}
-
-.modal-gestion-body select,
-.modal-gestion-body textarea{
-
-  width:100%;
-
-  border:1px solid rgba(255,255,255,.08);
-
-  border-radius:16px;
-
-  background:#0f172a;
-
-  color:white;
-
-  padding:15px 16px;
-
-  font-size:14px;
-
-}
-
-
-
-
-
-.modal-gestion-body select option{
-
-  background:#0f172a;
-
-  color:white;
-
-}
-
-.modal-gestion-body select:focus{
-
-  outline:none;
-
-  border-color:#3b82f6;
-
-  box-shadow:
-  0 0 0 4px rgba(59,130,246,.15);
-
-}
-
-
-
-
-
-
-.modal-gestion-body textarea{
-
-  min-height:90px;
-
-  max-height:90px;
-
-  resize:none;
-
-}
-
-
-
-
-.timeline-box{
-
-  margin-top:20px;
-
-  border-radius:20px;
-
-  padding:18px;
-
-  background:#f8fafc;
-
-  border:1px solid #e2e8f0;
-
-}
-
-
-
-
-
-.timeline-box h3{
-
-  color:#000000;
-
-  margin-bottom:20px;
-
-}
-
-.timeline-item{
-
-  padding:8px 12px;
-
-  margin-bottom:6px;
-
-  border-radius:12px;
-
-}
-
-
-
-
-
-.timeline-item::before{
-
-  content:'';
-
-  position:absolute;
-
-  left:0;
-  top:5px;
-
-  width:13px;
-  height:13px;
-
-  border-radius:50%;
-
-  background:
-  linear-gradient(
-    135deg,
-    #3b82f6,
-    #60a5fa
-  );
-
-}
-
-
-
-
-
-.timeline-fecha{
-
-  color:#94a3b8;
-
-  font-size:12px;
-
-  margin-bottom:8px;
-
-}
-
-
-
-
-
-.timeline-comentario{
-
-  color:#e2e8f0;
-
-  font-size:13px;
-
-  line-height:1.7;
-
-}
-
-
-
-
-
-.modal-gestion-footer{
-
-  padding:22px 24px;
-
-  display:flex;
-
-  justify-content:flex-end;
-
-  gap:10px;
-
-  border-top:
-  1px solid rgba(255,255,255,.06);
-
-}
-
-
-
-
-
 /* =========================
 RESPONSIVE
 ========================= */
@@ -1998,60 +1692,9 @@ CAMPOS GESTION
 
 }
 
-
-
-
-
-/* =====================================
-TIMELINE PREMIUM
-===================================== */
-
-.timeline-box{
-
-  margin-top:18px;
-
-  background:white;
-
-  border:1px solid #dbeafe;
-
-  border-radius:22px;
-
-  padding:20px;
-
-  box-shadow:
-  0 8px 20px rgba(37,99,235,.08);
-
-}
-
-.timeline-box h3{
-
-  color:#0f172a;
-
-  font-size:18px;
-
-  font-weight:700;
-
-  margin-bottom:14px;
-
-}
-
-
-
-
-
 /* =====================================
 SCROLL HISTORIAL
 ===================================== */
-
-#timelineSeguimiento{
-
-  max-height:140px;
-
-  overflow-y:auto;
-
-  padding-right:4px;
-
-}
 
 #timelineSeguimiento::-webkit-scrollbar{
 
@@ -2332,5 +1975,197 @@ PORTATILES
 
 }
 
+/* =====================================
+TIMELINE ERP PREMIUM
+===================================== */
+
+.timeline-box{
+
+  margin-top:20px;
+
+  background:white;
+
+  border:1px solid #e2e8f0;
+
+  border-radius:22px;
+
+  padding:22px;
+
+}
+
+.timeline-header{
+
+  margin-bottom:20px;
+
+}
+
+.timeline-header h3{
+
+  color:#0f172a;
+
+  font-size:18px;
+
+  font-weight:700;
+
+  margin-bottom:4px;
+
+}
+
+.timeline-subtitle{
+
+  color:#64748b;
+
+  font-size:12px;
+
+}
+
+#timelineSeguimiento{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:14px;
+
+}
+
+.timeline-item{
+
+  position:relative;
+
+  background:#f8fafc;
+
+  border:1px solid #e2e8f0;
+
+  border-radius:16px;
+
+  padding:16px 18px;
+
+  transition:.25s;
+
+}
+
+.timeline-item:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 10px 20px rgba(15,23,42,.08);
+
+}
+
+.timeline-item::before{
+
+  content:'';
+
+  position:absolute;
+
+  left:-9px;
+
+  top:20px;
+
+  width:16px;
+
+  height:16px;
+
+  border-radius:50%;
+
+  background:#2563eb;
+
+  border:3px solid white;
+
+}
+
+.timeline-fecha{
+
+  font-size:12px;
+
+  color:#64748b;
+
+  font-weight:600;
+
+  margin-bottom:10px;
+
+}
+
+.timeline-usuario{
+
+  font-size:14px;
+
+  font-weight:700;
+
+  color:#0f172a;
+
+  margin-bottom:10px;
+
+}
+
+.timeline-estado{
+
+  margin-bottom:12px;
+
+}
+
+.timeline-estado span{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  padding:6px 12px;
+
+  border-radius:30px;
+
+  background:#dbeafe;
+
+  color:#1d4ed8;
+
+  font-size:11px;
+
+  font-weight:700;
+
+}
+
+.timeline-comentario{
+
+  color:#334155;
+
+  line-height:1.7;
+
+  font-size:13px;
+
+}
+
+.timeline-empty{
+
+  text-align:center;
+
+  padding:35px 10px;
+
+}
+
+.timeline-empty-icon{
+
+  font-size:42px;
+
+  margin-bottom:10px;
+
+}
+
+.timeline-empty h4{
+
+  color:#0f172a;
+
+  margin-bottom:8px;
+
+}
+
+.timeline-empty p{
+
+  color:#64748b;
+
+  font-size:13px;
+
+}
 
 
