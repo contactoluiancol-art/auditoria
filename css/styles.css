@@ -1802,40 +1802,110 @@ MODAL GESTION ERP
 
 }
 
--------------------------------
+/* =====================================
+TIMELINE GESTIÓN COMPRAS
+===================================== */
 
 .timeline-item{
-  background:#fff;
-  border:1px solid #e5e7eb;
-  border-left:4px solid #2563eb;
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:15px;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
+
+  background:#ffffff;
+
+  border:1px solid #e2e8f0;
+
+  border-left:6px solid #2563eb;
+
+  border-radius:18px;
+
+  padding:18px;
+
+  margin-bottom:18px;
+
+  box-shadow:
+  0 6px 18px rgba(15,23,42,.06);
+
+  transition:.25s;
+
 }
 
-.timeline-item .fecha{
-  font-size:.9rem;
-  color:#64748b;
-  margin-bottom:10px;
+.timeline-item:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 12px 28px rgba(37,99,235,.12);
+
 }
 
-.timeline-item .usuario{
-  font-weight:600;
-  margin-bottom:8px;
-}
+.timeline-comentario{
 
-.timeline-item .estado{
-  display:inline-block;
-  background:#eff6ff;
-  color:#1d4ed8;
-  padding:4px 10px;
-  border-radius:20px;
-  margin-bottom:10px;
-}
-
-.timeline-item .comentario{
   color:#334155;
-  line-height:1.5;
+
+  font-size:14px;
+
+  line-height:1.9;
+
+  word-break:break-word;
+
 }
+
+/* Scroll elegante */
+
+#timelineSeguimiento{
+
+  max-height:600px;
+
+  overflow-y:auto;
+
+  padding-right:6px;
+
+}
+
+#timelineSeguimiento::-webkit-scrollbar{
+
+  width:8px;
+
+}
+
+#timelineSeguimiento::-webkit-scrollbar-track{
+
+  background:#e2e8f0;
+
+  border-radius:20px;
+
+}
+
+#timelineSeguimiento::-webkit-scrollbar-thumb{
+
+  background:#94a3b8;
+
+  border-radius:20px;
+
+}
+
+#timelineSeguimiento::-webkit-scrollbar-thumb:hover{
+
+  background:#64748b;
+
+}
+
+/* Sin historial */
+
+.sin-notificaciones{
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  min-height:180px;
+
+  color:#94a3b8;
+
+  font-size:14px;
+
+  font-weight:600;
+
+}
+
 
