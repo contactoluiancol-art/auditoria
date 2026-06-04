@@ -700,3 +700,23 @@ MODAL BIENVENIDA PREMIUM
 }
 
 }
+
+.bienvenida-icon{
+
+  background:none;
+
+  width:220px;
+
+  height:220px;
+
+}
+
+.bienvenida-icon img{
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:contain;
+
+}
