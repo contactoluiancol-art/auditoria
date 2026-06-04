@@ -363,158 +363,165 @@
 
     <div class="modal-gestion-content">
 
-      <!-- HEADER -->
+      <div
+  class="modal-gestion"
+  id="modalGestion"
+>
 
-      <div class="modal-gestion-header">
+  <div class="modal-gestion-content">
+<!-- HEADER -->
 
-        <div>
+<div class="modal-gestion-header">
 
-          <h2>
-            🛒 Gestión Compras
-          </h2>
+  <div>
+
+    <h2>
+      🛒 Gestión Compras
+    </h2>
+
+    <p>
+      Seguimiento y gestión de novedades
+    </p>
+
+  </div>
+
+  <button
+    class="cerrar-modal-btn"
+    onclick="cerrarModalGestion()"
+  >
+    ✕
+  </button>
+
+</div>
+
+<!-- BODY -->
+
+<div class="modal-gestion-body">
+
+  <div class="gestion-layout">
+
+    <!-- FORMULARIO -->
+
+    <div class="gestion-formulario">
+
+      <div class="input-group">
+
+        <label>
+          Estado Gestión
+        </label>
+
+        <select id="gestionEstadoInput">
+
+          <option value="Pendiente">
+            🟡 Pendiente
+          </option>
+
+          <option value="En Gestión Compras">
+            🛒 En Gestión Compras
+          </option>
+
+          <option value="Contactando Proveedor">
+            📞 Contactando Proveedor
+          </option>
+
+          <option value="Esperando Respuesta">
+            📦 Esperando Respuesta
+          </option>
+
+          <option value="Solucionado">
+            🟢 Solucionado
+          </option>
+
+          <option value="Cerrado">
+            🔒 Cerrado
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="input-group">
+
+        <label>
+          Comentario Gestión
+        </label>
+
+        <textarea
+          id="gestionComentarioInput"
+          placeholder="Ingrese seguimiento de compras..."
+        ></textarea>
+
+      </div>
+
+    </div>
+
+    <!-- HISTORIAL -->
+
+    <div class="gestion-historial">
+
+      <div class="timeline-header">
+
+        <h3>
+          📋 Historial de Gestión
+        </h3>
+
+        <span class="timeline-subtitle">
+          Trazabilidad completa de la novedad
+        </span>
+
+      </div>
+
+      <div id="timelineSeguimiento">
+
+        <div class="timeline-empty">
+
+          <div class="timeline-empty-icon">
+            📦
+          </div>
+
+          <h4>
+            Sin movimientos registrados
+          </h4>
 
           <p>
-            Seguimiento y gestión de novedades
+            Cuando Compras realice una gestión,
+            el historial aparecerá aquí.
           </p>
 
         </div>
 
-        <button
-          class="cerrar-modal-btn"
-          onclick="cerrarModalGestion()"
-        >
-
-          ✕
-
-        </button>
-
       </div>
-    
-<!-- FORMULARIO -->
-
-<div class="gestion-formulario">
-
-  <div class="input-group">
-
-    <label>
-      Estado Gestión
-    </label>
-
-    <select id="gestionEstadoInput">
-
-      <option value="Pendiente">
-        🟡 Pendiente
-      </option>
-
-      <option value="En Gestión Compras">
-        🛒 En Gestión Compras
-      </option>
-
-      <option value="Contactando Proveedor">
-        📞 Contactando Proveedor
-      </option>
-
-      <option value="Esperando Respuesta">
-        📦 Esperando Respuesta
-      </option>
-
-      <option value="Solucionado">
-        🟢 Solucionado
-      </option>
-
-      <option value="Cerrado">
-        🔒 Cerrado
-      </option>
-
-    </select>
-
-  </div>
-
-  <div class="input-group">
-
-    <label>
-      Comentario Gestión
-    </label>
-
-    <textarea
-      id="gestionComentarioInput"
-      placeholder="Ingrese seguimiento de compras..."
-    ></textarea>
-
-  </div>
-
-</div>
-
-<!-- HISTORIAL -->
-
-<div class="gestion-historial">
-
-  <div class="timeline-header">
-
-    <h3>
-      📋 Historial de Gestión
-    </h3>
-
-    <span class="timeline-subtitle">
-      Trazabilidad completa de la novedad
-    </span>
-
-  </div>
-
-  <div id="timelineSeguimiento">
-
-    <div class="timeline-empty">
-
-      <div class="timeline-empty-icon">
-        📦
-      </div>
-
-      <h4>
-        Sin movimientos registrados
-      </h4>
-
-      <p>
-        Cuando Compras realice una gestión,
-        el historial aparecerá aquí.
-      </p>
 
     </div>
 
   </div>
 
 </div>
-```
+
+<!-- FOOTER -->
+
+<div class="modal-gestion-footer">
+
+  <button
+    class="btn-danger"
+    onclick="cerrarModalGestion()"
+  >
+    Cancelar
+  </button>
+
+  <button
+    class="btn-primary"
+    id="guardarGestionBtn"
+  >
+    Guardar Gestión
+  </button>
+
+</div>
 
   </div>
 
 </div>
 
-
-      </div>
-
-      <!-- FOOTER -->
-
-      <div class="modal-gestion-footer">
-
-        <button
-          class="btn-danger"
-          onclick="cerrarModalGestion()"
-        >
-
-          Cancelar
-
-        </button>
-
-        <button
-          class="btn-primary"
-          id="guardarGestionBtn"
-        >
-
-          Guardar Gestión
-
-        </button>
-
-      </div>
 
     </div>
 
