@@ -1057,33 +1057,69 @@ window.recepcionGestionando
 
       .reverse();
 
+bloques.forEach(function(item){
 
+  if(item.trim() === ''){
+    return;
+  }
 
+  let badgeClass = 'estado-default';
+  let estadoTexto = 'Seguimiento';
 
+  if(item.includes('Pendiente')){
+    badgeClass = 'estado-pendiente-badge';
+    estadoTexto = 'Pendiente';
+  }
 
-      bloques.forEach(function(item){
+  else if(item.includes('En Gestión Compras')){
+    badgeClass = 'estado-gestion-badge';
+    estadoTexto = 'En Gestión Compras';
+  }
 
-        if(item.trim() === ''){
+  else if(item.includes('Contactando Proveedor')){
+    badgeClass = 'estado-contacto-badge';
+    estadoTexto = 'Contactando Proveedor';
+  }
 
-          return;
+  else if(item.includes('Esperando Respuesta')){
+    badgeClass = 'estado-espera-badge';
+    estadoTexto = 'Esperando Respuesta';
+  }
 
-        }
+  else if(item.includes('Solucionado')){
+    badgeClass = 'estado-solucionado-badge';
+    estadoTexto = 'Solucionado';
+  }
 
-timeline.innerHTML += `
+  else if(item.includes('Cerrado')){
+    badgeClass = 'estado-cerrado-badge';
+    estadoTexto = 'Cerrado';
+  }
 
-<div class="timeline-item">
+  timeline.innerHTML += `
 
-  <div class="timeline-comentario">
+  <div class="timeline-item">
 
-    ${item.replace(/\n/g,'<br>')}
+      <div class="timeline-top">
+
+          <span class="timeline-badge ${badgeClass}">
+              ${estadoTexto}
+          </span>
+
+      </div>
+
+      <div class="timeline-comentario">
+
+          ${item.replace(/\n/g,'<br>')}
+
+      </div>
 
   </div>
 
-</div>
+  `;
 
-`;
-
-      });
+});
+      
 
     }
 
