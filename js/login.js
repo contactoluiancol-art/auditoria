@@ -368,11 +368,10 @@ async function login(e){
     // REDIRECCIONAR
     // ======================
 
-    window.location.href =
-
-    'dashboard.html';
-
-  }
+window.mostrarBienvenida(
+  usuarioData.usuario,
+  usuarioData.rol
+);
 
   catch(error){
 
@@ -419,6 +418,9 @@ window.cerrarModalBienvenida = function(){
   .classList.remove(
     'active'
   );
+
+  window.location.href =
+  'dashboard.html';
 
 };
 
