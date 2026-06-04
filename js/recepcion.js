@@ -1069,28 +1069,35 @@ window.validarRecepcion = async function(id){
 
         }
 
+const htmlBonito = item
+  .replace(/\n/g,'<br>')
+  .replace(
+    /📅 (.*?)(<br>|$)/,
+    '<div class="timeline-fecha">📅 $1</div>'
+  )
+  .replace(
+    /👤 Usuario:<br>(.*?)(<br>|$)/,
+    '<div class="timeline-usuario">👤 $1</div>'
+  )
+  .replace(
+    /🏷️ Estado:<br>(.*?)(<br>|$)/,
+    '<div class="timeline-estado"><span>$1</span></div>'
+  )
+  .replace(
+    /📝 Comentario:<br>/,
+    '<div class="timeline-titulo">💬 Seguimiento</div>'
+  );
 
-timeline.innerHTML +=
-
-`
+timeline.innerHTML += `
 
 <div class="timeline-item">
 
-  <div class="timeline-comentario">
-
-    ${item
-      .replace(/\n/g,'<br>')
-      .replace('📅','<strong>📅</strong>')
-      .replace('👤','<strong>👤</strong>')
-      .replace('🏷️','<strong>🏷️</strong>')
-      .replace('📝','<strong>📝</strong>')
-    }
-
-  </div>
+  ${htmlBonito}
 
 </div>
 
 `;
+
 
       });
 
