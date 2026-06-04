@@ -1272,13 +1272,6 @@ ${estado}
 ${comentario}
 `;
 
-
- 
-
-
-
-
-
       const update =
 
       await window.supabaseClient
