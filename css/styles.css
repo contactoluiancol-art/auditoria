@@ -1136,11 +1136,19 @@ RESPONSIVE
 
   }
 
-  .modal-gestion-content{
+ .modal-gestion-content{
 
-    max-width:100%;
+width:90%;
 
-  }
+max-width:900px;
+
+max-height:85vh;
+
+overflow-y:auto;
+
+border-radius:24px;
+
+}
 
 }
 
@@ -1726,19 +1734,22 @@ ITEM HISTORIAL
 
 .timeline-item{
 
-  background:white;
+.timeline-item{
 
-  border:1px solid #e2e8f0;
+background:#ffffff;
 
-  border-left:4px solid #2563eb;
+border:1px solid #e2e8f0;
 
-  border-radius:14px;
+border-left:4px solid #2563eb;
 
-  padding:12px;
+border-radius:14px;
 
-  margin-bottom:10px;
+padding:14px;
 
-  transition:.25s;
+margin-bottom:12px;
+
+box-shadow:
+0 4px 10px rgba(0,0,0,.05);
 
 }
 
@@ -1771,13 +1782,13 @@ ITEM HISTORIAL
 
 .timeline-comentario{
 
-  color:#334155;
+font-size:14px;
 
-  font-size:13px;
+line-height:1.7;
 
-  line-height:1.6;
+color:#334155;
 
-  white-space:pre-wrap;
+white-space:pre-wrap;
 
 }
 
@@ -1895,18 +1906,21 @@ PORTATILES
 
   }
 
-  #timelineSeguimiento{
-
-    max-height:90px;
-
-  }
-
   .modal-gestion-header h2{
 
     font-size:24px;
 
   }
 
+#timelineSeguimiento{
+
+display:flex;
+flex-direction:column;
+gap:14px;
+
+}
+
+  
 }
 
 
