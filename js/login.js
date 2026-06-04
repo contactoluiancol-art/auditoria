@@ -1,22 +1,7 @@
-// ======================
-// VALIDAR LIBRERIA
-// ======================
-
 if (!window.supabase) {
-
-alert(
-'Error cargando Supabase'
-);
-
-throw new Error(
-'Supabase no cargó correctamente'
-);
-
+alert('Error cargando Supabase');
+throw new Error('Supabase no cargó correctamente');
 }
-
-// ======================
-// CONEXION SUPABASE
-// ======================
 
 const supabaseUrl =
 'https://hurxdjoiafkjoyrmyhbd.supabase.co';
@@ -24,45 +9,25 @@ const supabaseUrl =
 const supabaseKey =
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1cnhkam9pYWZram95cm15aGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzgxMTMsImV4cCI6MjA5NTMxNDExM30.Z6fRiWft3eSEVNZbWflmcvVcHAJTAEA37tPdp4LRnTg';
 
-// ======================
-// CLIENTE GLOBAL
-// ======================
-
 window.supabaseClient =
-
 window.supabase.createClient(
 supabaseUrl,
 supabaseKey
 );
 
-// ======================
-// FORM LOGIN
-// ======================
+const form =
+document.getElementById('loginForm');
 
-const form = document.getElementById(
-'loginForm'
-);
-
-// ======================
-// EVENTO LOGIN
-// ======================
-
-if (form) {
-
+if(form){
 form.addEventListener(
 'submit',
 login
 );
-
 }
 
-// ======================
-// LOGIN
-// ======================
+async function login(e){
 
-async function login(e) {
-
-try {
+try{
 
 ```
 e.preventDefault();
@@ -77,17 +42,14 @@ document.getElementById(
   'password'
 );
 
-if (
+if(
   !usuarioInput ||
   !passwordInput
-) {
-
+){
   alert(
     'Inputs no encontrados'
   );
-
   return;
-
 }
 
 const usuario =
@@ -99,17 +61,14 @@ const password =
 passwordInput.value
 .trim();
 
-if (
+if(
   !usuario ||
   !password
-) {
-
+){
   alert(
     'Complete todos los campos'
   );
-
   return;
-
 }
 
 const { data, error } =
@@ -132,79 +91,53 @@ await window.supabaseClient
 
 .limit(1);
 
-if (error) {
-
+if(error){
   console.log(error);
-
   alert(
     'Error conectando con Supabase'
   );
-
   return;
-
 }
 
-if (
+if(
   !data ||
   data.length === 0
-) {
-
+){
   alert(
     'Usuario o contraseña incorrectos'
   );
-
   return;
-
 }
 
 const usuarioData =
 data[0];
 
-if (
+if(
   usuarioData.estado ===
   'Inactivo'
-) {
-
+){
   alert(
     'Usuario inactivo'
   );
-
   return;
-
 }
 
-// ======================
-// GUARDAR SESION
-// ======================
-
 localStorage.setItem(
-
   'usuarioLogueado',
-
   JSON.stringify(
     usuarioData
   )
-
 );
-
-// ======================
-// MOSTRAR MODAL
-// ======================
 
 window.mostrarBienvenida(
-
   usuarioData.usuario,
-
   usuarioData.rol
-
 );
-
-return;
 ```
 
 }
 
-catch (error) {
+catch(error){
 
 ```
 console.log(error);
@@ -218,16 +151,7 @@ alert(
 
 }
 
-// ======================
-// MODAL BIENVENIDA
-// ======================
-
-window.mostrarBienvenida = function (
-
-usuario,
-rol
-
-) {
+window.mostrarBienvenida = function(usuario, rol){
 
 document.getElementById(
 'bienvenidaUsuario'
@@ -237,18 +161,14 @@ document.getElementById(
 'bienvenidaRol'
 ).innerText = rol;
 
-const modal =
-
 document.getElementById(
 'modalBienvenida'
-);
-
-modal.style.display =
+).style.display =
 'flex';
 
 };
 
-window.cerrarModalBienvenida = function () {
+window.cerrarModalBienvenida = function(){
 
 document.getElementById(
 'modalBienvenida'
@@ -260,31 +180,21 @@ window.location.href =
 
 };
 
-// ======================
-// OCULTAR MODAL
-// AL INICIAR
-// ======================
-
 document.addEventListener(
-
 'DOMContentLoaded',
-
-function () {
+function(){
 
 ```
 const modal =
-
 document.getElementById(
   'modalBienvenida'
 );
 
-if (modal) {
-
+if(modal){
   modal.style.display =
   'none';
+}
+```
 
 }
-
-}
-
 );
