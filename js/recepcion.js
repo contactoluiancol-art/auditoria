@@ -1664,13 +1664,26 @@ function limpiarFormulario(){
 
 window.verObservacion = function(observacion){
 
-  alert(
-
-`OBSERVACIÓN
-
-${observacion}`
-
+  const modal = document.getElementById(
+    'modalObservacion'
   );
+
+  const contenido = document.getElementById(
+    'contenidoObservacion'
+  );
+
+  contenido.innerText =
+  observacion || 'Sin observaciones registradas';
+
+  modal.classList.add('active');
+
+};
+
+window.cerrarModalObservacion = function(){
+
+  document
+  .getElementById('modalObservacion')
+  .classList.remove('active');
 
 };
 
