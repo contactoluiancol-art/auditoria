@@ -362,22 +362,42 @@ async function login(e){
 
     );
 
+// ======================
+// MODAL BIENVENIDA
+// ======================
 
+window.mostrarBienvenida = function(usuario, rol){
 
+  document.getElementById(
+    'bienvenidaUsuario'
+  ).innerText = usuario;
 
+  document.getElementById(
+    'bienvenidaRol'
+  ).innerText = rol;
 
-    // ======================
-    // LOGIN EXITOSO
-    // ======================
+  document
+  .getElementById(
+    'modalBienvenida'
+  )
+  .classList.add(
+    'active'
+  );
 
-    alert(
+};
 
-`Bienvenido ${usuarioData.usuario}
+window.cerrarModalBienvenida = function(){
 
-Rol:
-${usuarioData.rol}`
+  document
+  .getElementById(
+    'modalBienvenida'
+  )
+  .classList.remove(
+    'active'
+  );
 
-    );
+};
+
 
 
 
