@@ -424,6 +424,29 @@ window.cerrarModalBienvenida = function(){
 
 };
 
+// ======================
+// OCULTAR MODAL AL CARGAR
+// ======================
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function(){
+
+    const modal =
+    document.getElementById(
+      'modalBienvenida'
+    );
+
+    if(modal){
+
+      modal.style.display =
+      'none';
+
+    }
+
+  }
+);
+
 
 
 
