@@ -29,7 +29,7 @@ async function login(e){
 
 try{
 
-```
+
 e.preventDefault();
 
 const usuarioInput =
@@ -133,19 +133,19 @@ window.mostrarBienvenida(
   usuarioData.usuario,
   usuarioData.rol
 );
-```
+
 
 }
 
 catch(error){
 
-```
+
 console.log(error);
 
 alert(
   'Error general en login'
 );
-```
+
 
 }
 
@@ -184,7 +184,7 @@ document.addEventListener(
 'DOMContentLoaded',
 function(){
 
-```
+
 const modal =
 document.getElementById(
   'modalBienvenida'
@@ -194,7 +194,7 @@ if(modal){
   modal.style.display =
   'none';
 }
-```
+
 
 }
 );
