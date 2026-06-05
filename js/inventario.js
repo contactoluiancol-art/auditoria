@@ -1538,6 +1538,44 @@ window.cerrarModalNovedad = function(){
   );
 
 };
+
+// =====================================
+// MODAL NOVEDADES INVENTARIO
+// =====================================
+
+window.abrirModalNovedad = function(){
+
+  const modal = document.getElementById(
+    'modalNovedadInventario'
+  );
+
+  if(modal){
+
+    modal.classList.add(
+      'active'
+    );
+
+  }
+
+};
+
+window.cerrarModalNovedad = function(){
+
+  const modal = document.getElementById(
+    'modalNovedadInventario'
+  );
+
+  if(modal){
+
+    modal.classList.remove(
+      'active'
+    );
+
+  }
+
+};
+
+  
 // ========================================
 // FIN BLOQUE PRINCIPAL
 // ========================================
