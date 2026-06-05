@@ -505,11 +505,54 @@ window.eliminarTodoHistorial = async function(){
 
     }
 
+ const eliminar =
 
+await window.supabaseClient
 
+.from('historial')
 
+.delete()
 
-    const eliminar =
+.not(
+  'id',
+  'is',
+  null
+);
+
+// ======================
+// ELIMINAR TODO
+// ======================
+
+window.eliminarTodoHistorial = async function(){
+
+  try{
+
+    if(
+      !window.tienePermiso(
+        'historial',
+        'eliminar'
+      )
+    ){
+
+      alert(
+        'No tiene permisos'
+      );
+
+      return;
+
+    }
+
+    const confirmar = confirm(
+      '¿Desea eliminar TODO el historial?'
+    );
+
+    if(!confirmar){
+
+      return;
+
+    }
+
+    const { error } =
 
     await window.supabaseClient
 
@@ -517,13 +560,43 @@ window.eliminarTodoHistorial = async function(){
 
     .delete()
 
-    .neq(
+    .not(
       'id',
-      0
+      'is',
+      null
     );
 
+    if(error){
 
+      console.log(error);
 
+      alert(
+        'Error eliminando historial'
+      );
+
+      return;
+
+    }
+
+    document.getElementById(
+      'historialBody'
+    ).innerHTML = '';
+
+    await renderHistorialSistema();
+
+    alert(
+      'Historial eliminado correctamente'
+    );
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
 
 
     if(eliminar.error){
