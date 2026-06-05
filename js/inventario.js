@@ -1482,8 +1482,6 @@ if(window.refreshInventarioInterval){
 
 window.iniciarRefreshInventario = function(){
 
-  window.iniciarRefreshInventario = function(){
-
   window.refreshInventarioInterval =
 
   setInterval(function(){
@@ -1508,36 +1506,7 @@ window.iniciarRefreshInventario = function(){
 
 };
 
-  window.iniciarRefreshInventario();
-
-
-  // =====================================
-// MODAL NOVEDAD
-// =====================================
-
-window.abrirModalNovedad = function(){
-
-  document
-  .getElementById(
-    'modalNovedad'
-  )
-  .classList.add(
-    'active'
-  );
-
-};
-
-window.cerrarModalNovedad = function(){
-
-  document
-  .getElementById(
-    'modalNovedad'
-  )
-  .classList.remove(
-    'active'
-  );
-
-};
+window.iniciarRefreshInventario();
 
 // =====================================
 // MODAL NOVEDADES INVENTARIO
@@ -1545,7 +1514,8 @@ window.cerrarModalNovedad = function(){
 
 window.abrirModalNovedad = function(){
 
-  const modal = document.getElementById(
+  const modal =
+  document.getElementById(
     'modalNovedadInventario'
   );
 
@@ -1561,7 +1531,8 @@ window.abrirModalNovedad = function(){
 
 window.cerrarModalNovedad = function(){
 
-  const modal = document.getElementById(
+  const modal =
+  document.getElementById(
     'modalNovedadInventario'
   );
 
@@ -1575,9 +1546,10 @@ window.cerrarModalNovedad = function(){
 
 };
 
-  
+
 // ========================================
 // FIN BLOQUE PRINCIPAL
 // ========================================
 
 }
+
