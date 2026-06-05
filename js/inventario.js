@@ -1508,6 +1508,13 @@ window.iniciarRefreshInventario = function(){
 
 window.iniciarRefreshInventario();
 
+renderNovedades();
+
+setInterval(function(){
+
+  renderNovedades();
+
+},5000);
 // =====================================
 // MODAL NOVEDADES INVENTARIO
 // =====================================
@@ -1707,3 +1714,173 @@ if(guardarNovedadBtn){
 
 }
 
+
+// =====================================
+// RENDER NOVEDADES INVENTARIO
+// =====================================
+
+window.renderNovedades = async function(){
+
+  try{
+
+    const body =
+    document.getElementById(
+      'novedadesBody'
+    );
+
+    if(!body){
+
+      return;
+
+    }
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('novedades_inventario')
+
+    .select('*')
+
+    .order(
+      'id',
+      {
+        ascending:false
+      }
+    );
+
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      return;
+
+    }
+
+    const data =
+    response.data || [];
+
+    body.innerHTML = '';
+
+    if(data.length === 0){
+
+      body.innerHTML =
+
+      '<tr>' +
+
+      '<td colspan="8">' +
+
+      'No hay novedades registradas' +
+
+      '</td>' +
+
+      '</tr>';
+
+      return;
+
+    }
+
+    data.forEach(function(item){
+
+      body.innerHTML +=
+
+      '<tr>' +
+
+      '<td>' +
+      new Date(
+        item.created_at
+      ).toLocaleString('es-CO') +
+      '</td>' +
+
+      '<td>' +
+      item.codigo +
+      '</td>' +
+
+      '<td>' +
+      item.material +
+      '</td>' +
+
+      '<td>' +
+      item.tipo_novedad +
+      '</td>' +
+
+      '<td>' +
+      item.stock_sistema +
+      '</td>' +
+
+      '<td>' +
+      item.conteo_fisico +
+      '</td>' +
+
+      '<td>' +
+      item.usuario +
+      '</td>' +
+
+      '<td>' +
+
+      '<button class="btn-eliminar" onclick="eliminarNovedad(' +
+      item.id +
+      ')">' +
+
+      'Eliminar' +
+
+      '</button>' +
+
+      '</td>' +
+
+      '</tr>';
+
+    });
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
+
+// =====================================
+// ELIMINAR NOVEDAD
+// =====================================
+
+window.eliminarNovedad = async function(id){
+
+  try{
+
+    const confirmar = confirm(
+      '¿Eliminar novedad?'
+    );
+
+    if(!confirmar){
+
+      return;
+
+    }
+
+    await window.supabaseClient
+
+    .from('novedades_inventario')
+
+    .delete()
+
+    .eq(
+      'id',
+      Number(id)
+    );
+
+    renderNovedades();
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+  }
+
+};
