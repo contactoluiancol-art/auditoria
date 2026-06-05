@@ -1454,7 +1454,7 @@ renderHistorial();
 
 actualizarKPIs();
 
-}
+window.iniciarRefreshInventario();
 
 window.abrirSiesa = function(){
 
@@ -1465,5 +1465,43 @@ window.abrirSiesa = function(){
     '_blank'
 
   );
+
+};
+
+// ========================================
+// REFRESH INVENTARIO
+// ========================================
+
+if(window.refreshInventarioInterval){
+
+  clearInterval(
+    window.refreshInventarioInterval
+  );
+
+}
+
+window.iniciarRefreshInventario = function(){
+
+  window.refreshInventarioInterval =
+
+  setInterval(function(){
+
+    try{
+
+      renderInventario();
+
+      renderHistorial();
+
+      actualizarKPIs();
+
+    }
+
+    catch(error){
+
+      console.log(error);
+
+    }
+
+  },2000);
 
 };
