@@ -2301,4 +2301,30 @@ RESPONSIVE
 
 }
 
+.btn-warning{
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color:white;
+
+  border:none;
+
+  padding:0 16px;
+
+  height:42px;
+
+  border-radius:14px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+}
 
