@@ -2157,3 +2157,162 @@ MODAL OBSERVACIÓN ERP
   0 12px 25px rgba(20,184,166,.35);
 
 }
+
+/* =====================================
+MODAL ALERTA PREMIUM
+===================================== */
+
+.modal-alerta{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+  rgba(15,23,42,.75);
+
+  backdrop-filter:blur(8px);
+
+  display:none;
+
+  justify-content:center;
+
+  align-items:center;
+
+  z-index:999999;
+
+}
+
+.modal-alerta.active{
+
+  display:flex;
+
+}
+
+.modal-alerta-content{
+
+  width:90%;
+
+  max-width:700px;
+
+  background:white;
+
+  border-radius:30px;
+
+  padding:50px;
+
+  text-align:center;
+
+  position:relative;
+
+  box-shadow:
+  0 25px 70px rgba(0,0,0,.25);
+
+}
+
+.cerrar-alerta{
+
+  position:absolute;
+
+  top:20px;
+
+  right:20px;
+
+  width:50px;
+
+  height:50px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:#fef2f2;
+
+  color:#ef4444;
+
+  font-size:24px;
+
+  cursor:pointer;
+
+}
+
+.alerta-icon{
+
+  width:140px;
+
+  height:140px;
+
+  margin:auto;
+
+  margin-bottom:20px;
+
+  border-radius:50%;
+
+  background:#ffe4e6;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  font-size:70px;
+
+}
+
+.modal-alerta-content h2{
+
+  font-size:56px;
+
+  color:#0f172a;
+
+  margin-bottom:10px;
+
+}
+
+.modal-alerta-content h3{
+
+  font-size:28px;
+
+  color:#475569;
+
+  margin-bottom:15px;
+
+}
+
+.modal-alerta-content p{
+
+  color:#64748b;
+
+  font-size:18px;
+
+  margin-bottom:30px;
+
+}
+
+.btn-alerta{
+
+  border:none;
+
+  height:60px;
+
+  padding:0 40px;
+
+  border-radius:16px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #fb7185,
+    #f43f5e
+  );
+
+  color:white;
+
+  font-size:20px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+}
