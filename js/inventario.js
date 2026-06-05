@@ -1484,6 +1484,8 @@ if(window.refreshInventarioInterval){
 
 window.iniciarRefreshInventario = function(){
 
+  window.iniciarRefreshInventario = function(){
+
   window.refreshInventarioInterval =
 
   setInterval(function(){
@@ -1507,3 +1509,11 @@ window.iniciarRefreshInventario = function(){
   },2000);
 
 };
+
+  window.iniciarRefreshInventario();
+
+// ========================================
+// FIN BLOQUE PRINCIPAL
+// ========================================
+
+}
