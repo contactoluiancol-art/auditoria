@@ -2122,4 +2122,38 @@ MODAL OBSERVACIÓN ERP
 
 }
 
+.btn-siesa{
 
+  background:linear-gradient(
+    135deg,
+    #0f766e,
+    #14b8a6
+  );
+
+  color:white;
+
+  border:none;
+
+  padding:14px 24px;
+
+  border-radius:14px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+  box-shadow:
+  0 8px 20px rgba(20,184,166,.25);
+
+}
+
+.btn-siesa:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 12px 25px rgba(20,184,166,.35);
+
+}
