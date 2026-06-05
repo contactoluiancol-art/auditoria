@@ -814,30 +814,48 @@ window.editarEstado = async function(id){
 
 window.iniciarRefreshAuditorias = function(){
 
-  window.refreshAuditoriasInterval =
+  if(window.refreshAuditoriasInterval){
 
-  setInterval(function(){
-
-    var body =
-
-    document.getElementById(
-      'auditoriasBody'
+    clearInterval(
+      window.refreshAuditoriasInterval
     );
 
+  }
 
+  window.refreshAuditoriasInterval =
 
+  setInterval(async function(){
 
+    try{
 
-    if(body){
+      const body =
 
-      window.renderAuditorias();
+      document.getElementById(
+        'auditoriasBody'
+      );
+
+      if(!body){
+
+        return;
+
+      }
+
+      await window.renderAuditorias();
 
     }
 
-  },5000);
+    catch(error){
+
+      console.log(
+        'Error refresh auditorías:',
+        error
+      );
+
+    }
+
+  },2000);
 
 };
-
 
 
 
