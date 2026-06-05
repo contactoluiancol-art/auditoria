@@ -211,6 +211,13 @@
 >
   🏢 Siesa
 </button>
+
+      <button
+  class="btn-warning"
+  onclick="abrirModalNovedad()"
+>
+  ⚠️ Reportar Novedad
+</button>
     </div>
 
   </div>
@@ -472,6 +479,179 @@
         </tbody>
 
       </table>
+
+      <!-- =====================================
+MODAL NOVEDADES INVENTARIO
+===================================== -->
+
+<div
+  class="modal-novedad"
+  id="modalNovedad"
+>
+
+  <div class="modal-novedad-content">
+
+    <!-- HEADER -->
+
+    <div class="modal-novedad-header">
+
+      <div>
+
+        <h2>
+          ⚠️ Reportar Novedad
+        </h2>
+
+        <p>
+          Registro de diferencias encontradas en inventario
+        </p>
+
+      </div>
+
+      <button
+        class="cerrar-modal-btn"
+        onclick="cerrarModalNovedad()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <!-- BODY -->
+
+    <div class="modal-novedad-body">
+
+      <div class="form-grid">
+
+        <div class="input-group">
+
+          <label>
+            Código
+          </label>
+
+          <input
+            type="text"
+            id="novedadCodigo"
+            placeholder="Código material"
+          >
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            Material
+          </label>
+
+          <input
+            type="text"
+            id="novedadMaterial"
+            placeholder="Nombre material"
+          >
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            Stock Sistema
+          </label>
+
+          <input
+            type="number"
+            id="novedadSistema"
+          >
+
+        </div>
+
+        <div class="input-group">
+
+          <label>
+            Conteo Físico
+          </label>
+
+          <input
+            type="number"
+            id="novedadFisico"
+          >
+
+        </div>
+
+      </div>
+
+      <div class="input-group">
+
+        <label>
+          Tipo Novedad
+        </label>
+
+        <select id="novedadTipo">
+
+          <option value="Faltante">
+            🔴 Faltante
+          </option>
+
+          <option value="Sobrante">
+            🟢 Sobrante
+          </option>
+
+          <option value="Dañado">
+            🟠 Dañado
+          </option>
+
+          <option value="Sin Ubicación">
+            📍 Sin Ubicación
+          </option>
+
+          <option value="Diferencia Conteo">
+            ⚖️ Diferencia Conteo
+          </option>
+
+          <option value="Material No Identificado">
+            ❓ Material No Identificado
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="input-group">
+
+        <label>
+          Observación
+        </label>
+
+        <textarea
+          id="novedadObservacion"
+          placeholder="Describa la novedad encontrada..."
+        ></textarea>
+
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="modal-novedad-footer">
+
+      <button
+        class="btn-danger"
+        onclick="cerrarModalNovedad()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        class="btn-primary"
+        id="guardarNovedadBtn"
+      >
+        Guardar Novedad
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
     </div>
 
