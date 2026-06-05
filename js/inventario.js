@@ -1546,4 +1546,164 @@ window.cerrarModalNovedad = function(){
 
 };
 
+// =====================================
+// GUARDAR NOVEDAD INVENTARIO
+// =====================================
+
+const guardarNovedadBtn =
+document.getElementById(
+  'guardarNovedadBtn'
+);
+
+if(guardarNovedadBtn){
+
+  guardarNovedadBtn.onclick =
+  async function(){
+
+    try{
+
+      const codigo =
+      document.getElementById(
+        'novedadCodigo'
+      ).value.trim();
+
+      const material =
+      document.getElementById(
+        'novedadMaterial'
+      ).value.trim();
+
+      const stockSistema =
+      document.getElementById(
+        'novedadSistema'
+      ).value;
+
+      const conteoFisico =
+      document.getElementById(
+        'novedadFisico'
+      ).value;
+
+      const tipo =
+      document.getElementById(
+        'novedadTipo'
+      ).value;
+
+      const observacion =
+      document.getElementById(
+        'novedadObservacion'
+      ).value.trim();
+
+      if(
+
+        !codigo ||
+        !material ||
+        !observacion
+
+      ){
+
+        alert(
+          '⚠️ Complete todos los campos obligatorios'
+        );
+
+        return;
+
+      }
+
+      const usuarioLogueado =
+
+      JSON.parse(
+
+        localStorage.getItem(
+          'usuarioLogueado'
+        )
+
+      );
+
+      const response =
+
+      await window.supabaseClient
+
+      .from(
+        'novedades_inventario'
+      )
+
+      .insert([{
+
+        codigo:
+        codigo,
+
+        material:
+        material,
+
+        stock_sistema:
+        Number(stockSistema),
+
+        conteo_fisico:
+        Number(conteoFisico),
+
+        tipo_novedad:
+        tipo,
+
+        observacion:
+        observacion,
+
+        usuario:
+        usuarioLogueado?.usuario || 'Sistema'
+
+      }]);
+
+      if(response.error){
+
+        console.log(
+          response.error
+        );
+
+        alert(
+          'Error guardando novedad'
+        );
+
+        return;
+
+      }
+
+      alert(
+        '✅ Novedad registrada correctamente'
+      );
+
+      cerrarModalNovedad();
+
+      document.getElementById(
+        'novedadCodigo'
+      ).value = '';
+
+      document.getElementById(
+        'novedadMaterial'
+      ).value = '';
+
+      document.getElementById(
+        'novedadSistema'
+      ).value = '';
+
+      document.getElementById(
+        'novedadFisico'
+      ).value = '';
+
+      document.getElementById(
+        'novedadObservacion'
+      ).value = '';
+
+    }
+
+    catch(error){
+
+      console.log(error);
+
+      alert(
+        'Error general'
+      );
+
+    }
+
+  };
+
+}
 
