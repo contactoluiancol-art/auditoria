@@ -1510,6 +1510,34 @@ window.iniciarRefreshInventario = function(){
 
   window.iniciarRefreshInventario();
 
+
+  // =====================================
+// MODAL NOVEDAD
+// =====================================
+
+window.abrirModalNovedad = function(){
+
+  document
+  .getElementById(
+    'modalNovedad'
+  )
+  .classList.add(
+    'active'
+  );
+
+};
+
+window.cerrarModalNovedad = function(){
+
+  document
+  .getElementById(
+    'modalNovedad'
+  )
+  .classList.remove(
+    'active'
+  );
+
+};
 // ========================================
 // FIN BLOQUE PRINCIPAL
 // ========================================
