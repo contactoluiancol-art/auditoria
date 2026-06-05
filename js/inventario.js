@@ -1454,8 +1454,6 @@ renderHistorial();
 
 actualizarKPIs();
 
-window.iniciarRefreshInventario();
-
   }
 
 window.abrirSiesa = function(){
