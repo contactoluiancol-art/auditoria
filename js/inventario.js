@@ -1508,13 +1508,7 @@ window.iniciarRefreshInventario = function(){
 
 window.iniciarRefreshInventario();
 
-renderNovedades();
 
-setInterval(function(){
-
-  renderNovedades();
-
-},5000);
 // =====================================
 // MODAL NOVEDADES INVENTARIO
 // =====================================
@@ -1884,3 +1878,11 @@ window.eliminarNovedad = async function(id){
   }
 
 };
+
+renderNovedades();
+
+setInterval(function(){
+
+  renderNovedades();
+
+},5000);
