@@ -342,9 +342,10 @@ async function guardarRecepcion(){
 
     ){
 
-      alert(
-        'Complete todos los campos'
-      );
+  mostrarAlerta(
+  '¡Ups! 😕',
+  'Debes completar todos los campos'
+);
 
       return;
 
@@ -1688,7 +1689,36 @@ window.cerrarModalObservacion = function(){
 };
 
 
+window.mostrarAlerta = function(
+  titulo,
+  mensaje
+){
 
+  document.getElementById(
+    'tituloAlerta'
+  ).innerText = titulo;
+
+  document.getElementById(
+    'mensajeAlerta'
+  ).innerText = mensaje;
+
+  document.getElementById(
+    'modalAlerta'
+  ).classList.add(
+    'active'
+  );
+
+};
+
+window.cerrarAlerta = function(){
+
+  document.getElementById(
+    'modalAlerta'
+  ).classList.remove(
+    'active'
+  );
+
+};
 
 
 // ======================
