@@ -1814,9 +1814,9 @@ window.renderNovedades = async function(){
 
       '<td>' +
 
-      '<button class="btn-eliminar" onclick="eliminarNovedad(' +
-      item.id +
-      ')">' +
+     '<button class="btn-eliminar" onclick="abrirModalEliminar(' +
+item.id +
+')">'
 
       'Eliminar' +
 
@@ -1845,13 +1845,13 @@ window.eliminarNovedad = async function(id){
 
   try{
 
-    alert('Eliminando ID: ' + id);
-
     const response =
 
     await window.supabaseClient
 
-    .from('novedades_inventario')
+    .from(
+      'novedades_inventario'
+    )
 
     .delete()
 
@@ -1860,23 +1860,21 @@ window.eliminarNovedad = async function(id){
       Number(id)
     );
 
-    alert(
-      JSON.stringify(response)
-    );
-
     if(response.error){
 
+      console.log(
+        response.error
+      );
+
       alert(
-        response.error.message
+        'Error eliminando novedad'
       );
 
       return;
 
     }
 
-    alert(
-      'Eliminado correctamente'
-    );
+    cerrarModalEliminar();
 
     renderNovedades();
 
@@ -1884,21 +1882,11 @@ window.eliminarNovedad = async function(id){
 
   catch(error){
 
-    alert(
-      error.message
-    );
+    console.log(error);
 
   }
 
 };
-
-renderNovedades();
-
-setInterval(function(){
-
-  renderNovedades();
-
-},5000);
 
 // =====================================
 // MODAL ELIMINAR
