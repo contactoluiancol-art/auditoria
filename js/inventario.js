@@ -1888,6 +1888,35 @@ window.eliminarNovedad = async function(id){
 
 };
 
+
+const btnConfirmarEliminar =
+
+document.getElementById(
+  'btnConfirmarEliminar'
+);
+
+if(btnConfirmarEliminar){
+
+  btnConfirmarEliminar.onclick =
+  function(){
+
+    if(
+
+      window.idEliminarNovedad
+
+    ){
+
+      eliminarNovedad(
+
+        window.idEliminarNovedad
+
+      );
+
+    }
+
+  };
+
+}
 // =====================================
 // MODAL ELIMINAR
 // =====================================
