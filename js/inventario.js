@@ -1856,6 +1856,8 @@ window.eliminarNovedad = async function(id){
 
     }
 
+    const response =
+
     await window.supabaseClient
 
     .from('novedades_inventario')
@@ -1865,6 +1867,26 @@ window.eliminarNovedad = async function(id){
     .eq(
       'id',
       Number(id)
+    );
+
+    console.log(response);
+
+    if(response.error){
+
+      console.log(
+        response.error
+      );
+
+      alert(
+        'Error eliminando novedad'
+      );
+
+      return;
+
+    }
+
+    alert(
+      'Novedad eliminada correctamente'
     );
 
     renderNovedades();
