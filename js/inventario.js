@@ -1814,13 +1814,13 @@ window.renderNovedades = async function(){
 
       '<td>' +
 
-     '<button class="btn-eliminar" onclick="abrirModalEliminar(' +
+'<button class="btn-eliminar" onclick="abrirModalEliminar(' +
 item.id +
-')">'
+')">' +
 
-      'Eliminar' +
+'Eliminar' +
 
-      '</button>' +
+'</button>' +
 
       '</td>' +
 
@@ -1860,19 +1860,18 @@ window.eliminarNovedad = async function(id){
       Number(id)
     );
 
-    if(response.error){
+   if(response.error){
 
-      console.log(
-        response.error
-      );
+  console.log(response.error);
 
-      alert(
-        'Error eliminando novedad'
-      );
+  alert(
+    'Error guardando novedad: ' +
+    response.error.message
+  );
 
-      return;
+  return;
 
-    }
+}
 
     cerrarModalEliminar();
 
