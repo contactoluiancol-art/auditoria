@@ -1844,60 +1844,9 @@ window.renderNovedades = async function(){
 
 window.eliminarNovedad = async function(id){
 
-  try{
-
-    const confirmar = confirm(
-      '¿Eliminar novedad?'
-    );
-
-    if(!confirmar){
-
-      return;
-
-    }
-
-    const response =
-
-    await window.supabaseClient
-
-    .from('novedades_inventario')
-
-    .delete()
-
-    .eq(
-      'id',
-      Number(id)
-    );
-
-    console.log(response);
-
-    if(response.error){
-
-      console.log(
-        response.error
-      );
-
-      alert(
-        'Error eliminando novedad'
-      );
-
-      return;
-
-    }
-
-    alert(
-      'Novedad eliminada correctamente'
-    );
-
-    renderNovedades();
-
-  }
-
-  catch(error){
-
-    console.log(error);
-
-  }
+  alert(
+    'Intentando eliminar ID: ' + id
+  );
 
 };
 
