@@ -1546,7 +1546,6 @@ window.cerrarModalNovedad = function(){
   }
 
 };
-
 // =====================================
 // GUARDAR NOVEDAD INVENTARIO
 // =====================================
@@ -1594,11 +1593,9 @@ if(guardarNovedadBtn){
       ).value.trim();
 
       if(
-
         !codigo ||
         !material ||
         !observacion
-
       ){
 
         alert(
@@ -1654,20 +1651,24 @@ if(guardarNovedadBtn){
 
       if(response.error){
 
-  console.log(response.error);
+        console.log(
+          response.error
+        );
 
-  alert(
-    'ERROR: ' +
-    response.error.message
-  );
+        alert(
+          'ERROR: ' +
+          response.error.message
+        );
 
-  return;
+        return;
 
-}
+      }
 
       alert(
         '✅ Novedad registrada correctamente'
       );
+
+      await renderNovedades();
 
       cerrarModalNovedad();
 
@@ -1692,21 +1693,21 @@ if(guardarNovedadBtn){
       ).value = '';
 
     }
-catch(error){
 
-  console.log(error);
+    catch(error){
 
-  alert(
-    'ERROR GENERAL: ' +
-    error.message
-  );
+      console.log(error);
 
-}
+      alert(
+        'ERROR GENERAL: ' +
+        error.message
+      );
+
+    }
 
   };
 
 }
-
 
 // =====================================
 // RENDER NOVEDADES INVENTARIO
