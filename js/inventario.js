@@ -1841,12 +1841,54 @@ window.renderNovedades = async function(){
 // =====================================
 // ELIMINAR NOVEDAD
 // =====================================
-
 window.eliminarNovedad = async function(id){
 
-  alert(
-    'Intentando eliminar ID: ' + id
-  );
+  try{
+
+    alert('Eliminando ID: ' + id);
+
+    const response =
+
+    await window.supabaseClient
+
+    .from('novedades_inventario')
+
+    .delete()
+
+    .eq(
+      'id',
+      Number(id)
+    );
+
+    alert(
+      JSON.stringify(response)
+    );
+
+    if(response.error){
+
+      alert(
+        response.error.message
+      );
+
+      return;
+
+    }
+
+    alert(
+      'Eliminado correctamente'
+    );
+
+    renderNovedades();
+
+  }
+
+  catch(error){
+
+    alert(
+      error.message
+    );
+
+  }
 
 };
 
