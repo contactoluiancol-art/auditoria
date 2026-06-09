@@ -675,6 +675,55 @@ MODAL NOVEDADES INVENTARIO
 
 </div>
 
+  <!-- =====================================
+MODAL CONFIRMAR ELIMINACIÓN
+===================================== -->
+
+<div
+  class="modal-alerta"
+  id="modalEliminar"
+>
+
+  <div class="modal-alerta-content">
+
+    <div class="alerta-icon">
+      ⚠️
+    </div>
+
+    <h2>
+      Atención
+    </h2>
+
+    <h3>
+      ¿Desea eliminar este registro?
+    </h3>
+
+    <p>
+      Esta acción no podrá deshacerse.
+    </p>
+
+    <div class="button-group">
+
+      <button
+        class="btn-primary"
+        onclick="cerrarModalEliminar()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        class="btn-danger"
+        id="btnConfirmarEliminar"
+      >
+        Eliminar
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
 <!-- ===================================== -->
 <!-- INPUT EXCEL -->
 <!-- ===================================== -->
