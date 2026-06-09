@@ -1654,17 +1654,16 @@ if(guardarNovedadBtn){
 
       if(response.error){
 
-        console.log(
-          response.error
-        );
+  console.log(response.error);
 
-        alert(
-          'Error guardando novedad'
-        );
+  alert(
+    'ERROR: ' +
+    response.error.message
+  );
 
-        return;
+  return;
 
-      }
+}
 
       alert(
         '✅ Novedad registrada correctamente'
@@ -1693,16 +1692,16 @@ if(guardarNovedadBtn){
       ).value = '';
 
     }
+catch(error){
 
-    catch(error){
+  console.log(error);
 
-      console.log(error);
+  alert(
+    'ERROR GENERAL: ' +
+    error.message
+  );
 
-      alert(
-        'Error general'
-      );
-
-    }
+}
 
   };
 
