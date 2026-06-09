@@ -1899,3 +1899,37 @@ setInterval(function(){
   renderNovedades();
 
 },5000);
+
+// =====================================
+// MODAL ELIMINAR
+// =====================================
+
+window.idEliminarNovedad = null;
+
+window.abrirModalEliminar = function(id){
+
+  window.idEliminarNovedad = id;
+
+  document
+  .getElementById(
+    'modalEliminar'
+  )
+  .classList.add(
+    'active'
+  );
+
+};
+
+window.cerrarModalEliminar = function(){
+
+  document
+  .getElementById(
+    'modalEliminar'
+  )
+  .classList.remove(
+    'active'
+  );
+
+  window.idEliminarNovedad = null;
+
+};
