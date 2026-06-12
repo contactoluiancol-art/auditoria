@@ -2352,6 +2352,8 @@ RESPONSIVE
   cursor:pointer;
 
   transition:.3s;
+  font-size: 11px;
+    height: 33px;
 
 }
 
