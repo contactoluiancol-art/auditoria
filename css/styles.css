@@ -2803,25 +2803,7 @@ RESPONSIVE
 
   }
 
-}
 
-.hero-topbar{
-
-  position:absolute;
-
-  top:30px;
-
-  right:30px;
-
-  display:flex;
-
-  align-items:center;
-
-  gap:15px;
-
-  z-index:10;
-
-}
 
 .hero-avatar{
 
@@ -2838,25 +2820,6 @@ RESPONSIVE
   align-items:center;
 
   justify-content:center;
-
-}
-
-.hero-notification .notification-btn{
-
-  width:55px;
-
-  height:55px;
-
-  border:none;
-
-  border-radius:16px;
-
-  background:white;
-
-  cursor:pointer;
-
-  box-shadow:
-  0 8px 25px rgba(0,0,0,.15);
 
 }
 
@@ -2972,7 +2935,17 @@ RESPONSIVE
 
 .hero-right{
 
-  width:300px;
+  width:320px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:12px;
+
+}
+
+.hero-kpis-grid{
 
   display:grid;
 
