@@ -52,10 +52,6 @@ if(guardarRecepcionBtn){
 
 }
 
-
-
-
-
 // ======================
 // CREAR NOTIFICACION
 // ======================
