@@ -2079,13 +2079,13 @@ BOTÓN SIESA
 .btn-success,
 .btn-ver{
 
-  height:42px;
+  height:0px;
 
   padding:0 18px;
 
   border:none;
 
-  border-radius:14px;
+  border-radius:0px;
 
   background:
   linear-gradient(
