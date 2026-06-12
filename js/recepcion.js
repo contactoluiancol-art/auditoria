@@ -1,16 +1,4 @@
 // ======================
-// EVITAR DUPLICAR
-// ======================
-
-if(typeof window.recepcionCargado === 'undefined'){
-
-window.recepcionCargado = true;
-
-
-
-
-
-// ======================
 // VARIABLES GLOBALES
 // ======================
 
@@ -1727,4 +1715,4 @@ window.actualizarKPIsRecepcion();
 
 window.iniciarRefreshRecepcion();
 
-}
+
