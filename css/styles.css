@@ -2367,7 +2367,7 @@ RESPONSIVE
 
   width:100%;
 
-  min-height:500px;
+  min-height:320px;
 
   border-radius:30px;
 
@@ -2402,7 +2402,7 @@ RESPONSIVE
 
   gap:50px;
 
-  padding:60px;
+  padding:35px 45px;
 
   min-height:500px;
 
@@ -2416,7 +2416,7 @@ RESPONSIVE
 
 .hero-right{
 
-  width:380px;
+  width:300px;
 
   display:grid;
 
@@ -2452,7 +2452,7 @@ RESPONSIVE
 
 .hero-left h1{
 
-  font-size:64px;
+  font-size:48px;
 
   line-height:1.1;
 
@@ -2474,11 +2474,11 @@ RESPONSIVE
 
   color:#dbeafe;
 
-  font-size:18px;
+  font-size:16px;
 
   line-height:1.8;
 
-  max-width:700px;
+  max-width:600px;
 
   margin-bottom:30px;
 
@@ -2523,10 +2523,11 @@ RESPONSIVE
 
   border-radius:20px;
 
-  padding:22px;
+  padding:18px;
 
   box-shadow:
   0 8px 25px rgba(0,0,0,.12);
+  min-height:120px;
 
 }
 
