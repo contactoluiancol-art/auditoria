@@ -2487,24 +2487,6 @@ RESPONSIVE
   gap:12px;
   margin-top:25px;
 }
-
-.btn-primary{
-
-  height:48px;
-
-  padding:0 24px;
-
-  border:none;
-
-  border-radius:14px;
-
-  background:
-  linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8
-  );
-
   color:white;
 
   font-weight:700;
