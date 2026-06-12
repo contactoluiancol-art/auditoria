@@ -2779,3 +2779,80 @@ RESPONSIVE
   }
 
 }
+
+.hero-topbar{
+
+  position:absolute;
+
+  top:30px;
+
+  right:30px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+
+  z-index:10;
+
+}
+
+.hero-user{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  background:rgba(255,255,255,.12);
+
+  backdrop-filter:blur(10px);
+
+  padding:10px 18px;
+
+  border-radius:14px;
+
+  color:white;
+
+  font-weight:600;
+
+}
+
+.hero-avatar{
+
+  width:40px;
+
+  height:40px;
+
+  border-radius:50%;
+
+  background:#2563eb;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+}
+
+.hero-notification .notification-btn{
+
+  width:55px;
+
+  height:55px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:white;
+
+  cursor:pointer;
+
+  box-shadow:
+  0 8px 25px rgba(0,0,0,.15);
+
+}
