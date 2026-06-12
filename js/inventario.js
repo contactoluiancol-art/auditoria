@@ -1453,21 +1453,6 @@ renderInventario();
 renderHistorial();
 
 actualizarKPIs();
-
-  }
-
-window.abrirSiesa = function(){
-
-  window.open(
-
-    'https://siesaerp05.siesacloud.com/~~App12/',
-
-    '_blank'
-
-  );
-
-};
-
 // ========================================
 // REFRESH INVENTARIO
 // ========================================
