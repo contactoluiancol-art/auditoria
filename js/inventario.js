@@ -1,11 +1,4 @@
 
-// ========================================
-// EVITAR DUPLICAR SCRIPT
-// ========================================
-
-if(typeof window.inventarioCargado === 'undefined'){
-
-window.inventarioCargado = true;
 
 // ========================================
 // VARIABLES GLOBALES
@@ -1934,4 +1927,3 @@ window.cerrarModalEliminar = function(){
   window.idEliminarNovedad = null;
 
 };
-}
