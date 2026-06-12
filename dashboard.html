@@ -265,284 +265,346 @@
       </header>
 
 
+<!-- =========================
+HERO DASHBOARD
+========================= -->
 
+<div class="hero-dashboard">
 
+  <div class="hero-content">
 
-      <!-- =========================
-      CONTENT
-      ========================= -->
+    <div class="hero-left">
 
-      <section
-        class="content"
-        id="mainContent"
-      >
+      <span class="hero-badge">
 
+        🚀 ERP AUDITORÍA Y LOGÍSTICA
 
+      </span>
 
+      <h1>
 
+        Bienvenido
+        <span id="heroUsuario">
+          Usuario
+        </span>
 
-        <!-- =========================
-        WELCOME
-        ========================= -->
+      </h1>
 
-        <div class="welcome-banner">
+      <h2>
 
-          <div class="welcome-left">
+        Control total de inventarios,
+        auditorías y operaciones
 
-            <!-- ICON -->
+      </h2>
 
-            <div class="welcome-icon">
+      <p>
 
-              📋
+        Centraliza inventario,
+        auditorías,
+        recepción,
+        usuarios,
+        proyectos y compras
+        desde una única plataforma.
 
-            </div>
+      </p>
 
+      <div class="hero-buttons">
 
+        <button class="btn-primary">
 
+          📊 Dashboard
 
+        </button>
 
-            <!-- TEXT -->
+        <button class="btn-secondary">
 
-            <div>
+          📋 Actividad
 
-              <h1>
+        </button>
 
-                Bienvenido al sistema
+      </div>
 
-              </h1>
+    </div>
 
+    <div class="hero-right">
 
+      <div class="hero-kpi">
 
+        <span>
+          📦 Inventario
+        </span>
 
+        <strong id="heroInventario">
+          0
+        </strong>
 
-              <p>
+      </div>
 
-                Gestiona y controla
-                auditorías, inventarios,
-                recepción y usuarios
-                de forma profesional.
+      <div class="hero-kpi">
 
-              </p>
+        <span>
+          📋 Auditorías
+        </span>
 
-            </div>
+        <strong id="heroAuditorias">
+          0
+        </strong>
 
-          </div>
+      </div>
 
-        </div>
+      <div class="hero-kpi">
 
+        <span>
+          ⚠️ Novedades
+        </span>
 
+        <strong id="heroNovedades">
+          0
+        </strong>
 
+      </div>
 
+      <div class="hero-kpi">
 
-        <!-- =========================
-        DASHBOARD GRID
-        ========================= -->
+        <span>
+          👥 Usuarios
+        </span>
 
-        <div class="dashboard-grid">
+        <strong id="heroUsuarios">
+          0
+        </strong>
 
+      </div>
 
+    </div>
 
+  </div>
 
+</div>
 
-          <!-- INVENTARIO -->
+<!-- =========================
+KPIS PRINCIPALES
+========================= -->
 
-          <div
-            id="cardInventario"
-            class="dashboard-card"
-          >
+<div class="dashboard-kpis">
 
-            <div class="card-icon">
+  <div class="kpi-card">
 
-              📦
+    <div class="kpi-icon">
+      📦
+    </div>
 
-            </div>
+    <div>
 
+      <h3>
+        Inventario
+      </h3>
 
+      <span id="kpiInventario">
+        0 Materiales
+      </span>
 
+    </div>
 
+  </div>
 
-            <h3>
+  <div class="kpi-card">
 
-              Inventario
+    <div class="kpi-icon">
+      ⚠️
+    </div>
 
-            </h3>
+    <div>
 
+      <h3>
+        Novedades
+      </h3>
 
+      <span id="kpiNovedades">
+        0 Abiertas
+      </span>
 
+    </div>
 
+  </div>
 
-            <p>
+  <div class="kpi-card">
 
-              Gestión y control
-              de inventarios.
+    <div class="kpi-icon">
+      📋
+    </div>
 
-            </p>
+    <div>
 
-          </div>
+      <h3>
+        Auditorías
+      </h3>
 
+      <span id="kpiAuditorias">
+        0 Activas
+      </span>
 
+    </div>
 
+  </div>
 
+  <div class="kpi-card">
 
-          <!-- AUDITORIAS -->
+    <div class="kpi-icon">
+      👥
+    </div>
 
-          <div
-            id="cardAuditorias"
-            class="dashboard-card"
-          >
+    <div>
 
-            <div class="card-icon">
+      <h3>
+        Usuarios
+      </h3>
 
-              📋
+      <span id="kpiUsuarios">
+        0 Registrados
+      </span>
 
-            </div>
+    </div>
 
+  </div>
 
+</div>
 
+<!-- =========================
+ACCESOS RAPIDOS
+========================= -->
 
+<div class="quick-access">
 
-            <h3>
+  <h2>
 
-              Auditorías
+    Accesos Rápidos
 
-            </h3>
+  </h2>
 
+  <div class="quick-grid">
 
+    <div
+      id="cardInventario"
+      class="quick-card"
+    >
 
+      <div class="quick-icon">
+        📦
+      </div>
 
+      <h3>
+        Inventario
+      </h3>
 
-            <p>
+      <p>
+        Control de materiales
+      </p>
 
-              Seguimiento de
-              auditorías.
+    </div>
 
-            </p>
+    <div
+      id="cardAuditorias"
+      class="quick-card"
+    >
 
-          </div>
+      <div class="quick-icon">
+        📋
+      </div>
 
+      <h3>
+        Auditorías
+      </h3>
 
+      <p>
+        Seguimiento auditor
+      </p>
 
+    </div>
 
+    <div
+      id="cardRecepcion"
+      class="quick-card"
+    >
 
-          <!-- RECEPCION -->
+      <div class="quick-icon">
+        📥
+      </div>
 
-          <div
-            id="cardRecepcion"
-            class="dashboard-card"
-          >
+      <h3>
+        Recepción
+      </h3>
 
-            <div class="card-icon">
+      <p>
+        Control de ingresos
+      </p>
 
-              📥
+    </div>
 
-            </div>
+    <div
+      id="cardUsuarios"
+      class="quick-card"
+    >
 
+      <div class="quick-icon">
+        👥
+      </div>
 
+      <h3>
+        Usuarios
+      </h3>
 
+      <p>
+        Roles y permisos
+      </p>
 
+    </div>
 
-            <h3>
+  </div>
 
-              Recepción
+</div>
 
-            </h3>
+<!-- =========================
+ACTIVIDAD RECIENTE
+========================= -->
 
+<div class="activity-panel">
 
+  <div class="activity-header">
 
+    <h2>
 
+      🕓 Actividad Reciente
 
-            <p>
+    </h2>
 
-              Recepción y control
-              de mercancía.
+  </div>
 
-            </p>
+  <div
+    class="activity-list"
+    id="actividadReciente"
+  >
 
-          </div>
+    <div class="activity-item">
 
+      <span>
+        📦
+      </span>
 
+      <p>
 
+        No hay actividad reciente
 
+      </p>
 
-          <!-- USUARIOS -->
+    </div>
 
-          <div
-            id="cardUsuarios"
-            class="dashboard-card"
-          >
+  </div>
 
-            <div class="card-icon">
+</div>
 
-              👥
 
-            </div>
-
-
-
-
-
-            <h3>
-
-              Usuarios
-
-            </h3>
-
-
-
-
-
-            <p>
-
-              Gestión de usuarios
-              y permisos.
-
-            </p>
-
-          </div>
-
-
-
-
-
-          <!-- HISTORIAL -->
-
-          <div
-            id="cardHistorial"
-            class="dashboard-card"
-          >
-
-            <div class="card-icon">
-
-              🕓
-
-            </div>
-
-
-
-
-
-            <h3>
-
-              Historial
-
-            </h3>
-
-
-
-
-
-            <p>
-
-              Seguimiento de
-              movimientos.
-
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
+    
 
     </main>
 
