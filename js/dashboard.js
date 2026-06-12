@@ -618,34 +618,28 @@ window.renderNotificaciones = function(){
   // ======================
   // MOSTRAR
   // ======================
+notificaciones.forEach(function(item){
 
-  notificaciones.forEach(function(item){
+  lista.innerHTML +=
 
-    lista.innerHTML +=
+  '<div class="notificacion-item" onclick="mostrarModulo(\'recepcion\')">' +
 
-    '<div class="notificacion-item">' +
+    '<p>' +
 
-      '<p>' +
+    item.mensaje +
 
-      item.mensaje +
+    '</p>' +
 
-      '</p>' +
+    '<span>' +
 
-      '<span>' +
+    item.fecha +
 
-      item.fecha +
+    '</span>' +
 
-      '</span>' +
+  '</div>';
 
-    '</div>';
-
-  });
-
+});
 };
-
-
-
-
 
 // ======================
 // LIMPIAR NOTIFICACIONES
@@ -831,7 +825,7 @@ window.addEventListener(
 // MOSTRAR MODULO
 // ======================
 
-function mostrarModulo(modulo){
+window.mostrarModulo = function(modulo){
 
   const contenido =
 
