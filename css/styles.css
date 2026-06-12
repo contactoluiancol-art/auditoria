@@ -2437,15 +2437,9 @@ RESPONSIVE
 }
 
 .hero-left h2{
-
-  font-size:34px;
-
+  font-size:22px;
+  margin-bottom:15px;
   color:white;
-
-  margin-bottom:18px;
-
-  font-weight:700;
-
 }
 
 .hero-left p{
@@ -2463,11 +2457,40 @@ RESPONSIVE
 }
 
 .hero-buttons{
-
   display:flex;
+  gap:12px;
+  margin-top:25px;
+}
 
-  gap:15px;
+.hero-buttons button{
+  height:42px;
+  padding:0 18px;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.25s;
+  border:none;
+}
 
+.btn-primary{
+  background:#0d6efd;
+  color:white;
+  box-shadow:0 4px 12px rgba(13,110,253,.25);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+}
+
+.btn-secondary{
+  background:rgba(255,255,255,.12);
+  color:white;
+  border:1px solid rgba(255,255,255,.20);
+}
+
+.btn-secondary:hover{
+  background:rgba(255,255,255,.18);
 }
 
 .btn-primary{
@@ -2755,11 +2778,11 @@ RESPONSIVE
 
   }
 
-  .hero-left h1{
-
-    font-size:42px;
-
-  }
+.hero-left h1{
+  font-size:42px;
+  font-weight:800;
+  margin-bottom:8px;
+}
 
   .hero-left h2{
 
