@@ -1949,3 +1949,4 @@ window.cerrarModalEliminar = function(){
   window.idEliminarNovedad = null;
 
 };
+}
