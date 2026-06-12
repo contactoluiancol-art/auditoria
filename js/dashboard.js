@@ -1279,7 +1279,7 @@ document.addEventListener(
     const card =
 
     e.target.closest(
-      '.dashboard-card'
+      '.quick-card'
     );
 
 
