@@ -2404,7 +2404,7 @@ RESPONSIVE
 
   padding:35px 45px;
 
-  min-height:500px;
+  min-height:0px;
 
 }
 
@@ -2416,13 +2416,13 @@ RESPONSIVE
 
 .hero-right{
 
-  width:300px;
+  width:280px;
 
   display:grid;
 
   grid-template-columns:1fr 1fr;
 
-  gap:18px;
+  gap:12px;
 
 }
 
@@ -2521,13 +2521,20 @@ RESPONSIVE
 
   background:white;
 
-  border-radius:20px;
+  border-radius:18px;
 
-  padding:18px;
+  padding:14px 18px;
+
+  min-height:95px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
 
   box-shadow:
-  0 8px 25px rgba(0,0,0,.12);
-  min-height:120px;
+  0 8px 20px rgba(0,0,0,.10);
 
 }
 
@@ -2552,6 +2559,20 @@ RESPONSIVE
   font-weight:800;
 
 }
+
+.hero-kpi h2,
+.hero-kpi strong{
+
+  font-size:34px;
+
+  font-weight:800;
+
+  margin-top:5px;
+
+}
+
+
+
 
 /* ========================================
    ACCESOS RAPIDOS
@@ -2804,23 +2825,11 @@ RESPONSIVE
 
 .hero-user{
 
-  display:flex;
+  position:absolute;
 
-  align-items:center;
+  top:25px;
 
-  gap:12px;
-
-  background:rgba(255,255,255,.12);
-
-  backdrop-filter:blur(10px);
-
-  padding:10px 18px;
-
-  border-radius:14px;
-
-  color:white;
-
-  font-weight:600;
+  right:90px;
 
 }
 
@@ -2858,5 +2867,16 @@ RESPONSIVE
 
   box-shadow:
   0 8px 25px rgba(0,0,0,.15);
+
+}
+
+
+.hero-notification{
+
+  position:absolute;
+
+  top:25px;
+
+  right:25px;
 
 }
