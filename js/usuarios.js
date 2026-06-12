@@ -1,17 +1,5 @@
 
 // ======================
-// EVITAR DUPLICAR
-// ======================
-
-if(typeof window.usuariosCargado === 'undefined'){
-
-window.usuariosCargado = true;
-
-
-
-
-
-// ======================
 // EVENTO
 // ======================
 
@@ -1234,6 +1222,3 @@ function limpiarFormulario(){
 // ======================
 
 renderUsuarios();
-
-}
-
