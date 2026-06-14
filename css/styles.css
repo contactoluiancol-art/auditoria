@@ -40,64 +40,13 @@ body{
 LAYOUT
 ========================= */
 
-.dashboard{
-
-  display:flex;
-
-  width:100%;
-
-  min-height:100vh;
-
-}
 
 /* =========================
 SIDEBAR
 ========================= */
 
-.sidebar{
 
-  position:fixed;
 
-  top:0;
-  left:0;
-  right:0;
-
-  width:100%;
-  height:80px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  padding:0 25px;
-
-  background:
-  linear-gradient(
-    135deg,
-    #0f172a,
-    #1e3a8a
-  );
-
-  z-index:9999;
-
-  box-shadow:
-  0 6px 20px rgba(0,0,0,.15);
-
-}
-
-.logo{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:12px;
-
-  margin:0;
-
-}
 
 .logo img{
 
@@ -125,39 +74,6 @@ SIDEBAR
 
 }
 
-}
-
-.sidebar ul{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-  list-style:none;
-
-}
-
-.sidebar li{
-
-  margin:0;
-
-  padding:12px 18px;
-
-  border-radius:12px;
-
-  color:white;
-
-  font-size:13px;
-
-  font-weight:600;
-
-  cursor:pointer;
-
-  transition:.25s;
-
-}
 
 .sidebar li:hover{
 
@@ -179,17 +95,6 @@ SIDEBAR
   );
 
 }
-.logout-btn{
-
-  width:auto;
-
-  min-width:130px;
-
-  height:42px;
-
-  margin:0;
-
-}
 
 .logout-btn:hover{
 
@@ -202,17 +107,7 @@ SIDEBAR
 MAIN
 ========================= */
 
-.main-content{
 
-  width:100%;
-
-  min-height:100vh;
-
-  margin-left:0;
-
-  padding-top:90px;
-
-}
 
 /* =========================
 TOPBAR
@@ -2949,3 +2844,168 @@ min-height:120px;
   margin-top:10px;
 
 }
+
+
+/* ========================================
+NAVBAR SUPERIOR ERP
+======================================== */
+
+.top-navbar{
+
+  height:80px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #1e3a8a
+  );
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:0 25px;
+
+  position:sticky;
+
+  top:0;
+
+  z-index:9999;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,.15);
+
+}
+
+.navbar-logo{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+}
+
+.navbar-logo img{
+
+  width:55px;
+
+}
+
+.navbar-logo h2{
+
+  color:white;
+
+  font-size:20px;
+
+  margin:0;
+
+}
+
+.navbar-logo p{
+
+  color:#cbd5e1;
+
+  font-size:12px;
+
+  margin:0;
+
+}
+
+.navbar-menu{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+.nav-btn{
+
+  border:none;
+
+  background:transparent;
+
+  color:white;
+
+  padding:10px 16px;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+  font-weight:600;
+
+  transition:.25s;
+
+}
+
+.nav-btn:hover{
+
+  background:
+  rgba(255,255,255,.12);
+
+}
+
+.nav-btn.active{
+
+  background:
+  rgba(255,255,255,.18);
+
+}
+
+.navbar-actions{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+
+}
+
+.navbar-user{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  color:white;
+
+  font-weight:600;
+
+}
+
+.logout-mini{
+
+  border:none;
+
+  height:40px;
+
+  padding:0 18px;
+
+  border-radius:12px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color:white;
+
+  cursor:pointer;
+
+  font-weight:600;
+
+}
+
