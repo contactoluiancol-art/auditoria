@@ -3009,3 +3009,126 @@ NAVBAR SUPERIOR ERP
 
 }
 
+/* ======================================
+KPIs NUEVOS DASHBOARD
+====================================== */
+
+.dashboard-kpis{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(4,1fr);
+
+  gap:20px;
+
+  margin:25px 0 40px;
+
+}
+
+.dashboard-kpi{
+
+  background:#ffffff;
+
+  border-radius:18px;
+
+  padding:20px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:18px;
+
+  box-shadow:
+  0 8px 20px rgba(0,0,0,.08);
+
+  transition:.25s;
+
+}
+
+.dashboard-kpi:hover{
+
+  transform:
+  translateY(-3px);
+
+}
+
+.kpi-icon{
+
+  width:60px;
+  height:60px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:15px;
+
+  font-size:30px;
+
+}
+
+.products .kpi-icon{
+
+  background:#eef4ff;
+
+}
+
+.recepciones .kpi-icon{
+
+  background:#e9f9ee;
+
+}
+
+.auditorias .kpi-icon{
+
+  background:#f3edff;
+
+}
+
+.alertas .kpi-icon{
+
+  background:#fff0e8;
+
+}
+
+.kpi-info{
+
+  display:flex;
+
+  flex-direction:column;
+
+}
+
+.kpi-info span{
+
+  color:#64748b;
+
+  font-size:14px;
+
+  font-weight:500;
+
+}
+
+.kpi-info strong{
+
+  font-size:38px;
+
+  color:#0f172a;
+
+  margin:4px 0;
+
+  line-height:1;
+
+}
+
+.kpi-info small{
+
+  color:#16a34a;
+
+  font-weight:600;
+
+}
