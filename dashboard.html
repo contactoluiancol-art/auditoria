@@ -10,29 +10,120 @@
 
 <div class="dashboard"> 
 
-  <aside class="sidebar">
+  <header class="top-navbar">
 
-    <div class="logo">
-      <img src="img/logo-electro.png.png" alt="Logo">
+  <div class="navbar-logo">
+
+    <img
+      src="img/logo-electro.png.png"
+      alt="Logo"
+    >
+
+    <div>
+
       <h2>AUDITORIA</h2>
+
       <p>Auditoría Logística</p>
+
     </div>
 
-    <nav>
-      <ul>
-        <li id="dashboardMenu" class="active">🏠 Dashboard</li>
-        <li id="inventarioMenu">📦 Inventario</li>
-        <li id="auditoriasMenu">📋 Auditorías</li>
-        <li id="recepcionMenu">📥 Recepción</li>
-        <li id="usuariosMenu">👥 Usuarios</li>
-      </ul>
-    </nav>
+  </div>
 
-    <button id="cerrarSesionBtn" class="logout-btn">
-      Cerrar Sesión
+  <nav class="navbar-menu">
+
+    <button
+      id="dashboardMenu"
+      class="nav-btn active"
+    >
+      🏠 Dashboard
     </button>
 
-  </aside>
+    <button
+      id="inventarioMenu"
+      class="nav-btn"
+    >
+      📦 Inventario
+    </button>
+
+    <button
+      id="auditoriasMenu"
+      class="nav-btn"
+    >
+      📋 Auditorías
+    </button>
+
+    <button
+      id="recepcionMenu"
+      class="nav-btn"
+    >
+      📥 Recepción
+    </button>
+
+    <button
+      id="usuariosMenu"
+      class="nav-btn"
+    >
+      👥 Usuarios
+    </button>
+
+  </nav>
+
+  <div class="navbar-actions">
+
+    <div class="hero-notification">
+
+      <button
+        class="notification-btn"
+        id="campanaBtn"
+      >
+
+        🔔
+
+        <span
+          class="notification-count"
+          id="contadorNotificaciones"
+        >
+          0
+        </span>
+
+      </button>
+
+      <div
+        id="panelNotificaciones"
+        class="notifications-dropdown"
+      >
+
+        <div
+          id="listaNotificaciones"
+          class="notifications-list"
+        ></div>
+
+      </div>
+
+    </div>
+
+    <div class="navbar-user">
+
+      <div class="hero-avatar">
+        👤
+      </div>
+
+      <span id="usuarioNombre">
+        admin
+      </span>
+
+    </div>
+
+    <button
+      id="cerrarSesionBtn"
+      class="logout-mini"
+    >
+      Salir
+    </button>
+
+  </div>
+
+</header>
 
   <main class="main-content">
     
@@ -65,50 +156,6 @@
           </div>
 
  <div class="hero-right">
-
-  <div class="hero-topbar">
-
-    <div class="hero-user">
-
-      <div class="hero-avatar">
-        👤
-      </div>
-
-      <span id="usuarioNombre">
-        admin
-      </span>
-
-    </div>
-
-    <div class="hero-notification">
-
-      <button
-        class="notification-btn"
-        id="campanaBtn"
-      >
-
-        🔔
-
-        <span
-          class="notification-count"
-          id="contadorNotificaciones"
-        >
-          0
-        </span>
-
-      </button>
-<div
-  id="panelNotificaciones"
-  class="notifications-dropdown"
->
-  <div
-  id="listaNotificaciones"
-  class="notifications-list"
-></div>
-</div>
-    </div>
-
-  </div>
 
   <div class="hero-kpis-grid">
 
